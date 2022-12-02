@@ -13,7 +13,6 @@
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="20dp"
-        app:svg="@string/wpk_nav_icon_dark_back_svg"
         android:visibility="visible" />
 
     <com.wyze.sandglasslibrary.commonui.SLFTextView
