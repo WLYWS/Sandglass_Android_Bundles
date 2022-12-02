@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="std_title_bar_subtitle_text_size">12sp</dimen>
+    <dimen name="std_title_bar_text_size">15sp</dimen>
+    <dimen name="std_titlebar_button_interval">7dp</dimen>
+    <dimen name="std_titlebar_button_margin_left">10dp</dimen>
+    <dimen name="std_titlebar_button_margin_right">10dp</dimen>
+    <dimen name="std_titlebar_button_padding_horizontal">13dp</dimen>
+    <dimen name="std_titlebar_edit_mode_btn_font_size">11sp</dimen>
+    <dimen name="std_titlebar_height">44dp</dimen>
+    <dimen name="std_titlebar_icon_size">28dp</dimen>
+    <dimen name="std_titlebar_margin_left_right">9dp</dimen>
+    <dimen name="std_titlebar_new_msg_margin_top">8dp</dimen>
+    <dimen name="std_titlebar_redpoint_margin_right">12dp</dimen>
+    <dimen name="std_titlebar_redpoint_margin_top">10dp</dimen>
+    <dimen name="std_titlebar_return_area_size">90dp</dimen>
+    <dimen name="std_titlebar_sub_title_margin_bottom">1dp</dimen>
+    <dimen name="std_titlebar_title_size">14sp</dimen>
+    <string name="app_name">SandGlass</string>
+    <string name="slf_title_cancel">Cancel</string>
+    <string name="slf_title_save">save</string>
+    <declare-styleable name="SLFTextView">
+        <attr name="slfTypeface">
+            <enum name="TTNORMSPRO_NORMAL" value="0"/>
+            <enum name="TTNORMSPRO_MEDIUM" value="1"/>
+            <enum name="TTNORMSPRO_BOLD" value="2"/>
+            <enum name="TTNORMSPRO_LIGHT" value="3"/>
+            <enum name="TTNORMSPRO_BLACK" value="4"/>
+            <enum name="TTNORMSPRO_REGULAR" value="5"/>
+            <enum name="TTNORMSPRO_EXTRABLACK" value="6"/>
+            <enum name="TTNORMSPRO_THIN" value="7"/>
+            <enum name="TTNORMSPRO_EXTRALIGHT" value="8"/>
+            <enum name="TTNORMSPRO_EXTRABOLD" value="9"/>
+            <enum name="TTNORMSPRO_DEMIBOLD" value="10"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SLFTitleBar">
+        <attr name="title_style">
+            <enum name="style_black_icon" value="1"/>
+            <enum name="style_black_text" value="2"/>
+            <enum name="style_white_icon" value="3"/>
+            <enum name="style_white_text" value="4"/>
+        </attr>
+        <attr format="string" name="title_name"/>
+        <attr format="string" name="title_left"/>
+        <attr format="string" name="title_right"/>
+        <attr format="reference" name="title_right_icon"/>
+        <attr format="reference|string" name="title_right_icon_svg"/>
+        <attr format="reference" name="title_right_icon2"/>
+        <attr format="reference|string" name="title_right_icon2_svg"/>
+    </declare-styleable>
+</resources>

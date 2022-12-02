@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SLFTitleBar">
+        <attr name="title_style" >
+            <enum name="style_black_icon" value="1" />
+            <enum name="style_black_text" value="2" />
+            <enum name="style_white_icon" value="3" />
+            <enum name="style_white_text" value="4" />
+        </attr>
+        <attr name="title_name" format="string" />
+        <attr name="title_left" format="string" />
+        <attr name="title_right" format="string" />
+        <attr name="title_right_icon" format="reference" />
+        <attr name="title_right_icon_svg" format="reference|string" />
+        <attr name="title_right_icon2" format="reference" />
+        <attr name="title_right_icon2_svg" format="reference|string" />
+    </declare-styleable>
+
+    <declare-styleable name="SLFTextView">
+        <attr name="slfTypeface">
+            <enum name="TTNORMSPRO_NORMAL" value="0" />
+            <enum name="TTNORMSPRO_MEDIUM" value="1" />
+            <enum name="TTNORMSPRO_BOLD" value="2" />
+            <enum name="TTNORMSPRO_LIGHT" value="3" />
+            <enum name="TTNORMSPRO_BLACK" value="4" />
+            <enum name="TTNORMSPRO_REGULAR" value="5" />
+            <enum name="TTNORMSPRO_EXTRABLACK" value="6" />
+            <enum name="TTNORMSPRO_THIN" value="7" />
+            <enum name="TTNORMSPRO_EXTRALIGHT" value="8" />
+            <enum name="TTNORMSPRO_EXTRABOLD" value="9" />
+            <enum name="TTNORMSPRO_DEMIBOLD" value="10" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SandGlass</string>
+    <string name="slf_title_cancel">Cancel</string>
+    <string name="slf_title_save">save</string>
+</resources>

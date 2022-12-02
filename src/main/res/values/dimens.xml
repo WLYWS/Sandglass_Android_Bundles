@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="std_title_bar_subtitle_text_size">12sp</dimen>
+    <dimen name="std_title_bar_text_size">15sp</dimen>
+    <dimen name="std_titlebar_button_interval">7dp</dimen>
+    <dimen name="std_titlebar_button_margin_left">10dp</dimen>
+    <dimen name="std_titlebar_button_margin_right">10dp</dimen>
+    <dimen name="std_titlebar_button_padding_horizontal">13dp</dimen>
+    <dimen name="std_titlebar_edit_mode_btn_font_size">11sp</dimen>
+    <dimen name="std_titlebar_height">44dp</dimen>
+    <dimen name="std_titlebar_icon_size">28dp</dimen>
+    <dimen name="std_titlebar_margin_left_right">9dp</dimen>
+    <dimen name="std_titlebar_new_msg_margin_top">8dp</dimen>
+    <dimen name="std_titlebar_redpoint_margin_right">12dp</dimen>
+    <dimen name="std_titlebar_redpoint_margin_top">10dp</dimen>
+    <dimen name="std_titlebar_return_area_size">90dp</dimen>
+    <dimen name="std_titlebar_sub_title_margin_bottom">1dp</dimen>
+    <dimen name="std_titlebar_title_size">14sp</dimen>
+</resources>

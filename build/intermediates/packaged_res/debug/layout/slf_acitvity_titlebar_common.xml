@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ CopyRight(c) WYZE CO.LTD 2018.
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/std_titlebar_height">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="20dp"
+        app:svg="@string/wpk_nav_icon_dark_back_svg"
+        android:visibility="visible" />
+
+    <com.wyze.sandglasslibrary.commonui.SLFTextView
+        android:id="@+id/tv_title_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|left"
+        android:layout_marginStart="15dp"
+        android:padding="5dp"
+        android:text="@string/slf_title_cancel"
+        android:textColor="@color/black"
+        android:visibility="gone" />
+
+    <com.wyze.sandglasslibrary.commonui.SLFTextView
+        android:id="@+id/tv_title_name"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@color/black" />
+
+    <com.wyze.sandglasslibrary.commonui.SLFTextView
+        android:id="@+id/tv_title_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginEnd="12dp"
+        android:padding="8dp"
+        android:text="@string/slf_title_save"
+        android:textColor="@color/black"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="right|center_vertical"
+        android:layout_gravity="right|center_vertical">
+        <ImageView
+            android:id="@+id/iv_second_right"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerInside"/>
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="17dp"
+            android:scaleType="centerInside"/>
+    </LinearLayout>
+
+</FrameLayout>
