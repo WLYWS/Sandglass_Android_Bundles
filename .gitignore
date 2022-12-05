@@ -1,0 +1,16 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/app/debug/
+app/build/
+.cxx/
+
+#please see the id below in this doc: https://wyzelabs.atlassian.net/wiki/spaces/SEC/pages/1785954524/Github+Usage+Policy
+ba7555ac-6da9-435d-93fc-21525221a4a4
