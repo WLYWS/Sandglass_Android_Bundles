@@ -2,4 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wyze.sandglasslibrary">
 
+    <application
+        android:allowBackup="true"
+        >
+        <activity
+            android:name=".activity.SLFPhotoSelectorActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="slf.sdk.action.SLFphotoselector" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

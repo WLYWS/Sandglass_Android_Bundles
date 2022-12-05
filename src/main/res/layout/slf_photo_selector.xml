@@ -1,9 +1,122 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wyze.sandglasslibrary.base.SLFBaseActivity">
+    android:background="#f2f2f2">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/slf_all_common_title" />
+
+    <TextView
+        android:id="@+id/selector_question_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/slf_title_bar"
+        android:layout_marginLeft="30dp"
+        android:gravity="center"
+        android:text="@string/slf_feedback_selector_question_title"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <com.wyze.sandglasslibrary.commonui.SLFSpinnerView
+        android:id="@+id/spinner_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selector_question_title"
+        android:layout_alignLeft="@id/selector_question_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/question_description_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner_question"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/slf_feedback_question_description_title"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/question_content_releate"
+        android:layout_below="@id/question_description_title"
+        android:layout_alignLeft="@id/question_description_title"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white">
+    <EditText
+        android:id="@+id/question_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="left|top"
+        android:hint="分享动态..."
+        android:padding="8dip">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/slf_tv_opinion_textnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="30px"
+        android:layout_marginBottom="20px"
+        android:textColor="#b3b3b3"
+        android:textSize="24px"
+        android:text="/200字"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/photo_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/question_content_releate"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/slf_feedback_selecotr_photo_title"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+    <GridView
+        android:id="@+id/noScrollgridview"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/photo_file"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/photo_file"
+        android:layout_marginRight="30dp"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:columnWidth="90dip"
+        android:horizontalSpacing="5dp"
+        android:listSelector="#00000000"
+        android:numColumns="4"
+        android:padding="5dip"
+        android:scrollbars="none"
+        android:verticalSpacing="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/upload_device_info"
+        android:text="@string/slf_feedback_get_device_info"
+        android:layout_below="@id/noScrollgridview"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/submit_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/upload_device_info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="@string/slf_feedback_submit_feedback"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+
+</RelativeLayout>

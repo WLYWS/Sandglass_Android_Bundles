@@ -2,5 +2,14 @@
     <string name="app_name">SLFeedback</string>
     <string name="slf_title_cancel">Cancel</string>
     <string name="slf_title_save">save</string>
-    <string name="title_activity_slfbase">SLFBaseActivity</string>
+    <string name="slf_title_activity_slfbase">SLFBaseActivity</string>
+    <string name="slf_feedback_question_description">请描述您遇到的问题时的详细情况，包括：操作步骤、设备信息等</string>
+    <string name="slf_feedback_selector_question">选择反馈问题的现象</string>
+    <string name="slf_feedback_selector_question_title">问题描述</string>
+    <string name="slf_feedback_question_description_title">详细描述</string>
+    <string name="slf_feedback_selecotr_photo_title">附件</string>
+    <string name="slf_feedback_selecotr_photo_font_count">/200字</string>
+    <string name="slf_feedback_get_device_info">自动获取您的设备和软件信息及log</string>
+    <string name="slf_feedback_submit_feedback">提交反馈</string>
+    <string name="slf_feedback_title_content">请填写您的反馈内容</string>
 </resources>
