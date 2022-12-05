@@ -15,6 +15,7 @@ color purple_700
 color teal_200
 color teal_700
 color white
+dimen fab_margin
 dimen std_title_bar_subtitle_text_size
 dimen std_title_bar_text_size
 dimen std_titlebar_button_interval
@@ -36,6 +37,8 @@ drawable ic_launcher_foreground
 drawable slf_title_icon_dark_back
 drawable slf_title_icon_dark_close
 drawable slf_title_icon_white_back
+id FirstFragment
+id SecondFragment
 id TTNORMSPRO_BLACK
 id TTNORMSPRO_BOLD
 id TTNORMSPRO_DEMIBOLD
@@ -47,9 +50,12 @@ id TTNORMSPRO_MEDIUM
 id TTNORMSPRO_NORMAL
 id TTNORMSPRO_REGULAR
 id TTNORMSPRO_THIN
+id action_FirstFragment_to_SecondFragment
+id action_SecondFragment_to_FirstFragment
 id iv_back
 id iv_right
 id iv_second_right
+id nav_graph
 id style_black_icon
 id style_black_text
 id style_white_icon
@@ -61,11 +67,23 @@ id tv_title_right
 layout activity_main
 layout slf_acitvity_titlebar_common
 layout slf_activity_titlebar_white
+layout slf_baseactivity
 mipmap ic_launcher
 mipmap ic_launcher_round
+navigation nav_graph
 string app_name
+string first_fragment_label
+string hello_first_fragment
+string hello_second_fragment
+string next
+string previous
+string second_fragment_label
 string slf_title_cancel
 string slf_title_save
+string title_activity_slfbase
+style Theme_SLFeedback_AppBarOverlay
+style Theme_SLFeedback_NoActionBar
+style Theme_SLFeedback_PopupOverlay
 styleable SLFTextView slfTypeface
 styleable SLFTitleBar title_left title_name title_right title_right_icon title_right_icon2 title_right_icon2_svg title_right_icon_svg title_style
 xml backup_rules

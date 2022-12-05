@@ -1,13 +1,18 @@
-package com.wyze.sandglasslibrary.activity;
+package com.wyze.sandglasslibrary.base;
 
 import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.bean.Constants;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -28,6 +33,10 @@ public class SLFBaseActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         //管理acitivty的集合
         mActivityStack.put(hashCode(), new WeakReference<>(this));
+        //是否要一键变灰
+        if(Constants.isGreyed){
+            ColorGrayed();
+        }
     }
 
     @Override
@@ -43,6 +52,10 @@ public class SLFBaseActivity extends FragmentActivity {
     }
     //一键变灰
     private void ColorGrayed(){
-        
+        Paint paint = new Paint();
+        ColorMatrix colorMatrix= new ColorMatrix();
+        colorMatrix.setSaturation(0);
+        paint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+        getWindow().getDecorView().setLayerType(View.LAYER_TYPE_HARDWARE, paint);
     }
 }
