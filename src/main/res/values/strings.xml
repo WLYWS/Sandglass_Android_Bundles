@@ -12,4 +12,8 @@
     <string name="slf_feedback_get_device_info">自动获取您的设备和软件信息及log</string>
     <string name="slf_feedback_submit_feedback">提交反馈</string>
     <string name="slf_feedback_title_content">请填写您的反馈内容</string>
+    <string name="slf_take_photo">拍照</string>
+    <string name="slf_select_from_the_album">从相册选择</string>
+    <!--Adapter utils-->
+    <item name="slf_adatper_utils" type="id"></item>
 </resources>

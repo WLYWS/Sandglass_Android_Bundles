@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:elevation="0dp">
+
+    <include layout="@layout/slf_selector_photo_common_title" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/slf_photo_title_titleBar">
+
+        <GridView
+            android:id="@+id/slf_gv_photolist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF"
+            android:padding="2dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:clipToPadding="false"
+            android:fadingEdge="none"
+            android:listSelector="@color/transparent"
+            android:numColumns="4"
+            android:horizontalSpacing="2dp"
+            android:verticalSpacing="2dp" />
+
+        <ListView
+            android:id="@+id/slf_lv_filelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@color/transparent"
+            android:visibility="invisible">
+
+        </ListView>
+
+    </FrameLayout>
+
+    <Button
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/slf_photo_selector_iv_confirm"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="35dp"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:drawableLeft="@drawable/slf_photo_done_gf_done" />
+
+
+</RelativeLayout>

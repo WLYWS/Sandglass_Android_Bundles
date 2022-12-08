@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ CopyRight(c) WYZE CO.LTD 2018.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_checked="true"
+        android:drawable="@drawable/slf_photo_help_choose_selected" />
+    <item android:state_enabled="true" android:state_checked="false"
+        android:drawable="@drawable/slf_photo_help_choose" />
+    <item android:state_enabled="false" android:state_checked="true"
+        android:drawable="@drawable/slf_photo_help_choose_selected"/>
+    <item android:state_enabled="false" android:state_checked="false"
+        android:drawable="@drawable/slf_photo_help_choose"/>
+    <item android:drawable="@drawable/slf_photo_help_choose"/>
+
+</selector>

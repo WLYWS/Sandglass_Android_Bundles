@@ -32,4 +32,10 @@
             <enum name="TTNORMSPRO_DEMIBOLD" value="10" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="SLFRecordButton">
+        <attr name="slf_recordTime" format="float" />
+        <attr name="slf_minRecordTime" format="float" />
+        <attr name="slf_touchDelay" format="float" />
+    </declare-styleable>
 </resources>

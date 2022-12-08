@@ -15,7 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.wyze.sandglasslibrary.R;
-
+/**
+ *
+ **created by yangjie
+ **describe:公共的titlebar
+ **time:2022/12/2
+ *
+ */
 public class SLFTitleBar extends FrameLayout {
 
     private TextView slfTitle;
@@ -81,16 +87,16 @@ public class SLFTitleBar extends FrameLayout {
             case SLF_STYLE_BLACK_ICON:
             case SLF_STYLE_BLACK_TEXT:
             default:
-                titleView = View.inflate(context, R.layout.slf_acitvity_titlebar_common, this);
+                titleView = View.inflate(context, R.layout.slf_all_common_title, this);
                 break;
         }
 
-        slfTitle = titleView.findViewById(R.id.tv_title_name);
-        slfBack = titleView.findViewById(R.id.iv_back);
-        slfslfTitleLeft = titleView.findViewById(R.id.tv_title_left);
-        slfslfTitleRight = titleView.findViewById(R.id.tv_title_right);
-        slfsflIconRight = titleView.findViewById(R.id.iv_right);
-        slfsflIconRight2 = titleView.findViewById(R.id.iv_second_right);
+        slfTitle = titleView.findViewById(R.id.slf_tv_title_name);
+        slfBack = titleView.findViewById(R.id.slf_iv_back);
+        slfslfTitleLeft = titleView.findViewById(R.id.slf_tv_title_left);
+        slfslfTitleRight = titleView.findViewById(R.id.slf_tv_title_right);
+        slfsflIconRight = titleView.findViewById(R.id.slf_iv_right);
+        slfsflIconRight2 = titleView.findViewById(R.id.slf_iv_second_right);
 
         setTitle(slfTitleName);
 //        slfTitle.setText(slfTitleName)

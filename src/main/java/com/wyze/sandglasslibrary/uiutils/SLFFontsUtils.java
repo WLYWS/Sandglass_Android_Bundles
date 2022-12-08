@@ -20,7 +20,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+/**
+ *
+ **created by yangjie
+ **describe:公共的字体工具类
+ **time:2022/12/2
+ *
+ */
 public class SLFFontsUtils {
     private static final String TAG = "SLFFontsUtil";
 

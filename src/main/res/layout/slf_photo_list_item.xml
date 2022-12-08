@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/slf_iv_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <CheckBox
+        android:id="@+id/slf_checked_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/slf_photo_item_checkbox_layout"
+        android:button="@null"
+        android:clickable="false"
+        />
+
+    <CheckBox
+        android:id="@+id/slf_checked_num"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/slf_photo_checkbox_num_layout"
+        android:button="@null"
+        android:clickable="false"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/slf_iv_video"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/slf_photo_video_icon_light_play"/>
+
+    <Button
+        android:id="@+id/slf_tv_media_type"
+        android:layout_width="20dp"
+        android:layout_height="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/slf_tv_video_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"/>
+
+</RelativeLayout>

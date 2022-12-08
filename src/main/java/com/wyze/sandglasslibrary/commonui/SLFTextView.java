@@ -10,7 +10,13 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.uiutils.SLFFontsUtils;
-
+/**
+ *
+ **created by yangjie
+ **describe:计划写的一个公共textview
+ **time:2022/12/2
+ *
+ */
 public class SLFTextView extends AppCompatTextView {
 
     private final String TAG = SLFTextView.class.getSimpleName();

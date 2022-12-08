@@ -81,42 +81,52 @@
         android:text="@string/slf_feedback_selecotr_photo_title"
         android:textSize="22sp"
         android:textStyle="bold" />
-    <GridView
-        android:id="@+id/noScrollgridview"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/photo_file"
-        android:layout_marginTop="10dp"
-        android:layout_alignLeft="@id/photo_file"
-        android:layout_marginRight="30dp"
-        android:background="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:columnWidth="90dip"
-        android:horizontalSpacing="5dp"
-        android:listSelector="#00000000"
-        android:numColumns="4"
-        android:padding="5dip"
-        android:scrollbars="none"
-        android:verticalSpacing="5dp" />
+        android:layout_margin="14dp"
+        android:id="@+id/photo_grid_img_linear"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <GridView
+            android:id="@+id/slf_gv_add_attach"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:numColumns="5"
+            android:stretchMode="columnWidth" />
+
+        <ImageView
+            android:id="@+id/slf_img_add_attach"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="17dp"
+            android:src="@drawable/slf_addimg"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/upload_device_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/upload_device_info"
-        android:text="@string/slf_feedback_get_device_info"
-        android:layout_below="@id/noScrollgridview"
+        android:layout_below="@id/photo_grid_img_linear"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="@string/slf_feedback_get_device_info" />
 
     <Button
         android:id="@+id/submit_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/upload_device_info"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
         android:text="@string/slf_feedback_submit_feedback"
-        android:textColor="@color/black"
-        android:gravity="center"/>
+        android:textColor="@color/black" />
 
 </RelativeLayout>

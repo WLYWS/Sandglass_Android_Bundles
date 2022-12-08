@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/slf_previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:soundEffectsEnabled="false"/>
+
+
+
+    <CheckBox
+        android:id="@+id/slf_cb_switch_flash"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/slf_take_camra_select_flash_btn"
+        android:button="@null"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:text="Click Photo and Press Video"/>
+
+
+        <ImageView
+            android:id="@+id/slf_iv_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="8dp"
+            android:layout_marginLeft="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/slf_btn_common_back_white" />
+
+
+        <com.wyze.sandglasslibrary.commonui.SLFRecordButton
+            android:id="@+id/slf_iv_take_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="25dp"
+            android:layout_centerInParent="true"
+            app:slf_recordTime="10000" />
+
+        <CheckBox
+            android:id="@+id/slf_cb_switch_front"
+            android:layout_width="30dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/slf_take_camra_switch_camera"
+            android:button="@null" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
