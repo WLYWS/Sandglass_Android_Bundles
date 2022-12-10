@@ -2,6 +2,7 @@
     <string name="app_name">SLFeedback</string>
     <string name="slf_title_cancel">Cancel</string>
     <string name="slf_title_save">save</string>
+    <string name="slf_only_select_3">Only select up to 3 images.</string>
     <string name="slf_title_activity_slfbase">SLFBaseActivity</string>
     <string name="slf_feedback_question_description">请描述您遇到的问题时的详细情况，包括：操作步骤、设备信息等</string>
     <string name="slf_feedback_selector_question">选择反馈问题的现象</string>

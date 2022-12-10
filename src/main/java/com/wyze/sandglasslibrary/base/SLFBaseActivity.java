@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -43,7 +46,7 @@ public class SLFBaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isDrawPageFinish = false;
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         /**设置activity无title*/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         /**管理acitivty的集合*/
@@ -89,9 +92,9 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        if(isFinishing()){
-//            EventBus.getDefault().unregister(this);
-//        }
+        if(isFinishing()){
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -100,9 +103,9 @@ public class SLFBaseActivity extends FragmentActivity {
             super.onDestroy();
             /**activity摧毁时根据hashcode从集合移除*/
             mActivityStack.remove(hashCode());
-//            if (EventBus.getDefault().isRegistered(this)){
-//                EventBus.getDefault().unregister(this);
-//            }
+            if (EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().unregister(this);
+            }
         }catch (Exception e){
             Log.e(TAG,Log.getStackTraceString(e));
         }
@@ -113,9 +116,9 @@ public class SLFBaseActivity extends FragmentActivity {
     public void finish() {
 
         super.finish();
-//        if (EventBus.getDefault().isRegistered(this)) {
-//            EventBus.getDefault().unregister(this);
-//        }
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
     /**一键变灰*/
     private void ColorGrayed(){
@@ -128,5 +131,10 @@ public class SLFBaseActivity extends FragmentActivity {
 
     protected SLFBaseActivity getActivity() {
         return SLFBaseActivity.this;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFEventCommon event) {
+
     }
 }

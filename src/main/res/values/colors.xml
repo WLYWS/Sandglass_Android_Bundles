@@ -10,4 +10,5 @@
     <color name="transparent">#00000000</color>
     <color name="slf_grey">#FFaeaeae</color>
     <color name="slf_grey_bottom_dialog">#F0F4F7</color>
+    <color name="slf_photo_item_mask_bg">#B3383838</color>
 </resources>
