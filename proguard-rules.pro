@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# mars
+-keep class com.tencent.mars.xlog.** { *; }
+-keep class com.tencent.mars.comm.** { *; }
+-keep class com.tencent.mars.app.** { *; }
+-keep class com.tencent.mars.stn.** {*;}
+-keep class com.tencent.mars.** { *; }
+-keepclassmembers class com.tencent.mars.** { *; }
+-dontwarn com.tencent.mars.**
+
+# so
+#-libraryjars libs/armeabi/libmarsxlog.so
+#-libraryjars libs/armeabi/libc++_shared.so
+-libraryjars libs/armeabi-v7a/libmarsxlog.so
+-libraryjars libs/armeabi-v7a/libc++_shared.so
+-libraryjars libs/arm64-v8a/libmarsxlog.so
+-libraryjars libs/arm64-v8a/libc++_shared.so

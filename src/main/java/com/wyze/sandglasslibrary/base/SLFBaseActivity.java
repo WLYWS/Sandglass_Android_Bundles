@@ -2,6 +2,7 @@ package com.wyze.sandglasslibrary.base;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.ColorMatrix;
@@ -14,7 +15,6 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
-import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,6 +33,8 @@ import java.util.TreeMap;
 public class SLFBaseActivity extends FragmentActivity {
 
     private TextView tvTitle;
+
+    private String path;
 
     protected final String TAG = this.getClass().getSimpleName();
 
@@ -137,4 +139,5 @@ public class SLFBaseActivity extends FragmentActivity {
     public void onEvent(SLFEventCommon event) {
 
     }
+
 }
