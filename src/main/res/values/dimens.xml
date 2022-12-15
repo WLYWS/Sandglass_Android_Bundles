@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="std_title_bar_subtitle_text_size">12sp</dimen>
     <dimen name="std_title_bar_text_size">15sp</dimen>
     <dimen name="std_titlebar_button_interval">7dp</dimen>
@@ -16,4 +16,5 @@
     <dimen name="std_titlebar_return_area_size">90dp</dimen>
     <dimen name="std_titlebar_sub_title_margin_bottom">1dp</dimen>
     <dimen name="std_titlebar_title_size">14sp</dimen>
+    <dimen name="std_titlebar_top_padding">20dp</dimen>
 </resources>

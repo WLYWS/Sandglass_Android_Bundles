@@ -4,17 +4,22 @@
     <string name="slf_title_save">save</string>
     <string name="slf_only_select_3">Only select up to 3 images.</string>
     <string name="slf_title_activity_slfbase">SLFBaseActivity</string>
-    <string name="slf_feedback_question_description">请描述您遇到的问题时的详细情况，包括：操作步骤、设备信息等</string>
-    <string name="slf_feedback_selector_question">选择反馈问题的现象</string>
-    <string name="slf_feedback_selector_question_title">问题描述</string>
-    <string name="slf_feedback_question_description_title">详细描述</string>
-    <string name="slf_feedback_selecotr_photo_title">附件</string>
-    <string name="slf_feedback_selecotr_photo_font_count">/200字</string>
-    <string name="slf_feedback_get_device_info">自动获取您的设备和软件信息及log</string>
-    <string name="slf_feedback_submit_feedback">提交反馈</string>
-    <string name="slf_feedback_title_content">请填写您的反馈内容</string>
-    <string name="slf_take_photo">拍照</string>
-    <string name="slf_select_from_the_album">从相册选择</string>
+    <string name="slf_feedback_problem_description">Please describe your problem and any feedback you have. You can add up to 3 photos to help you describe the problem.</string>
+    <string name="slf_feedback_selector_service">Please select your service type</string>
+    <string name="slf_feedback_selector_service_title">Service type</string>
+    <string name="slf_feedback_selector_problem">Please select your problem type</string>
+    <string name="slf_feedback_selector_problem_title">Problem type</string>
+    <string name="slf_feedback_selector_problem_overview">Please select your problem overview</string>
+    <string name="slf_feedback_selector_problem_overview_title">Problem overview</string>
+    <string name="slf_feedback_problem_description_title">Description</string>
+    <string name="slf_feedback_font_count">%1$d/1000</string>
+    <string name="slf_feedback_photo_count">%1$d/3</string>
+    <string name="slf_feedback_email_title">Email:</string>
+    <string name="slf_feedback_email_hint">Email address</string>
+    <string name="slf_feedback_email_error">Please enter a valid email address</string>
+    <string name="slf_feedback_send_log">Send Log</string>
+    <string name="slf_feedback_submit_feedback">Submit Feedback</string>
+    <string name="slf_feedback_title_content">Feedback</string>
     <!--Adapter utils-->
     <item name="slf_adatper_utils" type="id"></item>
 </resources>

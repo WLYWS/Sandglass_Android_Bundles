@@ -2,131 +2,305 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2">
+    android:background="@color/black">
 
     <include layout="@layout/slf_all_common_title" />
 
-    <TextView
-        android:id="@+id/selector_question_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/slf_title_bar"
-        android:layout_marginLeft="30dp"
-        android:gravity="center"
-        android:text="@string/slf_feedback_selector_question_title"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <com.wyze.sandglasslibrary.commonui.SLFSpinnerView
-        android:id="@+id/spinner_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/selector_question_title"
-        android:layout_alignLeft="@id/selector_question_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:id="@+id/question_description_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinner_question"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/slf_feedback_question_description_title"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/question_content_releate"
-        android:layout_below="@id/question_description_title"
-        android:layout_alignLeft="@id/question_description_title"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/white">
-    <EditText
-        android:id="@+id/question_content"
+    <ScrollView
+        android:id="@+id/slf_feed_back_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="left|top"
-        android:hint="分享动态..."
-        android:padding="8dip">
+        android:layout_below="@id/slf_title_bar"
+        android:layout_above="@id/slf_submit_feedback"
+        android:overScrollMode="never"
+        android:focusable="false"
+        >
 
-    </EditText>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:paddingBottom="188dp"
+            >
 
-    <TextView
-        android:id="@+id/slf_tv_opinion_textnum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="30px"
-        android:layout_marginBottom="20px"
-        android:textColor="#b3b3b3"
-        android:textSize="24px"
-        android:text="/200字"/>
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/service_type_seletor_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/photo_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/question_content_releate"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/slf_feedback_selecotr_photo_title"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/photo_file"
-        android:layout_margin="14dp"
-        android:id="@+id/photo_grid_img_linear"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/selector_service_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:gravity="center"
+                    android:text="@string/slf_feedback_selector_service_title"
+                    android:textColor="@color/slf_feedback_question_type_title"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-        <GridView
-            android:id="@+id/slf_gv_add_attach"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:numColumns="5"
-            android:stretchMode="columnWidth" />
+                <TextView
+                    android:id="@+id/spinner_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/slf_feedback_page_child_bg"
+                    android:drawableRight="@drawable/slf_btn_icon_down"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="14dp"
+                    android:text="@string/slf_feedback_selector_service"
+                    android:textColor="@color/slf_feedback_page_child_text" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/slf_img_add_attach"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="17dp"
-            android:src="@drawable/slf_addimg"
-            android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/problem_type_seletor_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/service_type_seletor_linear"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/selector_problem_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:gravity="center"
+                    android:text="@string/slf_feedback_selector_problem_title"
+                    android:textColor="@color/slf_feedback_question_type_title"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/upload_device_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/photo_grid_img_linear"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/slf_feedback_get_device_info" />
+                <TextView
+                    android:id="@+id/spinner_problem"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/slf_feedback_page_child_bg"
+                    android:drawableRight="@drawable/slf_btn_icon_down"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="14dp"
+                    android:text="@string/slf_feedback_selector_problem"
+                    android:textColor="@color/slf_feedback_page_child_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/problem_overview_seletor_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/problem_type_seletor_linear"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/selector_problem_overview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:gravity="center"
+                    android:text="@string/slf_feedback_selector_problem_overview_title"
+                    android:textColor="@color/slf_feedback_question_type_title"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/spinner_problem_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/slf_feedback_page_child_bg"
+                    android:drawableRight="@drawable/slf_btn_icon_down"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="14dp"
+                    android:text="@string/slf_feedback_selector_problem_overview"
+                    android:textColor="@color/slf_feedback_page_child_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/problem_description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/problem_overview_seletor_linear"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/slf_feedback_problem_description_title"
+                android:textColor="@color/slf_feedback_question_type_title"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/slf_tv_opinion_textnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/problem_overview_seletor_linear"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="36dp"
+                android:gravity="center"
+                android:text="@string/slf_feedback_font_count"
+                android:textColor="@color/slf_feedback_question_type_title"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/problem_content_releate"
+                android:layout_width="match_parent"
+                android:layout_height="267dp"
+                android:layout_below="@id/problem_description_title"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/slf_feedback_page_child_bg">
+
+                <EditText
+                    android:id="@+id/question_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    android:inputType="textVisiblePassword|textMultiLine"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|top"
+                    android:maxLength="1000"
+                    android:hint="@string/slf_feedback_problem_description"
+                    android:padding="16dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/slf_feedback_page_child_text" />
+
+                <View
+                    android:id="@+id/edit_line_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/question_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/slf_feedback_page_edit_line" />
+
+                <LinearLayout
+                    android:id="@+id/photo_grid_img_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edit_line_view"
+                    android:layout_margin="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <GridView
+                        android:id="@+id/slf_gv_add_attach"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:numColumns="5"
+                        android:stretchMode="columnWidth" />
+
+                    <!--            <ImageView-->
+                    <!--                android:id="@+id/slf_img_add_attach"-->
+                    <!--                android:layout_width="60dp"-->
+                    <!--                android:layout_height="60dp"-->
+                    <!--                android:layout_margin="17dp"-->
+                    <!--                android:src="@drawable/slf_addimg"-->
+                    <!--                android:visibility="gone" />-->
+                    <include layout="@layout/slf_add_img_layout"
+                              android:visibility="gone"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/email_seletor_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/problem_content_releate"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/selector_email_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:gravity="center"
+                    android:text="@string/slf_feedback_email_title"
+                    android:textColor="@color/slf_feedback_question_type_title"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/slf_email_eidt"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/slf_feedback_page_child_bg"
+                    android:hint="@string/slf_feedback_email_hint"
+                    android:drawableRight="@drawable/slf_feed_back_email_close_all"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="@color/white"
+                    android:singleLine="true"
+                    android:drawablePadding="8dp"
+                    android:textColorHint="@color/slf_feedback_question_type_title" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/slf_email_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email_seletor_linear"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/slf_feedback_email_error"
+                android:textColor="@color/slf_feedback_page_email_error"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+
+            <CheckBox
+                android:id="@+id/slf_upload_log"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/slf_email_error"
+                android:layout_marginLeft="36dp"
+                android:button="@drawable/slf_feed_back_log_checkbox_layout"
+                android:checked="true"
+                android:paddingLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/slf_feedback_send_log"
+                android:textColor="@color/slf_feedback_page_child_text"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
-        android:id="@+id/submit_feedback"
-        android:layout_width="wrap_content"
+        android:id="@+id/slf_submit_feedback"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/upload_device_info"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
         android:layout_marginBottom="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:background="@drawable/slf_feedback_page_child_bg"
         android:gravity="center"
         android:text="@string/slf_feedback_submit_feedback"
-        android:textColor="@color/black" />
+        android:textColor="@color/slf_feedback_question_type_title" />
 
 </RelativeLayout>

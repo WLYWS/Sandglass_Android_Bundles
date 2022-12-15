@@ -2,7 +2,6 @@ package com.wyze.sandglasslibrary.base;
 
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.ColorMatrix;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
+import com.wyze.sandglasslibrary.uiutils.SLFTitleBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,8 +34,6 @@ public class SLFBaseActivity extends FragmentActivity {
 
     private TextView tvTitle;
 
-    private String path;
-
     protected final String TAG = this.getClass().getSimpleName();
 
     public static Map<Integer, WeakReference<Activity>> mActivityStack = new TreeMap<>();
@@ -47,6 +45,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SLFTitleBarUtil.enableTranslucentStatus(this);
         isDrawPageFinish = false;
         EventBus.getDefault().register(this);
         /**设置activity无title*/
@@ -66,6 +65,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     public void onContentChanged() {
         super.onContentChanged();
+        SLFTitleBarUtil.setTitleBar(this);
         tvTitle = findViewById(R.id.slf_tv_title_name);
         View viewBack = findViewById(R.id.slf_iv_back);
         if(viewBack!=null && !viewBack.hasOnClickListeners()){
