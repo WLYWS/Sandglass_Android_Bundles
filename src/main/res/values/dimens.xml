@@ -17,4 +17,5 @@
     <dimen name="std_titlebar_sub_title_margin_bottom">1dp</dimen>
     <dimen name="std_titlebar_title_size">14sp</dimen>
     <dimen name="std_titlebar_top_padding">20dp</dimen>
+    <dimen name="std_bottom_dialog_line_padding">16dp</dimen>
 </resources>

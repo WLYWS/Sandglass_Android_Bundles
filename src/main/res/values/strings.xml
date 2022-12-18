@@ -20,6 +20,7 @@
     <string name="slf_feedback_send_log">Send Log</string>
     <string name="slf_feedback_submit_feedback">Submit Feedback</string>
     <string name="slf_feedback_title_content">Feedback</string>
+    <string name="slf_feedback_problem_font_least">Feedback description should be at least 10 characters.</string>
     <!--Adapter utils-->
     <item name="slf_adatper_utils" type="id"></item>
 </resources>

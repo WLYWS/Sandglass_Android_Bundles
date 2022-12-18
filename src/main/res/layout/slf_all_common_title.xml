@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ 公共title.
+  ~ 公共title
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/slf_title_bar"
     android:layout_width="match_parent"
-    android:layout_height="54dp"
-    android:background="@color/transparent">
+    android:layout_height="@dimen/std_titlebar_height"
+    >
 
     <ImageView
         android:id="@+id/slf_iv_back"
-        android:layout_width="46dp"
-        android:layout_height="16dp"
+        android:layout_width="26dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center|left"
-        android:paddingRight="20dp"
         android:layout_marginStart="20dp"
-        android:src="@drawable/slf_btn_common_back_white"
+        android:src="@drawable/slf_title_icon_white_back"
         android:visibility="visible" />
 
     <TextView
@@ -27,7 +26,7 @@
         android:padding="5dp"
         android:text="@string/slf_title_cancel"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="17dp"
         android:visibility="gone" />
 
     <TextView
@@ -38,7 +37,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/slf_tv_title_right"
@@ -50,11 +49,11 @@
         android:padding="8dp"
         android:text="@string/slf_title_save"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="17dp"
         android:visibility="gone" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="88dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical">
 
@@ -66,10 +65,16 @@
 
         <ImageView
             android:id="@+id/slf_iv_right"
-            android:layout_width="64dp"
-            android:paddingLeft="20dp"
+            android:layout_width="44dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside" />
+        <ImageView
+            android:id="@+id/slf_iv_right_clean_history_detail"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY" />
     </LinearLayout>
 
 </FrameLayout>

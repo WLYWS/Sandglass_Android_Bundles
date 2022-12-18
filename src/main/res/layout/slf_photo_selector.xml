@@ -1,26 +1,28 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:fitsSystemWindows="true">
 
     <include layout="@layout/slf_all_common_title" />
 
-    <ScrollView
+    <com.wyze.sandglasslibrary.commonui.SLFScrollView
         android:id="@+id/slf_feed_back_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/slf_title_bar"
         android:layout_above="@id/slf_submit_feedback"
+        android:scrollbars="none"
         android:overScrollMode="never"
-        android:focusable="false"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="14dp"
-            android:paddingBottom="188dp"
+            android:paddingBottom="86dp"
             >
 
             <LinearLayout
@@ -53,8 +55,9 @@
                     android:paddingTop="14dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="14dp"
-                    android:text="@string/slf_feedback_selector_service"
-                    android:textColor="@color/slf_feedback_page_child_text" />
+                    android:textColor="@color/white"
+                    android:hint="@string/slf_feedback_selector_service"
+                    android:textColorHint="@color/slf_feedback_page_child_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -89,8 +92,9 @@
                     android:paddingTop="14dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="14dp"
-                    android:text="@string/slf_feedback_selector_problem"
-                    android:textColor="@color/slf_feedback_page_child_text" />
+                    android:textColor="@color/white"
+                    android:hint="@string/slf_feedback_selector_problem"
+                    android:textColorHint="@color/slf_feedback_page_child_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -125,8 +129,9 @@
                     android:paddingTop="14dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="14dp"
-                    android:text="@string/slf_feedback_selector_problem_overview"
-                    android:textColor="@color/slf_feedback_page_child_text" />
+                    android:textColor="@color/white"
+                    android:hint="@string/slf_feedback_selector_problem_overview"
+                    android:textColorHint="@color/slf_feedback_page_child_text" />
             </LinearLayout>
 
             <TextView
@@ -257,6 +262,7 @@
                     android:singleLine="true"
                     android:drawablePadding="8dp"
                     android:textColorHint="@color/slf_feedback_question_type_title" />
+
             </LinearLayout>
 
             <TextView
@@ -274,7 +280,7 @@
             <CheckBox
                 android:id="@+id/slf_upload_log"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/slf_email_error"
                 android:layout_marginLeft="36dp"
                 android:button="@drawable/slf_feed_back_log_checkbox_layout"
@@ -286,7 +292,7 @@
                 android:textSize="14sp"
                 />
         </RelativeLayout>
-    </ScrollView>
+    </com.wyze.sandglasslibrary.commonui.SLFScrollView>
 
     <Button
         android:id="@+id/slf_submit_feedback"
@@ -296,11 +302,12 @@
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
         android:layout_marginBottom="20dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
         android:background="@drawable/slf_feedback_page_child_bg"
         android:gravity="center"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:text="@string/slf_feedback_submit_feedback"
+        android:textAllCaps="false"
         android:textColor="@color/slf_feedback_question_type_title" />
 
-</RelativeLayout>
+</com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout>

@@ -17,4 +17,8 @@
     <color name="slf_feedback_page_edit_line">#414141</color>
     <color name="slf_feedback_page_email_error">#FF2C38</color>
     <color name="slf_feedback_page_submit_btn_bg">#C9FF43</color>
+    <color name="slf_feedback_bottom_dialog_item_bg">#3F3F3F</color>
+    <color name="slf_feedback_bottom_dialog_item_line">#5A5A5A</color>
+    <color name="slf_common_dialog_bg">#262626</color>
+    <color name="slf_common_dialog_bg_left_btn">#A5A5A5</color>
 </resources>

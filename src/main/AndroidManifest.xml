@@ -32,8 +32,9 @@
         </provider>
 
         <activity
-            android:name=".activity.SLFFeedbackSubmitActivity"
-            android:exported="true">
+            android:name=".activity.feedback.SLFFeedbackSubmitActivity"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="slf.sdk.action.SLFphotoselector" />
                 <category android:name="android.intent.category.DEFAULT" />
