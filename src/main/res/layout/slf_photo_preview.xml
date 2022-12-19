@@ -14,29 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/slf_photo_base_iv_crop"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="60dp"
-        android:layout_marginLeft="35dp"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:drawableLeft="@drawable/slf_photo_crop_gf_crop_tile" />
-
-    <Button
-        android:id="@+id/slf_photo_selector_iv_confirm"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="60dp"
-        android:layout_marginRight="35dp"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:drawableLeft="@drawable/slf_photo_done_gf_done" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -21,4 +21,7 @@
     <color name="slf_feedback_bottom_dialog_item_line">#5A5A5A</color>
     <color name="slf_common_dialog_bg">#262626</color>
     <color name="slf_common_dialog_bg_left_btn">#A5A5A5</color>
+    <color name="slf_photo_selector_grid_bottom_bg">#222222</color>
+
+
 </resources>

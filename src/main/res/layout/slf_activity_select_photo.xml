@@ -10,7 +10,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/slf_photo_title_titleBar">
+        android:layout_below="@+id/slf_photo_title_titleBar"
+        android:layout_above="@id/slf_photo_grid_bottom_relative">
 
         <GridView
             android:id="@+id/slf_gv_photolist"
@@ -24,7 +25,10 @@
             android:listSelector="@color/transparent"
             android:numColumns="4"
             android:horizontalSpacing="2dp"
-            android:verticalSpacing="2dp" />
+            android:verticalSpacing="2dp" >
+
+
+        </GridView>
 
         <ListView
             android:id="@+id/slf_lv_filelist"
@@ -37,18 +41,44 @@
 
     </FrameLayout>
 
-    <Button
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/slf_photo_selector_iv_confirm"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
+    <RelativeLayout
+        android:id="@+id/slf_photo_grid_bottom_relative"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="60dp"
-        android:layout_marginRight="35dp"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:drawableLeft="@drawable/slf_photo_done_gf_done" />
+        android:background="@color/slf_photo_selector_grid_bottom_bg"
+        android:gravity="center_vertical"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/slf_preview_text"
+            android:textSize="14sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/slf_feedback_bottom_dialog_item_bg"
+            android:text="@string/slf_feedback_grid_bottom_left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            />
+
+        <Button
+            android:id="@+id/slf_complate_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/slf_feedback_page_child_bg"
+            android:layout_gravity="right"
+            android:layout_alignParentRight="true"
+            android:text="@string/slf_feedback_grid_bottom_right"
+            android:textAllCaps="false"
+            android:layout_alignBottom="@id/slf_preview_text"
+            android:textColor="@color/slf_feedback_question_type_title" />
+
+    </RelativeLayout>
+
+
 
 
 </RelativeLayout>

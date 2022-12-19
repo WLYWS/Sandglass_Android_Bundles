@@ -17,34 +17,23 @@
         <ImageView
             android:id="@+id/slf_iv_photo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
         <ImageView
             android:id="@+id/slf_iv_video"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
             android:src="@drawable/slf_video_icon_light_play" />
 
-
-        <TextView
-            android:id="@+id/slf_tv_video_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="4dp"
-            android:textColor="@color/white"
-            android:textSize="9sp" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/slf_iv_delete"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_margin="2dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_margin="-6dp"
         android:src="@drawable/slf_list_img_delete"
         android:layout_alignParentRight="true"/>
 
@@ -52,13 +41,13 @@
         android:id="@+id/slf_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/slf_grey"
+        android:background="@drawable/slf_feedback_add_photo_bg"
         android:visibility="gone">
         <ProgressBar
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
-            android:progressTint="@color/white"
+            style="@style/slf_ProgressBar"
             />
     </FrameLayout>
 

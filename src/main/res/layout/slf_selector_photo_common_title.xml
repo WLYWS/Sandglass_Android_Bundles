@@ -45,23 +45,23 @@
             android:id="@+id/slf_iv_arrow_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/slf_photo_title_filename"
-            android:layout_marginLeft="6dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/slf_photo_title_filename"
             android:src="@drawable/slf_photo_arrow_gf_triangle_arrow"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/slf_photo_title_rotate"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toLeftOf="@+id/slf_photo_title_photograph"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/slf_photo_title_photograph"
+            android:background="@drawable/slf_photoselector_circle_bg"
             android:padding="12dp"
             android:src="@drawable/slf_photo_rotate_gf_rotate"
-            android:background="@drawable/slf_photoselector_circle_bg"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/slf_photo_title_photograph"
             android:layout_width="50dp"
@@ -69,11 +69,11 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
+            android:background="@drawable/slf_photoselector_circle_bg"
             android:padding="12dp"
             android:src="@drawable/slf_photo_camera_gf_camera"
-            android:background="@drawable/slf_photoselector_circle_bg"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/slf_photo_title_setting"
             android:layout_width="50dp"
@@ -81,24 +81,24 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
+            android:background="@drawable/slf_photoselector_circle_bg"
             android:padding="12dp"
             android:src="@drawable/slf_photo_setting"
-            android:background="@drawable/slf_photoselector_circle_bg"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/slf_tv_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/slf_photo_title_photograph"
             android:layout_centerVertical="true"
-            android:gravity="right"
             android:layout_marginRight="10dp"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:layout_toLeftOf="@+id/slf_photo_title_photograph"
+            android:gravity="right"
             android:text=""
             android:textColor="#FFFFFF"
-            android:visibility="gone"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
