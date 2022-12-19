@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".activity.feedback.SLFFeedbackSubmitActivity">
+    tools:context=".functionmodule.activity.feedback.SLFFeedbackSubmitActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/slf_bottom_dialog_selector_type"
