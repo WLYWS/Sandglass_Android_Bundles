@@ -5,7 +5,7 @@
     android:layout_height="85dp"
     android:paddingTop="15dp"
     android:elevation="6dp"
-    android:background="@color/black"
+    android:background="@color/transparent"
     >
 
     <RelativeLayout
@@ -22,18 +22,16 @@
             android:layout_marginLeft="8dp"
             android:background="@drawable/slf_photo_circle_bg"
             android:padding="10dp"
-            android:src="@drawable/slf_photo_back_gf_back" />
+            android:src="@drawable/slf_title_icon_dark_close" />
 
         <TextView
             android:id="@+id/slf_photo_title_filename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/slf_photo_title_back"
             android:ellipsize="end"
             android:gravity="center"
             android:maxWidth="150dp"
-            android:paddingLeft="5dp"
+            android:layout_centerInParent="true"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:singleLine="true"
@@ -51,54 +49,7 @@
             android:src="@drawable/slf_photo_arrow_gf_triangle_arrow"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/slf_photo_title_rotate"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/slf_photo_title_photograph"
-            android:background="@drawable/slf_photoselector_circle_bg"
-            android:padding="12dp"
-            android:src="@drawable/slf_photo_rotate_gf_rotate"
-            android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/slf_photo_title_photograph"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/slf_photoselector_circle_bg"
-            android:padding="12dp"
-            android:src="@drawable/slf_photo_camera_gf_camera"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/slf_photo_title_setting"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/slf_photoselector_circle_bg"
-            android:padding="12dp"
-            android:src="@drawable/slf_photo_setting"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/slf_tv_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/slf_photo_title_photograph"
-            android:gravity="right"
-            android:text=""
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
 
     </RelativeLayout>
 

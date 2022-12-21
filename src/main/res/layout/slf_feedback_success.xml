@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".functionmoudle.activity.feedback.SLFFeedbackSuccessActivity">
+
+    <include layout="@layout/slf_all_common_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_feed_back_succeeded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:text="@string/slf_feedback_success_center_title"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_feed_back_success_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slf_title_bar"
+        app:layout_constraintBottom_toTopOf="@+id/slf_feed_back_succeeded"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/slf_feedback_success_page_img"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_relateive_log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slf_feed_back_succeeded"
+        android:gravity="center">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_feed_back_sucess_logid"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        android:textColor="@color/slf_common_dialog_bg_left_btn"
+        android:text="@string/slf_feedback_success_center_logid"/>
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/slf_feed_back_success_copy"
+       android:layout_toRightOf="@id/slf_feed_back_sucess_logid"
+       android:layout_marginTop="12dp"
+       android:layout_marginLeft="10dp"
+       android:textSize="16sp"
+       android:textColor="@color/slf_feedback_page_submit_btn_bg"
+       android:text="@string/slf_feedback_success_center_copy"/>
+</RelativeLayout>
+
+    <Button
+        android:id="@+id/slf_success_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="54dp"
+        android:background="@drawable/slf_feedback_page_child_submit_bg"
+        android:gravity="center"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:text="@string/slf_feedback_success_bottom_finish"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+       />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
