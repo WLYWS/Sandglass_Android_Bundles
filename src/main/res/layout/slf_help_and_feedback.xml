@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slf_help_and_feedback_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <include layout="@layout/slf_all_common_title" />
+
+    <TextView
+        android:id="@+id/slf_all_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slf_title_bar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/slf_help_and_feedback_grid_title"
+        android:textColor="@color/slf_feedback_question_type_title"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/slf_all_devices_grid_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/slf_help_and_feedback_bottom"
+        android:layout_below="@id/slf_all_title"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <GridView
+            android:id="@+id/slf_all_devices_grid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:numColumns="3"
+            android:gravity="center"
+            android:stretchMode="columnWidth" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/slf_help_and_feedback_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/slf_help_feedback_bottom_bg"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+       >
+
+        <RelativeLayout
+            android:id="@+id/slf_help_and_feedback_chat_bot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/slf_help_and_feedback_chat_bot_img"
+                android:layout_width="21dp"
+                android:layout_height="23dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/slf_help_feedback_chatbot_img" />
+
+            <TextView
+                android:id="@+id/slf_help_and_feedback_chat_bot_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/slf_help_and_feedback_chat_bot_img"
+                android:text="@string/slf_help_and_feedback_chat_bot"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/slf_help_and_feedback_line"
+            android:layout_width="2dp"
+            android:layout_height="22dp"
+            android:background="@drawable/slf_help_feedback_bottom_line"
+            android:layout_marginTop="17dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/slf_help_and_feedback_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="17dp">
+
+            <ImageView
+                android:id="@+id/slf_help_and_feedback_feedback_img"
+                android:layout_width="21dp"
+                android:layout_height="23dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/slf_help_feedback_img" />
+
+            <TextView
+                android:id="@+id/slf_help_and_feedback_feedback_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/slf_help_and_feedback_feedback_img"
+                android:text="@string/slf_help_and_feedback_feed_back"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -59,7 +59,7 @@
 
         <ImageView
             android:id="@+id/slf_iv_second_right"
-            android:layout_width="44dp"
+            android:layout_width="26dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside" />
 
@@ -68,13 +68,6 @@
             android:layout_width="44dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside" />
-        <ImageView
-            android:id="@+id/slf_iv_right_clean_history_detail"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:visibility="gone"
-            android:layout_gravity="center_vertical"
-            android:scaleType="fitXY" />
     </LinearLayout>
 
 </FrameLayout>
