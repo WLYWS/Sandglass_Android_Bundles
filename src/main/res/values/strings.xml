@@ -33,6 +33,12 @@
     <string name="slf_feedback_success_center_logid">Log ID:%1$d</string>
     <string name="slf_feedback_success_center_copy">Copy</string>
     <string name="slf_feedback_success_bottom_finish">Finish</string>
+    <string name="slf_feedback_upload_photo_video">Photo uploading, please hold on.</string>
+
+    <string name="loading1">Loading   </string>
+    <string name="loading2">Loading.  </string>
+    <string name="loading3">Loading.. </string>
+    <string name="loading4">Loading...</string>
 
 
 

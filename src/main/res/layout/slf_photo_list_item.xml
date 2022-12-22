@@ -40,7 +40,7 @@
         android:layout_height="24dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/slf_photo_checkbox_num_layout"
+        android:background="@drawable/slf_photo_item_checkbox_layout"
         android:button="@null"
         android:clickable="false"
         android:gravity="center"

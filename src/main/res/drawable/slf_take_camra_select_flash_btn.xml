@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:drawable="@drawable/slf_take_camra_flash_on_white" android:state_checked="true" />
-        <item android:drawable="@drawable/slf_take_camra_flash_off_white" />
-</selector>

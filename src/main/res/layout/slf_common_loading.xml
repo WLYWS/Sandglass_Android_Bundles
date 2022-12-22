@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/slf_common_loading_parent"
+        android:layout_width="136dp"
+        android:layout_height="136dp"
+        android:layout_margin="6dp"
+        android:elevation="3dp"
+        android:background="@drawable/slf_common_toast_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!--<ProgressBar-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp" />-->
+
+
+        <ImageView
+            android:id="@+id/slf_common_laoding_iv_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_above="@+id/slf_common_loading_tv_content"
+            android:padding="6dp"
+            android:src="@drawable/slf_common_loading_img"/>
+
+
+        <TextView
+            android:id="@+id/slf_common_loading_tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:text="Loading"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+    </RelativeLayout>
+</LinearLayout>

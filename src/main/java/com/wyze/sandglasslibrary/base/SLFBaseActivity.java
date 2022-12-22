@@ -14,8 +14,10 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
 import com.wyze.sandglasslibrary.uiutils.SLFTitleBarUtil;
+import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,11 +44,19 @@ public class SLFBaseActivity extends FragmentActivity {
 
     protected boolean isWindowFocus = false;
 
+    private boolean isOnPause = false;
+    private boolean isOnStop = false;
+
+    private boolean mDestroyed = false;
+
+    private int loadingCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFTitleBarUtil.enableTranslucentStatus(this);
         isDrawPageFinish = false;
+        mDestroyed = false;
         EventBus.getDefault().register(this);
         /**设置activity无title*/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -89,14 +99,25 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isOnPause = false;
+        isOnStop = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        isOnPause = true;
         if(isFinishing()){
+            mDestroyed = true;
             EventBus.getDefault().unregister(this);
+            hideLoading();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isOnStop = true;
     }
 
     @Override
@@ -138,6 +159,114 @@ public class SLFBaseActivity extends FragmentActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFEventCommon event) {
 
+    }
+
+    public void showLoading() {
+        showLoading(false, SLFToastUtil.LOADING_TYPE_WHITE,SLFToastUtil.SHORT_LOADING_DURATION);
+    }
+
+    public void showLoading(boolean canGoBack) {
+        showLoading(canGoBack,SLFToastUtil.LOADING_TYPE_WHITE,SLFToastUtil.SHORT_LOADING_DURATION);
+    }
+
+    public void showLoading(int type) {
+        showLoading(false,type,SLFToastUtil.SHORT_LOADING_DURATION);
+    }
+
+    public void showLoading(int type,boolean canGoBack) {
+        showLoading(canGoBack,type,SLFToastUtil.SHORT_LOADING_DURATION);
+    }
+
+    public void showLoading(long duration) {
+        showLoading(false,SLFToastUtil.LOADING_TYPE_WHITE2,duration);
+    }
+
+    public void showLoading(boolean canGoBack,int type,long duration) {
+        if(loadingCount<0){
+            loadingCount = 0;
+        }
+        loadingCount++;
+        if(isOnStop){
+            return;
+        }
+        if(isDrawPageFinish){
+            SLFToastUtil.showCommonLoading(getActivity(),canGoBack,type,duration);
+        }else{
+            SLFToastUtil.showLoading(getActivity(),canGoBack,type,duration);
+        }
+        SLFToastUtil.setOnLoadingDismissListener(() -> {
+            if(loadingCount>0){
+                loadingCount = 0;
+                onLoadingTimeout();
+            }
+        });
+
+    }
+
+    public void hideLoading() {
+        loadingCount--;
+        if(isOnStop){
+            return;
+        }
+        SLFToastUtil.removeLoadingDismissListener();
+        if(loadingCount<=0){
+            loadingCount = 0;
+            if(mDestroyed){
+                SLFToastUtil.hideCommonLoading();
+            }else{
+                SLFToastUtil.hideLoading();
+            }
+        }
+
+    }
+
+    public void hideLoading(boolean forcedDismiss) {
+        if(forcedDismiss){
+            loadingCount = 0;
+            if(isOnStop){
+                return;
+            }
+            SLFToastUtil.removeLoadingDismissListener();
+            if(mDestroyed){
+                SLFToastUtil.hideCommonLoading();
+            }else{
+                SLFToastUtil.hideLoading();
+            }
+        }else{
+            if(isOnStop){
+                return;
+            }
+            hideLoading();
+        }
+    }
+
+    public void onLoadingTimeout(){
+    }
+
+    public boolean isDrawFinish(){
+        return isDrawPageFinish;
+    }
+
+    public boolean isOnPause(){
+        return isOnPause;
+    }
+
+
+    /**显示提示文字*/
+    public void showToast(String toastText) {
+        SLFToastUtil.cancelToast();
+        SLFToastUtil.showText(toastText);
+    }
+    /**Toast显示在底部距离自定义*/
+    public void showToastWithMarginBottom(String toastText, float marginBottom) {
+        SLFToastUtil.cancelToast();
+        SLFToastUtil.showToastWithMarginBottom(toastText,
+                SLFCommonUtils.dip2px(SLFBaseApplication.getAppContext(), marginBottom));
+    }
+    /**Toast显示在中间*/
+    public void showCenterToast(String toastText) {
+        SLFToastUtil.cancelToast();
+        SLFToastUtil.showCenterText(toastText);
     }
 
 }
