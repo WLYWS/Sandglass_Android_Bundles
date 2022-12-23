@@ -2,6 +2,8 @@ package com.wyze.sandglasslibrary.net;
 
 import android.util.Base64;
 
+import com.tencent.mars.xlog.Log;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -29,7 +31,7 @@ public class SLFDecryptUtil {
             byte[] result = cipher.doFinal(data);
             return new String(result, CHARSET_UTF8);
         } catch (Exception e) {
-
+            Log.e("wangjian","e ="+e.getMessage());
         }
         return null;
     }

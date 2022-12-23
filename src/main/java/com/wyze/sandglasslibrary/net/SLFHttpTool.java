@@ -29,24 +29,17 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.wyze.sandglasslibrary.commonutil.ArrayUtil;
-import com.wyze.sandglasslibrary.commonutil.StringUtil;
+import com.wyze.sandglasslibrary.utils.SLFStringUtil;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
 import javax.crypto.Cipher;
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import androidx.annotation.RequiresApi;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 /**
  * Created by wangjian on 2022/12/5
@@ -56,6 +49,7 @@ public class SLFHttpTool {
     private static String secret;
     private static final String CIP_ALGORITHM = "AES/ECB/PKCS5Padding";
     public static final String CHARSET_UTF8 = "UTF-8";
+    private static String nonce;
 
     /**
      * 生成签名
@@ -69,12 +63,11 @@ public class SLFHttpTool {
         String sha256SignStr = "";
         String signatureStr = "";
         if (method.equalsIgnoreCase(SLFHttpRequestConstants.REQUEST_METHOD_GET)&&params==null||method.equalsIgnoreCase(SLFHttpRequestConstants.REQUEST_METHOD_POST)&&params==null){
-            signatureStr =method+"&"+url+"&"+"app_id="+SLFHttpRequestConstants.APP_ID+"&"+ StringUtil.replaceBlank(generateSecret())+"&"+ts;
+            signatureStr =method+"&"+url+"&"+"app_id="+SLFHttpRequestConstants.APP_ID+"&"+ secret+"&"+ts;
         }else if (method.equalsIgnoreCase(SLFHttpRequestConstants.REQUEST_METHOD_GET)&&params!=null){
-            signatureStr =method+"&"+generateParamsGetUrl(url,params)+"&"+"app_id="+SLFHttpRequestConstants.APP_ID+"&"+StringUtil.replaceBlank(generateSecret())+"&"+ts;
+            signatureStr =method+"&"+generateParamsGetUrl(url,params)+"&"+"app_id="+SLFHttpRequestConstants.APP_ID+"&"+secret+"&"+ts;
         }else if (method.equalsIgnoreCase(SLFHttpRequestConstants.REQUEST_METHOD_POST)&&params!=null){
-            secret = StringUtil.replaceBlank(generateSecret());
-            signatureStr =method+"&"+url+"&"+"app_id="+SLFHttpRequestConstants.APP_ID+"&"+"data="+StringUtil.replaceBlank(encryptData(params))+"&"+secret+"&"+ts;
+            signatureStr =method+"&"+url+"&"+"app_id="+SLFHttpRequestConstants.APP_ID+"&"+"data="+SLFStringUtil.replaceBlank(encryptData(params))+"&"+secret+"&"+ts;
         }
         if ("".equals(signatureStr)){
             return "";
@@ -188,7 +181,7 @@ public class SLFHttpTool {
     public static String generateSecret(){
         String sha256Str = "";
         try {
-            String nonceStr = generateNonce();
+            String nonceStr = nonce;
             byte[] keyStr = SLFHttpRequestConstants.APP_KEY.getBytes(CHARSET_UTF8);
             byte[] nonceBuffer = Base64.decode(nonceStr,Base64.DEFAULT);
             byte[] key_nonceBuffer = new byte[keyStr.length+nonceBuffer.length];
@@ -320,17 +313,22 @@ public class SLFHttpTool {
         return Double.parseDouble(str);
     }
     public static TreeMap getTreeCrc(String method,String url,TreeMap maps) {
+        TreeMap map = new TreeMap();
         try {
+            nonce = SLFStringUtil.replaceBlank(generateNonce());
+            secret = SLFStringUtil.replaceBlank(generateSecret());
             long ts = System.currentTimeMillis();
-            maps.put("appId", SLFHttpRequestConstants.APP_ID);
-            maps.put("signature", generateSign(method, url, maps,String.valueOf(ts)));
-            maps.put("nonce", generateNonce());
-            maps.put("ts", ts);
-            maps.put("Authorization", "");
+            map.put("appId", SLFHttpRequestConstants.APP_ID);
+            map.put("signature", SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
+            map.put("nonce", nonce);
+            map.put("ts",String.valueOf(ts));
+            map.put("Authorization", "abc");
+            map.put("secret",encryptMd532(secret.getBytes(CHARSET_UTF8)));
+            Log.e("request", "请求体返回：| Response: ts="+ts);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return maps;
+        return map;
     }
 
     // 时间戳转换

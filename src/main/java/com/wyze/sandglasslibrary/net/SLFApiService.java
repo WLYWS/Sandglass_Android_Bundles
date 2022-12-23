@@ -12,6 +12,8 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -29,7 +31,7 @@ public interface SLFApiService {
 
     // 例如：http://www.baidu.com不使用baseUrl
     @GET
-    Observable<String> getPath(@Url String url);
+    Observable<String> getPath(@Url String url,@HeaderMap TreeMap <String, Object> map);
 
     // GET请求(无参) api = news
     // http://www.5mins-sun.com:8081/news
