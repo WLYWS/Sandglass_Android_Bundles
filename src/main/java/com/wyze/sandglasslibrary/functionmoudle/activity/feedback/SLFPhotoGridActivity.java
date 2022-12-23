@@ -36,6 +36,7 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFUtils;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -222,16 +223,16 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     int rotate = SLFCropUtil.getExifRotation(new File(path));
                                     try {
                                         if (aspect_X <= 0 || aspect_Y <= 0) {
-                                            Log.d("yj","SLFConstants.CROP_IMAGE_PATH:::"+SLFConstants.CROP_IMAGE_PATH);
+                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH::::"+SLFConstants.CROP_IMAGE_PATH);
                                             SLFViewUtil.savePicture(SLFCropUtil.rotateImage(bmp, rotate)
                                                     , SLFConstants.CROP_IMAGE_PATH, fileName);
                                         } else {
-                                            Log.d("yj","SLFConstants.CROP_IMAGE_PATH:2::"+SLFConstants.CROP_IMAGE_PATH);
+                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH:::else::"+SLFConstants.CROP_IMAGE_PATH);
                                             SLFViewUtil.savePicture(SLFViewUtil.zoomBitmap(SLFCropUtil.rotateImage(bmp, rotate), aspect_X, aspect_Y)
                                                     , SLFConstants.CROP_IMAGE_PATH, fileName);
                                         }
                                     }catch(Exception e){
-                                        Log.e("yj","savePicture----exception::"+e.toString());
+                                        SLFLogUtil.e(TAG,"picPathList crop error::"+e.toString());
                                     }
                                     picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                     picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
