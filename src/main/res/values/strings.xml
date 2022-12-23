@@ -32,7 +32,8 @@
     <string name="slf_feedback_dilaog_resure_content">You have filled out this feedback content, click OK to discard this feedback.</string>
     <string name="slf_feedback_dilaog_resure_ok">OK</string>
     <string name="slf_feedback_grid_bottom_left">Preview</string>
-    <string name="slf_feedback_grid_bottom_right">Compelate\(%1$d\)</string>
+    <string name="slf_feedback_grid_bottom_right">Done\(%1$d\)</string>
+    <string name="slf_feedback_grid_bottom_right_no_selected">Done</string>
     <string name="slf_feedback_success_center_title">Feedback succeeded</string>
     <string name="slf_feedback_success_center_logid">Log ID:%1$d</string>
     <string name="slf_feedback_success_center_copy">Copy</string>

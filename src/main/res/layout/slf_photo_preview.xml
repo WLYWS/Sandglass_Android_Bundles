@@ -4,7 +4,7 @@
     android:id="@+id/slf_photo_preivew_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/slf_feedback_page_child_bg"
     android:elevation="0dp">
 
     <include layout="@layout/slf_selector_photo_common_title" />
@@ -12,7 +12,9 @@
     <com.wyze.sandglasslibrary.commonui.SLFPhotoViewPager
         android:id="@+id/slf_vp_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/slf_photo_title_titleBar"
+        android:layout_marginTop="15dp"/>
 
 
     <ProgressBar

@@ -12,6 +12,7 @@ import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPreviewPagerAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFPhotoViewPager;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
+import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feed_back_pic_preview);
         initView();
         //SLFLogUtil.d(TAG,"feedbackpreview onCreate");

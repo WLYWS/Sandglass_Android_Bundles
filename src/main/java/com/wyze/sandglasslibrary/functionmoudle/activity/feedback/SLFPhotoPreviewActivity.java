@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -19,6 +20,7 @@ import com.wyze.sandglasslibrary.commonui.SLFPhotoViewPager;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.uiutils.SLFPhotoViewAttacher;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
+import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFUtils;
 
 import java.io.File;
@@ -78,6 +80,10 @@ public class SLFPhotoPreviewActivity extends SLFPhotoBaseActivity {
         ivBack = findViewById(R.id.slf_photo_title_back);
         titleBar = findViewById(R.id.slf_photo_title_titleBar);
         TextView tvTitle = findViewById(R.id.slf_photo_title_filename);
+        LinearLayout titlelinear = findViewById(R.id.slf_photo_title_center_linear);
+        ImageView titleimg = findViewById(R.id.slf_iv_arrow_down);
+        titleimg.setVisibility(View.GONE);
+        titlelinear.setBackgroundColor(SLFResourceUtils.getColor(R.color.transparent));
 //		ImageView imgPreview = (ImageView) findViewById(R.id.iv_preview)
 
 //		mProgressBar = findViewById(R.id.progress_bar)
