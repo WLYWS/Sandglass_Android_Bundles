@@ -37,6 +37,7 @@ import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.SLFProblemOverviewType;
 import com.wyze.sandglasslibrary.moudle.SLFProblemType;
 import com.wyze.sandglasslibrary.moudle.SLFResponse.SLFServiceTypeResponseMoudle;
+import com.wyze.sandglasslibrary.moudle.SLFServiceTilteMoudle;
 import com.wyze.sandglasslibrary.moudle.SLFServiceType;
 import com.wyze.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
@@ -54,6 +55,7 @@ import com.wyze.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -204,11 +206,12 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     boolean problemEdit = false;
     boolean emailEdit = false;
 
-    private List<SLFServiceType> slfServiceTypes = new ArrayList<>();
+    private List<Object> slfServiceTypes = new ArrayList<>();
     private List<SLFProblemType> slfProblemTypes = new ArrayList<>();
     private List<SLFProblemOverviewType> slfProblemOverviewTypes = new ArrayList<>();
     private Map<Integer, List<SLFProblemType>> slfServiceMap = new HashMap<Integer, List<SLFProblemType>>();
     private Map<Integer, List<SLFProblemOverviewType>> slfProblemMap = new HashMap<Integer, List<SLFProblemOverviewType>>();
+    private Map<Integer,List<SLFServiceType>> slfServiceTitleMap = new HashMap<>();
 
     private SLFServiceType slfServiceType;
     private SLFProblemType slfProblemType;
@@ -359,8 +362,7 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
             },2000);  //延迟2s// 秒执行
 
         } else if (view.getId() == R.id.spinner_service) {
-
-            showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title), getServiceTypeData(SLFConstants.json2), service_checkedPosition);
+            showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title), getServiceTypeData(SLFConstants.json), service_checkedPosition);
             changeTextAndImg(slfServiceSpinner);
 
         } else if (view.getId() == R.id.spinner_problem) {
@@ -781,18 +783,28 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     /**
      * 获取servicetype列表
      */
-    private List<SLFServiceType> getServiceTypeData(String json) {
+    private List<Object> getServiceTypeData(String json) {
 
         SLFServiceTypeResponseMoudle serviceTypes = SLFCommonUtils.JsonToClass(json, SLFServiceTypeResponseMoudle.class);
         if (serviceTypes != null && serviceTypes.data != null && serviceTypes.data.size() > 0) {
             slfServiceTypes.clear();
             slfServiceMap.clear();
-            slfServiceTypes.addAll(serviceTypes.data);
+            slfServiceTitleMap.clear();
             for (int i = 0; i < serviceTypes.data.size(); i++) {
-                SLFServiceType serviceType = serviceTypes.data.get(i);
-                slfServiceMap.put(serviceType.getId(), serviceType.getSub());
+                SLFServiceTilteMoudle serviceTypeTitle = serviceTypes.data.get(i);
+                if(serviceTypeTitle.getSub()!=null&& serviceTypeTitle.getSub().size()>0){
+                    slfServiceTypes.add(serviceTypeTitle.getName());
+                    slfServiceTypes.addAll(serviceTypeTitle.getSub());
+                    slfServiceTitleMap.put(serviceTypeTitle.getId(),serviceTypeTitle.getSub());
+                    for(int j=0;j< serviceTypeTitle.getSub().size();j++){
+                        SLFServiceType slfServiceType = serviceTypeTitle.getSub().get(i);
+                        slfServiceMap.put(slfServiceType.getId(),slfServiceType.getSub());
+                    }
+                }
             }
-            setListRoundConner(slfServiceTypes);
+            if(slfServiceTitleMap!=null&&slfServiceTitleMap.size()>0) {
+                setServiceTitleMapConner(slfServiceTitleMap);
+            }
         } else {
             showCenterToast("没有获取到问题数据类型");
         }
@@ -827,20 +839,39 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
         }
         return slfProblemOverviewTypes;
     }
+    /**serviceType设置圆角方法*/
+    private void setServiceTitleMapConner(Map<Integer,List<SLFServiceType>> serviceTitleMap){
+        Iterator<Map.Entry<Integer,List<SLFServiceType>>> it = serviceTitleMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, List<SLFServiceType>> entry = it.next();
+            for (int i = 0; i < entry.getValue().size(); i++) {
+                if (entry.getValue().size() == 1) {
+                    entry.getValue().get(i).setRound_type(SLFConstants.ALL_ROUND);
+                } else {
+                    if (i == 0) {
+                        entry.getValue().get(i).setRound_type(SLFConstants.ROUND_FIRST);
+                    } else if (i == entry.getValue().size() - 1) {
+                        entry.getValue().get(i).setRound_type(SLFConstants.ROUND_END);
+                    } else {
+                        entry.getValue().get(i).setRound_type(SLFConstants.ROUND_MIDDLE);
+                    }
+                }
+            }
+        }
+    }
 
     /**
-     * 获取数据设置list圆角
+     * problem和problemOverview获取数据设置list圆角
      */
     private <T extends Object> void setListRoundConner(List<T> list) {
         for (int i = 0; i < list.size(); i++) {
             T obj = list.get(i);
-
             if (list.size() == 1) {
                 if (obj instanceof SLFServiceType) {
                     ((SLFServiceType) obj).setRound_type(SLFConstants.ALL_ROUND);
                 } else if (obj instanceof SLFProblemType) {
                     ((SLFProblemType) obj).setRound_type(SLFConstants.ALL_ROUND);
-                } else {
+                } else if (obj instanceof SLFProblemOverviewType){
                     ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ALL_ROUND);
                 }
             } else {
@@ -849,7 +880,7 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
                         ((SLFServiceType) obj).setRound_type(SLFConstants.ROUND_FIRST);
                     } else if (obj instanceof SLFProblemType) {
                         ((SLFProblemType) obj).setRound_type(SLFConstants.ROUND_FIRST);
-                    } else {
+                    } else if (obj instanceof SLFProblemOverviewType){
                         ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ROUND_FIRST);
                     }
                 } else if (i == list.size() - 1) {
@@ -857,16 +888,16 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
                         ((SLFServiceType) obj).setRound_type(SLFConstants.ROUND_END);
                     } else if (obj instanceof SLFProblemType) {
                         ((SLFProblemType) obj).setRound_type(SLFConstants.ROUND_END);
-                    } else {
+                    } else if (obj instanceof SLFProblemOverviewType){
                         ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ROUND_END);
                     }
                 } else {
                     if (obj instanceof SLFServiceType) {
-                        ((SLFServiceType) obj).setRound_type("");
+                        ((SLFServiceType) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
                     } else if (obj instanceof SLFProblemType) {
-                        ((SLFProblemType) obj).setRound_type("");
-                    } else {
-                        ((SLFProblemOverviewType) obj).setRound_type("");
+                        ((SLFProblemType) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
+                    } else if (obj instanceof SLFProblemOverviewType){
+                        ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
                     }
                 }
             }

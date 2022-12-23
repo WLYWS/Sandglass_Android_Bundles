@@ -1,5 +1,6 @@
 package com.wyze.sandglasslibrary.moudle.SLFResponse;
 
+import com.wyze.sandglasslibrary.moudle.SLFServiceTilteMoudle;
 import com.wyze.sandglasslibrary.moudle.SLFServiceType;
 
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
  */
 public class SLFServiceTypeResponseMoudle extends SLFBaseResponseMoudle{
 
-    public List<SLFServiceType> data;
+    public List<SLFServiceTilteMoudle> data;
 }

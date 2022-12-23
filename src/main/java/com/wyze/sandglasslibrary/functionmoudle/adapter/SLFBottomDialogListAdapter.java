@@ -117,7 +117,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                 }else if(object instanceof SLFProblemType) {
                     serviceTypeTitle.setText(((SLFProblemType) object).getName());
                     checkBox.setChecked(((SLFProblemType) object).isChecked());
-                }else {
+                }else{
                     serviceTypeTitle.setText(((SLFProblemOverviewType) object).getName());
                     checkBox.setChecked(((SLFProblemOverviewType) object).isChecked());
                 }

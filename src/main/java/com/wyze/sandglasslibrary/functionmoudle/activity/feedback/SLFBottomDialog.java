@@ -44,8 +44,6 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
     private RecyclerView slf_recycler;
     /**列表adapter*/
     private SLFBottomDialogListAdapter mAdapter;
-    /**中间数据集*/
-    private Map<String, List<SLFServiceType>> slfServiceType = new HashMap<>();//类型为key的map集合
     private String selectedStr;
     private String title;
     private List<Object> slf_typeList;
@@ -93,7 +91,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
                     }
                     mAdapter.notifyDataSetChanged();
                     dialogDismiss();
-            }else{
+            }else if(list.get(holder.getAdapterPosition()) instanceof SLFProblemOverviewType){
                     ((SLFProblemOverviewType) list.get(holder.getAdapterPosition())).setChecked(true);
                     changedChecked(list,holder.getAdapterPosition());
                     selectedStr = ((SLFProblemOverviewType) list.get(holder.getAdapterPosition())).getName();
@@ -118,7 +116,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
                 if(i != position){
                     ((SLFProblemType) list.get(i)).setChecked(false);
                 }
-            }else{
+            }else if(list.get(i) instanceof SLFProblemOverviewType){
                 if(i != position){
                     ((SLFProblemOverviewType) list.get(i)).setChecked(false);
                 }
