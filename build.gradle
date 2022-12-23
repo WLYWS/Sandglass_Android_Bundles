@@ -75,4 +75,22 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    // okHttp网络请求框架
+    // define a BOM and its version
+    api(platform("com.squareup.okhttp3:okhttp-bom:4.9.1"))
+
+    // define any required OkHttp artifacts without version
+    api("com.squareup.okhttp3:okhttp")
+    api("com.squareup.okhttp3:logging-interceptor")
+
+    //retrofit网络请求框架
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    //retrofit添加Json解析返回数据
+    api 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //retrofit添加RxJava支持
+    api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    api "io.reactivex.rxjava3:rxjava:3.0.13"
+    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }
