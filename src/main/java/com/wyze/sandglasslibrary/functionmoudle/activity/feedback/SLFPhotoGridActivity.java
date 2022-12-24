@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     private String selectedImgPath;
 
     private TextView tvFileName;
+    private LinearLayout photo_title_center;
 
     private GridView gvPhotoList;
     private ListView lvFileList;
@@ -144,18 +146,20 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         selected_btn = findViewById(R.id.slf_complate_selector);
         slf_preview_text = findViewById(R.id.slf_preview_text);
         tvFileName = findViewById(R.id.slf_photo_title_filename);
+        photo_title_center = findViewById(R.id.slf_photo_title_center_linear);
         gvPhotoList = findViewById(R.id.slf_gv_photolist);
         lvFileList = findViewById(R.id.slf_lv_filelist);
 
         findViewById(R.id.slf_iv_arrow_down).setVisibility(View.VISIBLE);
 
         if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Video) {
-            tvFileName.setText("all videos");
+            tvFileName.setText("All videos");
         } else {
-            tvFileName.setText("all pictures");
+            tvFileName.setText("All pictures");
         }
 
-        selected_btn.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_grid_bottom_right, 0));
+        selected_btn.setText(SLFResourceUtils.getString(R.string.slf_feedback_grid_bottom_right_no_selected));
+
 
 //        selected_btn.updateBackGround(getColor());
 //        if (isDirectCrop) {
@@ -302,7 +306,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 comeBack();
             }
         });
-        tvFileName.setOnClickListener(new View.OnClickListener() {
+        photo_title_center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 gvPhotoList.smoothScrollToPosition(0);
@@ -313,6 +317,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         selected_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                SLFLogUtil.d("yj","click selected");
                 gotoFeedback();
                 finish();
             }
@@ -328,16 +333,20 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                     if (isDirectCrop) {
                         gotoPreview();
                     }
-                    if(mPhotoListAdapter.getPicList().size() < 3) {
-                        selected_btn.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_grid_bottom_right, mPhotoListAdapter.getPicList().size()));
-                        selected_btn.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_page_child_bg));
+                    if(mPhotoListAdapter.getPicList().size() <=0) {
+                        selected_btn.setText(SLFResourceUtils.getString(R.string.slf_feedback_grid_bottom_right_no_selected));
+                        selected_btn.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_photo_selector_bottom_done));
                         selected_btn.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_question_type_title));
-                        slf_preview_text.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_bottom_dialog_item_bg));
+                        slf_preview_text.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_question_type_title));
+                        selected_btn.setClickable(false);
+                        slf_preview_text.setClickable(false);
                     }else{
                             selected_btn.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_grid_bottom_right, mPhotoListAdapter.getPicList().size()));
                             slf_preview_text.setTextColor(SLFResourceUtils.getColor(R.color.white));
                             selected_btn.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_page_child_submit_bg));
                             selected_btn.setTextColor(SLFResourceUtils.getColor(R.color.black));
+                            selected_btn.setClickable(true);
+                            slf_preview_text.setClickable(true);
                     }
                 }
 
@@ -367,7 +376,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 selected_btn.setVisibility(View.VISIBLE);
             }
         });
-
+        selected_btn.setClickable(false);
+        slf_preview_text.setClickable(false);
     }
 
     /**添加相机module*/
@@ -534,7 +544,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             }
 
             if (picPathLists.size() > 0) {
-                Intent intent = new Intent(SLFPhotoGridActivity.this, SLFPhotoPreviewActivity.class);
+                Intent intent = new Intent(SLFPhotoGridActivity.this, SLFFeedbackPicPreviewActivity.class);
                 intent.putExtra("photoPath", picPathLists);
                 intent.putExtra("aspect_x", aspect_X);
                 intent.putExtra("aspect_y", aspect_Y);

@@ -62,10 +62,8 @@ public class SLFPreviewPagerAdapter extends PagerAdapter {
             videoView.setVisibility(View.GONE);
             imgTub.setVisibility(View.VISIBLE);
             if(!TextUtils.isEmpty(mediaData.getOriginalPath())){
-//                SLFImageUtil.loadImage(mContext,mediaData.getOriginalPath()
-//                        ,videoThub,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-//                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
-                  SLFImageUtil.loadImage(mContext,mediaData.getOriginalPath(),videoThub);
+                SLFImageUtil.loadImage(mContext,mediaData.getOriginalPath()
+                        ,videoThub,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon);
             }else{
                 videoThub.setImageBitmap(null);
             }

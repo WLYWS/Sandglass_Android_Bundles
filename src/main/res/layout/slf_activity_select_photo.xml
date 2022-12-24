@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/slf_feedback_page_child_bg"
     android:elevation="0dp">
 
     <include layout="@layout/slf_selector_photo_common_title" />
@@ -44,39 +44,36 @@
     <RelativeLayout
         android:id="@+id/slf_photo_grid_bottom_relative"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="54dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/slf_photo_selector_grid_bottom_bg"
-        >
+        android:background="@color/slf_photo_selector_grid_bottom_bg">
 
         <TextView
+            android:id="@+id/slf_preview_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/slf_preview_text"
-            android:textSize="14sp"
             android:layout_alignParentLeft="true"
-            android:textColor="@color/slf_feedback_bottom_dialog_item_bg"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/slf_feedback_grid_bottom_left"
-            android:padding="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            />
+            android:textColor="@color/slf_feedback_question_type_title"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/slf_complate_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/slf_feedback_page_child_bg"
-            android:layout_gravity="right"
+            android:layout_alignBottom="@id/slf_preview_text"
             android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/slf_photo_selector_bottom_done"
+            android:gravity="center"
             android:text="@string/slf_feedback_grid_bottom_right"
             android:textAllCaps="false"
-            android:padding ="10dp"
-            android:layout_alignBottom="@id/slf_preview_text"
             android:textColor="@color/slf_feedback_question_type_title"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
