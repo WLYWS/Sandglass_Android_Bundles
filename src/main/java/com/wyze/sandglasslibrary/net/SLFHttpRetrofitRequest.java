@@ -23,7 +23,7 @@ import okhttp3.RequestBody;
 /**
  * Created by wangjian on 2022/12/5
  */
-public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpRequest {
+public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHttpRequest<T> {
 
     private SLFApiService apiService;
     // 是否添加通用参数
@@ -56,7 +56,7 @@ public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpR
 
     // Get请求（使用Path形式）
     @Override
-    public void mHttpGetPath(Context context, String url, int type, SLFHttpRequestCallback callBack) {
+    public void mHttpGetPath(Context context, String url, T type, SLFHttpRequestCallback callBack) {
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_GET,url,null);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -66,7 +66,7 @@ public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpR
 
     // GET请求(无参)
     @Override
-    public void mHttpGet(Context context, String api, int type, SLFHttpRequestCallback callBack) {
+    public void mHttpGet(Context context, String api, T type, SLFHttpRequestCallback callBack) {
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_GET,SLFHttpRequestConstants.BASE_URL+api,null);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -76,7 +76,7 @@ public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpR
 
     // Get请求(带参)
     @Override
-    public void mHttpGet(Context context, String api, TreeMap map, int type, SLFHttpRequestCallback callBack) {
+    public void mHttpGet(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback callBack) {
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_GET,SLFHttpRequestConstants.BASE_URL+api,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -86,7 +86,7 @@ public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpR
 
     // Post请求(无参)
     @Override
-    public void mHttpPost(Context context, String api, int type, SLFHttpRequestCallback callBack) {
+    public void mHttpPost(Context context, String api, T type, SLFHttpRequestCallback callBack) {
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,null);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -97,7 +97,7 @@ public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpR
     // Post请求(带参)
     // 以RequestBody方式提交
     @Override
-    public void mHttpPost(Context context, String api, TreeMap map, int type, SLFHttpRequestCallback callBack) {
+    public void mHttpPost(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback callBack) {
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -110,7 +110,7 @@ public class SLFHttpRetrofitRequest extends SLFHttpRetrofit implements SLFIHttpR
 
     // Post请求(包含数组)
     @Override
-    public void mHttpPost(Context context, String api, TreeMap map, String[] data, int type, SLFHttpRequestCallback callBack) {
+    public void mHttpPost(Context context, String api, TreeMap map, String[] data, T type, SLFHttpRequestCallback callBack) {
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);

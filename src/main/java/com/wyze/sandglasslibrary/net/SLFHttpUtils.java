@@ -9,7 +9,7 @@ import java.util.TreeMap;
 /**
  * Created by wangjian on 2022/12/5
  */
-public class SLFHttpUtils{
+public class SLFHttpUtils<T>{
 
     private static SLFIHttpRequest mHttpRequest;
 
@@ -55,7 +55,7 @@ public class SLFHttpUtils{
      * @param type      请求的标识
      * @param callBack  结果返回接口
      */
-    public void executePathGet(Context context, String url, int type, SLFHttpRequestCallback callBack){
+    public void executePathGet(Context context, String url, T type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpGetPath(context,url,type,callBack);
     }
 
@@ -89,7 +89,7 @@ public class SLFHttpUtils{
      * @param type       请求的标识
      * @param callBack   结果返回接口
      */
-    public void executePost(Context context, String api, int type, SLFHttpRequestCallback callBack){
+    public void executePost(Context context, String api, T type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpPost(context,api,type,callBack);
     }
 
@@ -102,7 +102,7 @@ public class SLFHttpUtils{
      * @param type            请求的标识
      * @param callBack        结果返回接口
      */
-    public void executePost(Context context, String api, TreeMap map, int type, SLFHttpRequestCallback callBack){
+    public void executePost(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpPost(context,api,map,type,callBack);
     }
 
@@ -115,7 +115,7 @@ public class SLFHttpUtils{
      * @param type       请求的标识
      * @param callBack   结果返回接口
      */
-    public void executePost(Context context, String api, TreeMap treeMap, String[] data, int type, SLFHttpRequestCallback callBack){
+    public void executePost(Context context, String api, TreeMap treeMap, String[] data, T type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpPost(context,api,treeMap,data,type,callBack);
     }
 

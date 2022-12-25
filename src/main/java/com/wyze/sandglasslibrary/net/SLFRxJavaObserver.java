@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -14,10 +16,10 @@ import io.reactivex.rxjava3.disposables.Disposable;
 /**
  * Created by wangjian on 2022/12/5
  */
-public class SLFRxJavaObserver implements Observer<String> {
+public class SLFRxJavaObserver<T> implements Observer<String> {
 
     private SLFHttpRequestCallback mCallBack;
-    private int mType;
+    private T mType;
     private Context mContext;
     private String mSecret;
 
@@ -26,7 +28,7 @@ public class SLFRxJavaObserver implements Observer<String> {
     private final static String MSG = "message";
     private final static String SUCCESS = "SUCCESS";
 
-    SLFRxJavaObserver(Context context, int type, SLFHttpRequestCallback callBack,String secret) {
+    SLFRxJavaObserver(Context context, T type, SLFHttpRequestCallback callBack,String secret) {
         this.mCallBack = callBack;
         this.mContext = context;
         this.mType = type;
@@ -53,9 +55,9 @@ public class SLFRxJavaObserver implements Observer<String> {
                         String msg = jsonObjectData.getString(MSG);
                         if (msg.toUpperCase().equals(SUCCESS)) {
                             if (jsonObjectData.has(DATA)) {
-//                                Gson gson = new Gson();
-//                                gson.fromJson(jsonObjectData.getString(DATA), mType);
-                                mCallBack.onRequestSuccess(jsonObjectData.getString(DATA), mType);
+                                Gson gson = new Gson();
+                                T t = gson.fromJson(response, (Type) mType);
+                                mCallBack.onRequestSuccess(jsonObjectData.getString(DATA), t);
                             } else {
                                 if (jsonObjectData.has(CODE) && jsonObjectData.has(MSG)) {
                                     String code = jsonObjectData.getString(CODE);
@@ -66,7 +68,7 @@ public class SLFRxJavaObserver implements Observer<String> {
                         } else {
                             String errMsg = jsonObjectData.getString(MSG);
                             String code = jsonObjectData.getString(CODE);
-                            mCallBack.onRequestFail(errMsg, code, mType);
+                            mCallBack.onRequestFail(errMsg, code);
                         }
                     }
                 }
@@ -87,11 +89,11 @@ public class SLFRxJavaObserver implements Observer<String> {
         if (!SLFHttpTool.hasNetwork(mContext)) {
             //MyToast.showCenterSortToast(mContext, mContext.getResources().getString(R.string.connect_error));
             onComplete();
-            mCallBack.onRequestNetFail(mType);
+            mCallBack.onRequestNetFail();
             return;
         }
         // 2.非网络错误，接口请求错误
-        mCallBack.onRequestFail(e.getMessage(), "0000", mType);
+        mCallBack.onRequestFail(e.getMessage(), "0000");
     }
 
     /**
