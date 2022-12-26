@@ -36,16 +36,16 @@ public interface SLFApiService {
     // GET请求(无参) api = news
     // http://www.5mins-sun.com:8081/news
     @GET("{api}")
-    Observable<String> getData(@Path("api") String api);
+    Observable<String> getData(@Path("api") String api,@HeaderMap TreeMap <String, Object> map);
 
     // GET请求(带参) api = news
     // http://www.5mins-sun.com:8081/news?name=admin&pwd=123456
     @GET("{api}")
-    Observable<String> getData(@Path("api") String api, @QueryMap TreeMap <String, Object> map);
+    Observable<String> getData(@Path("api") String api, @QueryMap TreeMap <String, Object> map,@HeaderMap TreeMap <String, Object> headMap);
 
     // POST请求(无参)
     @POST("{api}")
-    Observable<String> postData(@Path(value = "api", encoded = true) String api);
+    Observable<String> postData(@Path(value = "api", encoded = true) String api,@HeaderMap TreeMap <String, Object> headMap);
 
     // POST请求,以RequestBody方式提交  api = news
     // http://www.5mins-sun.com:8081/news
@@ -55,7 +55,7 @@ public interface SLFApiService {
     //    "sectionID": 16
     // }
     @POST("{api}")
-    Observable<String> postData(@Path(value = "api", encoded = true) String api, @Body RequestBody requestBody);
+    Observable<String> postData(@Path(value = "api", encoded = true) String api, @Body RequestBody requestBody,@HeaderMap TreeMap <String, Object> headMap);
 
     // Post请求,以表单方式提交
     // http://www.5mins-sun.com:8081/news
@@ -63,12 +63,12 @@ public interface SLFApiService {
     // pwd=123456
     @FormUrlEncoded
     @POST("{api}")
-    Observable<ResponseBody> postData(@Path("api") String api, @FieldMap Map <String, String> maps);
+    Observable<ResponseBody> postData(@Path("api") String api, @FieldMap Map <String, String> maps,@HeaderMap TreeMap <String, Object> headMap);
 
     // Post请求（带数组）
     @FormUrlEncoded
     @POST("{api}")
-    Observable<ResponseBody> postData(@Path("api") String api, @FieldMap Map<String, String> maps, @Query("meta[]") String... linked);
+    Observable<ResponseBody> postData(@Path("api") String api, @FieldMap Map<String, String> maps,@HeaderMap TreeMap <String, Object> headMap, @Query("meta[]") String... linked);
 
     // 上传单个文件
     @Multipart

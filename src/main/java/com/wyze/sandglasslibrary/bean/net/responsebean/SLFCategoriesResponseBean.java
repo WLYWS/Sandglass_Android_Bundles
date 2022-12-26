@@ -10,7 +10,7 @@ public class SLFCategoriesResponseBean extends SLFResponseBaseBean {
 
     @Override
     public String toString ( ) {
-        return "CategoriesBean{" +
+        return "SLFCategoriesResponseBean{" +
                 "data=" + data +
                 ", code=" + code +
                 ", message='" + message + '\'' +

@@ -54,17 +54,17 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
                     if (jsonObjectData.has(MSG)) {
                         String msg = jsonObjectData.getString(MSG);
                         if (msg.toUpperCase().equals(SUCCESS)) {
-                            if (jsonObjectData.has(DATA)) {
+                            //if (jsonObjectData.has(DATA)) {
                                 Gson gson = new Gson();
                                 T t = gson.fromJson(response, (Type) mType);
-                                mCallBack.onRequestSuccess(jsonObjectData.getString(DATA), t);
-                            } else {
-                                if (jsonObjectData.has(CODE) && jsonObjectData.has(MSG)) {
-                                    String code = jsonObjectData.getString(CODE);
-                                    String errMsg = jsonObjectData.getString(MSG);
-                                    mCallBack.onRequestSuccess(errMsg, mType);
-                                }
-                            }
+                                mCallBack.onRequestSuccess(response, t);
+//                            } else {
+//                                if (jsonObjectData.has(CODE) && jsonObjectData.has(MSG)) {
+//                                    String code = jsonObjectData.getString(CODE);
+//                                    String errMsg = jsonObjectData.getString(MSG);
+//                                    mCallBack.onRequestSuccess(errMsg, mType);
+//                                }
+//                            }
                         } else {
                             String errMsg = jsonObjectData.getString(MSG);
                             String code = jsonObjectData.getString(CODE);
