@@ -70,7 +70,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_GET,SLFHttpRequestConstants.BASE_URL+api,null);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
-        Observable<String> observable = apiService.getData(api);
+        Observable<String> observable = apiService.getData(api,headMap);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 
@@ -90,7 +90,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,null);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
-        Observable<String> observable = apiService.postData(api);
+        Observable<String> observable = apiService.postData(api,headMap);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 
@@ -104,7 +104,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         Gson gson = new Gson();
         String param = gson.toJson(map);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), param);
-        Observable<String> observable = apiService.postData(api, requestBody);
+        Observable<String> observable = apiService.postData(api, requestBody,headMap);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 
@@ -114,7 +114,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
-        Observable<String> observable = apiService.postData(api, map, data);
+        Observable<String> observable = apiService.postData(api, map,headMap,data);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 

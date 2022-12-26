@@ -25,5 +25,28 @@
     <color name="slf_feed_back_success_bg">#383838</color>
     <color name="slf_help_feedback_bottom_bg">#131313</color>
 
+    <!--公共自定义样式-->
+    <color name="slf_theme_color">#C9FF43</color>//默认主题色
+    <color name="slf_bg_color">#000000</color>//背景颜色
+    <color name="slf_component_bg_color">#272727</color>//组件背景色
+    <color name="slf_sub_title_color">#808080</color>//子标题颜色
+    <color name="slf_warning_color">#FF2C38</color>//警告色
+    <!--导航栏自定义样式-->
+    <color name="slf_title_color">#FFFFFF</color>//导航栏标题颜色
+    <!--Alert自定义样式-->
+    <color name="slf_alert_bg_color">#3F3F3F</color>//alert背景颜色
+    <color name="slf_alert_title_color">#FFFFFF</color>//alert标题颜色
+    <color name="slf_alert_detail_color">#FFFFFF</color>//alert detail颜色
+    <color name="slf_alert_item_normal_color">#A5A5A5</color>//alert item normal颜色
+    <color name="slf_alert_item_highlight_color">#C9FF43</color>//alert /item highlight颜色
+    <!--Toast自定义样式-->
+    <color name="slf_toast_bg_color">#5A5A5A</color>//toast背景颜色
+    <color name="slf_toast_title_color">#FFFFFF</color>//toast title颜色
+    <color name="slf_toast_loading_color">#FFFFFF</color>//toast loading线条颜色
+    <!--相册自定义样式-->
+    <color name="slf_photo_cannot_select_layer_color">#CFCFCF</color>//相片不能选择时的蒙版颜色
+    <!--提交反馈模块页面自定义样式-->
+<!--    <color name="slf_toast_title_Color">#FFFFFFE</color>//toast title颜色-->
+<!--    <color name="slf_toast_loading_Color">#FFFFFF</color>//toast loading线条颜色-->
 
 </resources>

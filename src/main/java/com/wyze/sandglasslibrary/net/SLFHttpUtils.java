@@ -66,7 +66,7 @@ public class SLFHttpUtils<T>{
      * @param type        请求的标识
      * @param callBack    结果返回接口
      */
-    public void executeGet(Context context, String api, int type, SLFHttpRequestCallback callBack){
+    public void executeGet(Context context, String api, T type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpGet(context,api,type,callBack);
     }
 
@@ -78,7 +78,7 @@ public class SLFHttpUtils<T>{
      * @param type       请求的标识
      * @param callBack   结果返回接口
      */
-    public void executeGet(Context context, String api, TreeMap map, int type, SLFHttpRequestCallback callBack){
+    public void executeGet(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpGet(context,api,map,type,callBack);
     }
 
