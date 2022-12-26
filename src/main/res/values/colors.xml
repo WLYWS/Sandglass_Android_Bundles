@@ -46,7 +46,45 @@
     <!--相册自定义样式-->
     <color name="slf_photo_cannot_select_layer_color">#CFCFCF</color>//相片不能选择时的蒙版颜色
     <!--提交反馈模块页面自定义样式-->
-<!--    <color name="slf_toast_title_Color">#FFFFFFE</color>//toast title颜色-->
-<!--    <color name="slf_toast_loading_Color">#FFFFFF</color>//toast loading线条颜色-->
+    <color name="slf_feedback_default_text_color">#A7A7A7</color>//默认文案颜色
+    <color name="slf_feedback_input_text_color">#FFFFFF</color>//输入文案颜色
+    <color name="slf_feedback_underline_color">#5A5A5A</color>//下划线颜色
+    <color name="slf_feedback_add_photos_bg_color">#414141</color>//添加图片背景颜色
+    <color name="slf_feedback_add_photos_text_color">#A7A7A7</color>//添加图片文字颜色
+    <color name="slf_feedback_send_log_text_color">#A7A7A7</color>//sendlog文案颜色
+    <color name="slf_feedback_submit_button_usable_text_color">#000000</color>//submit按钮可用文案颜色
 
+    <!--提交反馈底部弹框自定义样式-->
+    <color name="slf_popup_item_bg_color">#383838</color>//选项背景色
+    <color name="slf_popup_title_color">#FFFFFF</color>//弹框标题文案颜色
+    <color name="slf_popup_tab_bg_color">#3F3F3F</color>//弹框选项卡背景颜色
+    <color name="slf_popup_default_text_color">#FFFFFF</color>//弹框默认文案颜色
+
+    <!--提交反馈完成页-->
+    <color name="slf_complete_title_color">#FFFFFF</color>//完成页标题颜色
+    <color name="slf_complete_text_color">#A5A5A5</color>//完成页文案颜色
+
+    <!--反馈列表-->
+    <color name="slf_list_card_bg_color">#262626</color>//卡片背景颜色
+    <color name="slf_list_time_text_color">#5A5A5A</color>//时间颜色
+    <color name="slf_list_problem_text_color">#FFFFFF</color>//问题颜色
+
+    <!--反馈详情-->
+    <color name="slf_detail_header_bg_color">#131313</color>//顶部背景颜色
+    <color name="slf_detail_bottom_bg_color">#131313</color>//底部（全部）背景颜色
+    <color name="slf_detail_line_color">#404040</color>//顶部背景分割线
+    <color name="slf_detail_id_color">#A7A7A7</color>//反馈id颜色
+    <color name="slf_detail_type_text_color">#FFFFFF</color>//问题类型颜色
+    <color name="slf_detail_card_bg_color">#272727</color>//留言卡片背景颜色
+    <color name="slf_detail_card_content_color">#FFFFFF</color>//卡片文字颜色
+    <color name="slf_detail_card_time_color">#A7A7A7</color>//卡片时间颜色
+
+    <!--智能助手-->
+    <color name="slf_chat_bar_bg_color">#131313</color>//底部bar背景颜色
+    <color name="slf_chat_input_bg_color">#272727</color>//输入框背景颜色
+    <color name="slf_chat_input_color">#FFFFFF</color>//输入文字颜色
+    <color name="slf_chat_input_ph_color">#808080</color>//输入框placeHolder文字颜色
+    <color name="slf_chat_cell_time_color">#A7A7A7</color>//单个时间颜色
+    <color name="slf_chat_content_color">#FFFFFF</color>//聊天文字颜色
+    <color name="slf_chat_line_color">#404040</color>//回答问题线的颜色
 </resources>
