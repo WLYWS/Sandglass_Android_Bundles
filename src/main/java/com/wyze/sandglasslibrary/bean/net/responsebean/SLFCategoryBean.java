@@ -10,6 +10,10 @@ public class SLFCategoryBean {
     public String name;
     public String deviceModel;
     public List <SLFCategoryDetailBean> sub;
+    /**是否选中*/
+    public boolean isChecked;
+    /**是否第一个，中间，最后一个，或者单个*/
+    public String round_type;
 
     @Override
     public String toString ( ) {

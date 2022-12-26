@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoriesResponseBean;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
@@ -39,6 +40,10 @@ import com.wyze.sandglasslibrary.moudle.SLFProblemType;
 import com.wyze.sandglasslibrary.moudle.SLFResponse.SLFServiceTypeResponseMoudle;
 import com.wyze.sandglasslibrary.moudle.SLFServiceTilteMoudle;
 import com.wyze.sandglasslibrary.moudle.SLFServiceType;
+import com.wyze.sandglasslibrary.net.ApiContant;
+import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
+import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
+import com.wyze.sandglasslibrary.net.SLFHttpUtils;
 import com.wyze.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
@@ -51,6 +56,7 @@ import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFSubmitFile;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
@@ -66,7 +72,7 @@ import java.util.Map;
  *
  * @author yangjie
  */
-public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener {
+public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener, SLFHttpRequestCallback<T> {
     /**
      * scollrview控件
      */
@@ -231,6 +237,7 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         initTitle();
         initView();
+        requestAllData();
         initPhontoSelector();
         slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
         slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
@@ -781,6 +788,14 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     }
 
     /**
+     * 获取后台配置数据
+     */
+    private void requestAllData(){
+        SLFHttpUtils.getInstance().executePathGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL+ ApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class,this);
+    }
+
+    /**
      * 获取servicetype列表
      */
     private List<Object> getServiceTypeData(String json) {
@@ -940,4 +955,19 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
             Intent in = new Intent(getContext(),SLFFeedbackSuccessActivity.class);
             startActivity(in);
         }
+
+    @Override
+    public void onRequestNetFail() {
+        SLFLogUtil.e("yj","requestNetFail");
+    }
+
+    @Override
+    public void onRequestSuccess(String result, Object type) {
+        SLFLogUtil.e("yj","requestScucess::::result::"+result+":::type:::"+type.toString());
+    }
+
+    @Override
+    public void onRequestFail(String value, String failCode) {
+        SLFLogUtil.e("yj","requestFail::"+value+":::failCode:::"+failCode);
+    }
 }
