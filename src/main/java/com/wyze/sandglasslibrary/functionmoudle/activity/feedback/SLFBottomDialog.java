@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFBottomDialogListAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseBottomDialog;
-import com.wyze.sandglasslibrary.moudle.SLFProblemOverviewType;
-import com.wyze.sandglasslibrary.moudle.SLFProblemType;
-import com.wyze.sandglasslibrary.moudle.SLFServiceType;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -72,29 +72,29 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
         slf_recycler.setAdapter(mAdapter);
         //getAllList();
         mAdapter.setOnItemClickListener((holder, position) -> {
-            if(list.get(holder.getAdapterPosition()) instanceof SLFServiceType) {
-                    ((SLFServiceType) list.get(holder.getAdapterPosition())).setChecked(true);
+            if(list.get(holder.getAdapterPosition()) instanceof SLFCategoryBean) {
+                    ((SLFCategoryBean) list.get(holder.getAdapterPosition())).setChecked(true);
                     changedChecked(list,holder.getAdapterPosition());
-                    selectedStr = ((SLFServiceType) list.get(holder.getAdapterPosition())).getName();
+                    selectedStr = ((SLFCategoryBean) list.get(holder.getAdapterPosition())).name;
                     if(onSeletedTypeListener!=null){
                         onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
                     }
                     mAdapter.notifyDataSetChanged();
                     dialogDismiss();
 
-            }else if(list.get(holder.getAdapterPosition()) instanceof SLFProblemType){
-                    ((SLFProblemType) list.get(holder.getAdapterPosition())).setChecked(true);
+            }else if(list.get(holder.getAdapterPosition()) instanceof SLFCategoryDetailBean){
+                    ((SLFCategoryDetailBean) list.get(holder.getAdapterPosition())).setChecked(true);
                     changedChecked(list,holder.getAdapterPosition());
-                    selectedStr = ((SLFProblemType) list.get(holder.getAdapterPosition())).getName();
+                    selectedStr = ((SLFCategoryDetailBean) list.get(holder.getAdapterPosition())).name;
                     if(onSeletedTypeListener!=null){
                         onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
                     }
                     mAdapter.notifyDataSetChanged();
                     dialogDismiss();
-            }else if(list.get(holder.getAdapterPosition()) instanceof SLFProblemOverviewType){
-                    ((SLFProblemOverviewType) list.get(holder.getAdapterPosition())).setChecked(true);
+            }else if(list.get(holder.getAdapterPosition()) instanceof SLFCategoryCommonBean){
+                    ((SLFCategoryCommonBean) list.get(holder.getAdapterPosition())).setChecked(true);
                     changedChecked(list,holder.getAdapterPosition());
-                    selectedStr = ((SLFProblemOverviewType) list.get(holder.getAdapterPosition())).getName();
+                    selectedStr = ((SLFCategoryCommonBean) list.get(holder.getAdapterPosition())).name;
                     if(onSeletedTypeListener!=null){
                         onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
                     }
@@ -108,17 +108,17 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
 
     private <T extends Object> void changedChecked(List<T> list,int position){
         for(int i=0;i<list.size();i++){
-            if(list.get(i) instanceof SLFServiceType){
+            if(list.get(i) instanceof SLFCategoryBean){
                 if(i != position){
-                    ((SLFServiceType) list.get(i)).setChecked(false);
+                    ((SLFCategoryBean) list.get(i)).setChecked(false);
                 }
-            }else if(list.get(i) instanceof SLFProblemType){
+            }else if(list.get(i) instanceof SLFCategoryDetailBean){
                 if(i != position){
-                    ((SLFProblemType) list.get(i)).setChecked(false);
+                    ((SLFCategoryDetailBean) list.get(i)).setChecked(false);
                 }
-            }else if(list.get(i) instanceof SLFProblemOverviewType){
+            }else if(list.get(i) instanceof SLFCategoryCommonBean){
                 if(i != position){
-                    ((SLFProblemOverviewType) list.get(i)).setChecked(false);
+                    ((SLFCategoryCommonBean) list.get(i)).setChecked(false);
                 }
             }
         }
@@ -164,8 +164,12 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
 
     public void setPositionChecked(int position){
         if(position!=-1&&slf_typeList!=null&&slf_typeList.size()>0){
-            if(slf_typeList.get(position) instanceof SLFServiceType){
-                ((SLFServiceType) slf_typeList.get(position)).setChecked(true);
+            if(slf_typeList.get(position) instanceof SLFCategoryBean){
+                ((SLFCategoryBean) slf_typeList.get(position)).setChecked(true);
+            }else if(slf_typeList.get(position) instanceof SLFCategoryDetailBean){
+                ((SLFCategoryDetailBean) slf_typeList.get(position)).setChecked(true);
+            }else if(slf_typeList.get(position) instanceof SLFCategoryCommonBean){
+                ((SLFCategoryCommonBean) slf_typeList.get(position)).setChecked(true);
             }
         }
         mAdapter.notifyDataSetChanged();
