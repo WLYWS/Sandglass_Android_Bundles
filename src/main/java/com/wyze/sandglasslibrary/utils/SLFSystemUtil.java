@@ -20,6 +20,7 @@ import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.WindowManager;
 
 import androidx.core.app.ActivityCompat;
@@ -297,13 +298,11 @@ public final class SLFSystemUtil {
         activity.getWindow().setAttributes(params);
     }
 
-    // 启动应用的设置
+    /** 启动应用的设置*/
     public static void startAppSettings(Context context) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
-
-
 }

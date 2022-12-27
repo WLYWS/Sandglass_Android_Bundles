@@ -27,11 +27,13 @@ import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.bean.SLFUserCenter;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoriesResponseBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFProlemDataBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFCancelOrOkDialog;
@@ -60,6 +62,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * created by yangjie
@@ -239,10 +242,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         initTitle();
         initView();
+        requestUploadUrls();
         requestAllData();
         initPhontoSelector();
-        slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
-        slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
+        SLFLogUtil.d("yj","appversion:::"+ SLFUserCenter.getAppVersionName()+"::pluginversion:::"+SLFUserCenter.getPluginversion()
+                     +":::phoneModel:::"+SLFUserCenter.getPhoneModel()+"::::OSversion:::"+SLFUserCenter.getOSVersion()+":::getPhone_id:::"+SLFUserCenter.getPhone_id()
+                        +"::::PhoneFactoryModel:::"+SLFUserCenter.getPhoneFactoryModel());
 
     }
 
@@ -279,7 +284,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         changeTextAndImg(slfProblemSpinner);
         changeTextAndImg(slfProblemOverviewSpinner);
         setListenerFotEditTexts();
-
+        slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
+        slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
     }
 
     /**
@@ -799,6 +805,16 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     }
 
     /**
+     * 请求上传文件链接
+     */
+    private void requestUploadUrls(){
+        TreeMap map = new TreeMap();
+        map.put("num",6);
+        SLFHttpUtils.getInstance().executeGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL+ApiContant.UPLOAD_FILE_URL,map, SLFUploadFileReponseBean.class,this);
+    }
+
+    /**
      * 得到后台配置数据解析
      */
     private SLFCategoriesResponseBean getSLFCategoriesResponseBean(){
@@ -974,11 +990,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     @Override
     public void onRequestSuccess(String result, Object type) {
-        SLFLogUtil.e(TAG,"requestScucess::::"+":::type:::"+type.toString());
+
         if(type instanceof SLFCategoriesResponseBean){
+            SLFLogUtil.e(TAG,"requestScucess::SLFCategoriesResponseBean::"+":::type:::"+type.toString());
             this.slfCategoriesResponseBean  = (SLFCategoriesResponseBean)type;
-            hideLoading();
+        }else if(type instanceof SLFUploadFileReponseBean){
+            SLFLogUtil.e(TAG,"requestScucess::SLFUploadFileReponseBean::"+":::type:::"+type.toString());
         }
+        hideLoading();
     }
 
     @Override

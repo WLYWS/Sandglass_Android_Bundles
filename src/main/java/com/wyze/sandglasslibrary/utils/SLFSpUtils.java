@@ -20,6 +20,8 @@ import java.util.Map;
 public class SLFSpUtils {
     private static SharedPreferences sp;
 
+    public static final String SLF_PHONE_ID = "slf_phone_id";
+
     private SLFSpUtils() {}
 
     /**
@@ -33,6 +35,87 @@ public class SLFSpUtils {
         if(sp == null){
             sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         }
+    }
+
+    /**
+     * 保存数据到SharedPreferences
+     *
+     * @param key   键
+     * @param value 需要保存的数据
+     * @return 保存结果
+     */
+    public static boolean putCommit(String key, Object value) {
+        if (sp == null) {
+            return false;
+        }
+        SharedPreferences.Editor editor = sp.edit();
+        if (value==null){
+            return false;
+        }
+        String type = value.getClass().getSimpleName();
+        try {
+            switch (type) {
+                case "Boolean":
+                    editor.putBoolean(key, (Boolean) value);
+                    break;
+                case "Long":
+                    editor.putLong(key, (Long) value);
+                    break;
+                case "Float":
+                    editor.putFloat(key, (Float) value);
+                    break;
+                case "String":
+                    editor.putString(key, (String) value);
+                    break;
+                case "Integer":
+                    editor.putInt(key, (Integer) value);
+                    break;
+                default:
+                    String json = JSON.toJSONString(value);
+                    editor.putString(key, json);
+                    break;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+
+        return editor.commit();
+    }
+
+    public static int getInt(String key, int defaultValue){
+        if (sp == null) {
+            return defaultValue;
+        }
+        return sp.getInt(key, defaultValue);
+    }
+
+    public static String getString(String key, String defaultValue){
+        if (sp == null) {
+            return defaultValue;
+        }
+        return sp.getString(key, defaultValue);
+    }
+
+    public static boolean getBoolean(String key, boolean defaultValue){
+        if (sp == null) {
+            return defaultValue;
+        }
+        return sp.getBoolean(key, defaultValue);
+    }
+
+    public static long getLong(String key, long defaultValue){
+        if (sp == null) {
+            return defaultValue;
+        }
+        return sp.getLong(key, defaultValue);
+    }
+
+    public static float getFloat(String key, float defaultValue){
+        if (sp == null) {
+            return defaultValue;
+        }
+        return sp.getFloat(key, defaultValue);
     }
 
 
