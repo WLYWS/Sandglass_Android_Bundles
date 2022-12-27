@@ -40,8 +40,8 @@ public interface SLFApiService {
 
     // GET请求(带参) api = news
     // http://www.5mins-sun.com:8081/news?name=admin&pwd=123456
-    @GET("{api}")
-    Observable<String> getData(@Path("api") String api, @QueryMap TreeMap <String, Object> map,@HeaderMap TreeMap <String, Object> headMap);
+    @GET
+    Observable<String> getData(@Url String url, @QueryMap TreeMap <String, Object> map,@HeaderMap TreeMap <String, Object> headMap);
 
     // POST请求(无参)
     @POST("{api}")

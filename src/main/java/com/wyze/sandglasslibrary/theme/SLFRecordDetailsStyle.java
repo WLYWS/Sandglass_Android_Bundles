@@ -12,7 +12,7 @@ public class SLFRecordDetailsStyle {
     public static int HeaderBGColor = SLFResourceUtils.getColor(R.color.slf_detail_header_bg_color);
 
     ///底部（全部）背景颜色
-    public static int bottomBGColor = SLFResourceUtils.getColor(R.color.slf_detail_bottom_bg_colorr);
+    public static int bottomBGColor = SLFResourceUtils.getColor(R.color.slf_detail_bottom_bg_color);
 
     ///顶部背景分割线
     public static int LineColor = SLFResourceUtils.getColor(R.color.slf_detail_line_color);
