@@ -1,11 +1,12 @@
 package com.wyze.sandglasslibrary.bean.net.responsebean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by wangjian on 2022/12/25
  */
-public class SLFUploadFileReponseBean extends SLFResponseBaseBean {
+public class SLFUploadFileReponseBean extends SLFResponseBaseBean implements Serializable {
     public List <SLFUplaodFileAddressBean> data;
     public String instance_id;
 

@@ -34,6 +34,7 @@ import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFProlemDataBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFCancelOrOkDialog;
@@ -245,10 +246,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         requestUploadUrls();
         requestAllData();
         initPhontoSelector();
-        SLFLogUtil.d("yj","appversion:::"+ SLFUserCenter.getAppVersionName()+"::pluginversion:::"+SLFUserCenter.getPluginversion()
-                     +":::phoneModel:::"+SLFUserCenter.getPhoneModel()+"::::OSversion:::"+SLFUserCenter.getOSVersion()+":::getPhone_id:::"+SLFUserCenter.getPhone_id()
-                        +"::::PhoneFactoryModel:::"+SLFUserCenter.getPhoneFactoryModel());
-
     }
 
     /**
@@ -809,7 +806,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void requestUploadUrls(){
         TreeMap map = new TreeMap();
-        map.put("num",6);
+        map.put("num",9);
         SLFHttpUtils.getInstance().executeGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL+ApiContant.UPLOAD_FILE_URL,map, SLFUploadFileReponseBean.class,this);
     }
@@ -996,6 +993,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             this.slfCategoriesResponseBean  = (SLFCategoriesResponseBean)type;
         }else if(type instanceof SLFUploadFileReponseBean){
             SLFLogUtil.e(TAG,"requestScucess::SLFUploadFileReponseBean::"+":::type:::"+type.toString());
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean)type);
+            /**分配前六个链接给图片和视频上传*/
+                for(int i=0;i<6;i++){
+                    SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                    SLFLogUtil.d("yj","uploadPath--all----:::"+SLFCommonUpload.getListInstance().get(i));
+                }
         }
         hideLoading();
     }

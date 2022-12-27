@@ -23,4 +23,5 @@ public class SLFApi {
         Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
         context.startActivity(in);
     }
+
 }

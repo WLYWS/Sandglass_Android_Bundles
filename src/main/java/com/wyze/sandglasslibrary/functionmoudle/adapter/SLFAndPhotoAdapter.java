@@ -6,11 +6,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.utils.SLFAdapterUtils;
 import com.wyze.sandglasslibrary.utils.SLFImageShapes;
 import com.wyze.sandglasslibrary.utils.SLFImageUtil;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.List;
 /**
@@ -61,6 +63,18 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
 
         helper.setOnClickListener(R.id.slf_iv_delete, v -> {
             getList().remove(object);
+            if(SLFCommonUpload.getListInstance().size()==9) {
+                for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
+                    if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
+                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i + 1)).isIdle = true;
+                        SLFLogUtil.d("yj","uploadPath----delete:::"+SLFCommonUpload.getListInstance().get(i));
+                        SLFLogUtil.d("yj","uploadPath----delete:::"+SLFCommonUpload.getListInstance().get(i+1));
+                    }
+                }
+
+            }
+
             notifyDataSetChanged();
         });
 

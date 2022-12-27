@@ -6,6 +6,8 @@ package com.wyze.sandglasslibrary.bean.net.responsebean;
 public class SLFUplaodFileAddressBean {
     public String path;
     public String uploadUrl;
+    /**是否空闲*/
+    public boolean isIdle;
 
     @Override
     public String toString ( ) {

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPhotoListAdapter;
 import com.wyze.sandglasslibrary.base.SLFPhotoBaseActivity;
@@ -268,6 +270,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                             if(SLFPhotoSelectorUtils.mListenter!=null){
                                 setResult(RESULT_OK);
                                 runOnUiThread(() -> SLFPhotoSelectorUtils.mListenter.onSelect(picPathLists));
+                            }
+                            for(int i=0;i<picPathLists.size();i++){
+                                setUploadUrl(i,picPathLists);
+                                SLFLogUtil.d("yj","uploadpath====confirm:::"+picPathLists.get(i).getUploadPath());
+                                SLFLogUtil.d("yj","uploadthumpath====confirm:::"+picPathLists.get(i).getUploadThumPath());
                             }
                             finish();
                         } else {
@@ -593,6 +600,33 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         if (event.success) {
             // 更新数据
             resumChecked();
+        }
+    }
+
+    private void setUploadUrl(int position,List<SLFMediaData> list){
+        if(SLFCommonUpload.getListInstance().size()==9&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0))!=null&&SLFCommonUpload.getInstance().size()==9){
+            if(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle){
+                list.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(0));
+                list.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(1));
+                list.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl);
+                list.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl);
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle = false;
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle = false;
+            }else if(SLFCommonUpload.getListInstance().size()==9&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle){
+                list.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(2));
+                list.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(3));
+                list.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
+                list.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).uploadUrl);
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle = false;
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle = false;
+            }else if(SLFCommonUpload.getListInstance().size()==9&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).isIdle&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).isIdle){
+                list.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(4));
+                list.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(5));
+                list.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).uploadUrl);
+                list.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).uploadUrl);
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).isIdle = false;
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).isIdle = false;
+            }
         }
     }
 }
