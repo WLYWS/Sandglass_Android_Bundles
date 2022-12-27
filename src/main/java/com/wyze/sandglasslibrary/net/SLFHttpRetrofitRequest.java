@@ -77,10 +77,10 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     // Get请求(带参)
     @Override
     public void mHttpGet(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback callBack) {
-        TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_GET,SLFHttpRequestConstants.BASE_URL+api,map);
+        TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_GET,api,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
-        Observable<String> observable = apiService.getData(api, map);
+        Observable<String> observable = apiService.getData(api, map,headMap);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 
