@@ -27,21 +27,23 @@ import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
-import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoriesResponseBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFProlemDataBean;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFCancelOrOkDialog;
 import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
-import com.wyze.sandglasslibrary.moudle.SLFProblemOverviewType;
-import com.wyze.sandglasslibrary.moudle.SLFProblemType;
-import com.wyze.sandglasslibrary.moudle.SLFResponse.SLFServiceTypeResponseMoudle;
-import com.wyze.sandglasslibrary.moudle.SLFServiceTilteMoudle;
-import com.wyze.sandglasslibrary.moudle.SLFServiceType;
+import com.wyze.sandglasslibrary.net.ApiContant;
+import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
+import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
+import com.wyze.sandglasslibrary.net.SLFHttpUtils;
 import com.wyze.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
-import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFCompressUtil;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
 import com.wyze.sandglasslibrary.utils.SLFPhotoSelectorUtils;
@@ -51,7 +53,7 @@ import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFSubmitFile;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
-//import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +68,7 @@ import java.util.Map;
  *
  * @author yangjie
  */
-public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener {
+public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener, SLFHttpRequestCallback<T> {
     /**
      * scollrview控件
      */
@@ -207,21 +209,27 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     boolean emailEdit = false;
 
     private List<Object> slfServiceTypes = new ArrayList<>();
-    private List<SLFProblemType> slfProblemTypes = new ArrayList<>();
-    private List<SLFProblemOverviewType> slfProblemOverviewTypes = new ArrayList<>();
-    private Map<Integer, List<SLFProblemType>> slfServiceMap = new HashMap<Integer, List<SLFProblemType>>();
-    private Map<Integer, List<SLFProblemOverviewType>> slfProblemMap = new HashMap<Integer, List<SLFProblemOverviewType>>();
-    private Map<Integer,List<SLFServiceType>> slfServiceTitleMap = new HashMap<>();
+    private List<SLFCategoryDetailBean> slfProblemTypes = new ArrayList<>();
+    private List<SLFCategoryCommonBean> slfProblemOverviewTypes = new ArrayList<>();
+    private Map<Integer, List<SLFCategoryDetailBean>> slfServiceMap = new HashMap<Integer, List<SLFCategoryDetailBean>>();
+    private Map<Integer, List<SLFCategoryCommonBean>> slfProblemMap = new HashMap<Integer, List<SLFCategoryCommonBean>>();
+    private Map<Integer,List<SLFCategoryBean>> slfServiceTitleMap = new HashMap<>();
 
-    private SLFServiceType slfServiceType;
-    private SLFProblemType slfProblemType;
-    private SLFProblemOverviewType slfProblemOverviewType;
+    //private SLFServiceType slfServiceType;
+    //private SLFProblemType slfProblemType;
+    //private SLFProblemOverviewType slfProblemOverviewType;
+
+    private SLFCategoryBean slfServiceType;
+    private SLFCategoryDetailBean slfProblemType;
+    private SLFCategoryCommonBean slfProblemOverviewType;
     private String oldServiceType = "";
     private String oldProblemType = "";
 
     private  Runnable submitLogRunnable;
 
     private boolean isSubmit = false;
+
+    private SLFCategoriesResponseBean slfCategoriesResponseBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,6 +239,7 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         initTitle();
         initView();
+        requestAllData();
         initPhontoSelector();
         slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
         slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
@@ -362,7 +371,7 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
             },2000);  //延迟2s// 秒执行
 
         } else if (view.getId() == R.id.spinner_service) {
-            showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title), getServiceTypeData(SLFConstants.json), service_checkedPosition);
+            showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title), getServiceTypeData(getSLFCategoriesResponseBean()), service_checkedPosition);
             changeTextAndImg(slfServiceSpinner);
 
         } else if (view.getId() == R.id.spinner_problem) {
@@ -693,10 +702,10 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
                 if (title.equals(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title))) {
                     changeTextAndImg(slfServiceSpinner);
                     if (service_checkedPosition != -1) {
-                        slfServiceType = ((List<SLFServiceType>) dataList).get(service_checkedPosition);
+                        slfServiceType = ((List<SLFCategoryBean>) dataList).get(service_checkedPosition);
                         if (slfServiceType != null) {
-                            if (slfServiceMap.get(slfServiceType.getId()) != null && slfServiceMap.get(slfServiceType.getId()).size() > 0) {
-                                if (!oldServiceType.equals(slfServiceType.getName())) {
+                            if (slfServiceMap.get(slfServiceType.id) != null && slfServiceMap.get(slfServiceType.id).size() > 0) {
+                                if (!oldServiceType.equals(slfServiceType.name)) {
                                     slfProblemLinear.setVisibility(View.GONE);
                                     slfProblemOverviewLinear.setVisibility(View.GONE);
                                     slfProblemSpinner.setText("");
@@ -711,9 +720,9 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
                                 slfProblemOverviewSpinner.setText("");
                                 problem_overview_checkedPosition  = -1;
                             }
-                            slfServiceSpinner.setText(slfServiceType.getName());
-                            oldServiceType = slfServiceType.getName();
-                            if (!TextUtils.isEmpty(slfServiceType.getName())) {
+                            slfServiceSpinner.setText(slfServiceType.name);
+                            oldServiceType = slfServiceType.name;
+                            if (!TextUtils.isEmpty(slfServiceType.name)) {
                                 serviceType = true;
                             } else {
                                 serviceType = false;
@@ -727,16 +736,16 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
                     changeTextAndImg(slfProblemSpinner);
                     if (problem_checkedPosition != -1) {
                         if (slfServiceType != null && slfServiceMap != null) {
-                            slfProblemType = ((List<SLFProblemType>) dataList).get(problem_checkedPosition);
-                            slfProblemSpinner.setText(slfProblemType.getName());
-                            if (slfProblemType != null && slfProblemMap != null && slfProblemMap.get(slfProblemType.getId()).size() > 0) {
-                                if (!oldProblemType.equals(slfProblemType.getName())) {
+                            slfProblemType = ((List<SLFCategoryDetailBean>) dataList).get(problem_checkedPosition);
+                            slfProblemSpinner.setText(slfProblemType.name);
+                            if (slfProblemType != null && slfProblemMap != null && slfProblemMap.get(slfProblemType.id).size() > 0) {
+                                if (!oldProblemType.equals(slfProblemType.name)) {
                                     slfProblemOverviewLinear.setVisibility(View.GONE);
                                     slfProblemOverviewSpinner.setText("");
                                     problem_overview_checkedPosition = -1;
                                 }
                                 slfProblemOverviewLinear.setVisibility(View.VISIBLE);
-                                oldProblemType = slfProblemType.getName();
+                                oldProblemType = slfProblemType.name;
                             } else {
                                 slfProblemOverviewLinear.setVisibility(View.GONE);
                             }
@@ -747,10 +756,10 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
                 } else {
                     changeTextAndImg(slfProblemOverviewSpinner);
                     if (problem_overview_checkedPosition != -1) {
-                        if (slfProblemType != null && slfProblemMap != null && (slfProblemMap.get(slfProblemType.getId()) != null) && (slfProblemMap.get(slfProblemType.getId())).size() > 0) {
-                            slfProblemOverviewType = ((List<SLFProblemOverviewType>) dataList).get(problem_overview_checkedPosition);
-                            slfProblemOverviewSpinner.setText(slfProblemOverviewType.getName());
-                            if (!TextUtils.isEmpty(slfProblemOverviewType.getName())) {
+                        if (slfProblemType != null && slfProblemMap != null && (slfProblemMap.get(slfProblemType.id) != null) && (slfProblemMap.get(slfProblemType.id)).size() > 0) {
+                            slfProblemOverviewType = ((List<SLFCategoryCommonBean>) dataList).get(problem_overview_checkedPosition);
+                            slfProblemOverviewSpinner.setText(slfProblemOverviewType.name);
+                            if (!TextUtils.isEmpty(slfProblemOverviewType.name)) {
                                 problemOverviewType = true;
 
                             } else {
@@ -781,24 +790,40 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     }
 
     /**
+     * 请求后台配置数据
+     */
+    private void requestAllData(){
+        showLoading();
+        SLFHttpUtils.getInstance().executePathGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL+ ApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class,this);
+    }
+
+    /**
+     * 得到后台配置数据解析
+     */
+    private SLFCategoriesResponseBean getSLFCategoriesResponseBean(){
+
+        return slfCategoriesResponseBean;
+    }
+
+    /**
      * 获取servicetype列表
      */
-    private List<Object> getServiceTypeData(String json) {
+    private List<Object> getServiceTypeData(SLFCategoriesResponseBean slfCategoriesResponseBean) {
 
-        SLFServiceTypeResponseMoudle serviceTypes = SLFCommonUtils.JsonToClass(json, SLFServiceTypeResponseMoudle.class);
-        if (serviceTypes != null && serviceTypes.data != null && serviceTypes.data.size() > 0) {
+        if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0) {
             slfServiceTypes.clear();
             slfServiceMap.clear();
             slfServiceTitleMap.clear();
-            for (int i = 0; i < serviceTypes.data.size(); i++) {
-                SLFServiceTilteMoudle serviceTypeTitle = serviceTypes.data.get(i);
-                if(serviceTypeTitle.getSub()!=null&& serviceTypeTitle.getSub().size()>0){
-                    slfServiceTypes.add(serviceTypeTitle.getName());
-                    slfServiceTypes.addAll(serviceTypeTitle.getSub());
-                    slfServiceTitleMap.put(serviceTypeTitle.getId(),serviceTypeTitle.getSub());
-                    for(int j=0;j< serviceTypeTitle.getSub().size();j++){
-                        SLFServiceType slfServiceType = serviceTypeTitle.getSub().get(i);
-                        slfServiceMap.put(slfServiceType.getId(),slfServiceType.getSub());
+            for (int i = 0; i < slfCategoriesResponseBean.data.size(); i++) {
+                SLFProlemDataBean serviceTypeTitle = slfCategoriesResponseBean.data.get(i);
+                if(serviceTypeTitle.sub!=null&& serviceTypeTitle.sub.size()>0){
+                    slfServiceTypes.add(serviceTypeTitle.name);
+                    slfServiceTypes.addAll(serviceTypeTitle.sub);
+                    slfServiceTitleMap.put(serviceTypeTitle.id,serviceTypeTitle.sub);
+                    for(int j=0;j< serviceTypeTitle.sub.size();j++){
+                        SLFCategoryBean slfServiceType = serviceTypeTitle.sub.get(i);
+                        slfServiceMap.put(slfServiceType.id,slfServiceType.sub);
                     }
                 }
             }
@@ -814,15 +839,15 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     /**
      * 获取problem列表
      */
-    private List<SLFProblemType> getProblemTypeData(SLFServiceType serviceType, Map<Integer, List<SLFProblemType>> serviceMap) {
+    private List<SLFCategoryDetailBean> getProblemTypeData(SLFCategoryBean serviceType, Map<Integer, List<SLFCategoryDetailBean>> serviceMap) {
         slfProblemTypes.clear();
         slfProblemMap.clear();
         if (serviceType != null && serviceMap != null && serviceMap.size() > 0) {
-            slfProblemTypes.addAll(serviceMap.get(serviceType.getId()));
+            slfProblemTypes.addAll(serviceMap.get(serviceType.id));
             setListRoundConner(slfProblemTypes);
             for (int i = 0; i < slfProblemTypes.size(); i++) {
-                SLFProblemType problemType = slfProblemTypes.get(i);
-                slfProblemMap.put(problemType.getId(), problemType.getSub());
+                SLFCategoryDetailBean problemType = slfProblemTypes.get(i);
+                slfProblemMap.put(problemType.id, problemType.sub);
             }
         }
         return slfProblemTypes;
@@ -831,19 +856,19 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
     /**
      * 获取problemoverview列表
      */
-    private List<SLFProblemOverviewType> getSlfProblemOverviewData(SLFProblemType problemType, Map<Integer, List<SLFProblemOverviewType>> problemMap) {
+    private List<SLFCategoryCommonBean> getSlfProblemOverviewData(SLFCategoryDetailBean problemType, Map<Integer, List<SLFCategoryCommonBean>> problemMap) {
         slfProblemOverviewTypes.clear();
         if (problemType != null && problemMap != null && problemMap.size() > 0) {
-            slfProblemOverviewTypes.addAll(problemMap.get(problemType.getId()));
+            slfProblemOverviewTypes.addAll(problemMap.get(problemType.id));
             setListRoundConner(slfProblemOverviewTypes);
         }
         return slfProblemOverviewTypes;
     }
     /**serviceType设置圆角方法*/
-    private void setServiceTitleMapConner(Map<Integer,List<SLFServiceType>> serviceTitleMap){
-        Iterator<Map.Entry<Integer,List<SLFServiceType>>> it = serviceTitleMap.entrySet().iterator();
+    private void setServiceTitleMapConner(Map<Integer,List<SLFCategoryBean>> serviceTitleMap){
+        Iterator<Map.Entry<Integer,List<SLFCategoryBean>>> it = serviceTitleMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, List<SLFServiceType>> entry = it.next();
+            Map.Entry<Integer, List<SLFCategoryBean>> entry = it.next();
             for (int i = 0; i < entry.getValue().size(); i++) {
                 if (entry.getValue().size() == 1) {
                     entry.getValue().get(i).setRound_type(SLFConstants.ALL_ROUND);
@@ -867,37 +892,37 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
         for (int i = 0; i < list.size(); i++) {
             T obj = list.get(i);
             if (list.size() == 1) {
-                if (obj instanceof SLFServiceType) {
-                    ((SLFServiceType) obj).setRound_type(SLFConstants.ALL_ROUND);
-                } else if (obj instanceof SLFProblemType) {
-                    ((SLFProblemType) obj).setRound_type(SLFConstants.ALL_ROUND);
-                } else if (obj instanceof SLFProblemOverviewType){
-                    ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ALL_ROUND);
+                if (obj instanceof SLFCategoryBean) {
+                    ((SLFCategoryBean) obj).setRound_type(SLFConstants.ALL_ROUND);
+                } else if (obj instanceof SLFCategoryDetailBean) {
+                    ((SLFCategoryDetailBean) obj).setRound_type(SLFConstants.ALL_ROUND);
+                } else if (obj instanceof SLFCategoryCommonBean){
+                    ((SLFCategoryCommonBean) obj).setRound_type(SLFConstants.ALL_ROUND);
                 }
             } else {
                 if (i == 0) {
-                    if (obj instanceof SLFServiceType) {
-                        ((SLFServiceType) obj).setRound_type(SLFConstants.ROUND_FIRST);
-                    } else if (obj instanceof SLFProblemType) {
-                        ((SLFProblemType) obj).setRound_type(SLFConstants.ROUND_FIRST);
-                    } else if (obj instanceof SLFProblemOverviewType){
-                        ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ROUND_FIRST);
+                    if (obj instanceof SLFCategoryBean) {
+                        ((SLFCategoryBean) obj).setRound_type(SLFConstants.ROUND_FIRST);
+                    } else if (obj instanceof SLFCategoryDetailBean) {
+                        ((SLFCategoryDetailBean) obj).setRound_type(SLFConstants.ROUND_FIRST);
+                    } else if (obj instanceof SLFCategoryCommonBean){
+                        ((SLFCategoryCommonBean) obj).setRound_type(SLFConstants.ROUND_FIRST);
                     }
                 } else if (i == list.size() - 1) {
-                    if (obj instanceof SLFServiceType) {
-                        ((SLFServiceType) obj).setRound_type(SLFConstants.ROUND_END);
-                    } else if (obj instanceof SLFProblemType) {
-                        ((SLFProblemType) obj).setRound_type(SLFConstants.ROUND_END);
-                    } else if (obj instanceof SLFProblemOverviewType){
-                        ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ROUND_END);
+                    if (obj instanceof SLFCategoryBean) {
+                        ((SLFCategoryBean) obj).setRound_type(SLFConstants.ROUND_END);
+                    } else if (obj instanceof SLFCategoryDetailBean) {
+                        ((SLFCategoryDetailBean) obj).setRound_type(SLFConstants.ROUND_END);
+                    } else if (obj instanceof SLFCategoryCommonBean){
+                        ((SLFCategoryCommonBean) obj).setRound_type(SLFConstants.ROUND_END);
                     }
                 } else {
-                    if (obj instanceof SLFServiceType) {
-                        ((SLFServiceType) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
-                    } else if (obj instanceof SLFProblemType) {
-                        ((SLFProblemType) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
-                    } else if (obj instanceof SLFProblemOverviewType){
-                        ((SLFProblemOverviewType) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
+                    if (obj instanceof SLFCategoryBean) {
+                        ((SLFCategoryBean) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
+                    } else if (obj instanceof SLFCategoryDetailBean) {
+                        ((SLFCategoryDetailBean) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
+                    } else if (obj instanceof SLFCategoryCommonBean){
+                        ((SLFCategoryCommonBean) obj).setRound_type(SLFConstants.ROUND_MIDDLE);
                     }
                 }
             }
@@ -940,4 +965,25 @@ public class SLFFeedbackSubmitActivity extends SLFBaseActivity implements View.O
             Intent in = new Intent(getContext(),SLFFeedbackSuccessActivity.class);
             startActivity(in);
         }
+
+    @Override
+    public void onRequestNetFail() {
+        SLFLogUtil.e(TAG,"requestNetFail");
+        hideLoading();
+    }
+
+    @Override
+    public void onRequestSuccess(String result, Object type) {
+        SLFLogUtil.e(TAG,"requestScucess::::"+":::type:::"+type.toString());
+        if(type instanceof SLFCategoriesResponseBean){
+            this.slfCategoriesResponseBean  = (SLFCategoriesResponseBean)type;
+            hideLoading();
+        }
+    }
+
+    @Override
+    public void onRequestFail(String value, String failCode) {
+        SLFLogUtil.e(TAG,"requestFail::"+value+":::failCode:::"+failCode);
+        hideLoading();
+    }
 }

@@ -7,11 +7,11 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerAdatper;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
-import com.wyze.sandglasslibrary.moudle.SLFProblemOverviewType;
-import com.wyze.sandglasslibrary.moudle.SLFProblemType;
-import com.wyze.sandglasslibrary.moudle.SLFServiceType;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -110,16 +110,16 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                     recyclerHolder.itemView.setBackground(mContext.getResources().getDrawable(R.drawable.slf_feedback_bottom_dialog_middle));
                     break;
             }
-                if(object instanceof SLFServiceType) {
-                    SLFLogUtil.d("yj","checked:::"+((SLFServiceType) object).isChecked());
-                    serviceTypeTitle.setText(((SLFServiceType) object).getName());
-                    checkBox.setChecked(((SLFServiceType) object).isChecked());
-                }else if(object instanceof SLFProblemType) {
-                    serviceTypeTitle.setText(((SLFProblemType) object).getName());
-                    checkBox.setChecked(((SLFProblemType) object).isChecked());
+                if(object instanceof SLFCategoryBean) {
+                    SLFLogUtil.d("yj","checked:::"+((SLFCategoryBean) object).isChecked());
+                    serviceTypeTitle.setText(((SLFCategoryBean) object).name);
+                    checkBox.setChecked(((SLFCategoryBean) object).isChecked());
+                }else if(object instanceof SLFCategoryDetailBean) {
+                    serviceTypeTitle.setText(((SLFCategoryDetailBean) object).name);
+                    checkBox.setChecked(((SLFCategoryDetailBean) object).isChecked());
                 }else{
-                    serviceTypeTitle.setText(((SLFProblemOverviewType) object).getName());
-                    checkBox.setChecked(((SLFProblemOverviewType) object).isChecked());
+                    serviceTypeTitle.setText(((SLFCategoryCommonBean) object).name);
+                    checkBox.setChecked(((SLFCategoryCommonBean) object).isChecked());
                 }
 
 
@@ -166,32 +166,32 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                 if (object instanceof String) {
                     type = TYPE_TITLE_TITLE;
                 } else {
-                    if(object instanceof SLFServiceType) {
-                        if (((SLFServiceType) object).round_type.equals(SLFConstants.ALL_ROUND)) {
+                    if(object instanceof SLFCategoryBean) {
+                        if (((SLFCategoryBean) object).round_type.equals(SLFConstants.ALL_ROUND)) {
                             type = TYPE_ALL_ROUND;
-                        } else if (((SLFServiceType) object).round_type.equals(SLFConstants.ROUND_FIRST)) {
+                        } else if (((SLFCategoryBean) object).round_type.equals(SLFConstants.ROUND_FIRST)) {
                             type = TYPE_LEFT_TOP_ROUND;
-                        } else if (((SLFServiceType) object).round_type.equals(SLFConstants.ROUND_END)) {
+                        } else if (((SLFCategoryBean) object).round_type.equals(SLFConstants.ROUND_END)) {
                             type = TYPE_LEFT_BOTTOM_ROUND;
                         } else {
                             type = TYPE_EMPTY_ROUND;
                         }
-                    }else if(object instanceof SLFProblemType){
-                        if (((SLFProblemType) object).round_type.equals(SLFConstants.ALL_ROUND)) {
+                    }else if(object instanceof SLFCategoryDetailBean){
+                        if (((SLFCategoryDetailBean) object).round_type.equals(SLFConstants.ALL_ROUND)) {
                             type = TYPE_ALL_ROUND;
-                        } else if (((SLFProblemType) object).round_type.equals(SLFConstants.ROUND_FIRST)) {
+                        } else if (((SLFCategoryDetailBean) object).round_type.equals(SLFConstants.ROUND_FIRST)) {
                             type = TYPE_LEFT_TOP_ROUND;
-                        } else if (((SLFProblemType) object).round_type.equals(SLFConstants.ROUND_END)) {
+                        } else if (((SLFCategoryDetailBean) object).round_type.equals(SLFConstants.ROUND_END)) {
                             type = TYPE_LEFT_BOTTOM_ROUND;
                         } else {
                             type = TYPE_EMPTY_ROUND;
                         }
-                    }else if(object instanceof SLFProblemOverviewType){
-                        if (((SLFProblemOverviewType) object).round_type.equals(SLFConstants.ALL_ROUND)) {
+                    }else if(object instanceof SLFCategoryCommonBean){
+                        if (((SLFCategoryCommonBean) object).round_type.equals(SLFConstants.ALL_ROUND)) {
                             type = TYPE_ALL_ROUND;
-                        } else if (((SLFProblemOverviewType) object).round_type.equals(SLFConstants.ROUND_FIRST)) {
+                        } else if (((SLFCategoryCommonBean) object).round_type.equals(SLFConstants.ROUND_FIRST)) {
                             type = TYPE_LEFT_TOP_ROUND;
-                        } else if (((SLFProblemOverviewType) object).round_type.equals(SLFConstants.ROUND_END)) {
+                        } else if (((SLFCategoryCommonBean) object).round_type.equals(SLFConstants.ROUND_END)) {
                             type = TYPE_LEFT_BOTTOM_ROUND;
                         } else {
                             type = TYPE_EMPTY_ROUND;
