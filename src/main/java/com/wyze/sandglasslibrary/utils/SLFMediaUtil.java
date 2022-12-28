@@ -46,6 +46,7 @@ public class SLFMediaUtil {
         projection.add(MediaStore.Images.Media.LONGITUDE);
         projection.add(MediaStore.Images.Media.ORIENTATION);
         projection.add(MediaStore.Images.Media.SIZE);
+        projection.add(MediaStore.Images.Thumbnails.DATA);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             projection.add(MediaStore.Images.Media.WIDTH);
             projection.add(MediaStore.Images.Media.HEIGHT);
@@ -101,6 +102,7 @@ public class SLFMediaUtil {
         projection.add(MediaStore.Video.Media.LONGITUDE);
         projection.add(MediaStore.Video.Media.SIZE);
         projection.add(MediaStore.Video.Media.DURATION);
+        projection.add(MediaStore.Video.Thumbnails.DATA);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             projection.add(MediaStore.Video.Media.WIDTH);
             projection.add(MediaStore.Video.Media.HEIGHT);
@@ -150,6 +152,7 @@ public class SLFMediaUtil {
         projection.add(MediaStore.Images.Media.LONGITUDE);
         projection.add(MediaStore.Images.Media.ORIENTATION);
         projection.add(MediaStore.Images.Media.SIZE);
+        projection.add(MediaStore.Images.Thumbnails.DATA);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             projection.add(MediaStore.Images.Media.WIDTH);
             projection.add(MediaStore.Images.Media.HEIGHT);
@@ -186,6 +189,7 @@ public class SLFMediaUtil {
         projection.add(MediaStore.Video.Media.LONGITUDE);
         projection.add(MediaStore.Video.Media.SIZE);
         projection.add(MediaStore.Video.Media.DURATION);
+        projection.add(MediaStore.Video.Thumbnails.DATA);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             projection.add(MediaStore.Video.Media.WIDTH);
@@ -229,6 +233,7 @@ public class SLFMediaUtil {
         String bucketId = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_ID));
         String bucketDisplayName = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
         String mimeType = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+        String thumbImg = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Thumbnails.DATA));
         long createDate = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED));
         long modifiedDate = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED));
 
@@ -241,6 +246,7 @@ public class SLFMediaUtil {
         mediaData.setMimeType(mimeType);
         mediaData.setCreateDate(createDate);
         mediaData.setModifiedDate(modifiedDate);
+        mediaData.setThumbnailSmallPath(thumbImg);
         int width = 0, height = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             width = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media.WIDTH));
@@ -294,6 +300,8 @@ public class SLFMediaUtil {
         mediaData.setLength(length);
         long duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
         mediaData.setDuration(duration);
+        String thumPath = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Thumbnails.DATA));
+        mediaData.setThumbnailSmallPath(thumPath);
 
         int width = 0, height = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

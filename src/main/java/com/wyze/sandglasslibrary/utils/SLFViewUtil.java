@@ -26,14 +26,16 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -390,6 +392,64 @@ public class SLFViewUtil {
         bm.compress(Bitmap.CompressFormat.PNG, 85, bos);
         bos.flush();
         bos.close();
+    }
+
+    /**
+     * 图片质量压缩方法
+     * @param image
+     * @return
+     */
+    /**
+     * 质量压缩方法
+     *
+     * @param image
+     * @return
+     */
+    public static File compressImage(Bitmap image,String folderName,String fileName) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 90;
+        while (baos.size()/1024 > 300) { // 循环判断如果压缩后图片是否大于300kb,大于继续压缩
+            baos.reset(); // 重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+            options = options - 10;// 每次都减少10
+        }
+        SLFLogUtil.e("compressImage",options + " " + baos.size()/1024);
+        File file = null;
+        try {
+            File dirFile = new File(folderName);
+            if (!dirFile.exists()) {              //如果不存在，那就建立这个文件夹
+                dirFile.mkdirs();
+            }
+            file = new File(folderName, fileName);
+            FileOutputStream fos = new FileOutputStream(file);
+            baos.writeTo(fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SLFLogUtil.e("compressImage"," options123-->" + file.length()/1024);
+        return file;
+    }
+
+    /**
+     * FFmpeg压缩视频
+     * -threads： 执行线程数，传入1 单线程压缩
+     * -i：input路径，传入视频文件的路径
+     * -c:v：编码格式，一般都是指定libx264
+     * -crf： 编码质量，取值范围是0-51，默认值为23，数字越小输出视频的质量越高。这里的30是我们经过测试得到的经验值
+     * -preset：转码速度，ultrafast，superfast，veryfast，faster，fast，medium，slow，slower，veryslow和placebo。ultrafast编码速度最快，但压缩率低，生成的文件更大，placebo则正好相反。x264所取的默认值为medium。需要说明的是，preset主要是影响编码的速度，并不会很大的影响编码出来的结果的质量。
+     * -acodec：音频编码，一般采用libmp3lame
+     * arg.thumbVideoPath：最后传入的是视频压缩后保存的路径
+     * -y：输出时覆盖输出目录已存在的同名文件（如果不加此参数，就不会覆盖）
+     *
+     ffmpeg  -i  Desktop/input.mp4  -fs 10MB  Desktop/output.mp4  压缩到指定大小的视频
+     */
+    public static void compressVideo(String inputPath,String outputPath){
+
     }
 
     /**

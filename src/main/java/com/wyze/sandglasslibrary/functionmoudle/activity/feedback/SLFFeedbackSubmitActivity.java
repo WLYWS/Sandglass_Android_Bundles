@@ -997,7 +997,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             /**分配前六个链接给图片和视频上传*/
                 for(int i=0;i<6;i++){
                     SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                    SLFLogUtil.d("yj","uploadPath--all----:::"+SLFCommonUpload.getListInstance().get(i));
+                    SLFLogUtil.d(TAG,"uploadPath--all----:::"+SLFCommonUpload.getListInstance().get(i));
                 }
         }
         hideLoading();

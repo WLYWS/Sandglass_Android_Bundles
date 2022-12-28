@@ -52,7 +52,10 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
             }
             if(!TextUtils.isEmpty(object.getOriginalPath())){
 
-                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
+//                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
+//                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+//                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
+                SLFImageUtil.loadImage(getContext(),object.getThumbnailSmallPath()
                         ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
                         , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
             }else{
