@@ -124,13 +124,11 @@ public class SLFHttpUtils<T>{
      * @param context    上下文
      * @param api        请求的api
      * @param file       上传的文件
-     * @param fileKey    上传的文件对应的key
-     * @param map        请求的参数
      * @param type       请求的标识
      * @param callBack   结果返回接口
      */
-    public void executeFile(Context context, String api, File file, String fileKey, TreeMap map, int type, SLFHttpRequestCallback callBack){
-        mHttpRequest.mHttpFile(context, api, file, fileKey, map, type, callBack);
+    public void executeFile(Context context, String api, File file, int type, SLFHttpRequestCallback callBack){
+        mHttpRequest.mHttpFile(context, api, file, type, callBack);
     }
 
     /**
@@ -145,5 +143,9 @@ public class SLFHttpUtils<T>{
      */
     public void executeMultiFile(Context context, String api, List<File> list, List <String> fileList, TreeMap map, int type, SLFHttpRequestCallback callBack){
         mHttpRequest.mHttpMultiFile(context, api, list, fileList, map, type, callBack);
+    }
+
+    public void executePutFile(Context context, String api, File file, int type, SLFHttpRequestCallback callBack){
+        mHttpRequest.putHttpFile(context, api, file, type, callBack);
     }
 }

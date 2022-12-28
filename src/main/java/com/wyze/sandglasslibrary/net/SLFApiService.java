@@ -16,6 +16,7 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -72,13 +73,16 @@ public interface SLFApiService {
 
     // 上传单个文件
     @Multipart
-    @POST("{api}/")
-    Observable<String> upload(@Path("api") String api, @PartMap Map<String, RequestBody> maps, @Part MultipartBody.Part file);
+    @POST
+    Observable<String> upload(@Url String api,@Part MultipartBody.Part file);
 
     // 上传多个文件
     @Multipart
-    @POST("{api}/")
-    Observable <String> uploadMultipart(@Path("api") String api, @PartMap Map<String, RequestBody> maps, @Part List <MultipartBody.Part> params);
+    @POST
+    Observable <String> uploadMultipart(@Url String api, @PartMap Map<String, RequestBody> maps, @Part List <MultipartBody.Part> params);
+
+    @PUT
+    Observable<String> putBodyFile(@Url String url, @Body RequestBody file);
 
 }
 
