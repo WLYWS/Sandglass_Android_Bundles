@@ -29,6 +29,21 @@
 
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/slf_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/slf_feedback_add_photo_bg"
+        android:visibility="visible">
+        <ProgressBar
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            style="@style/slf_ProgressBar"
+            />
+    </FrameLayout>
+
     <ImageView
         android:id="@+id/slf_iv_delete"
         android:layout_width="16dp"
@@ -37,18 +52,6 @@
         android:src="@drawable/slf_list_img_delete"
         android:layout_alignParentRight="true"/>
 
-    <FrameLayout
-        android:id="@+id/slf_progress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/slf_feedback_add_photo_bg"
-        android:visibility="gone">
-        <ProgressBar
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            style="@style/slf_ProgressBar"
-            />
-    </FrameLayout>
+
 
 </RelativeLayout>

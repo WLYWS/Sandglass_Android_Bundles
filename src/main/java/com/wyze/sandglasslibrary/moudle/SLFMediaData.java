@@ -1,8 +1,11 @@
 package com.wyze.sandglasslibrary.moudle;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.File;
 /**
@@ -64,6 +67,8 @@ public class SLFMediaData implements Parcelable {
     private String uploadUrl;
     /**上传缩略图地址*/
     private String uploadThumurl;
+    /**是否空闲*/
+    private String uploadStatus;
 
     public SLFMediaData() {
     }
@@ -90,6 +95,7 @@ public class SLFMediaData implements Parcelable {
         uploadThumPath = in.readString();
         uploadUrl = in.readString();
         uploadThumurl = in.readString();
+        uploadStatus = in.readString();
     }
 
     public String getUploadUrl() {
@@ -124,6 +130,17 @@ public class SLFMediaData implements Parcelable {
         this.uploadThumPath = uploadThumPath;
     }
 
+    public String getUploadStatus() {
+        if(uploadStatus==null){
+            uploadStatus = "";
+        }
+        return uploadStatus;
+    }
+
+    public void setUploadStatus(String uploadStatus) {
+        this.uploadStatus = uploadStatus;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
@@ -147,6 +164,7 @@ public class SLFMediaData implements Parcelable {
         dest.writeString(uploadThumPath);
         dest.writeString(uploadUrl);
         dest.writeString(uploadThumurl);
+        dest.writeString(uploadStatus);
     }
 
     @Override

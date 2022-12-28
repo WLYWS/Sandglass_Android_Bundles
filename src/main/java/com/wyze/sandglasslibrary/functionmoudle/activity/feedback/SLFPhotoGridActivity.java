@@ -20,8 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
-import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPhotoListAdapter;
 import com.wyze.sandglasslibrary.base.SLFPhotoBaseActivity;
@@ -47,7 +45,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -101,7 +98,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     ArrayList<SLFMediaData> oldCurrentList = new ArrayList<>();
     ArrayList<SLFMediaData> newCurrentList = new ArrayList<>();
     ArrayList<String> oldPickPositions = new ArrayList<>();
-    public static ExecutorService singleThreadExecutor;
+    private static ExecutorService singleThreadExecutor;
     private static Runnable getPhotoRunable;
     private static Runnable confirmRunnable;
     private boolean isEvent;
@@ -226,6 +223,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 String fileName = SLFUtils.getCharacterAndNumber()+".jpg";
                                 Bitmap bmp = SLFViewUtil.getBitmapFromPath(path);
                                 Bitmap thumBmp = SLFViewUtil.getBitmapFromPath(thumPth);
+                                File thumbleFile = new File(thumPth);
                                 picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 if(bmp!=null){
                                     //裁剪
@@ -246,12 +244,20 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     }
                                     picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                     picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
+                                    picPathLists.get(i).setThumbnailSmallPath(thumPth);
+                                    picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                    picPathLists.get(i).setUploadPath(null);
+                                    picPathLists.get(i).setUploadThumPath(null);
+                                    picPathLists.get(i).setUploadUrl(null);
+                                    picPathLists.get(i).setUploadThumurl(null);
+                                    //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumbleFile,i));
                                 }
 
                             }else if(picPathLists.get(i).getMimeType().contains("png")){
                                 final String path = picPathLists.get(i).getOriginalPath();
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
                                 String fileName = SLFUtils.getCharacterAndNumber()+".png";
+                                File thumFile = new File(thumPth);
                                 picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 try {
                                     Bitmap bmp = SLFViewUtil.getBitmapFromPath(path);
@@ -266,6 +272,13 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                         SLFViewUtil.compressImage(bmp,SLFConstants.CROP_IMAGE_PATH, fileName);
                                         picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                         picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
+                                        picPathLists.get(i).setThumbnailSmallPath(thumPth);
+                                        picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                        picPathLists.get(i).setUploadPath(null);
+                                        picPathLists.get(i).setUploadThumPath(null);
+                                        picPathLists.get(i).setUploadUrl(null);
+                                        picPathLists.get(i).setUploadThumurl(null);
+                                        //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumFile,i));
                                     }
                                 } catch (Exception e) {
                                     Log.e(TAG, Log.getStackTraceString(e));
@@ -276,10 +289,19 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
                                 String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
                                 picPathLists.get(i).setThumbnailSmallPath(thumPth);
+                                picPathLists.get(i).setOriginalPath(path);
+                                picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                picPathLists.get(i).setUploadPath(null);
+                                picPathLists.get(i).setUploadThumPath(null);
+                                picPathLists.get(i).setUploadUrl(null);
+                                picPathLists.get(i).setUploadThumurl(null);
+                                File file = new File(path);
+                                File thumFile = new File(thumPth);
+                                //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,file,thumFile,i));
                                 try {
-                                        SLFViewUtil.compressVideo(path, SLFConstants.CROP_IMAGE_PATH+fileName);
-                                        picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
-                                        picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
+//                                        SLFViewUtil.compressVideo(path, SLFConstants.CROP_IMAGE_PATH+fileName);
+//                                        picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
+//                                        picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
                                 } catch (Exception e) {
                                     Log.e(TAG, Log.getStackTraceString(e));
                                 }
@@ -290,11 +312,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         if (!picPathLists.isEmpty()) {
                             if(SLFPhotoSelectorUtils.mListenter!=null){
                                 setResult(RESULT_OK);
+
                                 runOnUiThread(() -> SLFPhotoSelectorUtils.mListenter.onSelect(picPathLists));
                             }
-                            for(int i=0;i<picPathLists.size();i++){
-                                setUploadUrl(i,picPathLists);
-                            }
+
                             finish();
                         } else {
                             showCenterToast("Please choose a picture!");
@@ -622,30 +643,5 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         }
     }
 
-    private void setUploadUrl(int position,List<SLFMediaData> list){
-        if(SLFCommonUpload.getListInstance().size()==9&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0))!=null&&SLFCommonUpload.getInstance().size()==9){
-            if(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle){
-                list.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(0));
-                list.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(1));
-                list.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl);
-                list.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl);
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle = false;
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle = false;
-            }else if(SLFCommonUpload.getListInstance().size()==9&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle){
-                list.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(2));
-                list.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(3));
-                list.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
-                list.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).uploadUrl);
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle = false;
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle = false;
-            }else if(SLFCommonUpload.getListInstance().size()==9&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).isIdle&&SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).isIdle){
-                list.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(4));
-                list.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(5));
-                list.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).uploadUrl);
-                list.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).uploadUrl);
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).isIdle = false;
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).isIdle = false;
-            }
-        }
-    }
+
 }
