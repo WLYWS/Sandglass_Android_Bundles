@@ -111,8 +111,16 @@ public class SLFHttpTool {
      * @return
      */
     private static String encryptData (Map <String, Object> params) {
-        String json = new GsonBuilder().create().toJson(params);
-        String data = encryptAES(json,secret);
+        String data = "";
+        try {
+            String json = new GsonBuilder().create().toJson(params);
+            byte[] key = secret.getBytes(CHARSET_UTF8);
+            String mSecret = encryptMd532(key);
+            data = encryptAES(json,mSecret);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         return data;
     }
 
@@ -126,8 +134,7 @@ public class SLFHttpTool {
         String encryptDta = "";
         try {
             byte[] data = sSrc.getBytes(CHARSET_UTF8);
-            byte[] key = sKey.getBytes(CHARSET_UTF8);
-            byte[] encrypted = encrypt(data, key);
+            byte[] encrypted = encrypt(data, sKey);
             encryptDta = Base64.encodeToString(encrypted, Base64.DEFAULT);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -135,10 +142,10 @@ public class SLFHttpTool {
         return encryptDta;
     }
 
-    public static byte[] encrypt(byte[] data, byte[] key) {
+    public static byte[] encrypt(byte[] data, String key) {
         //不足16字节，补齐内容为差值
         try {
-            SecretKeySpec skeySpec = new SecretKeySpec(encryptMd532(key).getBytes(CHARSET_UTF8), "AES");
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(CHARSET_UTF8), "AES");
             Cipher cipher = Cipher.getInstance(CIP_ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
             return cipher.doFinal(data);

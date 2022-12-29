@@ -50,11 +50,12 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has(DATA)) {
                     String response = SLFDecryptUtil.DecryAes(jsonObject.getString(DATA), mSecret);
-                    JSONObject jsonObjectData = new JSONObject(response);
-                    if (jsonObjectData.has(MSG)) {
-                        String msg = jsonObjectData.getString(MSG);
-                        if (msg.toUpperCase().equals(SUCCESS)) {
-                            //if (jsonObjectData.has(DATA)) {
+                    if(response!=null){
+                        JSONObject jsonObjectData = new JSONObject(response);
+                        if (jsonObjectData.has(MSG)) {
+                            String msg = jsonObjectData.getString(MSG);
+                            if (msg.toUpperCase().equals(SUCCESS)) {
+                                //if (jsonObjectData.has(DATA)) {
                                 Gson gson = new Gson();
                                 T t = gson.fromJson(response, (Type) mType);
                                 mCallBack.onRequestSuccess(response, t);
@@ -65,10 +66,11 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
 //                                    mCallBack.onRequestSuccess(errMsg, mType);
 //                                }
 //                            }
-                        } else {
-                            String errMsg = jsonObjectData.getString(MSG);
-                            String code = jsonObjectData.getString(CODE);
-                            mCallBack.onRequestFail(errMsg, code);
+                            } else {
+                                String errMsg = jsonObjectData.getString(MSG);
+                                String code = jsonObjectData.getString(CODE);
+                                mCallBack.onRequestFail(errMsg, code);
+                            }
                         }
                     }
                 }

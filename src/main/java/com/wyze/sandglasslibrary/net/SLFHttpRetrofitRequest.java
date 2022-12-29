@@ -102,7 +102,11 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
         Gson gson = new Gson();
-        String param = gson.toJson(map);
+        String paramStr = gson.toJson(map);
+        String paramsString  = SLFHttpTool.encryptAES(paramStr,secret);
+        TreeMap<String,String> paramMap = new TreeMap <>();
+        paramMap.put("data",paramsString);
+        String param = gson.toJson(paramMap);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), param);
         Observable<String> observable = apiService.postData(api, requestBody,headMap);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
