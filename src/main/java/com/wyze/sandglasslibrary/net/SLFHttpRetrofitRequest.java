@@ -3,6 +3,7 @@ package com.wyze.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.wyze.sandglasslibrary.utils.SLFStringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         headMap.remove(SLFHttpRequestConstants.SECRET);
         Gson gson = new Gson();
         String paramStr = gson.toJson(map);
-        String paramsString  = SLFHttpTool.encryptAES(paramStr,secret);
+        String paramsString  = SLFStringUtil.replaceBlank(SLFHttpTool.encryptAES(paramStr,secret));
         TreeMap<String,String> paramMap = new TreeMap <>();
         paramMap.put("data",paramsString);
         String param = gson.toJson(paramMap);
