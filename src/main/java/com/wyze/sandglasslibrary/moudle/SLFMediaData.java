@@ -1,8 +1,11 @@
 package com.wyze.sandglasslibrary.moudle;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.File;
 /**
@@ -56,6 +59,16 @@ public class SLFMediaData implements Parcelable {
     private String thumbnailBigPath;
     /**小缩略图*/
     private String thumbnailSmallPath;
+    /**上传图片的path*/
+    private String uploadPath;
+    /**上传缩略图的path*/
+    private String uploadThumPath;
+    /**上传压缩图地址*/
+    private String uploadUrl;
+    /**上传缩略图地址*/
+    private String uploadThumurl;
+    /**是否空闲*/
+    private String uploadStatus;
 
     public SLFMediaData() {
     }
@@ -78,6 +91,54 @@ public class SLFMediaData implements Parcelable {
         orientation = in.readInt();
         length = in.readLong();
         duration = in.readLong();
+        uploadPath = in.readString();
+        uploadThumPath = in.readString();
+        uploadUrl = in.readString();
+        uploadThumurl = in.readString();
+        uploadStatus = in.readString();
+    }
+
+    public String getUploadUrl() {
+        return uploadUrl;
+    }
+
+    public void setUploadUrl(String uploadUrl) {
+        this.uploadUrl = uploadUrl;
+    }
+
+    public String getUploadThumurl() {
+        return uploadThumurl;
+    }
+
+    public void setUploadThumurl(String uploadThumurl) {
+        this.uploadThumurl = uploadThumurl;
+    }
+
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
+    }
+
+    public String getUploadThumPath() {
+        return uploadThumPath;
+    }
+
+    public void setUploadThumPath(String uploadThumPath) {
+        this.uploadThumPath = uploadThumPath;
+    }
+
+    public String getUploadStatus() {
+        if(uploadStatus==null){
+            uploadStatus = "";
+        }
+        return uploadStatus;
+    }
+
+    public void setUploadStatus(String uploadStatus) {
+        this.uploadStatus = uploadStatus;
     }
 
     @Override
@@ -99,6 +160,11 @@ public class SLFMediaData implements Parcelable {
         dest.writeInt(orientation);
         dest.writeLong(length);
         dest.writeLong(duration);
+        dest.writeString(uploadPath);
+        dest.writeString(uploadThumPath);
+        dest.writeString(uploadUrl);
+        dest.writeString(uploadThumurl);
+        dest.writeString(uploadStatus);
     }
 
     @Override

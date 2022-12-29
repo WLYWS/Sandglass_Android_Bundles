@@ -35,3 +35,4 @@
 -libraryjars libs/armeabi-v7a/libc++_shared.so
 -libraryjars libs/arm64-v8a/libmarsxlog.so
 -libraryjars libs/arm64-v8a/libc++_shared.so
+

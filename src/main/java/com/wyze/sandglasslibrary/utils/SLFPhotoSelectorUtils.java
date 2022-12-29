@@ -2,7 +2,9 @@ package com.wyze.sandglasslibrary.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFPhotoGridActivity;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaQuality;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
@@ -73,6 +75,15 @@ public class SLFPhotoSelectorUtils {
     public SLFPhotoSelectorUtils insertAlbum(boolean isInsertAlbum) {
         if (mIntent != null) {
             mIntent.putExtra("insert_album", isInsertAlbum);
+        }
+        return util;
+    }
+
+    public SLFPhotoSelectorUtils setUploadObject(SLFUploadFileReponseBean slfUploadFileReponseBean){
+        if(mIntent !=null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("uploadbean",slfUploadFileReponseBean);
+            mIntent.putExtras(bundle);
         }
         return util;
     }

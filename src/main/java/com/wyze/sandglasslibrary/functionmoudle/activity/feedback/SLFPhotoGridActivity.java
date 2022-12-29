@@ -45,7 +45,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -99,7 +98,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     ArrayList<SLFMediaData> oldCurrentList = new ArrayList<>();
     ArrayList<SLFMediaData> newCurrentList = new ArrayList<>();
     ArrayList<String> oldPickPositions = new ArrayList<>();
-    public static ExecutorService singleThreadExecutor;
+    private static ExecutorService singleThreadExecutor;
     private static Runnable getPhotoRunable;
     private static Runnable confirmRunnable;
     private boolean isEvent;
@@ -219,45 +218,91 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     || picPathLists.get(i).getMimeType().contains("jpeg")){
 
                                 final String path = picPathLists.get(i).getOriginalPath();
+                                final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
 
                                 String fileName = SLFUtils.getCharacterAndNumber()+".jpg";
                                 Bitmap bmp = SLFViewUtil.getBitmapFromPath(path);
+                                Bitmap thumBmp = SLFViewUtil.getBitmapFromPath(thumPth);
+                                File thumbleFile = new File(thumPth);
+                                picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 if(bmp!=null){
                                     //裁剪
                                     int rotate = SLFCropUtil.getExifRotation(new File(path));
                                     try {
-                                        if (aspect_X <= 0 || aspect_Y <= 0) {
-                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH::::"+SLFConstants.CROP_IMAGE_PATH);
-                                            SLFViewUtil.savePicture(SLFCropUtil.rotateImage(bmp, rotate)
-                                                    , SLFConstants.CROP_IMAGE_PATH, fileName);
-                                        } else {
-                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH:::else::"+SLFConstants.CROP_IMAGE_PATH);
-                                            SLFViewUtil.savePicture(SLFViewUtil.zoomBitmap(SLFCropUtil.rotateImage(bmp, rotate), aspect_X, aspect_Y)
-                                                    , SLFConstants.CROP_IMAGE_PATH, fileName);
-                                        }
+//                                        if (aspect_X <= 0 || aspect_Y <= 0) {
+//                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH::::"+SLFConstants.CROP_IMAGE_PATH);
+//                                            SLFViewUtil.savePicture(SLFCropUtil.rotateImage(bmp, rotate)
+//                                                    , SLFConstants.CROP_IMAGE_PATH, fileName);
+//                                        } else {
+//                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH:::else::"+SLFConstants.CROP_IMAGE_PATH);
+//                                            SLFViewUtil.savePicture(SLFViewUtil.zoomBitmap(SLFCropUtil.rotateImage(bmp, rotate), aspect_X, aspect_Y)
+//                                                    , SLFConstants.CROP_IMAGE_PATH, fileName);
+//                                        }
+                                        SLFViewUtil.compressImage(SLFCropUtil.rotateImage(bmp,rotate),SLFConstants.CROP_IMAGE_PATH, fileName);
                                     }catch(Exception e){
                                         SLFLogUtil.e(TAG,"picPathList crop error::"+e.toString());
                                     }
                                     picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                     picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
+                                    picPathLists.get(i).setThumbnailSmallPath(thumPth);
+                                    picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                    picPathLists.get(i).setUploadPath(null);
+                                    picPathLists.get(i).setUploadThumPath(null);
+                                    picPathLists.get(i).setUploadUrl(null);
+                                    picPathLists.get(i).setUploadThumurl(null);
+                                    //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumbleFile,i));
                                 }
 
                             }else if(picPathLists.get(i).getMimeType().contains("png")){
                                 final String path = picPathLists.get(i).getOriginalPath();
+                                final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
                                 String fileName = SLFUtils.getCharacterAndNumber()+".png";
+                                File thumFile = new File(thumPth);
+                                picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 try {
                                     Bitmap bmp = SLFViewUtil.getBitmapFromPath(path);
+                                    Bitmap thumBmp = SLFViewUtil.getBitmapFromPath(thumPth);
                                     if(bmp!=null){
-                                        if(aspect_X <= 0 || aspect_Y <= 0){
-                                            SLFViewUtil.savePNGPicture(bmp, SLFConstants.CROP_IMAGE_PATH,fileName);
-                                        }else{
-                                            SLFViewUtil.savePNGPicture(SLFViewUtil.zoomBitmap(bmp,aspect_X,aspect_Y)
-                                                    , SLFConstants.CROP_IMAGE_PATH,fileName);
-                                        }
+//                                        if(aspect_X <= 0 || aspect_Y <= 0){
+//                                            SLFViewUtil.savePNGPicture(bmp, SLFConstants.CROP_IMAGE_PATH,fileName);
+//                                        }else{
+//                                            SLFViewUtil.savePNGPicture(SLFViewUtil.zoomBitmap(bmp,aspect_X,aspect_Y)
+//                                                    , SLFConstants.CROP_IMAGE_PATH,fileName);
+//                                        }
+                                        SLFViewUtil.compressImage(bmp,SLFConstants.CROP_IMAGE_PATH, fileName);
                                         picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                         picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
+                                        picPathLists.get(i).setThumbnailSmallPath(thumPth);
+                                        picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                        picPathLists.get(i).setUploadPath(null);
+                                        picPathLists.get(i).setUploadThumPath(null);
+                                        picPathLists.get(i).setUploadUrl(null);
+                                        picPathLists.get(i).setUploadThumurl(null);
+                                        //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumFile,i));
                                     }
-                                } catch (IOException e) {
+                                } catch (Exception e) {
+                                    Log.e(TAG, Log.getStackTraceString(e));
+                                }
+                            }else if(picPathLists.get(i).getMimeType().contains("video")){
+                                final String path = picPathLists.get(i).getOriginalPath();
+                                SLFLogUtil.d("compressVedio","path---::"+path);
+                                final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
+                                String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
+                                picPathLists.get(i).setThumbnailSmallPath(thumPth);
+                                picPathLists.get(i).setOriginalPath(path);
+                                picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                picPathLists.get(i).setUploadPath(null);
+                                picPathLists.get(i).setUploadThumPath(null);
+                                picPathLists.get(i).setUploadUrl(null);
+                                picPathLists.get(i).setUploadThumurl(null);
+                                File file = new File(path);
+                                File thumFile = new File(thumPth);
+                                //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,file,thumFile,i));
+                                try {
+//                                        SLFViewUtil.compressVideo(path, SLFConstants.CROP_IMAGE_PATH+fileName);
+//                                        picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
+//                                        picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
+                                } catch (Exception e) {
                                     Log.e(TAG, Log.getStackTraceString(e));
                                 }
                             }
@@ -267,8 +312,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         if (!picPathLists.isEmpty()) {
                             if(SLFPhotoSelectorUtils.mListenter!=null){
                                 setResult(RESULT_OK);
+
                                 runOnUiThread(() -> SLFPhotoSelectorUtils.mListenter.onSelect(picPathLists));
                             }
+
                             finish();
                         } else {
                             showCenterToast("Please choose a picture!");
@@ -595,4 +642,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             resumChecked();
         }
     }
+
+
 }

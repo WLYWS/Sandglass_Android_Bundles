@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.wyze.sandglasslibrary.utils.SLFImageUtil;
@@ -108,6 +110,7 @@ public class SLFPhotoListAdapter extends BaseAdapter {
                 }
             }
 
+
             final CheckBox checkedPhoto = convertView.findViewById(R.id.slf_checked_btn);
             //final CheckBox checkedNum = convertView.findViewById(R.id.slf_checked_num);
             //相机位置与图片的区分
@@ -162,6 +165,5 @@ public class SLFPhotoListAdapter extends BaseAdapter {
     public ArrayList<SLFMediaData> getPicList() {
         return picPathLists;
     }
-
 
 }
