@@ -6,7 +6,7 @@ import java.util.List;
  * Created by wangjian on 2022/12/25
  */
 public class SLFProlemDataBean {
-    public int id;
+    public Long id;
     public String name;
     public List <SLFCategoryBean> sub;
 

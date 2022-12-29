@@ -43,11 +43,13 @@ public class SLFUserCenter {
     public static String access_token; // App access_token
     public static String refresh_token; // App refresh_token
     /**设备id*/
-    public static String deviceId = "";
+    public static String deviceId = "ABC";
     /**设备model*/
-    public static String deviceModel="";
+    public static String deviceModel="RVI";
+    /**设备时区*/
+    public static String deviceTimeZone = "Asia/shanghai";
     /**固件版本号*/
-    public static String firmwareVersion= "";
+    public static String firmwareVersion= "2.13.56";
     /**phone type  1.ios,2.android*/
     public static int   phontType = 2;
     @SuppressWarnings("java:S1444")

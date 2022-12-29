@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,10 +26,14 @@ import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.bean.SLFUserCenter;
+import com.wyze.sandglasslibrary.bean.net.requestbean.SLFLeaveMsgBean;
+import com.wyze.sandglasslibrary.bean.net.requestbean.SLFLogAttrBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoriesResponseBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
+import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCreateFeedbackRepsonseBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFProlemDataBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.commonapi.SLFApi;
@@ -40,7 +43,6 @@ import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFCancelOrOkDialog;
 import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
-import com.wyze.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.net.ApiContant;
@@ -55,7 +57,6 @@ import com.wyze.sandglasslibrary.utils.SLFPhotoSelectorUtils;
 import com.wyze.sandglasslibrary.utils.SLFRegular;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
-import com.wyze.sandglasslibrary.utils.SLFSubmitFile;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -220,9 +221,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private List<Object> slfServiceTypes = new ArrayList<>();
     private List<SLFCategoryDetailBean> slfProblemTypes = new ArrayList<>();
     private List<SLFCategoryCommonBean> slfProblemOverviewTypes = new ArrayList<>();
-    private Map<Integer, List<SLFCategoryDetailBean>> slfServiceMap = new HashMap<Integer, List<SLFCategoryDetailBean>>();
-    private Map<Integer, List<SLFCategoryCommonBean>> slfProblemMap = new HashMap<Integer, List<SLFCategoryCommonBean>>();
-    private Map<Integer, List<SLFCategoryBean>> slfServiceTitleMap = new HashMap<>();
+    private Map<Long, List<SLFCategoryDetailBean>> slfServiceMap = new HashMap<Long, List<SLFCategoryDetailBean>>();
+    private Map<Long, List<SLFCategoryCommonBean>> slfProblemMap = new HashMap<Long, List<SLFCategoryCommonBean>>();
+    private Map<Long, List<SLFCategoryBean>> slfServiceTitleMap = new HashMap<>();
 
 
     private SLFCategoryBean slfServiceType;
@@ -245,6 +246,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private boolean imageThumbleSuccess1;
     private boolean imageSuccess2;
     private boolean imageThumbleSuccess2;
+
+    private String appLogFileName;
+    private String firmwareLogFileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -379,19 +383,24 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if (slfSendLogCheck.isChecked()) {
                 showLoading();
                 //sumbitLogFiles();
-                if( SLFApi.getInstance().getAppLogCallBack()!=null){
+                if (SLFApi.getInstance().getAppLogCallBack() != null) {
                     SLFApi.getInstance().getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
                             SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
                 }
                 SLFApi.getInstance().setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                     @Override
-                    public void isUploadComplete(boolean isComplete) {
+                    public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
                         if(isComplete){
-                            SLFLogUtil.d(TAG,"complete----");
+                            SLFLogUtil.d("yj", "complete----");
+                            appLogFileName = appFileName;
+                            firmwareLogFileName = firmwarFileName;
                             sumbitLogFiles();
                         }
                     }
                 });
+            }else{
+                showLoading();
+                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + ApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
             }
 
 
@@ -893,7 +902,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     /**
      * 获取problem列表
      */
-    private List<SLFCategoryDetailBean> getProblemTypeData(SLFCategoryBean serviceType, Map<Integer, List<SLFCategoryDetailBean>> serviceMap) {
+    private List<SLFCategoryDetailBean> getProblemTypeData(SLFCategoryBean serviceType, Map<Long, List<SLFCategoryDetailBean>> serviceMap) {
         slfProblemTypes.clear();
         slfProblemMap.clear();
         if (serviceType != null && serviceMap != null && serviceMap.size() > 0) {
@@ -910,7 +919,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     /**
      * 获取problemoverview列表
      */
-    private List<SLFCategoryCommonBean> getSlfProblemOverviewData(SLFCategoryDetailBean problemType, Map<Integer, List<SLFCategoryCommonBean>> problemMap) {
+    private List<SLFCategoryCommonBean> getSlfProblemOverviewData(SLFCategoryDetailBean problemType, Map<Long, List<SLFCategoryCommonBean>> problemMap) {
         slfProblemOverviewTypes.clear();
         if (problemType != null && problemMap != null && problemMap.size() > 0) {
             slfProblemOverviewTypes.addAll(problemMap.get(problemType.id));
@@ -922,10 +931,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     /**
      * serviceType设置圆角方法
      */
-    private void setServiceTitleMapConner(Map<Integer, List<SLFCategoryBean>> serviceTitleMap) {
-        Iterator<Map.Entry<Integer, List<SLFCategoryBean>>> it = serviceTitleMap.entrySet().iterator();
+    private void setServiceTitleMapConner(Map<Long, List<SLFCategoryBean>> serviceTitleMap) {
+        Iterator<Map.Entry<Long, List<SLFCategoryBean>>> it = serviceTitleMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer, List<SLFCategoryBean>> entry = it.next();
+            Map.Entry<Long, List<SLFCategoryBean>> entry = it.next();
             for (int i = 0; i < entry.getValue().size(); i++) {
                 if (entry.getValue().size() == 1) {
                     entry.getValue().get(i).setRound_type(SLFConstants.ALL_ROUND);
@@ -986,10 +995,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
         }
     }
+
     /**
      * sendlog checked
      */
-    private void sumbitLogFiles(){
+    private void sumbitLogFiles() {
         initLogFiles();
         singleThreadExecutor = Executors.newSingleThreadExecutor();
         singleThreadExecutor.execute(submitLogRunnable);
@@ -1006,15 +1016,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 SLFCompressUtil.zipFile(SLFConstants.apiLogPath, "*", SLFConstants.feedbacklogPath + "pluginLog.zip", new SLFCompressUtil.OnCompressSuccessListener() {
                     @Override
                     public void onSuccess() {
-                            isSubmit = true;
+                        isSubmit = true;
                         if (isSubmit) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
-                                    SLFLogUtil.d(TAG,"logFile.size------::"+logFile.length());
+                                    SLFLogUtil.d(TAG, "logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(),uploadUrl,logFile,6,SLFFeedbackSubmitActivity.this);
+                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, 6, SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1025,7 +1035,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     @Override
                     public void onFailure() {
                         isSubmit = false;
-                        SLFLogUtil.d("yj","compress  error-----::");
+                        SLFLogUtil.d("yj", "compress  error-----::");
                     }
                 });
             }
@@ -1035,8 +1045,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     /**
      * goto success page
      */
-    private void gotoFeedbackSuccess() {
+    private void gotoFeedbackSuccess(int logId) {
         Intent in = new Intent(getContext(), SLFFeedbackSuccessActivity.class);
+        in.putExtra(SLFConstants.LOGID,logId);
         startActivity(in);
     }
 
@@ -1063,12 +1074,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (type instanceof Integer) {
             int code = (int) type;
             SLFLogUtil.e(TAG, "requestScucess::Integer::" + ":::type:::" + type);
-            if(code==6){
-                SLFLogUtil.d(TAG,"logfile-----upload---complete");
-                hideLoading();
-                gotoFeedbackSuccess();
+            if (code == 6) {
+                SLFLogUtil.d(TAG, "logfile-----upload---complete");
+                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + ApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
+            } else {
+                resultUploadImageOrVideo(code);
             }
-            resultUploadImageOrVideo(code);
+        }else if(type instanceof SLFCreateFeedbackRepsonseBean){
+            SLFLogUtil.d("yj", "createFeedback-----success:"+((SLFCreateFeedbackRepsonseBean) type).data);
+            gotoFeedbackSuccess(((SLFCreateFeedbackRepsonseBean) type).data);
         }
         hideLoading();
     }
@@ -1187,5 +1201,82 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     }
 
+    private TreeMap<String, Object> getCreateFeedBackTreemap() {
+        ArrayList<SLFLogAttrBean> logAttrBeans = new ArrayList<>();
+        ArrayList<SLFLeaveMsgBean> attrList = new ArrayList<>();
+        TreeMap<String,Object> map = new TreeMap<>();
+        map.put("deviceId",SLFUserCenter.deviceId);
+        map.put("deviceModel",SLFUserCenter.deviceModel);
+        map.put("deviceTimezone",SLFUserCenter.deviceTimeZone);
+        map.put("serviceType",slfServiceType.id);
+        if (slfProblemLinear.getVisibility() == View.VISIBLE) {
+           map.put("category",slfProblemType.id);
+        }
+        if (slfProblemOverviewLinear.getVisibility() == View.VISIBLE) {
+            map.put("subCategory",slfProblemOverviewType.id);
+        }
+        map.put("content",slfEditProblem.getText().toString().trim());
+        map.put("email",slfEmailEdit.getText().toString().trim());
+        map.put("phone","18611223366");
+        if (slfSendLogCheck.isChecked()) {
+            map.put("sendLog",1);
+            SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();
+            /**appLogBean*/
+            logAttrAppBean.setPath(SLFCommonUpload.getListInstance().get(7));
+            if (!TextUtils.isEmpty(appLogFileName)) {
+                logAttrAppBean.setFileName(appLogFileName);
+            }
+            logAttrAppBean.setContentType("application/zip");
+            /**firmwareLogBean*/
+            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
+
+            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(8));
+            if (!TextUtils.isEmpty(firmwareLogFileName)) {
+                logAttrAppBean.setFileName(firmwareLogFileName);
+            }
+            logAttrFirmwareBean.setContentType("application/zip");
+            /*pluginLogBean*/
+            SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
+            logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(6));
+            logAttrPluginBean.setFileName("pluginLog.zip");
+            logAttrPluginBean.setContentType("application/zip");
+            logAttrBeans.add(logAttrAppBean);
+            logAttrBeans.add(logAttrFirmwareBean);
+            logAttrBeans.add(logAttrPluginBean);
+            map.put("logAttrList",logAttrBeans);
+        } else {
+            map.put("sendLog",0);
+        }
+        if(slfMediaDataList.size()-1>0){
+            for(int i=0;i<slfMediaDataList.size()-1;i++){
+                SLFLeaveMsgBean slfLeaveMsgBean = new SLFLeaveMsgBean();
+                slfLeaveMsgBean.setPath(slfMediaDataList.get(i).getUploadPath());
+                slfLeaveMsgBean.setThumbnailPath(slfMediaDataList.get(i).getUploadThumPath());
+                slfLeaveMsgBean.setFileName(slfMediaDataList.get(i).getFileName());
+                slfLeaveMsgBean.setThumbnailContentType("image/png");
+                if(slfMediaDataList.get(i).getMimeType().contains("video")) {
+                    slfLeaveMsgBean.setContentType("video/mp4");
+                }else if(slfMediaDataList.get(i).getMimeType().contains("png")){
+                    slfLeaveMsgBean.setContentType("image/png");
+                }else if(slfMediaDataList.get(i).getMimeType().contains("jpg")){
+                    slfLeaveMsgBean.setContentType("image/jpg");
+                }else if(slfMediaDataList.get(i).getMimeType().contains("jpeg")){
+                    slfLeaveMsgBean.setContentType("image/jpeg");
+                }
+                attrList.add(slfLeaveMsgBean);
+            }
+            map.put("attrList",attrList);
+        }
+        map.put("firmwareVersion",SLFUserCenter.firmwareVersion);
+        map.put("appVersion",SLFUserCenter.getAppVersionName());
+        map.put("pluginVersion",SLFUserCenter.getPluginversion());
+        map.put("phoneType",2);
+        map.put("phoneModel",SLFUserCenter.getPhoneModel());
+        map.put("phoneOsVersion",SLFUserCenter.getOSVersion());
+        map.put("phoneId",SLFUserCenter.getPhone_id());
+        map.put("phoneFactoryModel",SLFUserCenter.getPhoneFactoryModel());
+
+        return map;
+    }
 
 }

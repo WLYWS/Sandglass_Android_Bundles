@@ -30,19 +30,19 @@ public class SLFApi  {
         Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
         context.startActivity(in);
     }
-
+    /**设置监听获取上传applog的路径和固件log的地址*/
     public void setAppLogCallBack(SLFUploadAppLogCallback slfUploadAppLogCallback){
         this.slfUploadAppLogCallback = slfUploadAppLogCallback;
     }
-
+    /**获取一个上传监听用于回调*/
     public SLFUploadAppLogCallback getAppLogCallBack(){
         return slfUploadAppLogCallback;
     }
-
+    /**设置监听通知是否上传完成*/
     public void setUploadLogCompleteCallBack(SLFUploadCompleteCallback slfUploadCompleteCallback){
         this.slfUploadCompleteCallback = slfUploadCompleteCallback;
     }
-
+    /**获取一个回传成功的监听*/
     public SLFUploadCompleteCallback getUploadLogCompleteCallBack(){
         return slfUploadCompleteCallback;
     }

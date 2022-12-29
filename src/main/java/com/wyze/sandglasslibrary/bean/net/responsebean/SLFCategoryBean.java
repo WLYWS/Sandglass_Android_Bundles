@@ -6,7 +6,7 @@ import java.util.List;
  * Created by wangjian on 2022/12/25
  */
 public class SLFCategoryBean {
-    public int id;
+    public Long id;
     public String name;
     public String deviceModel;
     public List <SLFCategoryDetailBean> sub;

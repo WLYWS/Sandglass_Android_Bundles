@@ -250,6 +250,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     picPathLists.get(i).setUploadThumPath(null);
                                     picPathLists.get(i).setUploadUrl(null);
                                     picPathLists.get(i).setUploadThumurl(null);
+                                    picPathLists.get(i).setFileName(fileName);
                                     //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumbleFile,i));
                                 }
 
@@ -278,6 +279,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                         picPathLists.get(i).setUploadThumPath(null);
                                         picPathLists.get(i).setUploadUrl(null);
                                         picPathLists.get(i).setUploadThumurl(null);
+                                        picPathLists.get(i).setFileName(fileName);
                                         //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumFile,i));
                                     }
                                 } catch (Exception e) {
@@ -287,7 +289,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 final String path = picPathLists.get(i).getOriginalPath();
                                 SLFLogUtil.d("compressVedio","path---::"+path);
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
-                                String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
+                                //String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
+                                String fileName=path.substring(path.lastIndexOf("/")+1);
                                 picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 picPathLists.get(i).setOriginalPath(path);
                                 picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
@@ -295,8 +298,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 picPathLists.get(i).setUploadThumPath(null);
                                 picPathLists.get(i).setUploadUrl(null);
                                 picPathLists.get(i).setUploadThumurl(null);
-                                File file = new File(path);
-                                File thumFile = new File(thumPth);
+                                picPathLists.get(i).setFileName(fileName);
+                                //File file = new File(path);
+                                //File thumFile = new File(thumPth);
                                 //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,file,thumFile,i));
                                 try {
 //                                        SLFViewUtil.compressVideo(path, SLFConstants.CROP_IMAGE_PATH+fileName);

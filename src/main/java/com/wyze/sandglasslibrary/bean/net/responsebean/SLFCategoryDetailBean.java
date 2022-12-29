@@ -6,7 +6,7 @@ import java.util.List;
  * Created by wangjian on 2022/12/25
  */
 public class SLFCategoryDetailBean {
-    public int id;
+    public Long id;
     public String name;
     public List <SLFCategoryCommonBean> sub;
     /**是否选中*/
