@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.wyze.sandglasslibrary.utils.SLFStringUtil;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -104,6 +105,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         headMap.remove(SLFHttpRequestConstants.SECRET);
         Gson gson = new Gson();
         String paramStr = gson.toJson(map);
+        SLFLogUtil.d("request","加密前请求参数：| Request:"+paramStr);
         String paramsString  = SLFStringUtil.replaceBlank(SLFHttpTool.encryptAES(paramStr,secret));
         TreeMap<String,String> paramMap = new TreeMap <>();
         paramMap.put("data",paramsString);

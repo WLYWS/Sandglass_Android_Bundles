@@ -45,7 +45,6 @@ import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
-import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 import com.wyze.sandglasslibrary.net.ApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -400,12 +399,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 SLFApi.getInstance().setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                     @Override
                     public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
-                        if(isComplete){
                             SLFLogUtil.d("yj", "complete----");
                             appLogFileName = appFileName;
                             firmwareLogFileName = firmwarFileName;
                             sumbitLogFiles();
-                        }
                     }
                 });
             }else{
@@ -543,6 +540,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, i, this);
                     SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, i + 1000, this);
                 }
+            }else{
+                slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                slfaddAttachAdapter.notifyDataSetChanged();
             }
         }
     }

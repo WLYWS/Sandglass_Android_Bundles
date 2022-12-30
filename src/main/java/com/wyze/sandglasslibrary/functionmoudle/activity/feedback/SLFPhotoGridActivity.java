@@ -3,8 +3,10 @@ package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,6 +40,7 @@ import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFUtils;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.wyze.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +48,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -291,6 +296,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
                                 //String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
                                 String fileName=path.substring(path.lastIndexOf("/")+1);
+
+                                //File file = new File(path);
+                                //File thumFile = new File(thumPth);
                                 picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 picPathLists.get(i).setOriginalPath(path);
                                 picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
@@ -299,16 +307,83 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 picPathLists.get(i).setUploadUrl(null);
                                 picPathLists.get(i).setUploadThumurl(null);
                                 picPathLists.get(i).setFileName(fileName);
-                                //File file = new File(path);
-                                //File thumFile = new File(thumPth);
-                                //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,file,thumFile,i));
-                                try {
-//                                        SLFViewUtil.compressVideo(path, SLFConstants.CROP_IMAGE_PATH+fileName);
-//                                        picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
-//                                        picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
-                                } catch (Exception e) {
-                                    Log.e(TAG, Log.getStackTraceString(e));
-                                }
+//                                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+//                                retriever.setDataSource(path);
+//                                String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
+//                                String newFilePath = SLFConstants.CROP_IMAGE_PATH + fileName;
+//                                String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+//                                String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+//                                String bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+//                                String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+//                                File f = new File(path);
+//                                long fileSize = f.length();
+//                                SLFLogUtil.d("videocompress","vido_width==before========"+width);
+//                                SLFLogUtil.d("videocompress","vido_height==before========"+height);
+//                                SLFLogUtil.d("videocompress","fileSize---before----:"+Formatter.formatFileSize(getContext(),fileSize));
+//                                SLFLogUtil.d("videocompress","fileSize---before--old--:"+fileSize);
+//
+//                                if(Integer.parseInt(width)>Integer.parseInt(height)){
+//                                    String temp = height;
+//                                    String temp2 = width;
+//                                    width = temp;
+//                                    height = temp2;
+//                                }
+//                                try {
+//                                    SLFVideoSlimmer.convertVideo(path, newFilePath,Integer.parseInt(width), Integer.parseInt(height),(Integer.parseInt(width))*(Integer.parseInt(height))*2 , new SLFVideoSlimmer.SLFProgressListener() {
+//                                        @Override
+//                                        public void onStart() {
+//                                        }
+//
+//                                        @Override
+//                                        public void onFinish(boolean result) {
+//
+//                                            if (result) {
+//
+//                                                SLFLogUtil.e("videocompress","compress success");
+//
+//
+//                                                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+//                                                retriever.setDataSource(newFilePath);
+//                                                String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+//                                                String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+//                                                String bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+//
+//                                                File f = new File(newFilePath);
+//                                                long fileSize = f.length();
+//
+//                                                SLFLogUtil.d("videocompress","vido_width==after========"+width);
+//                                                SLFLogUtil.d("videocompress","vido_height==after========"+height);
+//                                                SLFLogUtil.d("videocompress","fileSize---after----:"+Formatter.formatFileSize(getContext(),fileSize));
+//
+////                                                String after = "outputPath:" +destPath+ "\n" + "width:" + width + "\n" + "height:" + height + "\n" + "bitrate:" + bitrate + "\n"
+////                                                        + "fileSize:" + Formatter.formatFileSize(MainActivity.this,fileSize);
+////                                                tv_output.setText(after);
+//
+//
+//                                            } else {
+//                                                SLFLogUtil.e("videocompress","compress faile");
+//                                            }
+//                                        }
+//
+//
+//                                        @Override
+//                                        public void onProgress(float percent) {
+//                                            SLFLogUtil.e("videocompress","compress progress:::"+String.valueOf(percent) + "%");
+//                                            //tv_progress.setText(String.valueOf(percent) + "%");
+//                                        }
+//                                    });
+//
+//                                    picPathLists.get(i).setThumbnailSmallPath(thumPth);
+//                                    picPathLists.get(i).setOriginalPath(newFilePath);
+//                                    picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+//                                    picPathLists.get(i).setUploadPath(null);
+//                                    picPathLists.get(i).setUploadThumPath(null);
+//                                    picPathLists.get(i).setUploadUrl(null);
+//                                    picPathLists.get(i).setUploadThumurl(null);
+//                                    picPathLists.get(i).setFileName(fileName);
+//                                } catch (Exception e) {
+//                                    Log.e(TAG, Log.getStackTraceString(e));
+//                                }
                             }
 
                         }
