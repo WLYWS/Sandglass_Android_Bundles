@@ -45,12 +45,15 @@ import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 import com.wyze.sandglasslibrary.net.ApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.wyze.sandglasslibrary.net.SLFHttpUtils;
 import com.wyze.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
+import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFCompressUtil;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
 import com.wyze.sandglasslibrary.utils.SLFPhotoSelectorUtils;
@@ -60,6 +63,9 @@ import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -258,8 +264,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         initTitle();
         initView();
-        requestUploadUrls();
-        requestAllData();
+        if(SLFCommonUtils.isNetworkAvailable(this)) {
+            requestUploadUrls();
+            requestAllData();
+        }else{
+            showNetworkError();
+        }
         initPhontoSelector();
     }
 
@@ -361,7 +371,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onClick(View view) {
         //SLFLogUtil.d(TAG,"feedbacksubmit onClick");
         if (view.getId() == R.id.slf_iv_back) {
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || !slfSendLogCheck.isChecked()) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || !slfSendLogCheck.isChecked()||(slfMediaDataList.size()-1>0)) {
                 showReSureDialog();
             } else {
                 finish();
@@ -450,6 +460,23 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+
+            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || !slfSendLogCheck.isChecked()||(slfMediaDataList.size()-1>0)) {
+                showReSureDialog();
+            } else {
+                finish();
+            }
+
+            return false;
+
+        }
+            return super.onKeyDown(keyCode, event);
     }
 
     /**
@@ -609,11 +636,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * emaiError显隐逻辑
      */
     private void hideEmailError() {
-        if (!TextUtils.isEmpty(slfEmailEdit.getText().toString().trim())) {
+//        if (!TextUtils.isEmpty(slfEmailEdit.getText().toString().trim())) {
             if (slfEmailError.getVisibility() == View.VISIBLE) {
                 slfEmailError.setVisibility(View.INVISIBLE);
             }
-        }
+ //       }
     }
 
     /**
@@ -684,8 +711,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             setSubmitBtnCanClick(canSubmit());
             if (slfEmailError.getVisibility() == View.VISIBLE) {
                 if (oldEmailLength <= slfEmailWordNum.length()) {
+                    oldEmailLength = slfEmailWordNum.length();
                     slfEmailError.setVisibility(View.VISIBLE);
                     setSubmitBtnCanClick(false);
+
                 } else {
                     if (type && problemEdit && emailEdit) {
                         setSubmitBtnCanClick(true);
@@ -1055,6 +1084,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestNetFail() {
         SLFLogUtil.e(TAG, "requestNetFail");
         hideLoading();
+        showNetworkError();
     }
 
     @Override
@@ -1091,6 +1121,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestFail(String value, String failCode) {
         SLFLogUtil.e(TAG, "requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
+        showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
     }
 
     private synchronized void resultUploadImageOrVideo(int code) {
@@ -1277,6 +1308,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         map.put("phoneFactoryModel",SLFUserCenter.getPhoneFactoryModel());
 
         return map;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFEventNetWorkChange event) {
+        if(event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)){
+            showNetworkError();
+        }else{
+
+        }
     }
 
 }

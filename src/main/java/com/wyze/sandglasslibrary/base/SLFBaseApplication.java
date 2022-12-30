@@ -2,10 +2,12 @@ package com.wyze.sandglasslibrary.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.StrictMode;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.utils.SLFFileUtils;
+import com.wyze.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.wyze.sandglasslibrary.utils.SLFSpUtils;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -25,6 +27,8 @@ public class SLFBaseApplication extends Application {
     public static Context getAppContext() {
         return sInstance;
     }
+
+    private SLFNetworkChangeReceiver mNetworkChangedReceiver;
 
     @Override
     public void onCreate() {
@@ -56,5 +60,21 @@ public class SLFBaseApplication extends Application {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
 
+        initReceiver();
     }
+
+
+
+    private void initReceiver() {
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction("android.net.wifi.STATE_CHANGE");
+        mNetworkChangedReceiver = new SLFNetworkChangeReceiver();
+
+        registerReceiver(mNetworkChangedReceiver, filter);
+
+    }
+
 }

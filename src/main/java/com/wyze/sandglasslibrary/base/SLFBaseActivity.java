@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
@@ -18,6 +19,8 @@ import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
 import com.wyze.sandglasslibrary.uiutils.SLFTitleBarUtil;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
+import com.wyze.sandglasslibrary.utils.SLFNetworkChangeReceiver;
+import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,6 +54,8 @@ public class SLFBaseActivity extends FragmentActivity {
 
     private int loadingCount;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +67,20 @@ public class SLFBaseActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         /**管理acitivty的集合*/
         mActivityStack.put(hashCode(), new WeakReference<>(this));
+
         /**是否要一键变灰*/
 //        if(SLFConstants.isGreyed){
 //            ColorGrayed();
 //        }
+
+
     }
 
     public Context getContext() {
         return this;
     }
+
+
 
     @Override
     public void onContentChanged() {
@@ -268,5 +278,9 @@ public class SLFBaseActivity extends FragmentActivity {
         SLFToastUtil.cancelToast();
         SLFToastUtil.showCenterText(toastText);
     }
-
+    /**Toast没有网络提示*/
+    public void showNetworkError() {
+        SLFToastUtil.cancelToast();
+        SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
+    }
 }

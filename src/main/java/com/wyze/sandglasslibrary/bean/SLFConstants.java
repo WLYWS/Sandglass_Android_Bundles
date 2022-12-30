@@ -71,4 +71,11 @@ public class SLFConstants {
 
     public static final String LOGID = "logid";
 
+    //网络不可用
+    public static final String NETWORK_UNAVAILABILITY = "network_unavailability";
+    //正在使用流量
+    public static final String MOBILE_AVAILABILITY = "mobile_availability";
+    //正在使用wifi
+    public static final String WIFI_AVAILABILITY = "wifi_availability";
+
 }
