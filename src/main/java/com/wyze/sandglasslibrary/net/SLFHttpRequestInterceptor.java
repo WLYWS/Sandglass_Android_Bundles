@@ -52,7 +52,7 @@ public class SLFHttpRequestInterceptor implements Interceptor {
                 charset = contentType.charset(UTF_8);
             }
             String params = buffer.readString(charset);
-            SLFLogUtil.d("request", "请求参数： | " + params);
+            //SLFLogUtil.d("request", "请求参数： | " + params);
         } catch (IOException e) {
             e.printStackTrace();
         }

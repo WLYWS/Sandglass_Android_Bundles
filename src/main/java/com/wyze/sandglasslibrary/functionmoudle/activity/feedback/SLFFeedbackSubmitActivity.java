@@ -49,6 +49,7 @@ import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.wyze.sandglasslibrary.net.ApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
@@ -243,6 +244,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private Runnable submitLogRunnable;
 
     private ExecutorService singleThreadExecutor;
+    private ExecutorService singleUploadVideoExecutor;
 
     private boolean isSubmit = false;
 
@@ -518,8 +520,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         slfMediaDataList.addAll(selectMediaList);
                         slfMediaDataList.add(slfMediaData);
                         setUploadUrl();
-                        slfaddAttachAdapter.notifyDataSetChanged();
-                        uploadFiles();
                         SLFLocalApi.getInstance().setCompressVideoCompelete(new SLFCompressVideoCompelete() {
                             @Override
                             public void isCompelete(String path, String fileName, SLFMediaData slfMediaData) {
@@ -542,10 +542,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                             slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
                                             slfaddAttachAdapter.notifyDataSetChanged();
                                         }
+                                    }else{
+                                        SLFLogUtil.d("videocompress","compelete---object--not--equals");
                                     }
                                 }
                             }
                         });
+                        slfaddAttachAdapter.notifyDataSetChanged();
+                        uploadFiles();
+
                     });
         }
 
@@ -583,6 +588,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         }
     }
+
 
 
     /**
@@ -1348,6 +1354,34 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         return map;
     }
 
+    private synchronized void uploadvideo(String path,String filename,SLFMediaData slfMediaData){
+        for(int i=0;i<slfMediaDataList.size()-1;i++) {
+            if (slfMediaDataList.get(i).equals(slfMediaData)) {
+                slfMediaDataList.get(i).setOriginalPath(path);
+                slfMediaDataList.get(i).setFileName(filename);
+                if (slfMediaDataList.get(i).getUploadPath() != null) {
+                    if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                        SLFLogUtil.d("videocompress", "compelete---");
+                        File file = new File(slfMediaDataList.get(i).getOriginalPath());
+                        File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
+                        SLFLogUtil.d("videocompress", "compelete--222222-");
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", i, SLFFeedbackSubmitActivity.this);
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", i + 1000, SLFFeedbackSubmitActivity.this);
+                        SLFLogUtil.d("videocompress", "compelete--33333-");
+
+                    }
+                } else {
+                    SLFLogUtil.d("videocompress", "compelete---url---null");
+                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                    slfaddAttachAdapter.notifyDataSetChanged();
+
+                }
+            } else {
+                SLFLogUtil.d("videocompress", "compelete---object--not--equals");
+            }
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFEventNetWorkChange event) {
         if(event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)){
@@ -1355,5 +1389,33 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }else{
 
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(SLFEventCompressVideo event) {
+
+        SLFLogUtil.d("videocompress","onevent----compelete");
+        singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
+        singleUploadVideoExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                uploadvideo(event.path,event.filename,event.slfMediaData);
+            }
+        });
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(SLFEventNoCompressVideo event) {
+
+        SLFLogUtil.d("videocompress","onevent----compelete");
+        singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
+        singleUploadVideoExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                uploadvideo(event.path,event.filename,event.slfMediaData);
+            }
+        });
+
     }
 }

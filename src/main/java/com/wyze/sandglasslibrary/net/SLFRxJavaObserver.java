@@ -3,6 +3,8 @@ package com.wyze.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.wyze.sandglasslibrary.commonapi.SLFLocalApi;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +52,7 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has(DATA)) {
                     String response = SLFDecryptUtil.DecryAes(jsonObject.getString(DATA), mSecret);
+                    SLFLogUtil.d("request","请求体返回解密 | Response:"+response);
                     if(response!=null){
                         JSONObject jsonObjectData = new JSONObject(response);
                         if (jsonObjectData.has(MSG)) {
