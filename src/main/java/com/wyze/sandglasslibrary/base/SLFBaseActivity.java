@@ -19,7 +19,6 @@ import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
 import com.wyze.sandglasslibrary.uiutils.SLFTitleBarUtil;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
-import com.wyze.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 
 import org.greenrobot.eventbus.EventBus;
