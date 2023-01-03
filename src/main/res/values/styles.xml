@@ -10,8 +10,10 @@
         <!-- 是否浮现在activity之上,会造成macth_parent失效-->
         <item name="android:windowIsFloating">true</item>
         <!-- 是否模糊 -->
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
     </style>
+    
     <!-- dialog进出动画 -->
     <style name="slf_dialogBottomAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/slf_clean_history_detail_dialog_bottom_in</item>

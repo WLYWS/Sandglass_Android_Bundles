@@ -7,10 +7,12 @@ import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 
 import java.io.File;
 import java.io.Serializable;
+
 /**
  * created by yangjie
  * describe:一个存储全局变量的类
  * time: 2022/12/2
+ *
  * @author yangjie
  */
 public class SLFConstants {
@@ -51,13 +53,13 @@ public class SLFConstants {
 
     public static final String ALL_ROUND = "all_round";
 
-    public static final String ROUND_FIRST="first";
+    public static final String ROUND_FIRST = "first";
 
     public static final String ROUND_END = "end";
 
     public static final String ROUND_MIDDLE = "middle";
 
-    public static String appLogName  = "SLFlog_" + System.currentTimeMillis() / 1000 + ".zip";
+    public static String appLogName = "SLFlog_" + System.currentTimeMillis() / 1000 + ".zip";
 
     public static String firmwareLogName = "SLFfirmwarelog_" + System.currentTimeMillis() / 1000 + ".zip";
     public static String firmwareIOTLogName = "SLFfirmwarelog_IOT_" + System.currentTimeMillis() / 1000 + ".zip";
@@ -66,5 +68,14 @@ public class SLFConstants {
     public static final String UPLOADING = "uploading";
     public static final String UPLOADED = "uploaded";
     public static final String UPLOADIDLE = "uploadidle";
+
+    public static final String LOGID = "logid";
+
+    //网络不可用
+    public static final String NETWORK_UNAVAILABILITY = "network_unavailability";
+    //正在使用流量
+    public static final String MOBILE_AVAILABILITY = "mobile_availability";
+    //正在使用wifi
+    public static final String WIFI_AVAILABILITY = "wifi_availability";
 
 }

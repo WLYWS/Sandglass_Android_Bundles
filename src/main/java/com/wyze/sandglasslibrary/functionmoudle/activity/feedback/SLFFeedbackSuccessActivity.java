@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
+import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.commonui.SLFTextView;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
@@ -29,11 +30,14 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
 
     private Button slf_finish_Btn;
 
+    private int logId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_success);
+        logId = getIntent().getIntExtra(SLFConstants.LOGID,-1);
         initTitle();
         initView();
     }
@@ -50,7 +54,7 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
         slf_logid = findViewById(R.id.slf_feed_back_sucess_logid);
         slf_copy = findViewById(R.id.slf_feed_back_success_copy);
         slf_finish_Btn = findViewById(R.id.slf_success_finish);
-        slf_logid.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_success_center_logid,12));
+        slf_logid.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_success_center_logid,logId));
         slf_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

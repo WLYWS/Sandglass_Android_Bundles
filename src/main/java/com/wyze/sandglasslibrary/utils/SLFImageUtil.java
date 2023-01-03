@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 
@@ -250,6 +251,10 @@ public class SLFImageUtil {
 //              .thumbnail(0.2f)
 //		        .apply(RequestOptions.bitmapTransform(new ImageTransformation(context, shape).getTransformation()))
                 .transform(transformations)
+                //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+                .skipMemoryCache(false)
+                //取消Glide自带的动画
+                .dontAnimate()
                 .into(img);
     }
 

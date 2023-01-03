@@ -18,6 +18,8 @@ public class SLFLeaveMsgBean {
         this.thumbnailContentType = thumbnailContentType;
     }
 
+    public SLFLeaveMsgBean(){}
+
     @Override
     public String toString ( ) {
         return "HistiryBean{" +

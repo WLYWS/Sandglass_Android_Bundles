@@ -69,6 +69,8 @@ public class SLFMediaData implements Parcelable {
     private String uploadThumurl;
     /**是否空闲*/
     private String uploadStatus;
+    /**文件名*/
+    private String fileName;
 
     public SLFMediaData() {
     }
@@ -96,6 +98,7 @@ public class SLFMediaData implements Parcelable {
         uploadUrl = in.readString();
         uploadThumurl = in.readString();
         uploadStatus = in.readString();
+        fileName = in.readString();
     }
 
     public String getUploadUrl() {
@@ -141,6 +144,14 @@ public class SLFMediaData implements Parcelable {
         this.uploadStatus = uploadStatus;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
@@ -165,6 +176,7 @@ public class SLFMediaData implements Parcelable {
         dest.writeString(uploadUrl);
         dest.writeString(uploadThumurl);
         dest.writeString(uploadStatus);
+        dest.writeString(fileName);
     }
 
     @Override
