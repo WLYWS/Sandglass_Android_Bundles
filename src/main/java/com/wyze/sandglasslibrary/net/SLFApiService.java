@@ -55,8 +55,8 @@ public interface SLFApiService {
     //    "albumID": 2,
     //    "sectionID": 16
     // }
-    @POST("{api}")
-    Observable<String> postData(@Path(value = "api", encoded = true) String api, @Body RequestBody requestBody,@HeaderMap TreeMap <String, Object> headMap);
+    @POST
+    Observable<String> postData(@Url String url, @Body RequestBody requestBody,@HeaderMap TreeMap <String, Object> headMap);
 
     // Post请求,以表单方式提交
     // http://www.5mins-sun.com:8081/news

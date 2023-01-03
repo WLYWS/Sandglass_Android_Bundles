@@ -46,6 +46,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class SLFHttpTool {
 
+    private static final String TAG = "SLFHttpTool";
     private static String secret;
     private static final String CIP_ALGORITHM = "AES/ECB/PKCS5Padding";
     public static final String CHARSET_UTF8 = "UTF-8";
@@ -319,6 +320,7 @@ public class SLFHttpTool {
         String str=df.format( ran );
         return Double.parseDouble(str);
     }
+
     public static TreeMap getTreeCrc(String method,String url,TreeMap maps) {
         TreeMap map = new TreeMap();
         try {

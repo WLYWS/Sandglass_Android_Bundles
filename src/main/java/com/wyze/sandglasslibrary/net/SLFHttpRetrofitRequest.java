@@ -99,8 +99,8 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     // Post请求(带参)
     // 以RequestBody方式提交
     @Override
-    public void mHttpPost(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback callBack) {
-        TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
+    public void mHttpPost(Context context, String url, TreeMap map, T type, SLFHttpRequestCallback callBack) {
+        TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,url,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
         Gson gson = new Gson();
@@ -111,7 +111,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         paramMap.put("data",paramsString);
         String param = gson.toJson(paramMap);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), param);
-        Observable<String> observable = apiService.postData(api, requestBody,headMap);
+        Observable<String> observable = apiService.postData(url, requestBody,headMap);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 
@@ -150,19 +150,14 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
             SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
         }
         Map<String, RequestBody> mapValue = new HashMap <>();
-//        for (Object key : map.keySet()) {
-//            mapValue.put(key.toString(), SLFHttpTool.convertToRequestBody(Objects.requireNonNull(map.get(key)).toString()));
-//        }
-        // 发送异步请求
         Observable <String> observable = apiService.uploadMultipart(api, mapValue, params);
-        //observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack));
     }
 
     @Override
-    public void putHttpFile (Context context, String url, File file, int type, SLFHttpRequestCallback callBack) {
+    public void putHttpFile (Context context, String url, File file,String mediaType,int type, SLFHttpRequestCallback callBack) {
 
         // 生成单个文件
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("mediaType"), file);
         Observable<String> observable = apiService.putBodyFile(url,requestFile);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,""));
     }

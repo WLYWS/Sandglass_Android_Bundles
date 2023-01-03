@@ -2,6 +2,8 @@ package com.wyze.sandglasslibrary.net;
 
 import android.util.Log;
 
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -31,13 +33,12 @@ public class SLFHttpRequestInterceptor implements Interceptor {
         long duration = endTime - startTime;
         okhttp3.MediaType mediaType = response.body().contentType();
         String content = response.body().string();
-        Log.d("request", "请求地址：| " + request.toString());
         if (request.body() != null) {
             printParams(request.body());
         }
-        Log.d("request", "请求体返回：| Response:" + content);
-        Log.d("request", "----------请求耗时:" + duration + "毫秒----------");
-        Log.d("request", "请求体返回：| Response 时间戳:" +System.currentTimeMillis());
+        SLFLogUtil.d("request", "请求体返回：| Response:" + content);
+        SLFLogUtil.d("request", "----------请求耗时:" + duration + "毫秒----------");
+        SLFLogUtil.d("request", "请求体返回：| Response 时间戳:" +System.currentTimeMillis());
         return response.newBuilder().body(okhttp3.ResponseBody.create(mediaType, content)).build();
     }
 
@@ -51,7 +52,7 @@ public class SLFHttpRequestInterceptor implements Interceptor {
                 charset = contentType.charset(UTF_8);
             }
             String params = buffer.readString(charset);
-            Log.d("request", "请求参数： | " + params);
+            SLFLogUtil.d("request", "请求参数： | " + params);
         } catch (IOException e) {
             e.printStackTrace();
         }
