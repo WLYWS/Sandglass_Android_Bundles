@@ -145,7 +145,7 @@ public class SLFHttpUtils<T>{
         mHttpRequest.mHttpMultiFile(context, api, list, fileList, map, type, callBack);
     }
 
-    public void executePutFile(Context context, String api, File file, int type, SLFHttpRequestCallback callBack){
-        mHttpRequest.putHttpFile(context, api, file, type, callBack);
+    public void executePutFile(Context context, String api, File file, String mediaType,int type, SLFHttpRequestCallback callBack){
+        mHttpRequest.putHttpFile(context, api, file, mediaType,type, callBack);
     }
 }
