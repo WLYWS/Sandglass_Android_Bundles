@@ -38,13 +38,16 @@ import com.wyze.sandglasslibrary.bean.net.responsebean.SLFProlemDataBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
+import com.wyze.sandglasslibrary.commonapi.SLFLocalApi;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFCancelOrOkDialog;
 import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
+import com.wyze.sandglasslibrary.interf.SLFCompressVideoCompelete;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 import com.wyze.sandglasslibrary.net.ApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -517,6 +520,32 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         setUploadUrl();
                         slfaddAttachAdapter.notifyDataSetChanged();
                         uploadFiles();
+                        SLFLocalApi.getInstance().setCompressVideoCompelete(new SLFCompressVideoCompelete() {
+                            @Override
+                            public void isCompelete(String path, String fileName, SLFMediaData slfMediaData) {
+                                for(int i=0;i<slfMediaDataList.size()-1;i++){
+                                    if(slfMediaDataList.get(i).equals(slfMediaData)){
+                                        slfMediaDataList.get(i).setOriginalPath(path);
+                                        slfMediaDataList.get(i).setFileName(fileName);
+                                        if (slfMediaDataList.get(i).getUploadPath() != null) {
+                                            if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                                                SLFLogUtil.d("videocompress","compelete---");
+                                                File file = new File(slfMediaDataList.get(i).getOriginalPath());
+                                                File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
+                                                SLFLogUtil.d("videocompress","compelete--222222-");
+                                                SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file,"video/mp4", i, SLFFeedbackSubmitActivity.this);
+                                                SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile,"image/jpg", i + 1000, SLFFeedbackSubmitActivity.this);
+                                                SLFLogUtil.d("videocompress","compelete--33333-");
+                                            }
+                                        }else{
+                                            SLFLogUtil.d("videocompress","compelete---url---null");
+                                            slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                                            slfaddAttachAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                            }
+                        });
                     });
         }
 
@@ -532,13 +561,21 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void uploadFiles() {
         SLFLogUtil.d("yj", "slfMediaDataList:::uploadFiles:::" + slfMediaDataList.size());
+        String contentType="";
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (slfMediaDataList.get(i).getUploadPath() != null) {
-                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)&&!slfMediaDataList.get(i).getMimeType().contains("video")) {
                     File file = new File(slfMediaDataList.get(i).getOriginalPath());
                     File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, i, this);
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, i + 1000, this);
+                   if(slfMediaDataList.get(i).getMimeType().contains("png")){
+                        contentType = "image/png";
+                    }else if(slfMediaDataList.get(i).getMimeType().contains("jpg")){
+                        contentType = "image/jpg";
+                    }else if(slfMediaDataList.get(i).getMimeType().contains("jpeg")){
+                        contentType = "image/jpeg";
+                    }
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file,contentType, i, this);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile,contentType, i + 1000, this);
                 }
             }else{
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
@@ -546,6 +583,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         }
     }
+
 
     /**
      * email的touchlistener
@@ -1053,7 +1091,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
                                     SLFLogUtil.d(TAG, "logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, 6, SLFFeedbackSubmitActivity.this);
+                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip",6, SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1099,7 +1137,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             /**分配前六个链接给图片和视频上传*/
             for (int i = 0; i < 6; i++) {
                 SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                SLFLogUtil.d(TAG, "uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
+                SLFLogUtil.d("videocompress", "uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
             }
         } else if (type instanceof Integer) {
             int code = (int) type;
@@ -1318,5 +1356,4 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
         }
     }
-
 }
