@@ -46,7 +46,7 @@ import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
-import com.wyze.sandglasslibrary.net.ApiContant;
+import com.wyze.sandglasslibrary.net.SLFApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.wyze.sandglasslibrary.net.SLFHttpUtils;
@@ -407,7 +407,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 });
             }else{
                 showLoading();
-                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + ApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
+                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
             }
 
 
@@ -877,7 +877,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void requestAllData() {
         showLoading();
         SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + ApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class, this);
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class, this);
     }
 
     /**
@@ -887,7 +887,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         TreeMap map = new TreeMap();
         map.put("num", 9);
         SLFHttpUtils.getInstance().executeGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + ApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
     }
 
     /**
@@ -1106,7 +1106,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             SLFLogUtil.e(TAG, "requestScucess::Integer::" + ":::type:::" + type);
             if (code == 6) {
                 SLFLogUtil.d(TAG, "logfile-----upload---complete");
-                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + ApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
+                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
             } else {
                 resultUploadImageOrVideo(code);
             }

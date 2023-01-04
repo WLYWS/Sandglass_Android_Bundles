@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">SLFeedback</string>
+    <item name="slf_adatper_utils" type="id"></item>
     <!--titlebar-->
+    <string name="app_name">SLFeedback</string>
     <string name="slf_title_cancel">Cancel</string>
-    <string name="slf_title_save">save</string>
 
 
     <!--feedback photoseletor-->
+    <string name="slf_title_save">save</string>
     <string name="slf_only_select_3">Only select up to 3 images.</string>
     <string name="slf_title_activity_slfbase">SLFBaseActivity</string>
     <string name="slf_feedback_problem_description">Please describe your problem and any feedback you have. You can add up to 3 photos to help you describe the problem.</string>
@@ -40,21 +41,19 @@
     <string name="slf_feedback_success_bottom_finish">Finish</string>
     <string name="slf_feedback_upload_photo_video">Photo uploading, please hold on.</string>
     <string name="slf_common_network_error">No network available.</string>
-    <string name="slf_common_request_error">Operation failed.</string>
 
     <!--help and feedback-->
+    <string name="slf_common_request_error">Operation failed.</string>
     <string name="slf_help_and_feedback_grid_title">All device types</string>
     <string name="slf_help_and_feedback_bar_title">Help &#038; Feedback</string>
     <string name="slf_help_and_feedback_chat_bot">Chat Bot</string>
-    <string name="slf_help_and_feedback_feed_back">Feedback</string>
 
+    <string name="slf_help_and_feedback_feed_back">Feedback</string>
     <string name="loading1">Loading   </string>
     <string name="loading2">Loading.  </string>
     <string name="loading3">Loading.. </string>
-    <string name="loading4">Loading...</string>
-
 
 
     <!--Adapter utils-->
-    <item name="slf_adatper_utils" type="id"></item>
+    <string name="loading4">Loading...</string>
 </resources>

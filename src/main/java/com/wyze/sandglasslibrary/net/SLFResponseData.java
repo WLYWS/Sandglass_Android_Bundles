@@ -3,7 +3,7 @@ package com.wyze.sandglasslibrary.net;
 /**
  * Created by wangjian on 2022/12/23
  */
-public class ResponseData<T> {
+public class SLFResponseData<T> {
     private int code;
     private String msg;
     private T data;

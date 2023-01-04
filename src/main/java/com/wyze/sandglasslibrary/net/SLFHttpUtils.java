@@ -145,6 +145,16 @@ public class SLFHttpUtils<T>{
         mHttpRequest.mHttpMultiFile(context, api, list, fileList, map, type, callBack);
     }
 
+    /**
+     *
+     * @param context 上下文
+     * @param api 请求的api
+     * @param file 上传的文件
+     * @param mediaType 上传的文件类型
+     * @param type 请求的标识
+     * @param callBack 结果返回接口
+     */
+
     public void executePutFile(Context context, String api, File file, String mediaType,int type, SLFHttpRequestCallback callBack){
         mHttpRequest.putHttpFile(context, api, file, mediaType,type, callBack);
     }

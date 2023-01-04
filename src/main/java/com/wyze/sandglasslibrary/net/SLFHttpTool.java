@@ -30,6 +30,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wyze.sandglasslibrary.utils.SLFStringUtil;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -157,7 +158,7 @@ public class SLFHttpTool {
     }
 
     /**
-     *
+     *md5生成32个字节
      * @param plainText
      *            明文
      * @return 32位密文
@@ -333,7 +334,8 @@ public class SLFHttpTool {
             map.put("ts",String.valueOf(ts));
             map.put("Authorization", "abc");
             map.put("secret",encryptMd532(secret.getBytes(CHARSET_UTF8)));
-            Log.e("request", "请求体返回：| Response: ts="+ts);
+            SLFLogUtil.d(TAG, "加密：| 签名: signature="+SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
+            SLFLogUtil.d(TAG, "加密：| 密钥: secret="+encryptMd532(secret.getBytes(CHARSET_UTF8)));
         } catch (Exception e) {
             e.printStackTrace();
         }
