@@ -157,7 +157,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     public void putHttpFile (Context context, String url, File file,String mediaType,int type, SLFHttpRequestCallback callBack) {
 
         // 生成单个文件
-        RequestBody requestFile = RequestBody.create(MediaType.parse("mediaType"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse(mediaType), file);
         Observable<String> observable = apiService.putBodyFile(url,requestFile);
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,""));
     }

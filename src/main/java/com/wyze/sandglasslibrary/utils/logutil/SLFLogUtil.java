@@ -385,7 +385,7 @@ public final class SLFLogUtil extends Xlog {
      *
      * @param code log级别 如：debug、error等等
      */
-    private static void log(String code, String tag, String msg) {
+    private  static synchronized void log(String code, String tag, String msg) {
         if(!toWrite){
             return;
         }

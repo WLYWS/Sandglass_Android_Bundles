@@ -1,6 +1,7 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
@@ -22,13 +23,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.commonapi.SLFLocalApi;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPhotoListAdapter;
 import com.wyze.sandglasslibrary.base.SLFPhotoBaseActivity;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
+import com.wyze.sandglasslibrary.interf.SLFVideoUploadedCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.SLFPhotoFolderInfo;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
+import com.wyze.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventUpdatePhotolist;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFCropUtil;
@@ -108,6 +113,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     private static Runnable confirmRunnable;
     private boolean isEvent;
     private TextView slf_preview_text;
+    private SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(false,"","",null);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -294,96 +300,32 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 final String path = picPathLists.get(i).getOriginalPath();
                                 SLFLogUtil.d("compressVedio","path---::"+path);
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
+                                SLFLogUtil.d("compressVedio","thumPth---::"+thumPth);
                                 //String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
-                                String fileName=path.substring(path.lastIndexOf("/")+1);
-
+                                //String fileName=path.substring(path.lastIndexOf("/")+1);
+                                String fileThumbleName = SLFUtils.getCharacterAndNumber()+"videoThumble.jpg";
+                                String fileName = SLFUtils.getCharacterAndNumber() + ".mp4";
+                                String newFilePath = SLFConstants.CROP_IMAGE_PATH + fileName;
                                 //File file = new File(path);
                                 //File thumFile = new File(thumPth);
-                                picPathLists.get(i).setThumbnailSmallPath(thumPth);
-                                picPathLists.get(i).setOriginalPath(path);
-                                picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
-                                picPathLists.get(i).setUploadPath(null);
-                                picPathLists.get(i).setUploadThumPath(null);
-                                picPathLists.get(i).setUploadUrl(null);
-                                picPathLists.get(i).setUploadThumurl(null);
-                                picPathLists.get(i).setFileName(fileName);
-//                                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//                                retriever.setDataSource(path);
-//                                String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
-//                                String newFilePath = SLFConstants.CROP_IMAGE_PATH + fileName;
-//                                String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
-//                                String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
-//                                String bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
-//                                String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-//                                File f = new File(path);
-//                                long fileSize = f.length();
-//                                SLFLogUtil.d("videocompress","vido_width==before========"+width);
-//                                SLFLogUtil.d("videocompress","vido_height==before========"+height);
-//                                SLFLogUtil.d("videocompress","fileSize---before----:"+Formatter.formatFileSize(getContext(),fileSize));
-//                                SLFLogUtil.d("videocompress","fileSize---before--old--:"+fileSize);
-//
-//                                if(Integer.parseInt(width)>Integer.parseInt(height)){
-//                                    String temp = height;
-//                                    String temp2 = width;
-//                                    width = temp;
-//                                    height = temp2;
-//                                }
-//                                try {
-//                                    SLFVideoSlimmer.convertVideo(path, newFilePath,Integer.parseInt(width), Integer.parseInt(height),(Integer.parseInt(width))*(Integer.parseInt(height))*2 , new SLFVideoSlimmer.SLFProgressListener() {
-//                                        @Override
-//                                        public void onStart() {
-//                                        }
-//
-//                                        @Override
-//                                        public void onFinish(boolean result) {
-//
-//                                            if (result) {
-//
-//                                                SLFLogUtil.e("videocompress","compress success");
-//
-//
-//                                                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//                                                retriever.setDataSource(newFilePath);
-//                                                String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
-//                                                String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
-//                                                String bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
-//
-//                                                File f = new File(newFilePath);
-//                                                long fileSize = f.length();
-//
-//                                                SLFLogUtil.d("videocompress","vido_width==after========"+width);
-//                                                SLFLogUtil.d("videocompress","vido_height==after========"+height);
-//                                                SLFLogUtil.d("videocompress","fileSize---after----:"+Formatter.formatFileSize(getContext(),fileSize));
-//
-////                                                String after = "outputPath:" +destPath+ "\n" + "width:" + width + "\n" + "height:" + height + "\n" + "bitrate:" + bitrate + "\n"
-////                                                        + "fileSize:" + Formatter.formatFileSize(MainActivity.this,fileSize);
-////                                                tv_output.setText(after);
-//
-//
-//                                            } else {
-//                                                SLFLogUtil.e("videocompress","compress faile");
-//                                            }
-//                                        }
-//
-//
-//                                        @Override
-//                                        public void onProgress(float percent) {
-//                                            SLFLogUtil.e("videocompress","compress progress:::"+String.valueOf(percent) + "%");
-//                                            //tv_progress.setText(String.valueOf(percent) + "%");
-//                                        }
-//                                    });
-//
-//                                    picPathLists.get(i).setThumbnailSmallPath(thumPth);
-//                                    picPathLists.get(i).setOriginalPath(newFilePath);
-//                                    picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
-//                                    picPathLists.get(i).setUploadPath(null);
-//                                    picPathLists.get(i).setUploadThumPath(null);
-//                                    picPathLists.get(i).setUploadUrl(null);
-//                                    picPathLists.get(i).setUploadThumurl(null);
-//                                    picPathLists.get(i).setFileName(fileName);
-//                                } catch (Exception e) {
-//                                    Log.e(TAG, Log.getStackTraceString(e));
-//                                }
+                                try{
+                                    Bitmap btm = getVideoThumbnail(path);
+                                    if(btm!=null){
+                                        SLFViewUtil.compressImage(btm,SLFConstants.CROP_IMAGE_PATH, fileThumbleName);
+                                    }
+                                    picPathLists.get(i).setThumbnailSmallPath(SLFConstants.CROP_IMAGE_PATH+fileThumbleName);
+                                    picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
+                                    picPathLists.get(i).setUploadPath(null);
+                                    picPathLists.get(i).setUploadThumPath(null);
+                                    picPathLists.get(i).setUploadUrl(null);
+                                    picPathLists.get(i).setUploadThumurl(null);
+                                    SLFMediaData slfMediaData = picPathLists.get(i);
+                                    compressVideo(path, newFilePath, fileName, picPathLists.get(i));
+                                }catch(Exception e){
+                                    Log.e(TAG, Log.getStackTraceString(e));
+                                }
+
+
                             }
 
                         }
@@ -401,6 +343,101 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         }
             }
         };
+    }
+    /**获取多媒体视频缩略图*/
+    private Bitmap getVideoThumbnail(String videoPath) {
+        MediaMetadataRetriever media =new MediaMetadataRetriever();
+        media.setDataSource(videoPath);
+        Bitmap bitmap = media.getFrameAtTime();
+        return bitmap;
+    }
+    /**压缩视频*/
+    private synchronized void compressVideo(String path,String newFilePath,String filename,SLFMediaData slfMediaData){
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(path);
+        String originPath = newFilePath;
+        String oldFilePath = path;
+        String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+        String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+        String bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+        String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        File f = new File(path);
+        long fileSize = f.length();
+        SLFLogUtil.d("videocompress", "vido_width==before========" + width);
+        SLFLogUtil.d("videocompress", "vido_height==before========" + height);
+        SLFLogUtil.d("videocompress", "fileSize---before----:" + Formatter.formatFileSize(getContext(), fileSize));
+        SLFLogUtil.d("videocompress", "fileSize---before--old--:" + fileSize);
+        SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(true,newFilePath,filename,slfMediaData);
+        if (Integer.parseInt(width) > Integer.parseInt(height)) {
+            String temp = height;
+            String temp2 = width;
+            width = temp;
+            height = temp2;
+        }
+        try {
+            SLFVideoSlimmer.convertVideo(path, newFilePath, Integer.parseInt(width), Integer.parseInt(height), (Integer.parseInt(width)) * (Integer.parseInt(height)) * 2, new SLFVideoSlimmer.SLFProgressListener() {
+                @Override
+                public void onStart() {
+                }
+
+                @Override
+                public void onFinish(boolean result) {
+
+                    if (result) {
+
+                        SLFLogUtil.e("videocompress", "compress success");
+
+
+                        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                        retriever.setDataSource(newFilePath);
+                        String width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+                        String height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+                        String bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+
+                        File f = new File(newFilePath);
+                        long fileSize = f.length();
+
+                        SLFLogUtil.d("videocompress", "vido_width==after========" + width);
+                        SLFLogUtil.d("videocompress", "vido_height==after========" + height);
+                        SLFLogUtil.d("videocompress", "fileSize---after----:" + Formatter.formatFileSize(getContext(), fileSize));
+
+//                                                String after = "outputPath:" +destPath+ "\n" + "width:" + width + "\n" + "height:" + height + "\n" + "bitrate:" + bitrate + "\n"
+//                                                        + "fileSize:" + Formatter.formatFileSize(MainActivity.this,fileSize);
+//                                                tv_output.setText(after);
+//                        if(SLFLocalApi.getInstance().getCompressVideoCompelete()!=null){
+//                            SLFLocalApi.getInstance().getCompressVideoCompelete().isCompelete(newFilePath,filename,slfMediaData);
+//                        }
+//                        slfEventCompressVideo.isCompelte = true;
+//                        slfEventCompressVideo.filename = filename;
+//                        slfEventCompressVideo.path = newFilePath;
+//                        slfEventCompressVideo.slfMediaData = slfMediaData;
+//                        EventBus.getDefault().post(slfEventCompressVideo);
+                        EventBus.getDefault().post(new SLFEventCompressVideo(true,path,filename,slfMediaData));
+                    } else {
+                        SLFLogUtil.e("videocompress", "compress faile");
+                        String fileName=path.substring(path.lastIndexOf("/")+1);
+//                        if(SLFLocalApi.getInstance().getCompressVideoCompelete()!=null){
+//                            SLFLocalApi.getInstance().getCompressVideoCompelete().isCompelete(path,fileName,slfMediaData);
+//                        }
+                        SLFMediaData slfMediaData1 = slfMediaData;
+                        EventBus.getDefault().post(new SLFEventNoCompressVideo(path,fileName,slfMediaData1));
+                    }
+
+                }
+
+
+                @Override
+                public void onProgress(float percent) {
+                    SLFLogUtil.e("videocompress", "compress progress:::" + String.valueOf(percent) + "%");
+                    //tv_progress.setText(String.valueOf(percent) + "%");
+                }
+            });
+
+
+        } catch (Exception e) {
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
     }
 
     @Override
@@ -518,6 +555,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     }
 
 
+    @SuppressLint("WrongConstant")
     private void takePhoto() {
 
 //        Intent intent = new Intent(this,SLFTakeToCamra.class);
@@ -721,6 +759,5 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             resumChecked();
         }
     }
-
 
 }
