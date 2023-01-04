@@ -41,6 +41,7 @@
     <string name="slf_feedback_upload_photo_video">Photo uploading, please hold on.</string>
     <string name="slf_common_network_error">No network available.</string>
     <string name="slf_common_request_error">Operation failed.</string>
+    <string name="slf_submit_fail_text">Failed to submit feedback, try again</string>
 
     <!--help and feedback-->
     <string name="slf_help_and_feedback_grid_title">All device types</string>
