@@ -1,14 +1,15 @@
-package com.wyze.sandglasslibrary.bean.net.responsebean;
+package com.wyze.sandglasslibrary.moudle.net.responsebean;
 
 import java.util.List;
 
 /**
  * Created by wangjian on 2022/12/25
  */
-public class SLFCategoryDetailBean {
+public class SLFCategoryBean {
     public Long id;
     public String name;
-    public List <SLFCategoryCommonBean> sub;
+    public String deviceModel;
+    public List <SLFCategoryDetailBean> sub;
     /**是否选中*/
     public boolean isChecked;
     /**是否第一个，中间，最后一个，或者单个*/
@@ -35,9 +36,10 @@ public class SLFCategoryDetailBean {
 
     @Override
     public String toString ( ) {
-        return "SLFCategoryDetailBean{" +
+        return "SLFCategoryBean{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", deviceModel='" + deviceModel + '\'' +
                 ", sub=" + sub +
                 '}';
     }

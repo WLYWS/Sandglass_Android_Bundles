@@ -1,10 +1,7 @@
 package com.wyze.sandglasslibrary.commonapi;
 
-import android.content.Context;
-import android.content.Intent;
-
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUplaodFileAddressBean;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUplaodFileAddressBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;

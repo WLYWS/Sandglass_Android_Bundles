@@ -72,6 +72,7 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:1.1.0-alpha08"
     implementation "androidx.camera:camera-view:1.0.0-alpha28"
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.room:room-runtime:2.3.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
@@ -94,4 +95,8 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     api "io.reactivex.rxjava3:rxjava:3.0.13"
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    //数据库
+    implementation 'androidx.room:room-common:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
 }

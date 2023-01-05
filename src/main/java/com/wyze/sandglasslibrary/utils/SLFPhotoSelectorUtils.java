@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFPhotoGridActivity;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaQuality;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;

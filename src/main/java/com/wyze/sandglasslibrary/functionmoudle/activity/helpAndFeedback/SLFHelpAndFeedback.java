@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
+import com.wyze.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.wyze.sandglasslibrary.moudle.SLFDeviceTypes;
@@ -91,9 +92,15 @@ public class SLFHelpAndFeedback extends SLFBaseActivity implements View.OnClickL
             //TODO gotoFeedbackFormat
         }else if(view.getId() == R.id.slf_help_and_feedback_chat_bot){
             //TODO gotoChatBot
+            gotoChatBot();
         }else if(view.getId() == R.id.slf_help_and_feedback_feedback){
             gotoFeedback();
         }
+    }
+
+    private void gotoChatBot ( ) {
+        Intent in = new Intent(getContext(), SLFChatBotActivity.class);
+        startActivity(in);
     }
 
     private void gotoFeedback(){

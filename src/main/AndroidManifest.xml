@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SLFChatBotActivity"
+            android:name=".functionmoudle.activity.chatbot.SLFChatBotActivity"
             android:exported="false" />
 
         <activity

@@ -15,18 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wyze.sandglasslibrary.R;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCategoryBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCategoryCommonBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCategoryDetailBean;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFBottomDialogListAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseBottomDialog;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
