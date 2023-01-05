@@ -1,4 +1,10 @@
 <resources>
+    <!-- faq-->
+    <string name="slf_faq_input_hint">Please describe your problem briefly</string>
+    <string name="slf_faq_title">Chat Bot</string>
+    <string name="slf_top_question">Top questions</string>
+    <string name="slf_related_question">Related questions:</string>
+
     <item name="slf_adatper_utils" type="id"></item>
     <!--titlebar-->
     <string name="app_name">SLFeedback</string>

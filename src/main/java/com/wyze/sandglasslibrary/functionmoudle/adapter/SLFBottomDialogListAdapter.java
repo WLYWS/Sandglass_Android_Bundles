@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryBean;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryCommonBean;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFCategoryDetailBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCategoryBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCategoryCommonBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCategoryDetailBean;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerAdatper;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;

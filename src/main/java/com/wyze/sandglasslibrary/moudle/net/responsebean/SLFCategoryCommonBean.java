@@ -1,4 +1,4 @@
-package com.wyze.sandglasslibrary.bean.net.responsebean;
+package com.wyze.sandglasslibrary.moudle.net.responsebean;
 
 import java.util.List;
 

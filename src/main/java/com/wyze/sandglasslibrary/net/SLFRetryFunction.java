@@ -2,6 +2,8 @@ package com.wyze.sandglasslibrary.net;
 
 import android.util.Log;
 
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -37,7 +39,7 @@ public class SLFRetryFunction implements Function<Observable<Throwable>, Observa
                  * 即，当发生的异常 = 网络异常 = IO异常 才选择重试
                  */
                 if (throwable instanceof IOException) {
-                    Log.d(SLFHttpRequestConstants.TAG, "属于IO异常，需重试");
+                    SLFLogUtil.d(SLFHttpRequestConstants.TAG, "throwable message="+throwable.getMessage());
 
                     /**
                      * 需求2：限制重试次数

@@ -1,4 +1,4 @@
-package com.wyze.sandglasslibrary.bean.net.requestbean;
+package com.wyze.sandglasslibrary.moudle.net.requestbean;
 
 /**
  * Created by wangjian on 2022/12/21

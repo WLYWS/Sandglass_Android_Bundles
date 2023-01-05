@@ -26,8 +26,8 @@
         android:padding="12sp"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp"
-        android:textColor="@color/white"
-        android:background="@drawable/slf_chat_bot_bg"
+        android:textColor="@color/black"
+        android:background="@drawable/slf_chat_bot_user_msg_bg"
         />
 
     <ImageView

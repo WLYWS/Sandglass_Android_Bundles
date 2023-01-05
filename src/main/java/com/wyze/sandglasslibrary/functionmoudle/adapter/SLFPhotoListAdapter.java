@@ -10,8 +10,6 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.wyze.sandglasslibrary.R;
-import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
-import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.wyze.sandglasslibrary.utils.SLFImageUtil;
