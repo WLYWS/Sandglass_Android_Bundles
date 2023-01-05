@@ -72,7 +72,7 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
                             } else {
                                 String errMsg = jsonObjectData.getString(MSG);
                                 String code = jsonObjectData.getString(CODE);
-                                mCallBack.onRequestFail(errMsg, code);
+                                mCallBack.onRequestFail(errMsg, code,mType);
                             }
                         }
                     }
@@ -94,11 +94,11 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
         if (!SLFHttpTool.hasNetwork(mContext)) {
             //MyToast.showCenterSortToast(mContext, mContext.getResources().getString(R.string.connect_error));
             onComplete();
-            mCallBack.onRequestNetFail();
+            mCallBack.onRequestNetFail(mType);
             return;
         }
         // 2.非网络错误，接口请求错误
-        mCallBack.onRequestFail(e.getMessage(), "0000");
+        mCallBack.onRequestFail(e.getMessage(), "1000",mType);
     }
 
     /**

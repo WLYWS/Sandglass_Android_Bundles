@@ -1125,7 +1125,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     }
 
     @Override
-    public void onRequestNetFail() {
+    public void onRequestNetFail(Object type) {
         SLFLogUtil.e(TAG, "requestNetFail");
         hideLoading();
         showNetworkError();
@@ -1162,7 +1162,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     }
 
     @Override
-    public void onRequestFail(String value, String failCode) {
+    public void onRequestFail(String value, String failCode,Object type) {
         SLFLogUtil.e(TAG, "requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
         showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));

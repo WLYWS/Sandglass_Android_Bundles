@@ -2,6 +2,9 @@ package com.wyze.sandglasslibrary.commonui.chatbot;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+
+import com.wyze.sandglasslibrary.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +31,7 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
     }
 
     private void initView (Context context) {
-        
+        View view = View.inflate(context, R.layout.slf_chat_bot_faq_list,null);
 
     }
 }
