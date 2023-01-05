@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
+import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.wyze.sandglasslibrary.moudle.SLFDeviceTypes;

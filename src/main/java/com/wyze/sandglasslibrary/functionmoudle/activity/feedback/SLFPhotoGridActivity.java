@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,13 +24,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.wyze.sandglasslibrary.R;
-import com.wyze.sandglasslibrary.commonapi.SLFLocalApi;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPhotoListAdapter;
 import com.wyze.sandglasslibrary.base.SLFPhotoBaseActivity;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
-import com.wyze.sandglasslibrary.interf.SLFVideoUploadedCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.SLFPhotoFolderInfo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
@@ -53,9 +52,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -240,15 +237,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     //裁剪
                                     int rotate = SLFCropUtil.getExifRotation(new File(path));
                                     try {
-//                                        if (aspect_X <= 0 || aspect_Y <= 0) {
-//                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH::::"+SLFConstants.CROP_IMAGE_PATH);
-//                                            SLFViewUtil.savePicture(SLFCropUtil.rotateImage(bmp, rotate)
-//                                                    , SLFConstants.CROP_IMAGE_PATH, fileName);
-//                                        } else {
-//                                            SLFLogUtil.e(TAG,"SLFConstants.CROP_IMAGE_PATH:::else::"+SLFConstants.CROP_IMAGE_PATH);
-//                                            SLFViewUtil.savePicture(SLFViewUtil.zoomBitmap(SLFCropUtil.rotateImage(bmp, rotate), aspect_X, aspect_Y)
-//                                                    , SLFConstants.CROP_IMAGE_PATH, fileName);
-//                                        }
+
                                         SLFViewUtil.compressImage(SLFCropUtil.rotateImage(bmp,rotate),SLFConstants.CROP_IMAGE_PATH, fileName);
                                     }catch(Exception e){
                                         SLFLogUtil.e(TAG,"picPathList crop error::"+e.toString());
@@ -262,7 +251,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     picPathLists.get(i).setUploadUrl(null);
                                     picPathLists.get(i).setUploadThumurl(null);
                                     picPathLists.get(i).setFileName(fileName);
-                                    //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumbleFile,i));
                                 }
 
                             }else if(picPathLists.get(i).getMimeType().contains("png")){
@@ -275,12 +263,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     Bitmap bmp = SLFViewUtil.getBitmapFromPath(path);
                                     Bitmap thumBmp = SLFViewUtil.getBitmapFromPath(thumPth);
                                     if(bmp!=null){
-//                                        if(aspect_X <= 0 || aspect_Y <= 0){
-//                                            SLFViewUtil.savePNGPicture(bmp, SLFConstants.CROP_IMAGE_PATH,fileName);
-//                                        }else{
-//                                            SLFViewUtil.savePNGPicture(SLFViewUtil.zoomBitmap(bmp,aspect_X,aspect_Y)
-//                                                    , SLFConstants.CROP_IMAGE_PATH,fileName);
-//                                        }
                                         SLFViewUtil.compressImage(bmp,SLFConstants.CROP_IMAGE_PATH, fileName);
                                         picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                         picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
@@ -291,7 +273,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                         picPathLists.get(i).setUploadUrl(null);
                                         picPathLists.get(i).setUploadThumurl(null);
                                         picPathLists.get(i).setFileName(fileName);
-                                        //EventBus.getDefault().post(new SLFEventUploadImageOrVideo(true,new File(SLFConstants.CROP_IMAGE_PATH+fileName),thumFile,i));
                                     }
                                 } catch (Exception e) {
                                     Log.e(TAG, Log.getStackTraceString(e));
@@ -301,13 +282,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 SLFLogUtil.d("compressVedio","path---::"+path);
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
                                 SLFLogUtil.d("compressVedio","thumPth---::"+thumPth);
-                                //String fileName = SLFUtils.getCharacterAndNumber()+".mp4";
-                                //String fileName=path.substring(path.lastIndexOf("/")+1);
+
                                 String fileThumbleName = SLFUtils.getCharacterAndNumber()+"videoThumble.jpg";
                                 String fileName = SLFUtils.getCharacterAndNumber() + ".mp4";
                                 String newFilePath = SLFConstants.CROP_IMAGE_PATH + fileName;
-                                //File file = new File(path);
-                                //File thumFile = new File(thumPth);
+
                                 try{
                                     Bitmap btm = getVideoThumbnail(path);
                                     if(btm!=null){
@@ -320,12 +299,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                     picPathLists.get(i).setUploadUrl(null);
                                     picPathLists.get(i).setUploadThumurl(null);
                                     SLFMediaData slfMediaData = picPathLists.get(i);
-                                    compressVideo(path, newFilePath, fileName, picPathLists.get(i));
+                                    compressVideo(path,newFilePath,fileName,slfMediaData);
                                 }catch(Exception e){
                                     Log.e(TAG, Log.getStackTraceString(e));
                                 }
-
-
                             }
 
                         }
@@ -333,10 +310,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         if (!picPathLists.isEmpty()) {
                             if(SLFPhotoSelectorUtils.mListenter!=null){
                                 setResult(RESULT_OK);
-
                                 runOnUiThread(() -> SLFPhotoSelectorUtils.mListenter.onSelect(picPathLists));
                             }
-
                             finish();
                         } else {
                             showCenterToast("Please choose a picture!");
@@ -344,6 +319,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             }
         };
     }
+
+
+
     /**获取多媒体视频缩略图*/
     private Bitmap getVideoThumbnail(String videoPath) {
         MediaMetadataRetriever media =new MediaMetadataRetriever();
@@ -402,26 +380,19 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         SLFLogUtil.d("videocompress", "vido_height==after========" + height);
                         SLFLogUtil.d("videocompress", "fileSize---after----:" + Formatter.formatFileSize(getContext(), fileSize));
 
-//                                                String after = "outputPath:" +destPath+ "\n" + "width:" + width + "\n" + "height:" + height + "\n" + "bitrate:" + bitrate + "\n"
-//                                                        + "fileSize:" + Formatter.formatFileSize(MainActivity.this,fileSize);
-//                                                tv_output.setText(after);
-//                        if(SLFLocalApi.getInstance().getCompressVideoCompelete()!=null){
-//                            SLFLocalApi.getInstance().getCompressVideoCompelete().isCompelete(newFilePath,filename,slfMediaData);
-//                        }
-//                        slfEventCompressVideo.isCompelte = true;
-//                        slfEventCompressVideo.filename = filename;
-//                        slfEventCompressVideo.path = newFilePath;
-//                        slfEventCompressVideo.slfMediaData = slfMediaData;
-//                        EventBus.getDefault().post(slfEventCompressVideo);
                         EventBus.getDefault().post(new SLFEventCompressVideo(true,path,filename,slfMediaData));
                     } else {
                         SLFLogUtil.e("videocompress", "compress faile");
                         String fileName=path.substring(path.lastIndexOf("/")+1);
-//                        if(SLFLocalApi.getInstance().getCompressVideoCompelete()!=null){
-//                            SLFLocalApi.getInstance().getCompressVideoCompelete().isCompelete(path,fileName,slfMediaData);
-//                        }
+
                         SLFMediaData slfMediaData1 = slfMediaData;
-                        EventBus.getDefault().post(new SLFEventNoCompressVideo(path,fileName,slfMediaData1));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                EventBus.getDefault().post(new SLFEventNoCompressVideo(path,fileName,slfMediaData1));
+                            }
+                        }, 1000);
+
                     }
 
                 }
@@ -430,7 +401,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 @Override
                 public void onProgress(float percent) {
                     SLFLogUtil.e("videocompress", "compress progress:::" + String.valueOf(percent) + "%");
-                    //tv_progress.setText(String.valueOf(percent) + "%");
                 }
             });
 
@@ -528,7 +498,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                     }
                 }
                 mCurPhotoList.add(getCamraMediaData());
-                //mPhotoListAdapter = new SLFPhotoListAdapter(getBaseContext(), mCurPhotoList, isSingle, selectedNum);
                 mPhotoListAdapter = new SLFPhotoListAdapter(getBaseContext(), mCurPhotoList, selectedNum);
                 gvPhotoList.setAdapter(mPhotoListAdapter);
                 tvFileName.setText(mAllPhotoFolderList.get(position).getFolderName());

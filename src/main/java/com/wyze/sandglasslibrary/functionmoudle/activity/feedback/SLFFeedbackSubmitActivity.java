@@ -38,13 +38,12 @@ import com.wyze.sandglasslibrary.bean.net.responsebean.SLFProlemDataBean;
 import com.wyze.sandglasslibrary.bean.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
-import com.wyze.sandglasslibrary.commonapi.SLFLocalApi;
+import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFCancelOrOkDialog;
 import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
-import com.wyze.sandglasslibrary.interf.SLFCompressVideoCompelete;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
@@ -313,7 +312,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
         slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
     }
-
     /**
      * 初始化标题栏
      */
@@ -375,7 +373,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onClick(View view) {
         //SLFLogUtil.d(TAG,"feedbacksubmit onClick");
         if (view.getId() == R.id.slf_iv_back) {
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || !slfSendLogCheck.isChecked()||(slfMediaDataList.size()-1>0)) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size()-1>0)) {
                 showReSureDialog();
             } else {
                 finish();
@@ -419,7 +417,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (view.getId() == R.id.spinner_service) {
             showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title), getServiceTypeData(getSLFCategoriesResponseBean()), service_checkedPosition);
             changeTextAndImg(slfServiceSpinner);
-
         } else if (view.getId() == R.id.spinner_problem) {
             //TODO selector problem
             showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_problem_title), getProblemTypeData(slfServiceType, slfServiceMap), problem_checkedPosition);
@@ -469,7 +466,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || !slfSendLogCheck.isChecked()||(slfMediaDataList.size()-1>0)) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size()-1>0)) {
                 showReSureDialog();
             } else {
                 finish();
@@ -520,34 +517,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         slfMediaDataList.addAll(selectMediaList);
                         slfMediaDataList.add(slfMediaData);
                         setUploadUrl();
-                        SLFLocalApi.getInstance().setCompressVideoCompelete(new SLFCompressVideoCompelete() {
-                            @Override
-                            public void isCompelete(String path, String fileName, SLFMediaData slfMediaData) {
-                                for(int i=0;i<slfMediaDataList.size()-1;i++){
-                                    if(slfMediaDataList.get(i).equals(slfMediaData)){
-                                        slfMediaDataList.get(i).setOriginalPath(path);
-                                        slfMediaDataList.get(i).setFileName(fileName);
-                                        if (slfMediaDataList.get(i).getUploadPath() != null) {
-                                            if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
-                                                SLFLogUtil.d("videocompress","compelete---");
-                                                File file = new File(slfMediaDataList.get(i).getOriginalPath());
-                                                File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                                                SLFLogUtil.d("videocompress","compelete--222222-");
-                                                SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file,"video/mp4", i, SLFFeedbackSubmitActivity.this);
-                                                SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile,"image/jpg", i + 1000, SLFFeedbackSubmitActivity.this);
-                                                SLFLogUtil.d("videocompress","compelete--33333-");
-                                            }
-                                        }else{
-                                            SLFLogUtil.d("videocompress","compelete---url---null");
-                                            slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                                            slfaddAttachAdapter.notifyDataSetChanged();
-                                        }
-                                    }else{
-                                        SLFLogUtil.d("videocompress","compelete---object--not--equals");
-                                    }
-                                }
-                            }
-                        });
                         slfaddAttachAdapter.notifyDataSetChanged();
                         uploadFiles();
 
@@ -1355,6 +1324,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     }
 
     private synchronized void uploadvideo(String path,String filename,SLFMediaData slfMediaData){
+        SLFLogUtil.d("videocompress","slfMediaDataList.size()::"+slfMediaDataList.size());
         for(int i=0;i<slfMediaDataList.size()-1;i++) {
             if (slfMediaDataList.get(i).equals(slfMediaData)) {
                 slfMediaDataList.get(i).setOriginalPath(path);

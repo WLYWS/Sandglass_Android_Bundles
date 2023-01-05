@@ -10,7 +10,7 @@
     <color name="transparent">#00000000</color>
     <color name="slf_grey">#FFaeaeae</color>
     <color name="slf_grey_bottom_dialog">#F0F4F7</color>
-    <color name="slf_photo_item_mask_bg">#B3383838</color>
+    <color name="slf_photo_item_mask_bg">#CCCFCFCF</color>
     <color name="slf_feedback_question_type_title">#808080</color>
     <color name="slf_feedback_page_child_bg">#272727</color>
     <color name="slf_feedback_page_child_text">#A7A7A7</color>
@@ -24,6 +24,7 @@
     <color name="slf_photo_selector_grid_bottom_bg">#222222</color>
     <color name="slf_feed_back_success_bg">#383838</color>
     <color name="slf_help_feedback_bottom_bg">#131313</color>
+    <color name="slf_submit_fail_text_color">#E6FFFFFF</color>
 
     <!--公共自定义样式-->
     <color name="slf_theme_color">#C9FF43</color>//默认主题色

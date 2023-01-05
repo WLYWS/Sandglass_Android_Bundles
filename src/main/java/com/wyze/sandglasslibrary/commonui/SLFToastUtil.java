@@ -23,6 +23,7 @@ import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFConvertUtil;
 import com.wyze.sandglasslibrary.utils.SLFImageUtil;
+import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFSystemUtil;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -136,7 +137,7 @@ public class SLFToastUtil {
         @SuppressLint("InflateParams")
         View toastView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_toast, null);
 
-        mToast.setGravity(Gravity.CENTER, 0, SLFConvertUtil.dp2px(45));
+        mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setView(toastView);
         mToast.setDuration(Toast.LENGTH_SHORT);
 
@@ -146,6 +147,31 @@ public class SLFToastUtil {
 
         TextView tvContent = relativeLayout.findViewById(R.id.slf_common_toast_tv_content);
         tvContent.setText(text);
+        tvContent.setLayoutParams(tvContent.getLayoutParams());
+        relativeLayout.measure(0, 0);
+
+        mToast.show();
+    }
+
+    /**
+     * @deprecated Recommend uniform use {@link #showText(CharSequence)} api.
+     */
+    @Deprecated
+    public static void showCenterSubmitFailText() {
+        mToast = new Toast(SLFBaseApplication.getAppContext());
+        @SuppressLint("InflateParams")
+        View toastView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_center_submit_fail_toast, null);
+
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+        mToast.setView(toastView);
+        mToast.setDuration(Toast.LENGTH_SHORT);
+
+        LinearLayout relativeLayout = mToast.getView().findViewById(R.id.slf_submit_fail_toast_parent);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(SLFResourceUtils.dp2px(SLFBaseApplication.getAppContext(),136), SLFResourceUtils.dp2px(SLFBaseApplication.getAppContext(),136));
+        relativeLayout.setLayoutParams(layoutParams);
+
+        TextView tvContent = relativeLayout.findViewById(R.id.slf_center_submit_fail_content);
+        tvContent.setText(SLFResourceUtils.getString(R.string.slf_submit_fail_text));
         tvContent.setLayoutParams(tvContent.getLayoutParams());
         relativeLayout.measure(0, 0);
 
