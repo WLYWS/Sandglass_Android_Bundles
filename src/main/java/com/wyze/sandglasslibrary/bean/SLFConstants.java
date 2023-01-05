@@ -68,6 +68,7 @@ public class SLFConstants {
     public static final String UPLOADING = "uploading";
     public static final String UPLOADED = "uploaded";
     public static final String UPLOADIDLE = "uploadidle";
+    public static final String UPLOADFAIL = "uploadfail";
 
     public static final String LOGID = "logid";
 

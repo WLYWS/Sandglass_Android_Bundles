@@ -1134,6 +1134,17 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestFail(String value, String failCode,Object type) {
         SLFLogUtil.e(TAG, "requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
+        if(type instanceof SLFCreateFeedbackRepsonseBean){
+            SLFToastUtil.showCenterSubmitFailText();
+        }else if(type instanceof Integer){
+            int code = (int) type;
+            if(code>=1000){
+                slfMediaDataList.get(code - 1000).setUploadStatus(SLFConstants.UPLOADFAIL);
+            }else{
+                slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
+            }
+            slfaddAttachAdapter.notifyDataSetChanged();
+        }
         showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
     }
 
