@@ -225,6 +225,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     boolean type = false;
     boolean problemEdit = false;
     boolean emailEdit = false;
+    boolean hasUploadingFile = false;
 
     private List<Object> slfServiceTypes = new ArrayList<>();
     private List<SLFCategoryDetailBean> slfProblemTypes = new ArrayList<>();
@@ -392,25 +393,36 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 oldEmailLength = slfEmailEdit.getText().toString().trim().length();
                 return;
             }
-            if (slfSendLogCheck.isChecked()) {
-                showLoading();
-                //sumbitLogFiles();
-                if (SLFApi.getInstance().getAppLogCallBack() != null) {
-                    SLFApi.getInstance().getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
-                            SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
+            for(int i=0;i<slfMediaDataList.size()-1;i++){
+                if(slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)){
+                    hasUploadingFile = true;
+                }else{
+                    hasUploadingFile = false;
                 }
-                SLFApi.getInstance().setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
-                    @Override
-                    public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
+            }
+            if(!hasUploadingFile) {
+                if (slfSendLogCheck.isChecked()) {
+                    showLoading();
+                    //sumbitLogFiles();
+                    if (SLFApi.getInstance().getAppLogCallBack() != null) {
+                        SLFApi.getInstance().getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
+                                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
+                    }
+                    SLFApi.getInstance().setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
+                        @Override
+                        public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
                             SLFLogUtil.d("yj", "complete----");
                             appLogFileName = appFileName;
                             firmwareLogFileName = firmwarFileName;
                             sumbitLogFiles();
-                    }
-                });
+                        }
+                    });
+                } else {
+                    showLoading();
+                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
+                }
             }else{
-                showLoading();
-                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_submit_if_uploading));
             }
 
 
@@ -519,7 +531,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         setUploadUrl();
                         slfaddAttachAdapter.notifyDataSetChanged();
                         uploadFiles();
-
                     });
         }
 
@@ -700,11 +711,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else {
             emailEdit = false;
         }
+
         if (type && problemEdit && emailEdit) {
             return true;
         } else {
             return false;
         }
+
 
     }
 
@@ -1144,8 +1157,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
             }
             slfaddAttachAdapter.notifyDataSetChanged();
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
-        showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+
     }
 
     private synchronized void resultUploadImageOrVideo(int code) {
