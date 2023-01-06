@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_top"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackList"
+    tools:ignore="MergeRootFrame" >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation"
+        >
+    </androidx.viewpager.widget.ViewPager>
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="44dp"
+            android:id="@+id/slf_history_back"
+            android:src="@drawable/slf_title_icon_white_back"
+            android:layout_gravity="left"
+            android:layout_marginStart="20dp"/>
+    </FrameLayout>
+
+</LinearLayout>

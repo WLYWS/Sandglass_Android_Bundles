@@ -194,7 +194,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
     };
     private CharSequence slfEmailWordNum;
-    private int oldEmailLength;
     /**
      * 获取email edit的高度
      */
@@ -302,7 +301,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfEditProblem.setOnTouchListener(new SLFEditTextScrollListener(slfEditProblem));
         slfEditProblem.addTextChangedListener(this);
         slfEmailEdit.addTextChangedListener(editWatcher);
-        slfEmailEdit.setOnKeyListener(emailKeyLister);
+        //slfEmailEdit.setOnKeyListener(emailKeyLister);
         slfEmailEdit.setOnTouchListener(emailTouchListener);
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
         setSubmitBtnCanClick(canSubmit());
@@ -389,9 +388,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
             if (!SLFRegular.isEmail(slfEmailEdit.getText().toString().trim())) {
                 slfEmailError.setVisibility(View.VISIBLE);
-                setSubmitBtnCanClick(false);
-                oldEmailLength = slfEmailEdit.getText().toString().trim().length();
                 return;
+            }else{
+                if(slfEmailError.getVisibility()==View.VISIBLE){
+                    slfEmailError.setVisibility(View.INVISIBLE);
+                }
             }
             for(int i=0;i<slfMediaDataList.size()-1;i++){
                 if(slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)){
@@ -619,18 +620,18 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     /**
      * email的删除输入监听
      */
-    View.OnKeyListener emailKeyLister = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-            if (keyCode == KeyEvent.KEYCODE_DEL) {
-                hideEmailError();
-                if (type && problemEdit && emailEdit) {
-                    setSubmitBtnCanClick(true);
-                }
-            }
-            return false;
-        }
-    };
+//    View.OnKeyListener emailKeyLister = new View.OnKeyListener() {
+//        @Override
+//        public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+//            if (keyCode == KeyEvent.KEYCODE_DEL) {
+//                hideEmailError();
+//                if (type && problemEdit && emailEdit) {
+//                    setSubmitBtnCanClick(true);
+//                }
+//            }
+//            return false;
+//        }
+//    };
 
     /**
      * 设置问题描述的字数限制显示
@@ -735,16 +736,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         @Override
         public void afterTextChanged(Editable editable) {
             setSubmitBtnCanClick(canSubmit());
-            if (slfEmailError.getVisibility() == View.VISIBLE) {
-                if (oldEmailLength <= slfEmailWordNum.length()) {
-                    oldEmailLength = slfEmailWordNum.length();
-                    slfEmailError.setVisibility(View.VISIBLE);
-                    setSubmitBtnCanClick(false);
-
-                } else {
-                    if (type && problemEdit && emailEdit) {
-                        setSubmitBtnCanClick(true);
-                    }
+            if(slfEmailWordNum.length()==0){
+                if(slfEmailError.getVisibility()==View.VISIBLE){
+                    slfEmailError.setVisibility(View.INVISIBLE);
                 }
             }
         }
