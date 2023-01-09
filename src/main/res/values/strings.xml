@@ -49,6 +49,8 @@
     <string name="slf_common_network_error">No network available.</string>
     <string name="slf_submit_fail_text">Failed to submit feedback, try again</string>
     <string name="slf_submit_if_uploading">Photo uploading, please hold on.</string>
+    <string name="slf_history_feedback_title">In progress</string>
+    <string name="slf_history_all_feedback_title">All</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>
