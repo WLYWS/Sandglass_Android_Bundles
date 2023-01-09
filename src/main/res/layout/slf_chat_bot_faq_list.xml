@@ -9,7 +9,6 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@mipmap/slf_chat_bot_robot_icon"
@@ -18,7 +17,6 @@
     <LinearLayout
         android:id="@+id/ll_faq_list"
         android:layout_marginLeft="58dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="parent"

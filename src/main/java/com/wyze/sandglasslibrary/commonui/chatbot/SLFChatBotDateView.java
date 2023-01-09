@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
@@ -19,12 +21,13 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Created by wangjian on 2023/1/3
  * chatbot上面的时间显示
  */
-public class SLFChatBotDateView extends AppCompatTextView {
+public class SLFChatBotDateView extends ConstraintLayout {
 
     public final static int TODAY_DATE = 1;
     public final static int YESTERDAY_DATE = 2;
@@ -35,26 +38,33 @@ public class SLFChatBotDateView extends AppCompatTextView {
     public static final String YHD = "MM/dd/yyyy HH:mm aa";
     private static final String TAG = "SLFChatBotDateView.CLASS";
     private static final String YESTERDAY = "Yesterday";
+    private  ViewGroup parent;
 
     private TextView tv_chat_bot_date;
+    public SLFChatBotDateView (Context context, ViewGroup parent) {
+        this (context);
+        this.parent = parent;
+        initView(context,null);
 
+    }
     public SLFChatBotDateView (Context context) {
         super(context);
-        initView(context,null);
+        //initView(context,null);
     }
 
     public SLFChatBotDateView (Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView(context,attrs);
+        //initView(context,attrs);
     }
 
     public SLFChatBotDateView (Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context,attrs);
+        //initView(context,attrs);
     }
 
     private void initView (Context context, AttributeSet attrs) {
-        View chat_bot_view = View.inflate(context, R.layout.slf_chat_bot_date,null);
+        View chat_bot_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.slf_chat_bot_date, parent, false);
+        //View chat_bot_view = View.inflate(context, R.layout.slf_chat_bot_date,parent);
         tv_chat_bot_date = chat_bot_view.findViewById(R.id.tv_chat_bot_date);
     }
 

@@ -11,7 +11,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         android:src="@mipmap/slf_chat_bot_robot_icon"
         />
     <TextView
@@ -19,7 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="58dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="13sp"
@@ -37,7 +35,6 @@
         app:layout_constraintRight_toLeftOf="@id/tv_chat_bot_user_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_marginRight="8dp"
         android:src="@mipmap/slf_chat_bot_user_warn"/>
 

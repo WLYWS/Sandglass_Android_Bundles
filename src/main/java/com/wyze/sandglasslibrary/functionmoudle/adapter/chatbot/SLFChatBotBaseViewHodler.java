@@ -1,5 +1,6 @@
 package com.wyze.sandglasslibrary.functionmoudle.adapter.chatbot;
 
+import android.content.Context;
 import android.view.View;
 
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;

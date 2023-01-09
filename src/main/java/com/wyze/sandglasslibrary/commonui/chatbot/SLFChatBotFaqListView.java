@@ -38,7 +38,7 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
     private Context context;
     private List <String>  questionList = new ArrayList <>();
     private final String SPLIT_STR = "\"@%&\"";
-    private String[] questions = new String[20];
+    private List<String> questions = new ArrayList <>() ;
     private String questionStr;
     private int mIndex;
     private int position;
@@ -75,7 +75,7 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
             @Override
             public void onClick (View v) {
                 //更新question list
-                if (questions!=null&&questions.length>5){
+                if (questions!=null&&questions.size()>5&&mIndex==0){
                     EventBus.getDefault().post(new SLFChatBotUpdateQuesionEvent(mIndex,position));
                 }
             }
@@ -106,6 +106,7 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
         this.position = position;
         mIndex = index;
         questionStr = question;
+        String[] questionArr=new String[20];
         if (TextUtils.isEmpty(question)){
             lv_faq_list.setVisibility(View.GONE);
             return;
@@ -116,17 +117,22 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
             lv_faq_list.setVisibility(View.GONE);
         }
         if (question.contains(SPLIT_STR)){
-            questions = question.split(SPLIT_STR);
+            questionArr = question.split(SPLIT_STR);
         }else {
-            questions[0] = question;
+            questionArr[0] = question;
         }
-        if (questions.length>=index+5){
+        for (String questionItem:questionArr){
+            if (!TextUtils.isEmpty(questionItem)){
+                questions.add(questionItem);
+            }
+        }
+        if (questions.size()>=index+5){
             for (int i = index; i<index+5;i++){
-                questionList.add(questions[i]);
+                questionList.add(questions.get(i));
             }
         }else {
-            for (int i = index; i<questions.length;i++){
-                questionList.add(questions[i]);
+            for (int i = index; i<questions.size();i++){
+                questionList.add(questions.get(i));
             }
         }
         if (questionList==null||questionList.size()==0){

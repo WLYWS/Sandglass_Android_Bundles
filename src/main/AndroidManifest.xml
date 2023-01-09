@@ -9,6 +9,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".functionmoudle.activity.chatbot.SLFChatBotActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <activity
