@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -258,6 +259,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     private String appLogFileName;
     private String firmwareLogFileName;
+    private Drawable mClearDrawable;
+    private Drawable drawableRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,10 +270,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         initTitle();
         initView();
-        if(SLFCommonUtils.isNetworkAvailable(this)) {
+        if (SLFCommonUtils.isNetworkAvailable(this)) {
             requestUploadUrls();
             requestAllData();
-        }else{
+        } else {
             showNetworkError();
         }
         initPhontoSelector();
@@ -300,6 +303,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfProblemOverviewSpinner.setOnClickListener(this);
         slfEditProblem.setOnTouchListener(new SLFEditTextScrollListener(slfEditProblem));
         slfEditProblem.addTextChangedListener(this);
+        initDrawableRight(slfEmailEdit);
+        setDrawableRightVisble(false, slfEmailEdit);
         slfEmailEdit.addTextChangedListener(editWatcher);
         //slfEmailEdit.setOnKeyListener(emailKeyLister);
         slfEmailEdit.setOnTouchListener(emailTouchListener);
@@ -311,7 +316,18 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         setListenerFotEditTexts();
         slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
         slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
+        slfEmailEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    setDrawableRightVisble(slfEmailEdit.getText().length() > 0, slfEmailEdit);
+                } else {
+                    setDrawableRightVisble(false, slfEmailEdit);
+                }
+            }
+        });
     }
+
     /**
      * 初始化标题栏
      */
@@ -358,6 +374,22 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         });
     }
 
+    private void initDrawableRight(EditText view) {
+        mClearDrawable = SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_email_close_all);
+        mClearDrawable = view.getCompoundDrawables()[2];
+        if (mClearDrawable == null) {
+            mClearDrawable = SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_email_close_all);
+        }
+        //drawable.setBounds ：设置Drawable的边界，必须要有
+        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+    }
+
+
+    private void setDrawableRightVisble(boolean visible, EditText view) {
+        drawableRight = visible ? mClearDrawable : null;
+        view.setCompoundDrawables(view.getCompoundDrawables()[0], view.getCompoundDrawables()[1], drawableRight, view.getCompoundDrawables()[3]);
+    }
+
     /**
      * 箭头方向切换
      */
@@ -373,7 +405,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onClick(View view) {
         //SLFLogUtil.d(TAG,"feedbacksubmit onClick");
         if (view.getId() == R.id.slf_iv_back) {
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size()-1>0)) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size() - 1 > 0)) {
                 showReSureDialog();
             } else {
                 finish();
@@ -389,19 +421,19 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if (!SLFRegular.isEmail(slfEmailEdit.getText().toString().trim())) {
                 slfEmailError.setVisibility(View.VISIBLE);
                 return;
-            }else{
-                if(slfEmailError.getVisibility()==View.VISIBLE){
+            } else {
+                if (slfEmailError.getVisibility() == View.VISIBLE) {
                     slfEmailError.setVisibility(View.INVISIBLE);
                 }
             }
-            for(int i=0;i<slfMediaDataList.size()-1;i++){
-                if(slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)){
+            for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
+                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                     hasUploadingFile = true;
-                }else{
+                } else {
                     hasUploadingFile = false;
                 }
             }
-            if(!hasUploadingFile) {
+            if (!hasUploadingFile) {
                 if (slfSendLogCheck.isChecked()) {
                     showLoading();
                     //sumbitLogFiles();
@@ -422,7 +454,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     showLoading();
                     SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
                 }
-            }else{
+            } else {
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_submit_if_uploading));
             }
 
@@ -479,7 +511,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size()-1>0)) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size() - 1 > 0)) {
                 showReSureDialog();
             } else {
                 finish();
@@ -488,7 +520,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             return false;
 
         }
-            return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);
     }
 
     /**
@@ -547,29 +579,28 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void uploadFiles() {
         SLFLogUtil.d("yj", "slfMediaDataList:::uploadFiles:::" + slfMediaDataList.size());
-        String contentType="";
+        String contentType = "";
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (slfMediaDataList.get(i).getUploadPath() != null) {
-                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)&&!slfMediaDataList.get(i).getMimeType().contains("video")) {
+                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING) && !slfMediaDataList.get(i).getMimeType().contains("video")) {
                     File file = new File(slfMediaDataList.get(i).getOriginalPath());
                     File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                   if(slfMediaDataList.get(i).getMimeType().contains("png")){
+                    if (slfMediaDataList.get(i).getMimeType().contains("png")) {
                         contentType = "image/png";
-                    }else if(slfMediaDataList.get(i).getMimeType().contains("jpg")){
+                    } else if (slfMediaDataList.get(i).getMimeType().contains("jpg")) {
                         contentType = "image/jpg";
-                    }else if(slfMediaDataList.get(i).getMimeType().contains("jpeg")){
+                    } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
                         contentType = "image/jpeg";
                     }
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file,contentType, i, this);
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile,contentType, i + 1000, this);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, i, this);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, i + 1000, this);
                 }
-            }else{
+            } else {
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
                 slfaddAttachAdapter.notifyDataSetChanged();
             }
         }
     }
-
 
 
     /**
@@ -584,10 +615,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             final int DRAWABLE_BOTTOM = 3;
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                if (event.getRawX() >= (slfEmailEdit.getRight() - SLFResourceUtils.px2dp(getContext(), 60) - slfEmailEdit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    clearEmailEdit();
-                    setSubmitBtnCanClick(canSubmit());
-                    return true;
+                if (drawableRight != null) {
+                    if (event.getRawX() >= (slfEmailEdit.getRight() - SLFResourceUtils.px2dp(getContext(), 60) - slfEmailEdit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        clearEmailEdit();
+                        setSubmitBtnCanClick(canSubmit());
+                        return true;
+                    }
                 }
             }
             return false;
@@ -662,10 +695,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void hideEmailError() {
 //        if (!TextUtils.isEmpty(slfEmailEdit.getText().toString().trim())) {
-            if (slfEmailError.getVisibility() == View.VISIBLE) {
-                slfEmailError.setVisibility(View.INVISIBLE);
-            }
- //       }
+        if (slfEmailError.getVisibility() == View.VISIBLE) {
+            slfEmailError.setVisibility(View.INVISIBLE);
+        }
+        //       }
     }
 
     /**
@@ -736,11 +769,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         @Override
         public void afterTextChanged(Editable editable) {
             setSubmitBtnCanClick(canSubmit());
-            if(slfEmailWordNum.length()==0){
-                if(slfEmailError.getVisibility()==View.VISIBLE){
+            if (slfEmailWordNum.length() == 0) {
+                if (slfEmailError.getVisibility() == View.VISIBLE) {
                     slfEmailError.setVisibility(View.INVISIBLE);
                 }
             }
+            setDrawableRightVisble(slfEmailEdit.getText().length() > 0, slfEmailEdit);
         }
     };
 
@@ -1073,7 +1107,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
                                     SLFLogUtil.d(TAG, "logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip",6, SLFFeedbackSubmitActivity.this);
+                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", 6, SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1096,7 +1130,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void gotoFeedbackSuccess(int logId) {
         Intent in = new Intent(getContext(), SLFFeedbackSuccessActivity.class);
-        in.putExtra(SLFConstants.LOGID,logId);
+        in.putExtra(SLFConstants.LOGID, logId);
         startActivity(in);
     }
 
@@ -1104,7 +1138,20 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestNetFail(Object type) {
         SLFLogUtil.e(TAG, "requestNetFail");
         hideLoading();
-        showNetworkError();
+        if (type instanceof Integer) {
+            int code = (int) type;
+            if (code == 6) {
+                SLFToastUtil.showCenterSubmitFailText();
+            } else {
+                if (code >= 1000) {
+                    slfMediaDataList.get(code - 1000).setUploadStatus(SLFConstants.UPLOADFAIL);
+                } else {
+                    slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
+                }
+                slfaddAttachAdapter.notifyDataSetChanged();
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+            }
+        }
     }
 
     @Override
@@ -1126,32 +1173,34 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             SLFLogUtil.e(TAG, "requestScucess::Integer::" + ":::type:::" + type);
             if (code == 6) {
                 SLFLogUtil.d(TAG, "logfile-----upload---complete");
-                SLFHttpUtils.getInstance().executePost(getContext(),SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL,getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class,this);
+                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
             } else {
                 resultUploadImageOrVideo(code);
             }
-        }else if(type instanceof SLFCreateFeedbackRepsonseBean){
-            SLFLogUtil.d("yj", "createFeedback-----success:"+((SLFCreateFeedbackRepsonseBean) type).data);
+        } else if (type instanceof SLFCreateFeedbackRepsonseBean) {
+            SLFLogUtil.d("yj", "createFeedback-----success:" + ((SLFCreateFeedbackRepsonseBean) type).data);
             gotoFeedbackSuccess(((SLFCreateFeedbackRepsonseBean) type).data);
         }
         hideLoading();
     }
 
     @Override
-    public void onRequestFail(String value, String failCode,Object type) {
+    public void onRequestFail(String value, String failCode, Object type) {
         SLFLogUtil.e(TAG, "requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
-        if(type instanceof SLFCreateFeedbackRepsonseBean){
-            SLFToastUtil.showCenterSubmitFailText();
-        }else if(type instanceof Integer){
+        if (type instanceof Integer) {
             int code = (int) type;
-            if(code>=1000){
-                slfMediaDataList.get(code - 1000).setUploadStatus(SLFConstants.UPLOADFAIL);
-            }else{
-                slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
+            if (code == 6) {
+                SLFToastUtil.showCenterSubmitFailText();
+            } else {
+                if (code >= 1000) {
+                    slfMediaDataList.get(code - 1000).setUploadStatus(SLFConstants.UPLOADFAIL);
+                } else {
+                    slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
+                }
+                slfaddAttachAdapter.notifyDataSetChanged();
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
             }
-            slfaddAttachAdapter.notifyDataSetChanged();
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
 
     }
@@ -1267,22 +1316,22 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private TreeMap<String, Object> getCreateFeedBackTreemap() {
         ArrayList<SLFLogAttrBean> logAttrBeans = new ArrayList<>();
         ArrayList<SLFLeaveMsgBean> attrList = new ArrayList<>();
-        TreeMap<String,Object> map = new TreeMap<>();
-        map.put("deviceId",SLFUserCenter.deviceId);
-        map.put("deviceModel",SLFUserCenter.deviceModel);
-        map.put("deviceTimezone",SLFUserCenter.deviceTimeZone);
-        map.put("serviceType",slfServiceType.id);
+        TreeMap<String, Object> map = new TreeMap<>();
+        map.put("deviceId", SLFUserCenter.deviceId);
+        map.put("deviceModel", SLFUserCenter.deviceModel);
+        map.put("deviceTimezone", SLFUserCenter.deviceTimeZone);
+        map.put("serviceType", slfServiceType.id);
         if (slfProblemLinear.getVisibility() == View.VISIBLE) {
-           map.put("category",slfProblemType.id);
+            map.put("category", slfProblemType.id);
         }
         if (slfProblemOverviewLinear.getVisibility() == View.VISIBLE) {
-            map.put("subCategory",slfProblemOverviewType.id);
+            map.put("subCategory", slfProblemOverviewType.id);
         }
-        map.put("content",slfEditProblem.getText().toString().trim());
-        map.put("email",slfEmailEdit.getText().toString().trim());
-        map.put("phone","18611223366");
+        map.put("content", slfEditProblem.getText().toString().trim());
+        map.put("email", slfEmailEdit.getText().toString().trim());
+        map.put("phone", "18611223366");
         if (slfSendLogCheck.isChecked()) {
-            map.put("sendLog",1);
+            map.put("sendLog", 1);
             SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();
             /**appLogBean*/
             logAttrAppBean.setPath(SLFCommonUpload.getListInstance().get(7));
@@ -1306,45 +1355,45 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             logAttrBeans.add(logAttrAppBean);
             logAttrBeans.add(logAttrFirmwareBean);
             logAttrBeans.add(logAttrPluginBean);
-            map.put("logAttrList",logAttrBeans);
+            map.put("logAttrList", logAttrBeans);
         } else {
-            map.put("sendLog",0);
+            map.put("sendLog", 0);
         }
-        if(slfMediaDataList.size()-1>0){
-            for(int i=0;i<slfMediaDataList.size()-1;i++){
+        if (slfMediaDataList.size() - 1 > 0) {
+            for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
                 SLFLeaveMsgBean slfLeaveMsgBean = new SLFLeaveMsgBean();
                 slfLeaveMsgBean.setPath(slfMediaDataList.get(i).getUploadPath());
                 slfLeaveMsgBean.setThumbnailPath(slfMediaDataList.get(i).getUploadThumPath());
                 slfLeaveMsgBean.setFileName(slfMediaDataList.get(i).getFileName());
                 slfLeaveMsgBean.setThumbnailContentType("image/png");
-                if(slfMediaDataList.get(i).getMimeType().contains("video")) {
+                if (slfMediaDataList.get(i).getMimeType().contains("video")) {
                     slfLeaveMsgBean.setContentType("video/mp4");
-                }else if(slfMediaDataList.get(i).getMimeType().contains("png")){
+                } else if (slfMediaDataList.get(i).getMimeType().contains("png")) {
                     slfLeaveMsgBean.setContentType("image/png");
-                }else if(slfMediaDataList.get(i).getMimeType().contains("jpg")){
+                } else if (slfMediaDataList.get(i).getMimeType().contains("jpg")) {
                     slfLeaveMsgBean.setContentType("image/jpg");
-                }else if(slfMediaDataList.get(i).getMimeType().contains("jpeg")){
+                } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
                     slfLeaveMsgBean.setContentType("image/jpeg");
                 }
                 attrList.add(slfLeaveMsgBean);
             }
-            map.put("attrList",attrList);
+            map.put("attrList", attrList);
         }
-        map.put("firmwareVersion",SLFUserCenter.firmwareVersion);
-        map.put("appVersion",SLFUserCenter.getAppVersionName());
-        map.put("pluginVersion",SLFUserCenter.getPluginversion());
-        map.put("phoneType",2);
-        map.put("phoneModel",SLFUserCenter.getPhoneModel());
-        map.put("phoneOsVersion",SLFUserCenter.getOSVersion());
-        map.put("phoneId",SLFUserCenter.getPhone_id());
-        map.put("phoneFactoryModel",SLFUserCenter.getPhoneFactoryModel());
+        map.put("firmwareVersion", SLFUserCenter.firmwareVersion);
+        map.put("appVersion", SLFUserCenter.getAppVersionName());
+        map.put("pluginVersion", SLFUserCenter.getPluginversion());
+        map.put("phoneType", 2);
+        map.put("phoneModel", SLFUserCenter.getPhoneModel());
+        map.put("phoneOsVersion", SLFUserCenter.getOSVersion());
+        map.put("phoneId", SLFUserCenter.getPhone_id());
+        map.put("phoneFactoryModel", SLFUserCenter.getPhoneFactoryModel());
 
         return map;
     }
 
-    private synchronized void uploadvideo(String path,String filename,SLFMediaData slfMediaData){
-        SLFLogUtil.d("videocompress","slfMediaDataList.size()::"+slfMediaDataList.size());
-        for(int i=0;i<slfMediaDataList.size()-1;i++) {
+    private synchronized void uploadvideo(String path, String filename, SLFMediaData slfMediaData) {
+        SLFLogUtil.d("videocompress", "slfMediaDataList.size()::" + slfMediaDataList.size());
+        for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (slfMediaDataList.get(i).equals(slfMediaData)) {
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
@@ -1373,9 +1422,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFEventNetWorkChange event) {
-        if(event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)){
-            showNetworkError();
-        }else{
+        if (event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)) {
+            for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
+                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADFAIL);
+                }
+            }
+            slfaddAttachAdapter.notifyDataSetChanged();
+        } else {
 
         }
     }
@@ -1383,12 +1437,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SLFEventCompressVideo event) {
 
-        SLFLogUtil.d("videocompress","onevent----compelete");
+        SLFLogUtil.d("videocompress", "onevent----compelete");
         singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
         singleUploadVideoExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                uploadvideo(event.path,event.filename,event.slfMediaData);
+                uploadvideo(event.path, event.filename, event.slfMediaData);
             }
         });
 
@@ -1397,12 +1451,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SLFEventNoCompressVideo event) {
 
-        SLFLogUtil.d("videocompress","onevent----compelete");
+        SLFLogUtil.d("videocompress", "onevent----compelete");
         singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
         singleUploadVideoExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                uploadvideo(event.path,event.filename,event.slfMediaData);
+                uploadvideo(event.path, event.filename, event.slfMediaData);
             }
         });
 
