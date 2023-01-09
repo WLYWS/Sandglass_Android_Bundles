@@ -32,6 +32,7 @@ public interface SLFMsgDao {
     void insertMsgData(SLFChatBotMsgData sLFChatBotMsgData);
 
     //删除所有数据
-    @Delete
+
+    @Query("DELETE FROM chatbotmessage")
     void deleteAll();
 }

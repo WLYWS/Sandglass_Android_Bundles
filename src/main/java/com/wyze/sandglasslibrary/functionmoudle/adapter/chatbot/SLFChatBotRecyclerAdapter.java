@@ -1,8 +1,11 @@
 package com.wyze.sandglasslibrary.functionmoudle.adapter.chatbot;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotDateView;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqFeedBackView;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView;
@@ -36,15 +39,20 @@ public class SLFChatBotRecyclerAdapter extends RecyclerView.Adapter<SLFChatBotBa
     public SLFChatBotBaseViewHodler onCreateViewHolder (@NonNull ViewGroup parent, int viewType) {
         SLFChatBotBaseViewHodler slfChatBotBaseViewHodler = null;
         if (viewType==SLFChatBotMsgData.MsgType.SINGLE_TIME_MSG.getValue()){
-            slfChatBotBaseViewHodler = new SLFChatBotTimeViewHolder(new SLFChatBotDateView(context));
+            View chatBotTimeview = LayoutInflater.from(parent.getContext()).inflate(R.layout.slf_chat_bot_date,parent,false);
+            slfChatBotBaseViewHodler = new SLFChatBotTimeViewHolder(chatBotTimeview,context);
         }else if (viewType==SLFChatBotMsgData.MsgType.SINGLE_ROBOT_MSG.getValue()) {
-            slfChatBotBaseViewHodler = new SLFChatBotSingleRobotViewHolder(new SLFChatBotIconTextLeftView(context));
+            View chatBotSingleRobotview = LayoutInflater.from(parent.getContext()).inflate(R.layout.slf_chat_bot_left,parent,false);
+            slfChatBotBaseViewHodler = new SLFChatBotSingleRobotViewHolder(chatBotSingleRobotview,context);
         }else if (viewType==SLFChatBotMsgData.MsgType.SINGLE_USER_MSG.getValue()) {
-            slfChatBotBaseViewHodler = new SLFChatBotSingleUserViewHolder(new SLFChatBotIconTextRightView(context));
+            View chatBotSingleUserRobotview = LayoutInflater.from(parent.getContext()).inflate(R.layout.slf_chat_bot_right,parent,false);
+            slfChatBotBaseViewHodler = new SLFChatBotSingleUserViewHolder(chatBotSingleUserRobotview,context);
         }else if (viewType==SLFChatBotMsgData.MsgType.HOT_ROBOT_MSG.getValue()) {
-            slfChatBotBaseViewHodler = new SLFChatBotQuestionViewHolder(new SLFChatBotFaqListView(context));
+            View chatBotQuestionview = LayoutInflater.from(parent.getContext()).inflate(R.layout.slf_chat_bot_faq_list,parent,false);
+            slfChatBotBaseViewHodler = new SLFChatBotQuestionViewHolder(chatBotQuestionview,context);
         }else if (viewType==SLFChatBotMsgData.MsgType.FEEDBACK_ROBOT_MSG.getValue()) {
-            slfChatBotBaseViewHodler = new SLFChatBotFeedBackViewHolder(new SLFChatBotFaqFeedBackView(context));
+            View chatBotFeedBackview = LayoutInflater.from(parent.getContext()).inflate(R.layout.slf_faq_feedback_result,parent,false);
+            slfChatBotBaseViewHodler = new SLFChatBotFeedBackViewHolder(chatBotFeedBackview,context);
         }
         return slfChatBotBaseViewHodler;
     }
@@ -56,7 +64,7 @@ public class SLFChatBotRecyclerAdapter extends RecyclerView.Adapter<SLFChatBotBa
 
     @Override
     public int getItemCount ( ) {
-        return itemList.size();
+        return itemList==null?0:itemList.size();
     }
 
     @Override

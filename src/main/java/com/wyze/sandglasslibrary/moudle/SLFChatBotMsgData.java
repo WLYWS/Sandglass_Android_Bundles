@@ -2,6 +2,7 @@ package com.wyze.sandglasslibrary.moudle;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 /**
  * Created by wangjian on 2023/1/5
@@ -19,9 +20,9 @@ public class SLFChatBotMsgData {
     private int msg_from;//谁发的消息
     private int answer_effective;//解答是否有效
     private int send_msg_status;//发送消息的状态
-    private int question_index = -1;//问题的第一个索引
+    private int question_index = 0;//问题的第一个索引
     private boolean isUpdate;//是否显示更新问题按钮
-
+    @Ignore
     public SLFChatBotMsgData(){}
     public SLFChatBotMsgData (int id, int faqId, long msgTime, int type, String title, String content, String question, int msg_from, int answer_effective, int send_msg_status, int question_index) {
         this.id = id;
