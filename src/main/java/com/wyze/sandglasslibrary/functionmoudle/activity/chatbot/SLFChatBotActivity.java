@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
+import com.wyze.sandglasslibrary.commonui.SLFClickEditText;
 import com.wyze.sandglasslibrary.dao.SLFChatBotDatabase;
 import com.wyze.sandglasslibrary.dao.SLFDBEngine;
 import com.wyze.sandglasslibrary.dao.SLFMsgDao;
@@ -55,7 +57,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     private SwipeRefreshLayout sw_faq_recycle;
     private RecyclerView rv_faq_chat_bot;
-    private EditText et_faq_input;
+    private SLFClickEditText et_faq_input;
     private List<SLFChatBotMsgData> faqMsgList = new ArrayList <>();
     private static final int dateItem = 1;
     private SLFChatBotRecyclerAdapter sLFChatBotRecyclerAdapter;
@@ -112,12 +114,25 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private void initView ( ) {
         TextView slf_tv_title_name = findViewById(R.id.slf_tv_title_name);
         slf_tv_title_name.setText(R.string.slf_faq_title);
-        sw_faq_recycle = findViewById(R.id.sw_faq_recycle);
+//        sw_faq_recycle = findViewById(R.id.sw_faq_recycle);
         rv_faq_chat_bot = findViewById(R.id.rv_faq_chat_bot);
         et_faq_input = findViewById(R.id.et_faq_input);
         ll_et_input = findViewById(R.id.ll_et_input);
         sLFChatBotRecyclerAdapter = new SLFChatBotRecyclerAdapter(this);
-        ll_et_input.setOnClickListener(view->onInput());
+        //et_faq_input.setEnabled(false);
+        ll_et_input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                et_faq_input.requestFocus();
+                showSoftInput(SLFChatBotActivity.this,et_faq_input);
+                new Handler(getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run ( ) {
+                        rv_faq_chat_bot.scrollToPosition(faqMsgList.size() - 1);
+                    }
+                }, 250);
+            }
+        });
         rv_faq_chat_bot.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets (@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
@@ -145,7 +160,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                        // return true;
                     }
                 }
-                return false;//返回true，保留软键盘。false，隐藏软键盘
+                return true;//返回true，保留软键盘。false，隐藏软键盘
             }
         });
 
@@ -157,12 +172,19 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private void onInput ( ) {
         et_faq_input.requestFocus();
         showSoftInput(SLFChatBotActivity.this,et_faq_input);
-        runOnUiThread(new Runnable() {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run ( ) {
+//                rv_faq_chat_bot.scrollToPosition(faqMsgList.size()-1);
+//            }
+//        });
+        Handler handler = new Handler(getMainLooper());
+        handler.postDelayed(new Runnable() {
             @Override
             public void run ( ) {
-                rv_faq_chat_bot.scrollToPosition(faqMsgList.size()-1);
+                rv_faq_chat_bot.scrollToPosition(faqMsgList.size() - 1);
             }
-        });
+        }, 250);
     }
 
     @Override
@@ -201,7 +223,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             slfChatBotRobotNoAnswerData.setType(SLFChatBotMsgData.MsgType.SINGLE_ROBOT_MSG.getValue());
             slfChatBotRobotNoAnswerData.setContent(slfFaqSearchReslutBean.noDataText);
             faqMsgList.add(slfChatBotRobotNoAnswerData);
-            sLFChatBotRecyclerAdapter.notifyDataSetChanged();
+            notiftyAdapter();
             //保存数据库
             slfdbEngine.insert_msg(slfChatBotRobotNoAnswerData);
 
@@ -224,7 +246,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             slfChatBotRobotAnswerData.setQuestion(sb.toString());
             slfChatBotRobotAnswerData.setAnswer_effective(SLFChatBotMsgData.AnswerEffective.ANSWER_NO_SELECT.getValue());
             faqMsgList.add(slfChatBotRobotAnswerData);
-            sLFChatBotRecyclerAdapter.notifyDataSetChanged();
+            notiftyAdapter();
             //保存数据库
             slfdbEngine.insert_msg(slfChatBotRobotAnswerData);
         }
@@ -296,7 +318,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     public void onEvent (SLFChatBotUpdateQuesionEvent event) {
         SLFChatBotMsgData slfChatBotUpdateQuesionData = faqMsgList.get(event.position);
         slfChatBotUpdateQuesionData.setQuestion_index(slfChatBotUpdateQuesionData.getQuestion_index()+5);
-        sLFChatBotRecyclerAdapter.notifyDataSetChanged();
+        notiftyAdapter();
         //刷新数据库
         slfdbEngine.insert_msg(slfChatBotUpdateQuesionData);
     }
@@ -393,6 +415,22 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     }
 
+    @Override
+    protected void onPause ( ) {
+        super.onPause();
+        //页面退出时隐藏软键盘
+        et_faq_input.clearFocus();
+        hideSoftInput(SLFChatBotActivity.this,et_faq_input);
+    }
 
+
+    /**
+     * 刷新adapter
+     */
+    public void notiftyAdapter(){
+        sLFChatBotRecyclerAdapter.notifyDataSetChanged();
+        rv_faq_chat_bot.scrollToPosition(faqMsgList.size() - 1);
+
+    }
 
 }

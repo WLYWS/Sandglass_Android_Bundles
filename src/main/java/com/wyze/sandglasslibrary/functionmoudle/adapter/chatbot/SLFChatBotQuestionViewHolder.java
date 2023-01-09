@@ -101,6 +101,8 @@ public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
         mIndex = index;
         questionStr = question;
         String[] questionArr=new String[20];
+        questionList.clear();
+        questions.clear();
         if (TextUtils.isEmpty(question)){
             lv_faq_list.setVisibility(View.GONE);
             return;

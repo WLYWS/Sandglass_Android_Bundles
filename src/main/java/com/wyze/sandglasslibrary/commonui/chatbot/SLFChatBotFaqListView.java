@@ -106,6 +106,8 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
         this.position = position;
         mIndex = index;
         questionStr = question;
+        questions.clear();
+        questionList.clear();
         String[] questionArr=new String[20];
         if (TextUtils.isEmpty(question)){
             lv_faq_list.setVisibility(View.GONE);
