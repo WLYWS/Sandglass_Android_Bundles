@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/transparent"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_id"
+        android:text="first"
+        android:textColor="@color/white"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/slf_histroy_feedback_list"
         android:layout_width="match_parent"

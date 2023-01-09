@@ -46,6 +46,10 @@
             android:name=".functionmoudle.activity.feedback.SLFFeedbackSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".functionmoudle.activity.feedback.SLFFeedbackList"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <provider
             android:name=".utils.SLFFileProvider"
             android:authorities="${applicationId}.fileprovider"
