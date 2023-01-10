@@ -21,6 +21,7 @@ import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -261,13 +262,13 @@ public class SLFImageUtil {
 
     //清理内存缓存
     public static void clearMemory(){
-        Glide.get(SLFBaseApplication.getAppContext()).clearMemory();
+        Glide.get(SLFApi.getSLFContext()).clearMemory();
     }
 
     //清理硬盘缓存
     public static void clearDiskCache(){
-        Glide.get(SLFBaseApplication.getAppContext()).clearMemory();
-        Glide.get(SLFBaseApplication.getAppContext()).clearDiskCache();
+        Glide.get(SLFApi.getSLFContext()).clearMemory();
+        Glide.get(SLFApi.getSLFContext()).clearDiskCache();
     }
 
     /**

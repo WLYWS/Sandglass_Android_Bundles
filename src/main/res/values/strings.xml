@@ -51,6 +51,7 @@
     <string name="slf_submit_if_uploading">Photo uploading, please hold on.</string>
     <string name="slf_history_feedback_title">In progress</string>
     <string name="slf_history_all_feedback_title">All</string>
+    <string name="slf_feedback_submit_success_copy">Copied to clipboard</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>

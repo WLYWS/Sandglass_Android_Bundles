@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import androidx.core.app.ActivityCompat;
 
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
@@ -177,10 +178,10 @@ public final class SLFSystemUtil {
      * 获取客户端的版本代号
      */
     public static int getVersionCode() {
-        PackageManager pm = SLFBaseApplication.getAppContext().getPackageManager();
+        PackageManager pm = SLFApi.getSLFContext().getPackageManager();
         int versionCode;
         try {
-            PackageInfo info = pm.getPackageInfo(SLFBaseApplication.getAppContext().getPackageName(), 0);
+            PackageInfo info = pm.getPackageInfo(SLFApi.getSLFContext().getPackageName(), 0);
             versionCode = info.versionCode;
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -193,10 +194,10 @@ public final class SLFSystemUtil {
      * 获取客户端的版本名称
      */
     public static String getVersionName() {
-        PackageManager pm = SLFBaseApplication.getAppContext().getPackageManager();
+        PackageManager pm = SLFApi.getSLFContext().getPackageManager();
         String versionName;
         try {
-            PackageInfo info = pm.getPackageInfo(SLFBaseApplication.getAppContext().getPackageName(), 0);
+            PackageInfo info = pm.getPackageInfo(SLFApi.getSLFContext().getPackageName(), 0);
             versionName = info.versionName;
 
         } catch (PackageManager.NameNotFoundException e) {

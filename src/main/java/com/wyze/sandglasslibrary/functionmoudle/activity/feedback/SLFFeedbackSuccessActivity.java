@@ -1,5 +1,6 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
+import android.app.ActivityManager;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +12,10 @@ import android.widget.Toast;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
+import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.commonui.SLFTextView;
+import com.wyze.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
@@ -60,14 +63,14 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
             public void onClick(View view) {
                 ClipboardManager cm =(ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(slf_logid.getText().toString());
-                showCenterToast("logid已复制");
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_submit_success_copy));
             }
         });
 
         slf_finish_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                SLFBaseApplication.exitAllActivity();
             }
         });
     }

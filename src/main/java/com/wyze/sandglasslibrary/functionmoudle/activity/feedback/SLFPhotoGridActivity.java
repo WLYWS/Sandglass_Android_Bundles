@@ -8,6 +8,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
@@ -63,7 +66,7 @@ import java.util.concurrent.Executors;
  * time: 2022/12/6
  * @author yangjie
  */
-public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
+public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageCapture.OnImageSavedCallback{
 
 
     private ImageView ivBack;
@@ -537,6 +540,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             startActivityForResult(intent,CAMERA_REQUEST);
         } catch (Exception e) {
             e.printStackTrace();
@@ -622,6 +626,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             SLFPhotoGridActivity.this.setResult(RESULT_OK, data);
             finish();
         } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            SLFLogUtil.d("yj","camrea_request----imagecup");
         }
     }
 
@@ -702,7 +707,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     SLFPermissionManager.IPermissionsResult permissionsCamraResult = new SLFPermissionManager.IPermissionsResult() {
         @Override
         public void passPermissons() {
-            takePhoto();
+            if(mPhotoListAdapter.getPicList().size() < 3) {
+                takePhoto();
+            }else{
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_only_select_3));
+            }
         }
 
         @Override
@@ -729,4 +738,13 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         }
     }
 
+    @Override
+    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+         SLFLogUtil.d("yj","save image callback");
+    }
+
+    @Override
+    public void onError(@NonNull ImageCaptureException exception) {
+        SLFLogUtil.d("yj","save image callback error");
+    }
 }

@@ -1,6 +1,7 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -58,6 +59,7 @@ import com.wyze.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFCompressUtil;
+import com.wyze.sandglasslibrary.utils.SLFFastClickUtils;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
 import com.wyze.sandglasslibrary.utils.SLFPhotoSelectorUtils;
 import com.wyze.sandglasslibrary.utils.SLFRegular;
@@ -404,6 +406,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Override
     public void onClick(View view) {
         //SLFLogUtil.d(TAG,"feedbacksubmit onClick");
+        if (SLFFastClickUtils.isFastDoubleClick(500)) {
+            return;
+        }
         if (view.getId() == R.id.slf_iv_back) {
             if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size() - 1 > 0)) {
                 showReSureDialog();
@@ -437,14 +442,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 if (slfSendLogCheck.isChecked()) {
                     showLoading();
                     //sumbitLogFiles();
-                    if (SLFApi.getInstance().getAppLogCallBack() != null) {
-                        SLFApi.getInstance().getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
+                    if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
+                        SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
                                 SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
                     }
-                    SLFApi.getInstance().setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
+                    SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                         @Override
                         public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
-                            SLFLogUtil.d("yj", "complete----");
+                            SLFLogUtil.d("yj", "complete--callback--");
                             appLogFileName = appFileName;
                             firmwareLogFileName = firmwarFileName;
                             sumbitLogFiles();

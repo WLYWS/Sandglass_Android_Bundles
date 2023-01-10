@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.lang.reflect.Field;
@@ -216,7 +217,7 @@ public class SLFTitleBarUtil {
             int topPadding = activity.getResources().getDimensionPixelSize(
                     R.dimen.std_titlebar_top_padding);
             try {
-                Resources resources = SLFBaseApplication.getAppContext().getResources();
+                Resources resources = SLFApi.getSLFContext().getResources();
                 topPadding = resources.getDimensionPixelOffset(
                         resources.getIdentifier("status_bar_height", "dimen", "android"));
             } catch (Exception e) {

@@ -2,9 +2,19 @@ package com.wyze.sandglasslibrary.commonapi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
 
+import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
+import com.wyze.sandglasslibrary.utils.SLFFileUtils;
+import com.wyze.sandglasslibrary.utils.SLFSpUtils;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogAPI;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Greated by yangjie
@@ -15,15 +25,52 @@ public class SLFApi  {
 
     private static SLFApi mInstance;
 
+    private static Context mContext;
+
     private SLFUploadAppLogCallback slfUploadAppLogCallback;
 
     private SLFUploadCompleteCallback slfUploadCompleteCallback;
 
-    public static SLFApi getInstance(){
+    public static SLFApi getInstance(Context context){
         if(mInstance==null){
-            mInstance = new SLFApi();
+            mInstance = new SLFApi(context);
         }
         return mInstance;
+    }
+
+
+    public SLFApi(Context context){
+        mContext = context;
+    }
+
+    public static Context getSLFContext(){
+        return mContext;
+    }
+    public void init(){
+        SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
+        long startTime = System.currentTimeMillis();
+//        ARouter.openLog();     // 打印日志
+//        ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+//        ARouter.init(this);
+        long endTime = System.currentTimeMillis();
+        SLFLogAPI.init();
+        SLFLogUtil.setUserInfo();
+        SLFLogUtil.initAPILog();
+        SLFLogUtil.getInstance().initPluginXlog("slf");
+        SLFLogUtil.e("ArouterInitTime:",(endTime-startTime)+"");
+        SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
+
+        List<File> logList = SLFFileUtils.listFileSortByName(SLFConstants.apiLogPath);
+        if (logList.size() > 3) {
+            for (int i = 3; i < logList.size(); i++) {
+                SLFFileUtils.delete(logList.get(i));
+            }
+        }
+
+        // android 7.0系统解决拍照的问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
     }
     /**跳转到插件反馈*/
     public void gotoHelpAndFeedback(Context context){
