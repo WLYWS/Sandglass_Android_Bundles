@@ -99,5 +99,4 @@ dependencies {
     implementation 'androidx.room:room-common:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
 
-    //implementation'com.lcodecorex:tkrefreshlayout:1.0.7'
 }

@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
  * Created by wangjian on 2023/1/5
  */
 @Entity(tableName = "chatbotmessage")
-public class SLFChatBotMsgData {
+public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
     @PrimaryKey(autoGenerate = true)
-    private int id;//数据库id
+    private int id ;//数据库id
     private int faqId;//获得解答answer的id
     private long msgTime;//消息时间戳
     private int type;//消息类型
@@ -42,6 +42,11 @@ public class SLFChatBotMsgData {
         this.answer_effective = answer_effective;
         this.send_msg_status = send_msg_status;
         this.question_index = question_index;
+    }
+
+    @Override
+    public int compareTo (SLFChatBotMsgData data) {
+        return this.id - data.getId();
     }
 
     public enum MsgType{

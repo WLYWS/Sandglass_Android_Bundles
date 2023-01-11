@@ -31,6 +31,7 @@ import com.wyze.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent;
 import com.wyze.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent;
 import com.wyze.sandglasslibrary.moudle.event.SLFChatBotUpdateQuesionEvent;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCommon;
+import com.wyze.sandglasslibrary.moudle.event.SLFTenMsgData;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchReslutBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchResponseBean;
@@ -47,6 +48,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -71,6 +73,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private boolean isFirstGetFromDataBase = false;
     private Handler handler;
     private long lastSendTime;
+    private int msg_id = 100000000;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -88,7 +91,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             getWelcomeHotQuestion();
         }else {
             //请求数据库查找记录
-            slfdbEngine.quary_all_msg();
+            slfdbEngine.quary_ten_msg(msg_id);
         }
 
         SLFSpUtils.putCommit(LAST_ENTER_PAGE,System.currentTimeMillis());
@@ -129,7 +132,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private void initView ( ) {
         TextView slf_tv_title_name = findViewById(R.id.slf_tv_title_name);
         slf_tv_title_name.setText(R.string.slf_faq_title);
-//        sw_faq_recycle = findViewById(R.id.sw_faq_recycle);
+        sw_faq_recycle = findViewById(R.id.sw_faq_recycle);
         rv_faq_chat_bot = findViewById(R.id.rv_faq_chat_bot);
         et_faq_input = findViewById(R.id.et_faq_input);
         ll_et_input = findViewById(R.id.ll_et_input);
@@ -179,7 +182,16 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 return true;//返回true，保留软键盘。false，隐藏软键盘
             }
         });
+        refresh();
+    }
 
+    private void refresh ( ) {
+        sw_faq_recycle.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh ( ) {
+                slfdbEngine.quary_ten_msg(msg_id);
+            }
+        });
     }
 
     /**
@@ -482,6 +494,49 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     }
 
+    /**
+     * 查询数据库10条数据结果
+     * @param sLFTenMsgData
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFTenMsgData sLFTenMsgData){
+        if (sw_faq_recycle.isRefreshing()){
+            sw_faq_recycle.setRefreshing(false);
+            int position = sLFTenMsgData.slfChatBotMsgData.size();
+            LinearLayoutManager linearManager = (LinearLayoutManager) rv_faq_chat_bot.getLayoutManager();
+//最后一个可见view的位置
+            int mLastVisibleItemPosition = linearManager.findLastVisibleItemPosition();
+//第一个可见view的位置
+            int mFirstVisibleItemPosition = linearManager.findFirstVisibleItemPosition();
+            sLFTenMsgData.slfChatBotMsgData.addAll(faqMsgList);
+            faqMsgList.clear();
+            faqMsgList.addAll(sLFTenMsgData.slfChatBotMsgData);
+            Collections.sort(faqMsgList);
+            sLFChatBotRecyclerAdapter.setItemList(faqMsgList);
+            sLFChatBotRecyclerAdapter.notifyDataSetChanged();
+            //sLFChatBotRecyclerAdapter.notifyItemRangeInserted(faqMsgList.size()-position,1);
+             rv_faq_chat_bot.scrollToPosition(mLastVisibleItemPosition+position-1);
+        }else {
+            if (sLFTenMsgData.slfChatBotMsgData ==null ||sLFTenMsgData.slfChatBotMsgData.size()==0){
+                getWelcomeHotQuestion();
+            }else {
+                faqMsgList.addAll(sLFTenMsgData.slfChatBotMsgData);
+                Collections.sort(faqMsgList);
+                setRcycleApdater();
+                rv_faq_chat_bot.scrollToPosition(faqMsgList.size()-1);
+                isFirstGetFromDataBase = true;
+            }
+        }
+        minIdfaqMsgList();
+    }
+
+    private void minIdfaqMsgList ( ) {
+        for (SLFChatBotMsgData sLFChatBotMsgData:faqMsgList){
+            if (sLFChatBotMsgData.getId()<msg_id){
+                msg_id = sLFChatBotMsgData.getId();
+            }
+        }
+    }
     //弹出键盘
 
     public static void showSoftInput(Context context, View view) {
@@ -560,7 +615,11 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     protected void onDestroy ( ) {
         super.onDestroy();
         //取消动画，防止内容泄露
-        sLFChatBotRecyclerAdapter.destroy();
-        handler.removeCallbacksAndMessages(null);
+        if (sLFChatBotRecyclerAdapter!=null){
+            sLFChatBotRecyclerAdapter.destroy();
+        }
+        if (handler!=null) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 }
