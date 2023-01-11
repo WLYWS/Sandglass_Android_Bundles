@@ -26,7 +26,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class SLFChatBotFaqFeedBackView extends ConstraintLayout implements View.OnClickListener {
     private LinearLayout ll_faq_answer;
     private TextView tv_faq_feedback_title;
-    //private SLFChatBotFaqListView sf_faq_feedback_question;
+    private SLFChatBotFaqListView sf_faq_feedback_question;
     private TextView tv_faq_feedback_answer;
     private ImageView iv_faq_question_up,iv_faq_question_center,iv_faq_question_down;
     private View view_question_line;
@@ -54,7 +54,7 @@ public class SLFChatBotFaqFeedBackView extends ConstraintLayout implements View.
         ll_faq_answer = faqFeedBackView.findViewById(R.id.ll_faq_answer);
         tv_faq_feedback_title = faqFeedBackView.findViewById(R.id.tv_faq_feedback_title);
         tv_faq_feedback_answer = faqFeedBackView.findViewById(R.id.tv_faq_feedback_answer);
-        //sf_faq_feedback_question = faqFeedBackView.findViewById(R.id.sf_faq_feedback_question);
+        sf_faq_feedback_question = faqFeedBackView.findViewById(R.id.sf_faq_feedback_question);
         iv_faq_question_up = faqFeedBackView.findViewById(R.id.iv_faq_question_up);
         iv_faq_question_center = faqFeedBackView.findViewById(R.id.iv_faq_question_center);
         iv_faq_question_down = faqFeedBackView.findViewById(R.id.iv_faq_question_down);
@@ -79,14 +79,14 @@ public class SLFChatBotFaqFeedBackView extends ConstraintLayout implements View.
     public void setQustionList (String question, int question_index,int position) {
         this.position = position;
         if (TextUtils.isEmpty(question)){
-            //sf_faq_feedback_question.setVisibility(View.GONE);
+            sf_faq_feedback_question.setVisibility(View.GONE);
             view_question_line.setVisibility(View.GONE);
             return;
         }else {
-            //sf_faq_feedback_question.setVisibility(View.VISIBLE);
+            sf_faq_feedback_question.setVisibility(View.VISIBLE);
             view_question_line.setVisibility(View.VISIBLE);
-            //sf_faq_feedback_question.setQustionType(SLFChatBotMsgData.MsgType.FEEDBACK_ROBOT_MSG.getValue());
-            //sf_faq_feedback_question.setQuestionList(question,question_index,position);
+            sf_faq_feedback_question.setQustionType(SLFChatBotMsgData.MsgType.FEEDBACK_ROBOT_MSG.getValue());
+            sf_faq_feedback_question.setQuestionList(question,question_index,position);
         }
 
     }
