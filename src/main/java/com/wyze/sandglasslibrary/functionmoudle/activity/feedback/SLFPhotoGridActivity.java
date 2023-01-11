@@ -3,6 +3,7 @@ package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import com.wyze.sandglasslibrary.moudle.SLFPhotoFolderInfo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventUpdatePhotolist;
+import com.wyze.sandglasslibrary.receiver.SLFCamraReceiver;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFCropUtil;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
@@ -46,6 +48,7 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFUtils;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
+import com.wyze.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 import com.wyze.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -114,6 +117,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     private boolean isEvent;
     private TextView slf_preview_text;
     private SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(false,"","",null);
+    //private SLFCamraReceiver camraReceiver;
+    private SLFCamraContentObserver slfCamraContentObserver;
+    private Handler handler = new Handler();
+
+    private final int NOTIFY_NO_DELAY = 1<<15;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,12 +131,17 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         initView();
         requestPermission();
         initListener();
+
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //SLFLogUtil.d(TAG,"photoGrid onResume");
+
+
         if(!isCreate){
             isEvent = true;
             getPhotos();
@@ -429,6 +442,14 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         oldCurrentList = null;
         oldPickPositions = null;
         newCurrentList = null;
+        try {
+            getContentResolver().unregisterContentObserver(slfCamraContentObserver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        if(camraReceiver!=null){
+//            unregisterReceiver(camraReceiver);
+//        }
     }
 
     private void requestPermission() {
@@ -535,11 +556,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
 //        startActivityForResult(intent,CAMERA_REQUEST);
 
         try {
-            Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
-
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+           Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
+//              Intent intent = new Intent("android.media.action.VIDEO_CAPTURE");
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                    | Intent.FLAG_ACTIVITY_NEW_TASK
+//                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
             startActivityForResult(intent,CAMERA_REQUEST);
         } catch (Exception e) {
@@ -621,7 +642,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
             SLFPhotoGridActivity.this.setResult(RESULT_OK, data);
             finish();
@@ -747,4 +767,5 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     public void onError(@NonNull ImageCaptureException exception) {
         SLFLogUtil.d("yj","save image callback error");
     }
+
 }

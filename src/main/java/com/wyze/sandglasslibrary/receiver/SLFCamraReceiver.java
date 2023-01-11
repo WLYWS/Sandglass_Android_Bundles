@@ -11,7 +11,12 @@ import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 public class SLFCamraReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        SLFLogUtil.d("yj","监听到了摄像完毕的广播");
+        SLFLogUtil.d("yj", "监听到了拍照完毕的广播ttttttt");
+        if(intent.getAction().equals("com.android.camera.NEW_PICTURE")||intent.getAction().equals("android.hardware.action.NEW_PICTURE")) {
+            SLFLogUtil.d("yj", "监听到了拍照完毕的广播");
+        }else if(intent.getAction().equals("com.android.camera.NEW_VIDEO")||intent.getAction().equals("android.hardware.action.NEW_VIDEO")){
+            SLFLogUtil.d("yj","监听到了录制完成的广播");
+        }
 //        Cursor cursor = context.getContentResolver().query(intent.getData(),
 //                null, null, null, null);
 //        cursor.moveToFirst();

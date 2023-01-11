@@ -62,14 +62,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <receiver
-            android:name=".receiver.SLFCamraReceiver"
-            android:enabled="true" >
-            <intent-filter android:priority="2147483647" >
-                <action android:name="android.hardware.action.NEW_PICTURE" />
-                <data android:mimeType="*/*" />
-            </intent-filter>
-        </receiver>
+
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
