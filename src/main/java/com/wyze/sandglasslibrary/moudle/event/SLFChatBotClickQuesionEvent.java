@@ -5,8 +5,10 @@ package com.wyze.sandglasslibrary.moudle.event;
  */
 public class SLFChatBotClickQuesionEvent {
     public String question;
+    public int type;
 
-    public SLFChatBotClickQuesionEvent (String question) {
+    public SLFChatBotClickQuesionEvent (String question,int type) {
         this.question = question;
+        this.type = type;
     }
 }

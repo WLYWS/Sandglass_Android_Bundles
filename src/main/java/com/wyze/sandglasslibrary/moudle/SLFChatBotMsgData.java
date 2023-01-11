@@ -22,6 +22,12 @@ public class SLFChatBotMsgData {
     private int send_msg_status;//发送消息的状态
     private int question_index = 0;//问题的第一个索引
     private boolean isUpdate;//是否显示更新问题按钮
+
+    public static final int SEND_FROM_INPUT = 1001;//键盘的发送消息
+    public static final int SEND_FROM_AGAIN_SEND = 1002;//重新发送问题
+    public static final int SEND_FROM_CLICK_HOT = 1003;//点击热门问题
+    public static final int SEND_FROM_CLICK_RELATE = 1004;//点击相关问题
+
     @Ignore
     public SLFChatBotMsgData(){}
     public SLFChatBotMsgData (int id, int faqId, long msgTime, int type, String title, String content, String question, int msg_from, int answer_effective, int send_msg_status, int question_index) {

@@ -63,7 +63,10 @@ public class SLFDBEngine {
 
         @Override
         protected Void doInBackground (SLFChatBotMsgData... slfChatBotMsgData) {
-            this.slfMsgDao.updateMsgData(slfChatBotMsgData[0]);
+            SLFChatBotMsgData msgData = this.slfMsgDao.selectByTime(slfChatBotMsgData[0].getMsgTime());
+            SLFChatBotMsgData data = slfChatBotMsgData[0];
+            data.setId(msgData.getId());
+            this.slfMsgDao.updateMsgData(data);
             return null;
         }
 

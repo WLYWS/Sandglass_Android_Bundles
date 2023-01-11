@@ -75,4 +75,8 @@ public class SLFChatBotRecyclerAdapter extends RecyclerView.Adapter<SLFChatBotBa
         SLFChatBotMsgData slfChatBotMsgData = itemList.get(position);
         return slfChatBotMsgData.getType();
     }
+
+    public void destroy ( ) {
+
+    }
 }

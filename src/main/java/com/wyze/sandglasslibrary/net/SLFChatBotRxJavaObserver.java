@@ -3,7 +3,6 @@ package com.wyze.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.wyze.sandglasslibrary.commonapi.SLFLocalApi;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.json.JSONException;
@@ -18,23 +17,25 @@ import io.reactivex.rxjava3.disposables.Disposable;
 /**
  * Created by wangjian on 2022/12/5
  */
-public class SLFRxJavaObserver<T> implements Observer<String> {
+public class SLFChatBotRxJavaObserver<T> implements Observer<String> {
 
-    private SLFHttpRequestCallback mCallBack;
+    private SLFHttpChatBotRequestCallback mCallBack;
     private T mType;
     private Context mContext;
     private String mSecret;
+    private long requestTime;
 
     private final static String DATA = "data";
     private final static String CODE = "code";
     private final static String MSG = "message";
     private final static String SUCCESS = "SUCCESS";
 
-    SLFRxJavaObserver(Context context, T type, SLFHttpRequestCallback callBack,String secret) {
+    SLFChatBotRxJavaObserver (Context context, T type, long requestTime,SLFHttpChatBotRequestCallback callBack, String secret) {
         this.mCallBack = callBack;
         this.mContext = context;
         this.mType = type;
         this.mSecret = secret;
+        this.requestTime = requestTime;
     }
 
     @Override
@@ -60,17 +61,17 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
                             if (msg.toUpperCase().equals(SUCCESS)) {
                                 Gson gson = new Gson();
                                 T t = gson.fromJson(response, (Type) mType);
-                                mCallBack.onRequestSuccess(response, t);
+                                mCallBack.onRequestChatBotSuccess(response, t,requestTime);
                             } else {
                                 String errMsg = jsonObjectData.getString(MSG);
                                 String code = jsonObjectData.getString(CODE);
-                                mCallBack.onRequestFail(errMsg, code,mType);
+                                mCallBack.onRequestChatBotFail(errMsg, code,mType,requestTime);
                             }
                         }
                     }
                 }
             } else {
-                mCallBack.onRequestSuccess(s, mType);
+                mCallBack.onRequestChatBotSuccess(s, mType,requestTime);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -86,11 +87,11 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
         if (!SLFHttpTool.hasNetwork(mContext)) {
             //MyToast.showCenterSortToast(mContext, mContext.getResources().getString(R.string.connect_error));
             onComplete();
-            mCallBack.onRequestNetFail(mType);
+            mCallBack.onRequestChatBotNetFail(mType,requestTime);
             return;
         }
         // 2.非网络错误，接口请求错误
-        mCallBack.onRequestFail(e.getMessage(), "1000",mType);
+        mCallBack.onRequestChatBotFail(e.getMessage(), "1000",mType,requestTime);
     }
 
     /**

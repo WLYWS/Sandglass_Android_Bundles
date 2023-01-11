@@ -20,8 +20,8 @@ public interface SLFMsgDao {
     List <SLFChatBotMsgData> selectAll();
 
     // 根据id查找
-    @Query("select * from chatbotmessage where id = (:id)")
-     SLFChatBotMsgData selectById(int id);
+    @Query("select * from chatbotmessage where msgTime = (:msgTime)")
+     SLFChatBotMsgData selectByTime(long msgTime);
 
     //更新数据库中的内容
     @Update

@@ -45,28 +45,27 @@
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
-        <LinearLayout
-            android:id="@+id/ll_faq_feedback_list"
-            android:background="@drawable/slf_chat_bot_bg"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_relate_question"
-                android:textSize="16sp"
-                android:text="asdfadsf"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.wyze.sandglasslibrary.commonui.SLFNoScrollListview
-                android:id="@+id/lv_faq_feedback_list"
-                android:layout_marginTop="6dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/ll_faq_feedback_list"
+        android:background="@drawable/slf_chat_bot_bg"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_relate_question"
+            android:textSize="16sp"
+            android:text="@string/slf_related_question"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.wyze.sandglasslibrary.commonui.SLFNoScrollListview
+            android:id="@+id/lv_faq_feedback_list"
+            android:layout_marginTop="6dp"
+            android:divider="#FFCC00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
 <!--    <com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView-->
 <!--        android:id="@+id/sf_faq_feedback_question"-->
