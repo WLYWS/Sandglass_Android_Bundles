@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 
@@ -48,7 +50,7 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFUtils;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
-import com.wyze.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
+//import com.wyze.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 import com.wyze.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -118,7 +120,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     private TextView slf_preview_text;
     private SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(false,"","",null);
     //private SLFCamraReceiver camraReceiver;
-    private SLFCamraContentObserver slfCamraContentObserver;
+    //private SLFCamraContentObserver slfCamraContentObserver;
     private Handler handler = new Handler();
 
     private final int NOTIFY_NO_DELAY = 1<<15;
@@ -442,11 +444,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         oldCurrentList = null;
         oldPickPositions = null;
         newCurrentList = null;
-        try {
-            getContentResolver().unregisterContentObserver(slfCamraContentObserver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            getContentResolver().unregisterContentObserver(slfCamraContentObserver);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //        if(camraReceiver!=null){
 //            unregisterReceiver(camraReceiver);
 //        }
@@ -548,6 +550,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("WrongConstant")
     private void takePhoto() {
 
@@ -725,6 +728,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     };
 
     SLFPermissionManager.IPermissionsResult permissionsCamraResult = new SLFPermissionManager.IPermissionsResult() {
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void passPermissons() {
             if(mPhotoListAdapter.getPicList().size() < 3) {

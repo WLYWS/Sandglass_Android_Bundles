@@ -68,12 +68,12 @@
 
         </LinearLayout>
 
-<!--    <com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView-->
-<!--        android:id="@+id/sf_faq_feedback_question"-->
-<!--        android:textSize="14sp"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"/>-->
+    <com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView
+        android:id="@+id/sf_faq_feedback_question"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <View
         android:id="@+id/view_question_line"
         android:background="@color/slf_chat_line_color"
