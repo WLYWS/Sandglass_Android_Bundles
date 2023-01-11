@@ -32,7 +32,8 @@
             android:name=".functionmoudle.activity.feedback.SLFPhotoGridActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
         <activity
             android:name=".functionmoudle.activity.feedback.SLFPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -51,7 +52,11 @@
             android:name=".functionmoudle.activity.feedback.SLFFeedbackList"
             android:exported="false"
             android:screenOrientation="portrait" />
-        
+
+        <activity
+            android:name=".functionmoudle.activity.feedback.SLFTakePhotoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <provider
             android:name=".utils.SLFFileProvider"
             android:authorities="${applicationId}.fileprovider"

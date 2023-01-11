@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -122,8 +123,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     //private SLFCamraReceiver camraReceiver;
     //private SLFCamraContentObserver slfCamraContentObserver;
     private Handler handler = new Handler();
-
-    private final int NOTIFY_NO_DELAY = 1<<15;
+    private SLFMediaData getMediaData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,11 +144,24 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         //SLFLogUtil.d(TAG,"photoGrid onResume");
 
 
+//        if(!isCreate){
+//            isEvent = true;
+//            getMediaData = getIntent().getParcelableExtra("mediaData");
+//            SLFLogUtil.d("yj","getmediadata-----"+getMediaData);
+//            getPhotos();
+//        }
+        //SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this,permissionStorage,permissionsResumeResult);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         if(!isCreate){
             isEvent = true;
+            getMediaData = intent.getParcelableExtra("mediaData");
+            SLFLogUtil.d("yj","getmediadata-----"+getMediaData);
             getPhotos();
         }
-        //SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this,permissionStorage,permissionsResumeResult);
     }
 
     @Override
@@ -554,26 +567,33 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     @SuppressLint("WrongConstant")
     private void takePhoto() {
 
-//        Intent intent = new Intent(this,SLFTakeToCamra.class);
-//        intent.putExtra("insert_album",getIntent().getBooleanExtra("insert_album",false));
-//        startActivityForResult(intent,CAMERA_REQUEST);
+        Intent intent = new Intent(this,SLFTakePhotoActivity.class);
+        intent.putExtra("insert_album",true);
+        startActivityForResult(intent,CAMERA_REQUEST);
 
-        try {
-           Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
-//              Intent intent = new Intent("android.media.action.VIDEO_CAPTURE");
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                    | Intent.FLAG_ACTIVITY_NEW_TASK
-//                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            startActivityForResult(intent,CAMERA_REQUEST);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//           Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
+////              Intent intent = new Intent("android.media.action.VIDEO_CAPTURE");
+////            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+////                    | Intent.FLAG_ACTIVITY_NEW_TASK
+////                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//
+//            startActivityForResult(intent,CAMERA_REQUEST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void resumChecked(){
         newCurrentList.clear();
         newCurrentList.addAll(mCurPhotoList);
+        if(getMediaData!=null){
+            for(int i=0;i<newCurrentList.size();i++){
+                if(getFileName(getMediaData.getOriginalPath()).equals(getFileName(newCurrentList.get(i).getOriginalPath()))){
+                    mPhotoListAdapter.setCurrentPosition(i);
+                }
+            }
+        }
         if(oldPickPositions.size()==0){
             return;
         }else{
@@ -581,8 +601,23 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                 int selectedpos = Integer.parseInt(oldPickPositions.get(i)) + (newCurrentList.size() - oldCurrentList.size());
                 mPhotoListAdapter.setCurrentPosition(selectedpos);
             }
+
         }
         gvPhotoList.invalidate();
+    }
+
+    public String getFileName(String pathandname){
+        if(!TextUtils.isEmpty(pathandname)) {
+            int start = pathandname.lastIndexOf("/");
+            int end = pathandname.lastIndexOf(".");
+            if (start != -1 && end != -1) {
+                return pathandname.substring(start + 1, end);
+            } else {
+                return "";
+            }
+        }else{
+            return "";
+        }
     }
 
     private void gotoPreview() {
@@ -711,6 +746,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                 intent.putExtra("aspect_y", aspect_Y);
                 intent.putExtra("app_color", getColor());
                 intent.putExtra("direct_crop", isDirectCrop);
+                intent.putExtra("from","photogrid");
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
             } else {
                 showCenterToast("Please choose a picture!");

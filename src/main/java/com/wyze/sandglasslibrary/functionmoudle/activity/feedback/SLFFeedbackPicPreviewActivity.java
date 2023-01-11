@@ -1,8 +1,11 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -13,6 +16,7 @@ import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFPhotoViewPager;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
@@ -22,6 +26,8 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
     private ArrayList<SLFMediaData> picPathLists;
 
     private SLFPreviewPagerAdapter mPreviewVpAdapter;
+
+    private SLFMediaData mediaData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +44,17 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
 
         final View titleBar = findViewById(R.id.slf_title_bar);
         final TextView tvTitle = findViewById(R.id.slf_tv_title_name);
-
-        findViewById(R.id.slf_iv_back).setOnClickListener(v -> finish());
+        final ImageView img_back = findViewById(R.id.slf_iv_back);
+        final RelativeLayout bottomlayout = findViewById(R.id.slf_bottom_use_relative);
+        final TextView use_btn =findViewById(R.id.slf_use_photo);
+        final TextView re_take = findViewById(R.id.slf_retake);
+        img_back.setOnClickListener(v -> finish());
         SLFPhotoViewPager mViewPager = findViewById(R.id.slf_vp_preview);
 
         picPathLists = getIntent().getParcelableArrayListExtra("photoPath");
         int position = getIntent().getIntExtra("position",0);
+        String from = getIntent().getStringExtra("from");
+        mediaData = getIntent().getParcelableExtra("take_photo");
         mPreviewVpAdapter = new SLFPreviewPagerAdapter(getActivity(), picPathLists);
         mViewPager.setAdapter(mPreviewVpAdapter);
         mViewPager.setCurrentItem(position);
@@ -53,6 +64,17 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
         }
         final View viewParent = findViewById(R.id.slf_pic_preview_parent);
 
+        if(from.equals("takephoto")){
+            tvTitle.setVisibility(View.GONE);
+            img_back.setVisibility(View.GONE);
+            bottomlayout.setVisibility(View.VISIBLE);
+            re_take.setOnClickListener(v -> finish());
+            use_btn.setOnClickListener(v -> gotoPhotoGridActivity());
+        }else{
+            tvTitle.setVisibility(View.VISIBLE);
+            img_back.setVisibility(View.VISIBLE);
+            bottomlayout.setVisibility(View.GONE);
+        }
         mPreviewVpAdapter.setOnClickListener(() -> {
 //            if(titleBar.getVisibility() == View.VISIBLE){
 //                titleBar.setVisibility(View.GONE);
@@ -71,12 +93,23 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
             @Override
             public void onPageSelected(int i) {
                 //SLFLogUtil.d(TAG,"feedbackpreview onPageSelected");
-                tvTitle.setText(i+1+"/"+picPathLists.size());
+                if(tvTitle.getVisibility() == View.VISIBLE)
+                    tvTitle.setText(i+1+"/"+picPathLists.size());
             }
             @Override
             public void onPageScrollStateChanged(int i) {
                 //
             }
         });
+    }
+
+    private void gotoPhotoGridActivity(){
+        picPathLists.add(mediaData);
+        Intent in = new Intent(SLFFeedbackPicPreviewActivity.this,SLFPhotoGridActivity.class);
+        in.putExtra("mediaData",mediaData);
+        in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(in);
+        SLFLogUtil.d("yj","mediaData  preview----"+mediaData);
+        finish();
     }
 }

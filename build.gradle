@@ -67,6 +67,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
 
+
+
     //camra
     implementation "androidx.camera:camera-core:1.1.0-alpha08"
     implementation "androidx.camera:camera-camera2:1.1.0-alpha08"
@@ -74,7 +76,6 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha28"
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

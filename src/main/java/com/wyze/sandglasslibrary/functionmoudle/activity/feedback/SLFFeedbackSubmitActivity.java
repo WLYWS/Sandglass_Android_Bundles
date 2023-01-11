@@ -365,6 +365,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 picPathLists.remove(slfMediaData);
                 if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                     Intent in = new Intent();
+                    in.putExtra("from","feedback");
                     in.setClass(SLFFeedbackSubmitActivity.this, SLFFeedbackPicPreviewActivity.class);
                     in.putExtra("position", position);
                     in.putParcelableArrayListExtra("photoPath", picPathLists);
