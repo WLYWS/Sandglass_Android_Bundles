@@ -42,6 +42,7 @@
                 android:textColorHint="@color/slf_chat_input_ph_color"
                 android:textSize="16sp"
                 android:imeOptions="actionSend"
+                android:textColor="@color/white"
                 android:inputType="text"
                 android:background="@drawable/slf_chat_bot_bg"
                 android:layout_marginBottom="10dp"
