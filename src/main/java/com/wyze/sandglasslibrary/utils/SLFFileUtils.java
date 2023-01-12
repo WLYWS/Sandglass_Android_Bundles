@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
@@ -482,11 +483,11 @@ public class SLFFileUtils {
         }else{
             values.put(MediaStore.Images.Media.DATA,SLFConstants.externalGallery+relativePath+"/"+file.getName());
         }
-        Uri uri = SLFBaseApplication.getAppContext().getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,values);
+        Uri uri = SLFApi.getSLFContext().getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,values);
 
         int byteRead = 0;
         try (InputStream inputStream = new FileInputStream(file.getAbsolutePath())){
-            try (OutputStream outputStream = SLFBaseApplication.getAppContext().getContentResolver().openOutputStream(uri)) {
+            try (OutputStream outputStream = SLFApi.getSLFContext().getContentResolver().openOutputStream(uri)) {
                 byte[] buffer = new byte[4096];
                 while ((byteRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, byteRead);
@@ -512,7 +513,7 @@ public class SLFFileUtils {
         }else{
             values.put(MediaStore.Images.Media.DATA, SLFConstants.externalGallery+relativePath+"/"+file.getName());
         }
-        Uri uri = SLFBaseApplication.getAppContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        Uri uri = SLFApi.getSLFContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
 
         Bitmap bp = BitmapFactory.decodeFile(file.getAbsolutePath());
         Matrix mat = new Matrix();
@@ -539,7 +540,7 @@ public class SLFFileUtils {
             //
         }
 
-        try(OutputStream outputStream = SLFBaseApplication.getAppContext().getContentResolver().openOutputStream(uri)) {
+        try(OutputStream outputStream = SLFApi.getSLFContext().getContentResolver().openOutputStream(uri)) {
             bp.compress(Bitmap.CompressFormat.JPEG,80,outputStream);
             outputStream.flush();
             bp.recycle();

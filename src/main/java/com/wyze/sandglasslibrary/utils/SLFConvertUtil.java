@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -377,7 +378,7 @@ public class SLFConvertUtil {
      * @return drawable
      */
     public static Drawable bitmap2Drawable(final Bitmap bitmap) {
-        return bitmap == null ? null : new BitmapDrawable(SLFBaseApplication.getAppContext().getResources(), bitmap);
+        return bitmap == null ? null : new BitmapDrawable(SLFApi.getSLFContext().getResources(), bitmap);
     }
 
     /**

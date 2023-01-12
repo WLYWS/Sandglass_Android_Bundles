@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFConvertUtil;
 import com.wyze.sandglasslibrary.utils.SLFImageUtil;
@@ -61,9 +62,9 @@ public class SLFToastUtil {
     }
 
     private static void showText(CharSequence text, int duration) {
-        mToast = new Toast(SLFBaseApplication.getAppContext());
+        mToast = new Toast(SLFApi.getSLFContext());
         @SuppressLint("InflateParams")
-        View toastView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_toast, null);
+        View toastView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_toast, null);
 
         mToast.setGravity(Gravity.BOTTOM, 0, SLFConvertUtil.dp2px(45));
         mToast.setView(toastView);
@@ -86,7 +87,7 @@ public class SLFToastUtil {
         if (mPopWindow == null) {
             //设置contentView
             @SuppressLint("InflateParams")
-            View contentView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_toast, null);
+            View contentView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_toast, null);
 
             mPopWindow = new PopupWindow(contentView,
                     SLFCommonUtils.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -133,9 +134,9 @@ public class SLFToastUtil {
      */
     @Deprecated
     public static void showCenterText(CharSequence text) {
-        mToast = new Toast(SLFBaseApplication.getAppContext());
+        mToast = new Toast(SLFApi.getSLFContext());
         @SuppressLint("InflateParams")
-        View toastView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_toast, null);
+        View toastView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_toast, null);
 
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setView(toastView);
@@ -158,16 +159,16 @@ public class SLFToastUtil {
      */
     @Deprecated
     public static void showCenterSubmitFailText() {
-        mToast = new Toast(SLFBaseApplication.getAppContext());
+        mToast = new Toast(SLFApi.getSLFContext());
         @SuppressLint("InflateParams")
-        View toastView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_center_submit_fail_toast, null);
+        View toastView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_center_submit_fail_toast, null);
 
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setView(toastView);
         mToast.setDuration(Toast.LENGTH_SHORT);
 
         LinearLayout relativeLayout = mToast.getView().findViewById(R.id.slf_submit_fail_toast_parent);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(SLFResourceUtils.dp2px(SLFBaseApplication.getAppContext(),136), SLFResourceUtils.dp2px(SLFBaseApplication.getAppContext(),136));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(SLFResourceUtils.dp2px(SLFApi.getSLFContext(),136), SLFResourceUtils.dp2px(SLFApi.getSLFContext(),136));
         relativeLayout.setLayoutParams(layoutParams);
 
         TextView tvContent = relativeLayout.findViewById(R.id.slf_center_submit_fail_content);
@@ -187,8 +188,8 @@ public class SLFToastUtil {
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = new Toast(SLFBaseApplication.getAppContext());
-        View toastView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_toast,
+        mToast = new Toast(SLFApi.getSLFContext());
+        View toastView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_toast,
                 (ViewGroup) null);
         if (pxMarginBottom < 0) {
             pxMarginBottom = SLFConvertUtil.dp2px(45.0F);
@@ -254,7 +255,7 @@ public class SLFToastUtil {
 
         if(mLoadingView == null){
             //设置contentView
-            View contentView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_loading, null);
+            View contentView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_loading, null);
             mLoadingView = new PopupWindow(contentView,
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
             mLoadingView.setContentView(contentView);
@@ -268,7 +269,7 @@ public class SLFToastUtil {
 
             if (type == LOADING_TYPE_WHITE) {
                 //设置contentView
-                @SuppressLint("InflateParams") View contentView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_loading, null);
+                @SuppressLint("InflateParams") View contentView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_loading, null);
                 final RelativeLayout relativeLayout = contentView.findViewById(R.id.slf_common_loading_parent);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(SLFConvertUtil.dp2px(136), SLFConvertUtil.dp2px(136));
                 relativeLayout.setLayoutParams(layoutParams);
@@ -338,7 +339,7 @@ public class SLFToastUtil {
 
         if(mLoadingView == null){
             //设置contentView
-            @SuppressLint("InflateParams") View contentView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_loading, null);
+            @SuppressLint("InflateParams") View contentView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_loading, null);
             mLoadingView = new PopupWindow(contentView,
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
             mLoadingView.setContentView(contentView);
@@ -352,7 +353,7 @@ public class SLFToastUtil {
 
         if (type == LOADING_TYPE_WHITE) {
             //设置contentView
-            View contentView = LayoutInflater.from(SLFBaseApplication.getAppContext()).inflate(R.layout.slf_common_loading, null);
+            View contentView = LayoutInflater.from(SLFApi.getSLFContext()).inflate(R.layout.slf_common_loading, null);
             final RelativeLayout relativeLayout = contentView.findViewById(R.id.slf_common_loading_parent);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(SLFConvertUtil.dp2px(136), SLFConvertUtil.dp2px(136));
             relativeLayout.setLayoutParams(layoutParams);

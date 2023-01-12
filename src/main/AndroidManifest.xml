@@ -2,11 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wyze.sandglasslibrary"
-    tools:ignore="CoarseFineLocation">
+    >
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        >
         <activity
             android:name=".functionmoudle.activity.chatbot.SLFChatBotActivity"
             android:windowSoftInputMode="adjustResize"
@@ -31,7 +32,8 @@
             android:name=".functionmoudle.activity.feedback.SLFPhotoGridActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
         <activity
             android:name=".functionmoudle.activity.feedback.SLFPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -46,6 +48,15 @@
             android:name=".functionmoudle.activity.feedback.SLFFeedbackSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".functionmoudle.activity.feedback.SLFFeedbackList"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".functionmoudle.activity.feedback.SLFTakePhotoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <provider
             android:name=".utils.SLFFileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -55,6 +66,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -75,8 +88,12 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 照相的特征 -->
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 
 </manifest>

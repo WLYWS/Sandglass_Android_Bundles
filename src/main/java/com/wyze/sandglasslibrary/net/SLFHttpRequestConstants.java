@@ -6,6 +6,7 @@ package com.wyze.sandglasslibrary.net;
 public class SLFHttpRequestConstants {
     public static final String APP_ID = "test";
     public static final String BASE_URL = "http://app.gateway.chenyanjin.top";
+    //public static final String BASE_URL = "http://api.feedback.chenyanjin.top";
     public static final String APP_KEY = "test";
     //public static final String BASE_API = "http://172.16.101.135:10003";
 

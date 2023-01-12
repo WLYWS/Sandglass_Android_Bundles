@@ -1,5 +1,6 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
+import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackList;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.wyze.sandglasslibrary.moudle.SLFDeviceTypes;
@@ -90,6 +92,7 @@ public class SLFHelpAndFeedback extends SLFBaseActivity implements View.OnClickL
     public void onClick(View view) {
         if(view.getId() == R.id.slf_iv_second_right){
             //TODO gotoFeedbackFormat
+            gotoFeedbackHistoryList();
         }else if(view.getId() == R.id.slf_help_and_feedback_chat_bot){
             //TODO gotoChatBot
             gotoChatBot();
@@ -105,6 +108,10 @@ public class SLFHelpAndFeedback extends SLFBaseActivity implements View.OnClickL
 
     private void gotoFeedback(){
         Intent in = new Intent(getContext(), SLFFeedbackSubmitActivity.class);
+        startActivity(in);
+    }
+    private void gotoFeedbackHistoryList(){
+        Intent in = new Intent(getContext(), SLFFeedbackList.class);
         startActivity(in);
     }
 }

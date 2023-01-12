@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.BufferedOutputStream;
@@ -339,7 +340,7 @@ public class SLFViewUtil {
 
     public static int[] getScreenSize() {
         int[] screens;
-        DisplayMetrics dm = SLFBaseApplication.getAppContext().getResources().getDisplayMetrics();
+        DisplayMetrics dm = SLFApi.getSLFContext().getResources().getDisplayMetrics();
         screens = new int[]{dm.widthPixels, dm.heightPixels};
         return screens;
     }

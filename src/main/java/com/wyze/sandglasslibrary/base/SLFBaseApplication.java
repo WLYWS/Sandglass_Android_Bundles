@@ -1,11 +1,13 @@
 package com.wyze.sandglasslibrary.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.StrictMode;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.utils.SLFFileUtils;
 import com.wyze.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.wyze.sandglasslibrary.utils.SLFSpUtils;
@@ -13,6 +15,7 @@ import com.wyze.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,36 +33,13 @@ public class SLFBaseApplication extends Application {
 
     private SLFNetworkChangeReceiver mNetworkChangedReceiver;
 
+    private static List<Activity> mList = new LinkedList<>();//记录当前应用的Activity,用于退出整个应用销毁所有Activity
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-
-        SLFSpUtils.getInstance(this, getPackageName() + "_slf_sp");
-        long startTime = System.currentTimeMillis();
-        ARouter.openLog();     // 打印日志
-        ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-        ARouter.init(this);
-        long endTime = System.currentTimeMillis();
-        SLFLogAPI.init();
-        SLFLogUtil.setUserInfo();
-        SLFLogUtil.initAPILog();
-        SLFLogUtil.getInstance().initPluginXlog("slf");
-        SLFLogUtil.e("ArouterInitTime:",(endTime-startTime)+"");
-        SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
-
-        List<File> logList = SLFFileUtils.listFileSortByName(SLFConstants.apiLogPath);
-        if (logList.size() > 3) {
-            for (int i = 3; i < logList.size(); i++) {
-                SLFFileUtils.delete(logList.get(i));
-            }
-        }
-
-        // android 7.0系统解决拍照的问题
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        builder.detectFileUriExposure();
-
+        SLFApi.getInstance(this).init();
         initReceiver();
     }
 
@@ -77,4 +57,30 @@ public class SLFBaseApplication extends Application {
 
     }
 
+    public static void addActivity(Activity activity) {
+        mList.add(activity);
+    }
+
+    public static void exitAllActivity() {
+        try {
+            for (Activity activity : mList) {
+                if (activity != null) {
+                    activity.finish();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public static void exitActivity(Activity activity){
+       mList.remove(activity);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        System.gc();
+    }
 }

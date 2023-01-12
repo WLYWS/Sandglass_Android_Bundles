@@ -3,11 +3,15 @@ package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
@@ -34,6 +41,7 @@ import com.wyze.sandglasslibrary.moudle.SLFPhotoFolderInfo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventUpdatePhotolist;
+import com.wyze.sandglasslibrary.receiver.SLFCamraReceiver;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFCropUtil;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
@@ -43,6 +51,7 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.wyze.sandglasslibrary.utils.SLFUtils;
 import com.wyze.sandglasslibrary.utils.SLFViewUtil;
+//import com.wyze.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 import com.wyze.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -63,7 +72,7 @@ import java.util.concurrent.Executors;
  * time: 2022/12/6
  * @author yangjie
  */
-public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
+public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageCapture.OnImageSavedCallback{
 
 
     private ImageView ivBack;
@@ -111,6 +120,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     private boolean isEvent;
     private TextView slf_preview_text;
     private SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(false,"","",null);
+    //private SLFCamraReceiver camraReceiver;
+    //private SLFCamraContentObserver slfCamraContentObserver;
+    private Handler handler = new Handler();
+    private SLFMediaData getMediaData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,17 +133,35 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         initView();
         requestPermission();
         initListener();
+
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //SLFLogUtil.d(TAG,"photoGrid onResume");
+
+
+//        if(!isCreate){
+//            isEvent = true;
+//            getMediaData = getIntent().getParcelableExtra("mediaData");
+//            SLFLogUtil.d("yj","getmediadata-----"+getMediaData);
+//            getPhotos();
+//        }
+        //SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this,permissionStorage,permissionsResumeResult);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         if(!isCreate){
             isEvent = true;
+            getMediaData = intent.getParcelableExtra("mediaData");
+            SLFLogUtil.d("yj","getmediadata-----"+getMediaData);
             getPhotos();
         }
-        //SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this,permissionStorage,permissionsResumeResult);
     }
 
     @Override
@@ -426,6 +457,14 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         oldCurrentList = null;
         oldPickPositions = null;
         newCurrentList = null;
+//        try {
+//            getContentResolver().unregisterContentObserver(slfCamraContentObserver);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        if(camraReceiver!=null){
+//            unregisterReceiver(camraReceiver);
+//        }
     }
 
     private void requestPermission() {
@@ -524,28 +563,37 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("WrongConstant")
     private void takePhoto() {
 
-//        Intent intent = new Intent(this,SLFTakeToCamra.class);
-//        intent.putExtra("insert_album",getIntent().getBooleanExtra("insert_album",false));
-//        startActivityForResult(intent,CAMERA_REQUEST);
+        Intent intent = new Intent(this,SLFTakePhotoActivity.class);
+        intent.putExtra("insert_album",true);
+        startActivityForResult(intent,CAMERA_REQUEST);
 
-        try {
-            Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
-
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivityForResult(intent,CAMERA_REQUEST);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//           Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
+////              Intent intent = new Intent("android.media.action.VIDEO_CAPTURE");
+////            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+////                    | Intent.FLAG_ACTIVITY_NEW_TASK
+////                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//
+//            startActivityForResult(intent,CAMERA_REQUEST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void resumChecked(){
         newCurrentList.clear();
         newCurrentList.addAll(mCurPhotoList);
+        if(getMediaData!=null){
+            for(int i=0;i<newCurrentList.size();i++){
+                if(getFileName(getMediaData.getOriginalPath()).equals(getFileName(newCurrentList.get(i).getOriginalPath()))){
+                    mPhotoListAdapter.setCurrentPosition(i);
+                }
+            }
+        }
         if(oldPickPositions.size()==0){
             return;
         }else{
@@ -553,8 +601,23 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 int selectedpos = Integer.parseInt(oldPickPositions.get(i)) + (newCurrentList.size() - oldCurrentList.size());
                 mPhotoListAdapter.setCurrentPosition(selectedpos);
             }
+
         }
         gvPhotoList.invalidate();
+    }
+
+    public String getFileName(String pathandname){
+        if(!TextUtils.isEmpty(pathandname)) {
+            int start = pathandname.lastIndexOf("/");
+            int end = pathandname.lastIndexOf(".");
+            if (start != -1 && end != -1) {
+                return pathandname.substring(start + 1, end);
+            } else {
+                return "";
+            }
+        }else{
+            return "";
+        }
     }
 
     private void gotoPreview() {
@@ -617,11 +680,11 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
             SLFPhotoGridActivity.this.setResult(RESULT_OK, data);
             finish();
         } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            SLFLogUtil.d("yj","camrea_request----imagecup");
         }
     }
 
@@ -683,6 +746,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 intent.putExtra("aspect_y", aspect_Y);
                 intent.putExtra("app_color", getColor());
                 intent.putExtra("direct_crop", isDirectCrop);
+                intent.putExtra("from","photogrid");
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
             } else {
                 showCenterToast("Please choose a picture!");
@@ -700,9 +764,14 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     };
 
     SLFPermissionManager.IPermissionsResult permissionsCamraResult = new SLFPermissionManager.IPermissionsResult() {
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void passPermissons() {
-            takePhoto();
+            if(mPhotoListAdapter.getPicList().size() < 3) {
+                takePhoto();
+            }else{
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_only_select_3));
+            }
         }
 
         @Override
@@ -727,6 +796,16 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             // 更新数据
             resumChecked();
         }
+    }
+
+    @Override
+    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+         SLFLogUtil.d("yj","save image callback");
+    }
+
+    @Override
+    public void onError(@NonNull ImageCaptureException exception) {
+        SLFLogUtil.d("yj","save image callback error");
     }
 
 }

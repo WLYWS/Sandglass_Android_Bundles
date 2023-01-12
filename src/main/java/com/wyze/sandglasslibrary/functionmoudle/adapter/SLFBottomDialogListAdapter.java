@@ -127,7 +127,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                     checkBox.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_bottom_dialog_selected));
                     serviceTypeTitle.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_page_submit_btn_bg));
                 }else{
-                    checkBox.setBackground(null);
+                    checkBox.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_bottom_dialog_no_select));
                     serviceTypeTitle.setTextColor(SLFResourceUtils.getColor(R.color.white));
                 }
 

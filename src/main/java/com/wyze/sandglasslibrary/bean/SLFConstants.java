@@ -4,6 +4,7 @@ import android.os.Environment;
 
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 
 import java.io.File;
 import java.io.Serializable;
@@ -24,8 +25,8 @@ public class SLFConstants {
     public static boolean isOpenConsoleLog = true;
     public static boolean isLogFileEncrypt = false;
 
-    public static final String rootPath = SLFBaseApplication.getAppContext().getFilesDir() + "/SLF"; // App
-    public static final String cacheRootPath = SLFBaseApplication.getAppContext().getCacheDir() + "/SLF"; // App
+    public static final String rootPath = SLFApi.getSLFContext().getFilesDir() + "/SLF"; // App
+    public static final String cacheRootPath = SLFApi.getSLFContext().getCacheDir() + "/SLF"; // App
 
     public static final String documentPath = rootPath + "/document/";
 
@@ -42,7 +43,7 @@ public class SLFConstants {
 
     public static String CROP_IMAGE_PATH = slfCachePath + "img/crop/";
 
-    private static final String externalRootPath = SLFBaseApplication.getAppContext().getExternalFilesDir("slf").getAbsolutePath(); // storge root App 不暴露
+    private static final String externalRootPath = SLFApi.getSLFContext().getExternalFilesDir("slf").getAbsolutePath(); // storge root App 不暴露
     public static final String externalCachePath = externalRootPath + "/cache/"; // storge cache path
     public static final String externalDocumentPath = externalRootPath + "/document/"; // storge document path
     public static final String externalGallery = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_DCIM + "/slf/"; // storge gallery path
@@ -68,6 +69,7 @@ public class SLFConstants {
     public static final String UPLOADING = "uploading";
     public static final String UPLOADED = "uploaded";
     public static final String UPLOADIDLE = "uploadidle";
+    public static final String UPLOADFAIL = "uploadfail";
 
     public static final String LOGID = "logid";
 

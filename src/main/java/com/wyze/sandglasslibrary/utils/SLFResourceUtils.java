@@ -6,13 +6,14 @@ import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
+import com.wyze.sandglasslibrary.commonapi.SLFApi;
 
 public class SLFResourceUtils {
 
     private SLFResourceUtils(){}
 
     public static Resources getResources() {
-        return SLFBaseApplication.getAppContext().getResources();
+        return SLFApi.getSLFContext().getResources();
     }
 
     public static int getColor(int id) {
@@ -71,7 +72,7 @@ public class SLFResourceUtils {
      *            资源名称
      */
     public static int getIdentifierId(String name) {
-        return getIdentifier(SLFBaseApplication.getAppContext(), name, "id", 0);
+        return getIdentifier(SLFApi.getSLFContext(), name, "id", 0);
     }
 
     /** 获取屏幕材质信息 */
