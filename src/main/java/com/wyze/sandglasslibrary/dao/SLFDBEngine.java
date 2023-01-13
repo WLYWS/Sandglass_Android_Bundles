@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;
+import com.wyze.sandglasslibrary.moudle.event.SLFTenMsgData;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,6 +42,36 @@ public class SLFDBEngine {
         new QuaryAllAsynTask(slfMsgDao).execute();
     }
 
+    //查询10条数据
+    public void quary_ten_msg(int id) {
+        new QuaryTenAsynTask(slfMsgDao).execute(id);
+    }
+
+    static class QuaryTenAsynTask extends AsyncTask <Integer,Void,List<SLFChatBotMsgData>> {
+
+        private SLFMsgDao slfMsgDao;
+        public QuaryTenAsynTask(SLFMsgDao slfMsgDao) {
+            this.slfMsgDao = slfMsgDao;
+        }
+
+        @Override
+        protected List <SLFChatBotMsgData> doInBackground(Integer... integers) {
+            List <SLFChatBotMsgData> all_msg = this.slfMsgDao.selectLimitTen(integers[0]);
+            //遍历全部查询的结果
+            for (SLFChatBotMsgData SLFChatBotMsgData:all_msg)
+            {
+                SLFLogUtil.i(TAG, "doInBackground: "+SLFChatBotMsgData.toString());
+            }
+            return all_msg;
+        }
+
+        @Override
+        protected void onPostExecute (List <SLFChatBotMsgData> slfChatBotMsgData) {
+            super.onPostExecute(slfChatBotMsgData);
+            EventBus.getDefault().post(new SLFTenMsgData(slfChatBotMsgData));
+        }
+    }
+
     //开启异步操作
     static class InsertAsynTask extends AsyncTask<SLFChatBotMsgData,Void,Void> {
         private SLFMsgDao slfMsgDao;
@@ -63,7 +94,10 @@ public class SLFDBEngine {
 
         @Override
         protected Void doInBackground (SLFChatBotMsgData... slfChatBotMsgData) {
-            this.slfMsgDao.updateMsgData(slfChatBotMsgData[0]);
+            SLFChatBotMsgData msgData = this.slfMsgDao.selectByTime(slfChatBotMsgData[0].getMsgTime());
+            SLFChatBotMsgData data = slfChatBotMsgData[0];
+            data.setId(msgData.getId());
+            this.slfMsgDao.updateMsgData(data);
             return null;
         }
 

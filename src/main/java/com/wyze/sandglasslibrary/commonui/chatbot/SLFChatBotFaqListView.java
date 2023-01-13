@@ -85,7 +85,7 @@ public class SLFChatBotFaqListView extends ConstraintLayout {
             @Override
             public void onItemClick (AdapterView <?> parent, View view, int position, long id) {
                 //EventBus.getDefault().post(position);
-                EventBus.getDefault().post(new SLFChatBotClickQuesionEvent(questionList.get(position)));
+               // EventBus.getDefault().post(new SLFChatBotClickQuesionEvent(questionList.get(position)));
             }
         });
 

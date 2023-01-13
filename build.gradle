@@ -44,7 +44,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    buildToolsVersion '23.0.3'
     ndkVersion '21.3.6528147'
 
 
@@ -102,4 +101,5 @@ dependencies {
     //数据库
     implementation 'androidx.room:room-common:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
 }

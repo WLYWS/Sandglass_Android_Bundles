@@ -115,6 +115,27 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
         observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFRxJavaObserver(context, type, callBack,secret));
     }
 
+    // Post请求(带参)
+    // 以RequestBody方式提交
+    //携带时间戳上传数据
+    @Override
+    public void mHttpPost(Context context, String url, TreeMap map, T type,long requestTime,SLFHttpChatBotRequestCallback callBack) {
+        TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,url,map);
+        String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
+        headMap.remove(SLFHttpRequestConstants.SECRET);
+        Gson gson = new Gson();
+        String paramStr = gson.toJson(map);
+        SLFLogUtil.d("request","加密前请求参数：| Request:"+paramStr);
+        String paramsString  = SLFStringUtil.replaceBlank(SLFHttpTool.encryptAES(paramStr,secret));
+        TreeMap<String,String> paramMap = new TreeMap <>();
+        paramMap.put("data",paramsString);
+        String param = gson.toJson(paramMap);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), param);
+        Observable<String> observable = apiService.postData(url, requestBody,headMap);
+        observable.retryWhen(new SLFRetryFunction()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SLFChatBotRxJavaObserver<>(context, type, requestTime,callBack,secret));
+    }
+
+
     // Post请求(包含数组)
     @Override
     public void mHttpPost(Context context, String api, TreeMap map, String[] data, T type, SLFHttpRequestCallback callBack) {

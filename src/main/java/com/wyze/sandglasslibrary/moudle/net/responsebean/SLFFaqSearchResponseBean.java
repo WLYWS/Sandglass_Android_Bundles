@@ -6,6 +6,15 @@ package com.wyze.sandglasslibrary.moudle.net.responsebean;
 public class SLFFaqSearchResponseBean extends SLFResponseBaseBean{
     public SLFFaqSearchReslutBean data;
     public String instance_id;
+    public long requestTime;
+
+    public SLFFaqSearchResponseBean ( ) {
+    }
+
+    public SLFFaqSearchResponseBean (SLFFaqSearchReslutBean data, String instance_id) {
+        this.data = data;
+        this.instance_id = instance_id;
+    }
 
     @Override
     public String toString ( ) {

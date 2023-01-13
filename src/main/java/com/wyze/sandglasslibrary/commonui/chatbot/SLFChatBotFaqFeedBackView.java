@@ -54,7 +54,7 @@ public class SLFChatBotFaqFeedBackView extends ConstraintLayout implements View.
         ll_faq_answer = faqFeedBackView.findViewById(R.id.ll_faq_answer);
         tv_faq_feedback_title = faqFeedBackView.findViewById(R.id.tv_faq_feedback_title);
         tv_faq_feedback_answer = faqFeedBackView.findViewById(R.id.tv_faq_feedback_answer);
-        sf_faq_feedback_question = faqFeedBackView.findViewById(R.id.sf_faq_feedback_question);
+        //sf_faq_feedback_question = faqFeedBackView.findViewById(R.id.sf_faq_feedback_question);
         iv_faq_question_up = faqFeedBackView.findViewById(R.id.iv_faq_question_up);
         iv_faq_question_center = faqFeedBackView.findViewById(R.id.iv_faq_question_center);
         iv_faq_question_down = faqFeedBackView.findViewById(R.id.iv_faq_question_down);

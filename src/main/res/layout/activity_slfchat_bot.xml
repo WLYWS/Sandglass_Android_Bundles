@@ -14,18 +14,17 @@
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
         android:layout_height="match_parent">
-<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--            android:id="@+id/sw_faq_recycle"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_height="0dp">-->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/sw_faq_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_faq_chat_bot"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"/>
-
-<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+                android:layout_height="match_parent"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <LinearLayout
             android:id="@+id/ll_et_input"
             android:orientation="vertical"

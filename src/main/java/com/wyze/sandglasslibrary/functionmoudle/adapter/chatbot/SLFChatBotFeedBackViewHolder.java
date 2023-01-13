@@ -3,19 +3,26 @@ package com.wyze.sandglasslibrary.functionmoudle.adapter.chatbot;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.commonui.SLFNoScrollListview;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqFeedBackView;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotIconTextLeftView;
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.wyze.sandglasslibrary.moudle.event.SLFChatBotAnswerEffectEvent;
+import com.wyze.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,26 +32,38 @@ import androidx.constraintlayout.widget.ConstraintLayout;
  */
 public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler implements View.OnClickListener {
 
+    private SLFNoScrollListview lv_faq_feedback_list;
+    private TextView tv_relate_question;
+    private LinearLayout ll_faq_feedback_list;
     private LinearLayout ll_faq_answer;
     private TextView tv_faq_feedback_title;
-    private SLFChatBotFaqListView sf_faq_feedback_question;
+    //private SLFChatBotFaqListView sf_faq_feedback_question;
     private TextView tv_faq_feedback_answer;
     private ImageView iv_faq_question_up,iv_faq_question_center,iv_faq_question_down;
     private View view_question_line;
     private final int QUSTION_SOLUTION = 1;
     private final int QUSTION_NO_SOLUTION = 0;
     private int position;
+    private final String SPLIT_STR = "\"@%&\"";
+    private List<String> questions = new ArrayList <>() ;
+    private String questionStr;
+    private int mIndex;
+    private Context context;
 
     public SLFChatBotFeedBackViewHolder (@NonNull View itemView, Context context) {
         super(itemView);
+        this.context = context;
         ll_faq_answer = itemView.findViewById(R.id.ll_faq_answer);
         tv_faq_feedback_title = itemView.findViewById(R.id.tv_faq_feedback_title);
         tv_faq_feedback_answer = itemView.findViewById(R.id.tv_faq_feedback_answer);
-        sf_faq_feedback_question = itemView.findViewById(R.id.sf_faq_feedback_question);
+        //sf_faq_feedback_question = itemView.findViewById(R.id.sf_faq_feedback_question);
         iv_faq_question_up = itemView.findViewById(R.id.iv_faq_question_up);
         iv_faq_question_center = itemView.findViewById(R.id.iv_faq_question_center);
         iv_faq_question_down = itemView.findViewById(R.id.iv_faq_question_down);
         view_question_line = itemView.findViewById(R.id.view_question_line);
+        ll_faq_feedback_list = itemView.findViewById(R.id.ll_faq_feedback_list);
+        tv_relate_question = itemView.findViewById(R.id.tv_relate_question);
+        lv_faq_feedback_list = itemView.findViewById(R.id.lv_faq_feedback_list);
 
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ll_faq_answer.getLayoutParams());
         layoutParams.width = SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116);
@@ -54,6 +73,15 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
         ll_faq_answer.setLayoutParams(layoutParams);
 
         iv_faq_question_up.setOnClickListener(this);
+        iv_faq_question_down.setOnClickListener(this);
+
+        lv_faq_feedback_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick (AdapterView <?> parent, View view, int position, long id) {
+                //EventBus.getDefault().post(position);
+                EventBus.getDefault().post(new SLFChatBotClickQuesionEvent(questions.get(position),SLFChatBotMsgData.SEND_FROM_CLICK_RELATE));
+            }
+        });
     }
 
     @Override
@@ -61,7 +89,7 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
         setPostion(position);
         setTitle(bean.getTitle());
         setContent(bean.getContent());
-        setQustionList(bean.getQuestion(),bean.getQuestion_index(),position);
+        setQustionList(bean.getQuestion(),position);
         setAnswer_effective(bean.getAnswer_effective());
     }
 
@@ -73,19 +101,51 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
         tv_faq_feedback_answer.setText(content);
     }
 
-    public void setQustionList (String question, int question_index,int position) {
+    public void setQustionList (String question,int position) {
         this.position = position;
         if (TextUtils.isEmpty(question)){
-            sf_faq_feedback_question.setVisibility(View.GONE);
+            ll_faq_feedback_list.setVisibility(View.GONE);
             view_question_line.setVisibility(View.GONE);
             return;
         }else {
-            sf_faq_feedback_question.setVisibility(View.VISIBLE);
+            ll_faq_feedback_list.setVisibility(View.VISIBLE);
             view_question_line.setVisibility(View.VISIBLE);
-            sf_faq_feedback_question.setQustionType(SLFChatBotMsgData.MsgType.FEEDBACK_ROBOT_MSG.getValue());
-            sf_faq_feedback_question.setQuestionList(question,question_index,position);
+            //ll_faq_feedback_list.setQustionType(SLFChatBotMsgData.MsgType.FEEDBACK_ROBOT_MSG.getValue());
+            showQuestionList(question,position);
         }
 
+    }
+
+    private void showQuestionList (String question, int position) {
+
+        this.position = position;
+        questionStr = question;
+        questions.clear();
+        String[] questionArr=new String[20];
+        if (TextUtils.isEmpty(question)){
+            ll_faq_feedback_list.setVisibility(View.GONE);
+            view_question_line.setVisibility(View.GONE);
+            return;
+        }else {
+            ll_faq_feedback_list.setVisibility(View.VISIBLE);
+            view_question_line.setVisibility(View.VISIBLE);
+        }
+        if (question.contains(SPLIT_STR)){
+            questionArr = question.split(SPLIT_STR);
+        }else {
+            questionArr[0] = question;
+        }
+        for (String questionItem:questionArr){
+            if (!TextUtils.isEmpty(questionItem)){
+                questions.add(questionItem.replaceAll("\n",""));
+            }
+        }
+        if (questions==null||questions.size()==0){
+            ll_faq_feedback_list.setVisibility(View.GONE);
+            view_question_line.setVisibility(View.GONE);
+            return;
+        }
+        lv_faq_feedback_list.setAdapter(new ArrayAdapter <String>(context, R.layout.slf_chat_bot_question_item,R.id.tv_question_item, questions));
     }
 
     public void setAnswer_effective (int answer_effective) {
@@ -109,17 +169,18 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
     @Override
     public void onClick (View v) {
         if (v.getId() == R.id.iv_faq_question_up) {
-            iv_faq_question_up.setVisibility(View.GONE);
-            iv_faq_question_center.setVisibility(View.VISIBLE);
-            iv_faq_question_down.setVisibility(View.GONE);
-            iv_faq_question_center.setImageResource(R.mipmap.slf_faq_answer_up);
+//            iv_faq_question_up.setVisibility(View.GONE);
+//            iv_faq_question_center.setVisibility(View.VISIBLE);
+//            iv_faq_question_down.setVisibility(View.GONE);
+//            iv_faq_question_center.setImageResource(R.mipmap.slf_faq_answer_up);
+            EventBus.getDefault().post(new SLFChatBotAnswerEffectEvent(QUSTION_SOLUTION,position));
         }else if (v.getId() == R.id.iv_faq_question_down){
-            iv_faq_question_up.setVisibility(View.GONE);
-            iv_faq_question_center.setVisibility(View.VISIBLE);
-            iv_faq_question_down.setVisibility(View.GONE);
-            iv_faq_question_center.setImageResource(R.mipmap.slf_faq_answer_down);
+//            iv_faq_question_up.setVisibility(View.GONE);
+//            iv_faq_question_center.setVisibility(View.VISIBLE);
+//            iv_faq_question_down.setVisibility(View.GONE);
+//            iv_faq_question_center.setImageResource(R.mipmap.slf_faq_answer_down);
+            EventBus.getDefault().post(new SLFChatBotAnswerEffectEvent(QUSTION_NO_SOLUTION,position));
         }
-        EventBus.getDefault().post(new SLFChatBotAnswerEffectEvent(QUSTION_NO_SOLUTION,position));
     }
 
     public void setPostion (int position) {

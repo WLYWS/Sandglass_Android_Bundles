@@ -107,6 +107,19 @@ public class SLFHttpUtils<T>{
     }
 
     /**
+     * Post请求(带参)
+     * 携带请求时间戳
+     * @param context
+     * @param api
+     * @param map
+     * @param type
+     * @param requestTime
+     * @param callBack
+     */
+    public void executePost(Context context, String api, TreeMap map, T type, long requestTime,SLFHttpChatBotRequestCallback callBack){
+        mHttpRequest.mHttpPost(context,api,map,type,requestTime,callBack);
+    }
+    /**
      * Post请求(包含数组)
      * @param context    上下文
      * @param api        请求的api

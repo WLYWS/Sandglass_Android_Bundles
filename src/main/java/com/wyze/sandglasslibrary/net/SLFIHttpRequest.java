@@ -27,6 +27,11 @@ public interface SLFIHttpRequest<T> {
     // 以RequestBody方式提交
     void mHttpPost(Context context, String api, TreeMap map, T type, SLFHttpRequestCallback mCallBack);
 
+    // Post请求(带参)
+    // 以RequestBody方式提交
+    //携带时间戳的传递方式
+    void mHttpPost(Context context, String api, TreeMap map, T type,long requestTime,SLFHttpChatBotRequestCallback mCallBack);
+
     // Post请求(包含数组)
     void mHttpPost(Context context, String api, TreeMap treeMap, String[] data, T type, SLFHttpRequestCallback mCallBack);
 

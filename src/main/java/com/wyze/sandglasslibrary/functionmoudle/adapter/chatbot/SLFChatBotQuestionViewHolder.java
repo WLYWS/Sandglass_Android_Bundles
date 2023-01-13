@@ -73,7 +73,7 @@ public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
             @Override
             public void onItemClick (AdapterView <?> parent, View view, int position, long id) {
                 //EventBus.getDefault().post(position);
-                EventBus.getDefault().post(new SLFChatBotClickQuesionEvent(questionList.get(position)));
+                EventBus.getDefault().post(new SLFChatBotClickQuesionEvent(questionList.get(position),SLFChatBotMsgData.SEND_FROM_CLICK_HOT));
             }
         });
     }
@@ -124,11 +124,11 @@ public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
         }
         if (questions.size()>=index+5){
             for (int i = index; i<index+5;i++){
-                questionList.add(questions.get(i));
+                questionList.add(questions.get(i).replaceAll("\n",""));
             }
         }else {
             for (int i = index; i<questions.size();i++){
-                questionList.add(questions.get(i));
+                questionList.add(questions.get(i).replaceAll("\n",""));
             }
         }
         if (questionList==null||questionList.size()==0){
