@@ -87,7 +87,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
                         onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
                     }
                     mAdapter.notifyDataSetChanged();
-                    //dialogDismiss();
+                    dialogDismiss();
             }else if(list.get(holder.getAdapterPosition()) instanceof SLFCategoryCommonBean){
                     ((SLFCategoryCommonBean) list.get(holder.getAdapterPosition())).setChecked(true);
                     changedChecked(list,holder.getAdapterPosition());

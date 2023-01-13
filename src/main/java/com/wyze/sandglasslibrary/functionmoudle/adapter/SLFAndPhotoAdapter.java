@@ -61,15 +61,19 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
             if (object.getUploadStatus().equals(SLFConstants.UPLOADING)) {
                 helper.setVisible(R.id.slf_progress, true);
                 helper.setVisible(R.id.slf_iv_delete, true);
+                helper.setVisible(R.id.slf_iv_video, false);
+                helper.setVisible(R.id.slf_iv_delete, false);
+                helper.setVisible(R.id.slf_iv_photo, false);
             } else {
-                helper.setVisible(R.id.slf_progress, false);
+                //helper.setVisible(R.id.slf_progress, false);
                 if (!TextUtils.isEmpty(object.getThumbnailSmallPath())) {
-
 //                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
 //                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
                    if(object.getThumbnailSmallPath().equals(helper.getView(R.id.slf_iv_photo).getTag(R.id.slf_iv_photo))){
 
                    }else {
+                       helper.setVisible(R.id.slf_progress, true);
+                       helper.setVisible(R.id.slf_iv_photo, false);
                        SLFImageUtil.loadImage(mContext, object.getThumbnailSmallPath()
                                , (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
                                , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
