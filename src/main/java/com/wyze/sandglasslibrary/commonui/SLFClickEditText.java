@@ -3,6 +3,8 @@ package com.wyze.sandglasslibrary.commonui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,5 +32,20 @@ public class SLFClickEditText extends AppCompatEditText {
 //            return false;
 //        }
         return false;
+    }
+
+    /**
+     *  android:inputType="textMultiLine"
+     *  android:imeOptions="actionSend"同时生效
+     * @param outAttrs
+     * @return
+     */
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        InputConnection inputConnection = super.onCreateInputConnection(outAttrs);
+        if(inputConnection != null){
+            outAttrs.imeOptions &= ~EditorInfo.IME_FLAG_NO_ENTER_ACTION;
+        }
+        return inputConnection;
     }
 }
