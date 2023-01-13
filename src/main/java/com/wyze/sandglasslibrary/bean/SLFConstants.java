@@ -79,5 +79,8 @@ public class SLFConstants {
     public static final String MOBILE_AVAILABILITY = "mobile_availability";
     //正在使用wifi
     public static final String WIFI_AVAILABILITY = "wifi_availability";
+    //相机模式
+    public static final String CAMERA_PHOTO = "camera_photo";
+    public static final String CAMERA_VIDEO = "camera_video";
 
 }

@@ -54,6 +54,8 @@
     <string name="slf_feedback_submit_success_copy">Copied to clipboard</string>
     <string name="slf_photo_preview_retake_photo">Retake</string>
     <string name="slf_photo_preview_use_photo">Use photo</string>
+    <string name="slf_camera_mode_photo">PHOTO</string>
+    <string name="slf_camera_mode_video">VIDEO</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>
