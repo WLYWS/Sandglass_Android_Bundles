@@ -125,11 +125,11 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * @param faqid faq id
      * @param mark 标记 0=未解决、1=解决
      */
-    private void postQuestionMark(long faqid,int mark){
+    private void postQuestionMark(long faqid,int mark,long requesTime){
         TreeMap requestMap = new TreeMap();
         requestMap.put("id",faqid);
         requestMap.put("mark",mark);
-        SLFHttpUtils.getInstance().executePost(this, SLFHttpRequestConstants.BASE_URL+SLFApiContant.FEEDBACK_FAQ_MARK, requestMap, SLFFaqMarkResponseBean.class,this);
+        SLFHttpUtils.getInstance().executePost(this, SLFHttpRequestConstants.BASE_URL+SLFApiContant.FEEDBACK_FAQ_MARK, requestMap, SLFFaqMarkResponseBean.class,requesTime,this);
 
     }
 
@@ -286,9 +286,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         if (type instanceof SLFFaqWelcomeHotQResponseBean){
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
-        }else if (type instanceof SLFFaqMarkResponseBean){
-            SLFFaqMarkResponseBean sLFFaqMarkResponseBean = (SLFFaqMarkResponseBean)type;
-            showMarkReslutData(sLFFaqMarkResponseBean);
         }
     }
 
@@ -498,7 +495,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         }
         sLFChatBotRecyclerAdapter.notifyDataSetChanged();
         //发送FAQ是否解决
-        postQuestionMark(slfChatBotAnswerEffectData.getFaqId(),event.isSolution);
+        postQuestionMark(slfChatBotAnswerEffectData.getFaqId(),event.isSolution,slfChatBotAnswerEffectData.getMsgTime());
         //刷新数据库(这块考虑啥时候刷新)
         slfdbEngine.update_msg(slfChatBotAnswerEffectData);
     }
@@ -647,7 +644,11 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      */
     @Override
     public void onRequestChatBotNetFail (Object type, long requestTime) {
-        showSendMsgStatus(false,requestTime);
+        if (type instanceof SLFFaqSearchResponseBean){
+            showSendMsgStatus(false,requestTime);
+        }else if (type instanceof SLFFaqMarkResponseBean){
+            updateMsgMarkStatus(requestTime);
+        }
     }
 
     /**
@@ -661,6 +662,9 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         if (type instanceof SLFFaqSearchResponseBean){
             SLFFaqSearchResponseBean sLFFaqSearchResponseBean = (SLFFaqSearchResponseBean)type;
             showSearchReslutData(sLFFaqSearchResponseBean,requestTime);
+        }else if (type instanceof SLFFaqMarkResponseBean){
+            SLFFaqMarkResponseBean sLFFaqMarkResponseBean = (SLFFaqMarkResponseBean)type;
+            showMarkReslutData(sLFFaqMarkResponseBean);
         }
     }
 
@@ -668,12 +672,32 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * 失败回调
      * @param value
      * @param failCode
-     * @param typ
+     * @param type
      * @param requestTime
      */
     @Override
-    public void onRequestChatBotFail (String value, String failCode, Object typ, long requestTime) {
-        showSendMsgStatus(false,requestTime);
+    public void onRequestChatBotFail (String value, String failCode, Object type, long requestTime) {
+        if (type instanceof SLFFaqSearchResponseBean){
+            showSendMsgStatus(false,requestTime);
+        }else if (type instanceof SLFFaqMarkResponseBean){
+           updateMsgMarkStatus(requestTime);
+        }
+
+    }
+
+    /**
+     * mark失败刷新mark数据
+     * @param requestTime
+     */
+    private void updateMsgMarkStatus (long requestTime ) {
+        for(SLFChatBotMsgData slfChatBotMsgData:faqMsgList){
+            if (slfChatBotMsgData.getMsgTime()==requestTime){
+                slfChatBotMsgData.setAnswer_effective(SLFChatBotMsgData.AnswerEffective.ANSWER_NO_SELECT.getValue());
+                sLFChatBotRecyclerAdapter.notifyDataSetChanged();
+                slfdbEngine.update_msg(slfChatBotMsgData);
+                break;
+            }
+        }
     }
 
     @Override
