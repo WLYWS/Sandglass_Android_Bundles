@@ -31,10 +31,10 @@
 
     <FrameLayout
         android:id="@+id/slf_progress"
-        android:layout_width="61dp"
-        android:layout_height="61dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/slf_feedback_add_photo_bg"
-        android:layout_margin="4dp"
+        android:layout_margin="5dp"
         android:visibility="gone">
         <ProgressBar
             android:layout_width="25dp"
