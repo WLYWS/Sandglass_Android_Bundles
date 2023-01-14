@@ -37,7 +37,6 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
 
     public SLFChatBotSingleUserViewHolder (@NonNull View itemView, Context context) {
         super(itemView);
-        loading();
         iv_chat_bot_user_icon = itemView.findViewById(R.id.iv_chat_bot_user_icon);
         tv_chat_bot_user_text = itemView.findViewById(R.id.tv_chat_bot_user_text);
         iv_chat_bot_user_warn = itemView.findViewById(R.id.iv_chat_bot_user_warn);
@@ -68,11 +67,13 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
         if (animator!=null){
             animator.cancel();
             animator=null;
+            //
         }
         iv_chat_bot_user_warn.setVisibility(View.GONE);
         if (send_msg_status == SLFChatBotMsgData.MsgSendStatus.SEND_FAIL_MSG.getValue()){
             iv_chat_bot_user_warn.setImageResource(R.mipmap.slf_chat_bot_user_warn);
             iv_chat_bot_user_warn.setVisibility(View.VISIBLE);
+            iv_chat_bot_user_warn.setRotation(0);
             //animationSet.reset();
         }else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue()){
             iv_chat_bot_user_warn.setVisibility(View.GONE);

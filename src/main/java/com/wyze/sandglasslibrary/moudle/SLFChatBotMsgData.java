@@ -46,7 +46,7 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
 
     @Override
     public int compareTo (SLFChatBotMsgData data) {
-        return this.id - data.getId();
+        return (int) (this.msgTime - data.getMsgTime());
     }
 
     public enum MsgType{

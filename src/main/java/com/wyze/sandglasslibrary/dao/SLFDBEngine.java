@@ -72,7 +72,7 @@ public class SLFDBEngine {
         }
     }
 
-    //开启异步操作
+    //开启插入异步操作
     static class InsertAsynTask extends AsyncTask<SLFChatBotMsgData,Void,Void> {
         private SLFMsgDao slfMsgDao;
         public InsertAsynTask(SLFMsgDao slfMsgDao) {
@@ -85,6 +85,7 @@ public class SLFDBEngine {
             return null;
         }
     }
+
     static class UpdateAsynTask extends AsyncTask<SLFChatBotMsgData,Void,Void> {
         private SLFMsgDao slfMsgDao;
         public UpdateAsynTask(SLFMsgDao slfMsgDao) {

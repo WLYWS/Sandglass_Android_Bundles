@@ -41,16 +41,19 @@
                 android:hint="@string/slf_faq_input_hint"
                 android:textColorHint="@color/slf_chat_input_ph_color"
                 android:textSize="16sp"
+                android:inputType="textMultiLine"
                 android:imeOptions="actionSend"
-                android:inputType="text"
+                android:textColor="@color/white"
+                android:maxLength="500"
                 android:background="@drawable/slf_chat_bot_bg"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:singleLine="false"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
