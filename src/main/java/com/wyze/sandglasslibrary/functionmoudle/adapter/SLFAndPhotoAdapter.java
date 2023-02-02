@@ -66,7 +66,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
             helper.setVisible(R.id.slf_progress, true);
             helper.setVisible(R.id.slf_iv_delete, true);
         } else {
-            //helper.setVisible(R.id.slf_progress, false);
+            helper.setVisible(R.id.slf_progress, false);
             if (!TextUtils.isEmpty(object.getThumbnailSmallPath())) {
 //                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
 //                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
