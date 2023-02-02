@@ -1,10 +1,8 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,9 +11,8 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
-import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
-import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackList;
+import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.wyze.sandglasslibrary.moudle.SLFDeviceTypes;
@@ -111,7 +108,7 @@ public class SLFHelpAndFeedback extends SLFBaseActivity implements View.OnClickL
         startActivity(in);
     }
     private void gotoFeedbackHistoryList(){
-        Intent in = new Intent(getContext(), SLFFeedbackList.class);
+        Intent in = new Intent(getContext(), SLFFeedbackListActivity.class);
         startActivity(in);
     }
 }

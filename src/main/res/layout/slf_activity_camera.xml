@@ -4,13 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:soundEffectsEnabled="false"/>
+        android:soundEffectsEnabled="false" />
 
-
+    <TextView
+        android:id="@+id/slf_tv_video_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="@color/white"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_alignParentLeft="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <CheckBox
         android:id="@+id/cb_switch_flash"
@@ -25,36 +40,53 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true">
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        >
 
-        <TextView
+        <com.wyze.sandglasslibrary.uiutils.SLFHorizontalPickerViewFromLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:text="Click Photo and Press Video"/>
-
-
-        <ImageView
+            android:layout_height="44dp"
+            android:id="@+id/slf_camera_mode_tab"
+            />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_back"-->
+<!--            android:layout_width="45dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="35dp"-->
+<!--            android:padding="8dp"-->
+<!--            android:src="@drawable/slf_btn_common_back_white" />-->
+        <TextView
             android:id="@+id/iv_back"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:padding="8dp"
-            android:layout_marginLeft="35dp"
-            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/slf_btn_common_back_white" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="35dp"
+            android:padding="8dp"
+            android:text="@string/slf_title_cancel"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-
-        <com.wyze.sandglasslibrary.commonui.SLFRecordButton
-            android:id="@+id/iv_take_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="25dp"
-            android:layout_centerInParent="true"
-            app:slf_recordTime="10000" />
+<!--        <com.wyze.sandglasslibrary.commonui.SLFRecordButton-->
+<!--            android:id="@+id/iv_take_photo"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginBottom="25dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            app:slf_recordTime="10000" />-->
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="25dp"
+                android:layout_centerInParent="true"
+                android:id="@+id/iv_take_photo"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/slf_flash_camera_take_photo"
+                />
 
         <CheckBox
             android:id="@+id/cb_switch_front"

@@ -7,7 +7,7 @@ package com.wyze.sandglasslibrary.utils;
 public enum SLFImageShapes {
     CENTERCROP,             //居中裁剪
     CIRCLE,                 //圆形
-    ROUND(15),        //圆角矩形
+    ROUND(16),        //圆角矩形
     SQUARE,                 //正方形
     BLUR(12),         //高斯模糊
     GRAYSCALE,              //去色

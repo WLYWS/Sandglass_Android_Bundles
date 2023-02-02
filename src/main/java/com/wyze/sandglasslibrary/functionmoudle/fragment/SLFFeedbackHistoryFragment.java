@@ -14,10 +14,9 @@ import com.wyze.sandglasslibrary.R;
 
 @SuppressLint("ValidFragment")
 public class SLFFeedbackHistoryFragment extends Fragment {
-	private String textString;
 
 	public SLFFeedbackHistoryFragment(String textString) {
-		this.textString = textString;
+
 	}
 
 	public static SLFFeedbackHistoryFragment newInstance(String textString) {
@@ -29,8 +28,6 @@ public class SLFFeedbackHistoryFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.slf_list_history_feedback, container, false);
-		TextView text = view.findViewById(R.id.text_id);
-		text.setText(textString);
 		return view;
 	}
 }
