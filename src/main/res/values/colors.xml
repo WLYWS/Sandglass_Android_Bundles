@@ -79,6 +79,7 @@
     <color name="slf_detail_card_bg_color">#272727</color>//留言卡片背景颜色
     <color name="slf_detail_card_content_color">#FFFFFF</color>//卡片文字颜色
     <color name="slf_detail_card_time_color">#A7A7A7</color>//卡片时间颜色
+    <color name="slf_detail_leave_message_list_color">#000000</color>//留言列表背景颜色
 
     <!--智能助手-->
     <color name="slf_chat_bar_bg_color">#131313</color>//底部bar背景颜色

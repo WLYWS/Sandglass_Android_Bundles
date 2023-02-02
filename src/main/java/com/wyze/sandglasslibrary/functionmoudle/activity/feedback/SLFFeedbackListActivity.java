@@ -25,7 +25,7 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
  * describe:反馈列表
  * time:2023/1/6
  */
-public class SLFFeedbackList extends SLFBaseActivity {
+public class SLFFeedbackListActivity extends SLFBaseActivity {
 
     ViewPager mViewPager;
     ImageView slf_back_img;
@@ -51,7 +51,7 @@ public class SLFFeedbackList extends SLFBaseActivity {
 
 
         fragments = new Fragment[2];
-        fragments[0] = new SLFFeedbackHistoryFragment("first");
+        fragments[0] = new SLFFeedbackAllHistoryFragment("first");
         fragments[1] = new SLFFeedbackAllHistoryFragment("second");
 
         adapter = new SLFFragmentAdapter(getSupportFragmentManager(), fragments, nameList);

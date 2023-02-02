@@ -49,10 +49,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFFeedbackList"
+            android:name=".functionmoudle.activity.feedback.SLFFeedbackListActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".functionmoudle.activity.feedback.SLFFeedbackListDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".functionmoudle.activity.feedback.SLFTakePhotoActivity"
             android:exported="false"

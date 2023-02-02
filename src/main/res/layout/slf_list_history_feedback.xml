@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
-    android:orientation="vertical">
-    <TextView
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:layout_marginBottom="16dp">
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/slf_feedback_list_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/slf_histroy_feedback_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/slf_feedback_list_no_item_linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_id"
-        android:text="first"
-        android:textColor="@color/white"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/slf_histroy_feedback_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="16dp"/>
-</LinearLayout>
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/slf_feedback_list_no_item_img"
+            android:layout_width="227dp"
+            android:layout_height="161dp"
+            android:src="@drawable/slf_feedback_list_no_item" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/slf_feedback_list_item_no_item"
+            android:textColor="@color/slf_sub_title_color"
+            android:textSize="20sp" />
+    </LinearLayout>
+</RelativeLayout>
