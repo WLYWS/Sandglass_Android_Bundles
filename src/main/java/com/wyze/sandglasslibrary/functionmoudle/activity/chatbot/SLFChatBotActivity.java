@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFClickEditText;
+import com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.dao.SLFChatBotDatabase;
 import com.wyze.sandglasslibrary.dao.SLFDBEngine;
@@ -44,6 +45,8 @@ import com.wyze.sandglasslibrary.net.SLFHttpChatBotRequestCallback;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.wyze.sandglasslibrary.net.SLFHttpUtils;
+import com.wyze.sandglasslibrary.theme.SLFFontSet;
+import com.wyze.sandglasslibrary.theme.SLFSetTheme;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFSpUtils;
 
@@ -140,6 +143,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         rv_faq_chat_bot = findViewById(R.id.rv_faq_chat_bot);
         et_faq_input = findViewById(R.id.et_faq_input);
         ll_et_input = findViewById(R.id.ll_et_input);
+        SLFFITRelativeLayout chat_bot_root = findViewById(R.id.chat_bot_root);
+        chat_bot_root.setBackgroundColor(SLFSetTheme.defaultBackgroundColor);
+        SLFFontSet.setSLF_RegularFont(this,slf_tv_title_name);
+
         sLFChatBotRecyclerAdapter = new SLFChatBotRecyclerAdapter(this);
         //et_faq_input.setEnabled(false);
         view_click();
@@ -203,7 +210,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 return true;//返回true，保留软键盘。false，隐藏软键盘
             }
         });
-
+        //监听输入字数不得超过500
         et_faq_input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged (CharSequence s, int start, int count, int after) {
@@ -372,22 +379,23 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         faqMsgList.add(slfChatBotWelcomeData);
         slfdbEngine.insert_msg(slfChatBotWelcomeData);
 
-        int faqSize = 0;
-        StringBuilder sb = new StringBuilder();
-        SLFChatBotMsgData slfChatBotHotData= new SLFChatBotMsgData();
-        slfChatBotHotData.setMsgTime(System.currentTimeMillis());
-        slfChatBotHotData.setType(SLFChatBotMsgData.MsgType.HOT_ROBOT_MSG.getValue());
-        for (String question:sLFFaqWelcomeHotQResponseBean.data.hotFaq){
-            faqSize++;
-            sb.append(question);
-            if(faqSize!=sLFFaqWelcomeHotQResponseBean.data.hotFaq.size()){
-                sb.append(SPLIT_STR);
+        if (sLFFaqWelcomeHotQResponseBean.data.hotFaq.size()>0) {
+            int faqSize = 0;
+            StringBuilder sb = new StringBuilder();
+            SLFChatBotMsgData slfChatBotHotData = new SLFChatBotMsgData();
+            slfChatBotHotData.setMsgTime(System.currentTimeMillis()+1);
+            slfChatBotHotData.setType(SLFChatBotMsgData.MsgType.HOT_ROBOT_MSG.getValue());
+            for (String question : sLFFaqWelcomeHotQResponseBean.data.hotFaq) {
+                faqSize++;
+                sb.append(question);
+                if (faqSize != sLFFaqWelcomeHotQResponseBean.data.hotFaq.size()) {
+                    sb.append(SPLIT_STR);
+                }
             }
+            slfChatBotHotData.setQuestion(sb.toString());
+            faqMsgList.add(slfChatBotHotData);
+            slfdbEngine.insert_msg(slfChatBotHotData);
         }
-        slfChatBotHotData.setQuestion(sb.toString());
-        faqMsgList.add(slfChatBotHotData);
-        slfdbEngine.insert_msg(slfChatBotHotData);
-
 
         if(faqMsgList.size()>3){//表示不是新的faq
 
@@ -599,8 +607,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             }
         }
     }
-    //弹出键盘
 
+    //弹出键盘
     public static void showSoftInput(Context context, View view) {
 
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -609,8 +617,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     }
 
-//隐藏键盘
-
+    //隐藏键盘
     public static void hideSoftInput(Context context, View view) {
 
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);

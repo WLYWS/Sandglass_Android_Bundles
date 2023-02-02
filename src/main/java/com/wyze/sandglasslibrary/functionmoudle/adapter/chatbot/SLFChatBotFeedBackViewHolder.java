@@ -17,6 +17,7 @@ import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotIconTextLeftView;
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.wyze.sandglasslibrary.moudle.event.SLFChatBotAnswerEffectEvent;
 import com.wyze.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent;
+import com.wyze.sandglasslibrary.theme.SLFFontSet;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -64,6 +65,9 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
         ll_faq_feedback_list = itemView.findViewById(R.id.ll_faq_feedback_list);
         tv_relate_question = itemView.findViewById(R.id.tv_relate_question);
         lv_faq_feedback_list = itemView.findViewById(R.id.lv_faq_feedback_list);
+        SLFFontSet.setSLF_RegularFont(context,tv_faq_feedback_title);
+        SLFFontSet.setSLF_RegularFont(context,tv_relate_question);
+        SLFFontSet.setSLF_RegularFont(context,tv_faq_feedback_answer);
 
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ll_faq_answer.getLayoutParams());
         layoutParams.width = SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116);

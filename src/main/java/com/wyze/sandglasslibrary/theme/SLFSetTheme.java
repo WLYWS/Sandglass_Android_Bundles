@@ -9,6 +9,10 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 public class SLFSetTheme {
     //默认主题色
     public static int defaultThemeColor = SLFResourceUtils.getColor(R.color.slf_theme_color);
+    //统一背景
+
+    public static int defaultBackgroundColor = SLFResourceUtils.getColor(R.color.black);
+
 }
 
 

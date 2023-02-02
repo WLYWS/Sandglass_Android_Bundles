@@ -15,6 +15,7 @@ import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotIconTextLeftView;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotIconTextRightView;
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.wyze.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent;
+import com.wyze.sandglasslibrary.theme.SLFFontSet;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,6 +42,7 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
         tv_chat_bot_user_text = itemView.findViewById(R.id.tv_chat_bot_user_text);
         iv_chat_bot_user_warn = itemView.findViewById(R.id.iv_chat_bot_user_warn);
         tv_chat_bot_user_text.setMaxWidth(SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116));
+        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_user_text);
 
         iv_chat_bot_user_icon.setImageResource(R.mipmap.slf_chat_bot_user_icon);
         iv_chat_bot_user_warn.setOnClickListener(new View.OnClickListener() {

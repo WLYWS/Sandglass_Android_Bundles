@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;
+import com.wyze.sandglasslibrary.theme.SLFFontSet;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ public class SLFChatBotSingleRobotViewHolder extends SLFChatBotBaseViewHodler {
         super(itemView);
         iv_chat_bot_robot_icon = itemView.findViewById(R.id.iv_chat_bot_robot_icon);
         tv_chat_bot_robot_text = itemView.findViewById(R.id.tv_chat_bot_robot_text);
+        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_robot_text);
 
         tv_chat_bot_robot_text.setMaxWidth(SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116));
     }

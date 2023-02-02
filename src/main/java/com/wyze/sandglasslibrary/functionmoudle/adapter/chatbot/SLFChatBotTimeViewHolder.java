@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotDateView;
 import com.wyze.sandglasslibrary.moudle.SLFChatBotMsgData;
+import com.wyze.sandglasslibrary.theme.SLFFontSet;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -47,6 +48,7 @@ public class SLFChatBotTimeViewHolder extends SLFChatBotBaseViewHodler{
         super(itemView);
         this.context = context;
         tv_chat_bot_date = itemView.findViewById(R.id.tv_chat_bot_date);
+        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_date);
     }
 
     @Override
