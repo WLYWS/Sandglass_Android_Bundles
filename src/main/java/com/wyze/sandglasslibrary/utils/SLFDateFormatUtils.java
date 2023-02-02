@@ -20,9 +20,11 @@ public class SLFDateFormatUtils {
     public static final String YMDHM_CN = "yyyy年MM月dd日";
     public static final String YYYYMMDD = "yyyyMMdd";
     public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
+    public static final String MDYT = "MM/dd/yy HH:mm";
     public static final SimpleDateFormat yymmdd = new SimpleDateFormat(YYYYMMDD);
     public static final SimpleDateFormat ymdhmsSDF = new SimpleDateFormat(YMDHMS);
     public static final SimpleDateFormat ymdhm_cnSDF = new SimpleDateFormat(YMDHM_CN);
+    public static final SimpleDateFormat mdytSDF = new SimpleDateFormat(MDYT);
     //时间戳转换日期格式
     public static String timeStampToDate(Context context, long tsp, String... format) {
         SimpleDateFormat simpleDateFormat;
@@ -71,6 +73,15 @@ public class SLFDateFormatUtils {
     public static String getDateToString(long milSecond) {
         Date date = new Date(milSecond);
         SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        return format.format(date);
+    }
+
+    /**
+     * 时间戳转换成需要的格式
+     */
+    public static String getDateToMyString(long second,String pattern){
+        Date date = new Date(second);
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
 

@@ -55,6 +55,15 @@
     <string name="slf_feedback_submit_success_copy">Copied to clipboard</string>
     <string name="slf_photo_preview_retake_photo">Retake</string>
     <string name="slf_photo_preview_use_photo">Use photo</string>
+    <string name="slf_feedback_list_item_title_in_progress">In progress</string>
+    <string name="slf_feedback_list_item_title_to_be_processed">To be processed</string>
+    <string name="slf_feedback_list_item_title_finished">Finished</string>
+    <string name="slf_feedback_list_item_no_item">No feedback</string>
+    <string name="slf_feedback_list_item_id">Feedback ID: %1$d</string>
+    <string name="slf_feedback_list_leave_message_bottom_text">Continue to leave a message</string>
+    <string name="slf_feedback_list_leave_message_title_text">Details</string>
+    <string name="slf_camera_mode_photo">PHOTO</string>
+    <string name="slf_camera_mode_video">VIDEO</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>

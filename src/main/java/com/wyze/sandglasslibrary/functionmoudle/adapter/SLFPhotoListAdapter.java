@@ -90,19 +90,16 @@ public class SLFPhotoListAdapter extends BaseAdapter {
                     helper.setVisibility(R.id.slf_iv_photo_mask,false);
                 }
                 if(mSLFMediaData.getMimeType().contains("video")){
-//					WpkImageUtil.loadImage(context,WpkImageUtil.getVideoUriById(mSLFMediaData.getId()),helper.getView(R.id.iv_photo))
                     helper.setVisibility(R.id.slf_tv_media_type,false);
                     helper.setVisibility(R.id.slf_iv_video,true);
                     helper.setVisibility(R.id.slf_tv_video_duration,true);
-                    helper.setText(R.id.slf_tv_video_duration, SLFDateFormatUtils.timeStampToDate(context,mSLFMediaData.getDuration()));
+                    helper.setText(R.id.slf_tv_video_duration, SLFDateFormatUtils.dateToString(mSLFMediaData.getDuration(),SLFDateFormatUtils.YMDHMS));
                 }else if(mSLFMediaData.getMimeType().contains("gif")){
-//					WpkImageUtil.loadImage(context,WpkImageUtil.getImageUriById(mSLFMediaData.getId()),helper.getView(R.id.iv_photo))
                     helper.setText(R.id.slf_tv_media_type,"gif");
                     helper.setVisibility(R.id.slf_iv_video,false);
                     helper.setVisibility(R.id.slf_tv_media_type,true);
                     helper.setVisibility(R.id.slf_tv_video_duration,false);
                 }else{
-//					WpkImageUtil.loadImage(context,WpkImageUtil.getImageUriById(mSLFMediaData.getId()),helper.getView(R.id.iv_photo))
                     helper.setVisibility(R.id.slf_tv_media_type,false);
                     helper.setVisibility(R.id.slf_iv_video,false);
                     helper.setVisibility(R.id.slf_tv_video_duration,false);

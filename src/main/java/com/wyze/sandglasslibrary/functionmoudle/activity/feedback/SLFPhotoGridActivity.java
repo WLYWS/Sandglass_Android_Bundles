@@ -591,6 +591,13 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
             for(int i=0;i<newCurrentList.size();i++){
                 if(getFileName(getMediaData.getOriginalPath()).equals(getFileName(newCurrentList.get(i).getOriginalPath()))){
                     mPhotoListAdapter.setCurrentPosition(i);
+                    mPhotoListAdapter.notifyDataSetChanged();
+                    selected_btn.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_grid_bottom_right, mPhotoListAdapter.getPicList().size()));
+                    slf_preview_text.setTextColor(SLFResourceUtils.getColor(R.color.white));
+                    selected_btn.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_page_child_submit_bg));
+                    selected_btn.setTextColor(SLFResourceUtils.getColor(R.color.black));
+                    selected_btn.setClickable(true);
+                    slf_preview_text.setClickable(true);
                 }
             }
         }
@@ -603,7 +610,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
             }
 
         }
+
         gvPhotoList.invalidate();
+
+
     }
 
     public String getFileName(String pathandname){

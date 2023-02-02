@@ -5,13 +5,16 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Size;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,9 +36,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
-import com.wyze.sandglasslibrary.commonui.SLFRecordButton;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
+import com.wyze.sandglasslibrary.uiutils.SLFHorizontalPickerViewFromLayout;
 import com.wyze.sandglasslibrary.utils.SLFFileUtils;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
 import com.wyze.sandglasslibrary.utils.SLFPhotoSelectorUtils;
@@ -45,7 +48,6 @@ import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("java:S110")
 public class SLFTakePhotoActivity extends SLFBaseActivity {
@@ -57,9 +59,11 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
     private ImageCapture mImageCapture;
     private ImageAnalysis mImageAnalysis;
     private VideoCapture mVideoCapture;
-    private SLFRecordButton takePhotoBtn;
+    //private SLFRecordButton takePhotoBtn;
+    private ImageButton takePhotoBtn;
     private CheckBox cbFlash;
     private CheckBox cbFront;
+    private TextView slf_cancel;
 
     private Size targetSize;
     private int videoBitRate;
@@ -75,6 +79,26 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
     private boolean isTooShot;
     private static final int REQUEST_CODE = 101;
     private boolean isInsertAlbum;
+    private String mode = SLFConstants.CAMERA_PHOTO;
+    private String videoStatus = "startRecroding";
+
+    private TextView video_time;
+    private  boolean flag =false;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            //启动
+            int min = msg.arg1/60;
+            int sec = msg.arg1 % 60;
+            //00:00
+            String timestr = (min <10 ? "0" +min:""+min)+":"+(sec<10 ? "0" +sec:""+sec);
+            video_time.setText(timestr);
+            if (flag == false){
+                video_time.setText("录制:"+timestr);
+            }
+        }
+    };
 
     /**
      * 定义permissions
@@ -84,18 +108,35 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private String[] permissionCamrea = new String[]{Manifest.permission.CAMERA};
     private String[] permissionMic = new String[]{Manifest.permission.RECORD_AUDIO};
+    private String[] modeList = new String[]{SLFResourceUtils.getString(R.string.slf_camera_mode_photo),SLFResourceUtils.getString(R.string.slf_camera_mode_video)};
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.slf_activity_camera);
         mPreviewView = findViewById(R.id.previewView);
-
+        video_time = findViewById(R.id.slf_tv_video_duration);
         takePhotoBtn = findViewById(R.id.iv_take_photo);
         cbFlash = findViewById(R.id.cb_switch_flash);
         cbFront = findViewById(R.id.cb_switch_front);
+        slf_cancel = findViewById(R.id.iv_back);
+        SLFHorizontalPickerViewFromLayout horizontalPickerView = (SLFHorizontalPickerViewFromLayout) findViewById(R.id.slf_camera_mode_tab);
+        horizontalPickerView.setData(modeList);
         isInsertAlbum = getIntent().getBooleanExtra("insert_album",false);
 
+        horizontalPickerView.setSelectListener(new SLFHorizontalPickerViewFromLayout.SelectListener() {
+            @Override
+            public void currentItem(String currentObject) {
+                if(currentObject.equals(SLFResourceUtils.getString(R.string.slf_camera_mode_photo))){
+                    mode = SLFConstants.CAMERA_PHOTO;
+                    video_time.setVisibility(View.GONE);
+                }else{
+                    mode = SLFConstants.CAMERA_VIDEO;
+                    video_time.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
         requestPermission();
 
         switch(SLFPhotoSelectorUtils.quality) {
@@ -115,7 +156,6 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
         }
 
         initListener();
-
     }
 
     private void requestPermission() {
@@ -133,7 +173,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                     mPreviewView.getMeteringPointFactory()
                             .createPoint(event.getX(), event.getY())).build();
             try {
-                showTapView((int) event.getX(), (int) event.getY());
+                //showTapView((int) event.getX(), (int) event.getY());
                 mCamera.getCameraControl().startFocusAndMetering(action);
             } catch (Exception e) {
                 SLFLogUtil.e("CameraX", "Error focus camera");
@@ -141,37 +181,93 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
             return false;
         });
 
-        takePhotoBtn.setRecordButtonListener(new SLFRecordButton.SLFRecordButtonListener() {
+        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick() {
-                if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Video) {
-                    showCenterToast("You can only shoot videos !");
-                    return;
+            public void onClick(View view) {
+                if(mode.equals(SLFConstants.CAMERA_PHOTO)) {
+                    if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Video) {
+                        showCenterToast("You can only shoot videos !");
+                        return;
+                    }
+                    takenPictureInternal(true);
+                }else{
+                    if(videoStatus.equals("recroding")){
+                        isTooShot  = true;
+                        stopVideoMode();
+                        stopTime();
+                        toggleRecordingStatus();
+                        videoStatus = "recordstop";
+                        takePhotoBtn.setImageResource(R.drawable.slf_flash_camera_take_photo);
+                    }else{
+                        SLFPermissionManager.getInstance().chekPermissions(SLFTakePhotoActivity.this, permissionMic, permissionsMicrphoneResult);
+                    }
                 }
-                takenPictureInternal(true);
-            }
-
-            @Override
-            public void onLongClick() {
-                if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Image) {
-                    showCenterToast("You can only take pictures !");
-                    return;
-                }
-                SLFPermissionManager.getInstance().chekPermissions(SLFTakePhotoActivity.this, permissionMic, permissionsMicrphoneResult);
-            }
-
-            @Override
-            public void onLongClickFinish(int result) {
-                isTooShot = result == SLFRecordButton.RECORD_SHORT;
-                stopVideoMode();
-                toggleRecordingStatus();
             }
         });
+
+
+//        takePhotoBtn.setRecordButtonListener(new SLFRecordButton.SLFRecordButtonListener() {
+//            @Override
+//            public void onClick() {
+//                if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Video) {
+//                    showCenterToast("You can only shoot videos !");
+//                    return;
+//                }
+//                takenPictureInternal(true);
+//            }
+//
+//            @Override
+//            public void onLongClick() {
+//                if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Image) {
+//                    showCenterToast("You can only take pictures !");
+//                    return;
+//                }
+//                SLFPermissionManager.getInstance().chekPermissions(SLFTakePhotoActivity.this, permissionMic, permissionsMicrphoneResult);
+//            }
+//
+//            @Override
+//            public void onLongClickFinish(int result) {
+//                isTooShot = result == SLFRecordButton.RECORD_SHORT;
+//                stopVideoMode();
+//                toggleRecordingStatus();
+//            }
+//        });
+
+        slf_cancel.setOnClickListener(v -> finish());
 
 
         cbFlash.setOnCheckedChangeListener((buttonView, isChecked) -> mCamera.getCameraControl().enableTorch(isChecked));
 
         cbFront.setOnCheckedChangeListener((buttonView, isChecked) -> onChangeGo(!isBack));
+    }
+
+    private void stopTime(){
+        flag = false;
+    }
+
+    private void startTime(){
+        //开启进程
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                //时间不停增长
+                //时间处理不在子线程中
+                int i = 1;
+                while (flag){
+                    try {
+                        sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Message mesg = new Message();
+                    mesg.arg1 = i;
+                    handler.sendMessage(mesg);
+                    //时间增加
+                    i++;
+                }
+            }
+        }.start();
     }
 
     public void onChangeGo(boolean isBack) {
@@ -380,7 +476,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                                 intent.putExtra("aspect_x", getIntent().getIntExtra("aspect_x", 0));
                                 intent.putExtra("aspect_y", getIntent().getIntExtra("aspect_y", 0));
                                 intent.putExtra("app_color", getIntent().getIntExtra("app_color", SLFResourceUtils.getColor(R.color.slf_theme_color)));
-                                intent.putExtra("form","takephoto");
+                                intent.putExtra("from","takephoto");
                                 intent.putExtra("take_photo", mediaData);
                                 intent.setClass(getActivity(), SLFFeedbackPicPreviewActivity.class);
                                 startActivityForResult(intent, REQUEST_CODE);
@@ -454,8 +550,13 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
         @Override
         public void passPermissons() {
             startTime = System.currentTimeMillis();
+            videoStatus = "recording";
+            takePhotoBtn.setImageResource(R.drawable.slf_flash_camera_recording);
             startVideoMode();
+            flag = true;
+            startTime();
             recordVideo();
+
         }
 
         @Override

@@ -1417,12 +1417,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 } else {
                     SLFLogUtil.d("videocompress", "compelete---url---null");
                     slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                    slfaddAttachAdapter.notifyDataSetChanged();
-
                 }
             } else {
                 SLFLogUtil.d("videocompress", "compelete---object--not--equals");
             }
+
         }
     }
 
