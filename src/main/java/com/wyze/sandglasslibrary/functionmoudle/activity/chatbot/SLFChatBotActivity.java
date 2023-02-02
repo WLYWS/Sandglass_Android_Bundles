@@ -515,10 +515,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent (SLFChatBotClickNoSendWarnEvent event) {
         lastSendTime = System.currentTimeMillis();
-        if (isAddTimeItem()){
-            addTimeItem();
-            isFirstGetFromDataBase = false;
-        }
+//        if (isAddTimeItem()){
+//            addTimeItem();
+//            isFirstGetFromDataBase = false;
+//        }
         SLFChatBotMsgData slfChatBotClickNoSendData = faqMsgList.get(event.position);
         slfChatBotClickNoSendData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SENDING_MSG.getValue());
         sLFChatBotRecyclerAdapter.notifyDataSetChanged();
@@ -651,9 +651,9 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      */
     @Override
     public void onRequestChatBotNetFail (Object type, long requestTime) {
-        if (type instanceof SLFFaqSearchResponseBean){
+        if (type == SLFFaqSearchResponseBean.class){
             showSendMsgStatus(false,requestTime);
-        }else if (type instanceof SLFFaqMarkResponseBean){
+        }else if (type == SLFFaqMarkResponseBean.class){
             updateMsgMarkStatus(requestTime);
         }
     }
@@ -684,9 +684,9 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      */
     @Override
     public void onRequestChatBotFail (String value, String failCode, Object type, long requestTime) {
-        if (type instanceof SLFFaqSearchResponseBean){
+        if (type == SLFFaqSearchResponseBean.class){
             showSendMsgStatus(false,requestTime);
-        }else if (type instanceof SLFFaqMarkResponseBean){
+        }else if (type == SLFFaqMarkResponseBean.class){
            updateMsgMarkStatus(requestTime);
         }
 
