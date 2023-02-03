@@ -81,7 +81,9 @@ public class SLFDBEngine {
 
         @Override
         protected Void doInBackground (SLFChatBotMsgData... slfChatBotMsgData) {
-            slfMsgDao.insertMsgData(slfChatBotMsgData[0]);
+            long id = slfMsgDao.insertMsgData(slfChatBotMsgData[0]);
+            SLFChatBotMsgData data = slfChatBotMsgData[0];
+            data.setId((int) id);
             return null;
         }
     }

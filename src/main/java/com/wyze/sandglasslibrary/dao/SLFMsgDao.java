@@ -33,7 +33,7 @@ public interface SLFMsgDao {
 
     //插入数据
     @Insert
-    void insertMsgData(SLFChatBotMsgData sLFChatBotMsgData);
+    long insertMsgData(SLFChatBotMsgData sLFChatBotMsgData);
 
     //删除所有数据
 

@@ -556,17 +556,14 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
          if (sw_faq_recycle.isRefreshing()){
             sw_faq_recycle.setRefreshing(false);
-            if (tenMsgDataList==null||tenMsgDataList.size()==0){
+            if (tenMsgDataList==null||tenMsgDataList.size()==0||msg_id==MAX_ID){
+                ////msg_id==MAX_ID:第一次获取minId时，faqMsgList中的对象id都为0，不能刷新mag_id, 防止刷新重复添加数据
                 return;
             }
             int position = tenMsgDataList.size();
             LinearLayoutManager linearManager = (LinearLayoutManager) rv_faq_chat_bot.getLayoutManager();
             //最后一个可见view的位置
             int mLastVisibleItemPosition = linearManager.findLastVisibleItemPosition();
-             //第一次获取minId时，faqMsgList中的对象id都为0，不能刷新mag_id, 防止刷新重复添加数据
-            if (msg_id==MAX_ID){
-                tenMsgDataList.clear();
-            }
             tenMsgDataList.addAll(faqMsgList);
             faqMsgList.clear();
             faqMsgList.addAll(tenMsgDataList);
