@@ -65,6 +65,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpRequestCallback ,SLFHttpChatBotRequestCallback {
     //记录上次进入此页面的时间
+    private static final int MAX_ID = 100000000;
     private static final String LAST_ENTER_PAGE = "LAST_ENTER_PAGE";
     private SwipeRefreshLayout sw_faq_recycle;
     private RecyclerView rv_faq_chat_bot;
@@ -79,7 +80,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private boolean isFirstGetFromDataBase = false;
     private Handler handler;
     private long lastSendTime;
-    private int msg_id = 100000000;
+    private int msg_id = MAX_ID;
     private int tempLineCount;
 
     @Override
@@ -562,6 +563,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             LinearLayoutManager linearManager = (LinearLayoutManager) rv_faq_chat_bot.getLayoutManager();
             //最后一个可见view的位置
             int mLastVisibleItemPosition = linearManager.findLastVisibleItemPosition();
+             //第一次获取minId时，faqMsgList中的对象id都为0，不能刷新mag_id, 防止刷新重复添加数据
+            if (msg_id==MAX_ID){
+                tenMsgDataList.clear();
+            }
             tenMsgDataList.addAll(faqMsgList);
             faqMsgList.clear();
             faqMsgList.addAll(tenMsgDataList);
