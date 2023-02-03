@@ -311,6 +311,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                                     Log.e(TAG, Log.getStackTraceString(e));
                                 }
                             }else if(picPathLists.get(i).getMimeType().contains("video")){
+                                SLFLogUtil.d("videocompress","MimeType()---::"+picPathLists.get(i).getMimeType());
                                 final String path = picPathLists.get(i).getOriginalPath();
                                 SLFLogUtil.d("videocompress","path---::"+path);
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();

@@ -602,9 +602,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         contentType = "image/jpg";
                     } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
                         contentType = "image/jpeg";
+                    } else if (slfMediaDataList.get(i).getMimeType().contains("video")) {
+                        contentType = "video/mp4";
                     }
-                    String pic_thumid = slfMediaDataList.get(i).getId()+"1000";
-                    pic_thumid_long = Long.parseLong(pic_thumid);
                     SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
                     SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType,String.valueOf(slfMediaDataList.get(i).getId())+"thumb" , this);
                 }
@@ -1220,34 +1220,38 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     private synchronized void resultUploadImageOrVideo(String code) {
         for(int i=0;i<slfMediaDataList.size()-1;i++){
-            if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))){
-                if(i==0) {
-                    imageSuccess0 = true;
-                }else if(i==1){
-                    imageSuccess1 = true;
-                }else if(i==2){
-                    imageSuccess2 = true;
-                }
-            }else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")){
-                if(i==0) {
-                    imageThumbleSuccess0 = true;
-                }else if(i==1){
-                    imageThumbleSuccess1 = true;
-                }else if(i==2){
-                    imageThumbleSuccess2 = true;
-                }
+            if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
+                imageSuccessed = true;
+                resultCodeMethod(code, imageSuccessed);
+//                if (i == 0) {
+//                    imageSuccess0 = true;
+//                } else if (i == 1) {
+//                    imageSuccess1 = true;
+//                } else if (i == 2) {
+//                    imageSuccess2 = true;
+//                }
+
             }
+//            }else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")){
+//                if(i==0) {
+//                    imageThumbleSuccess0 = true;
+//                }else if(i==1){
+//                    imageThumbleSuccess1 = true;
+//                }else if(i==2){
+//                    imageThumbleSuccess2 = true;
+//                }
+//            }
         }
-        if (imageSuccess0 && imageThumbleSuccess0) {
-            resultCodeMethod(code, imageSuccess0, imageThumbleSuccess0);
-        } else if (imageSuccess1 && imageThumbleSuccess1) {
-            resultCodeMethod(code, imageSuccess1, imageThumbleSuccess1);
-        } else if (imageSuccess2 && imageThumbleSuccess2) {
-            resultCodeMethod(code, imageSuccess2, imageThumbleSuccess2);
-        }
+//        if (imageSuccess0 && imageThumbleSuccess0) {
+//            resultCodeMethod(code, imageSuccess0);
+//        } else if (imageSuccess1 && imageThumbleSuccess1) {
+//            resultCodeMethod(code, imageSuccess1);
+//        } else if (imageSuccess2 && imageThumbleSuccess2) {
+//            resultCodeMethod(code, imageSuccess2);
+//        }
     }
 
-    private void resultCodeMethod(String code, boolean imageSuccess, boolean imageThumbleSuccess) {
+    private void resultCodeMethod(String code, boolean imageSuccess) {
         for(int i=0;i<slfMediaDataList.size()-1;i++){
             if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))){
                 if (slfMediaDataList.get(i).getUploadPath() != null) {
@@ -1257,15 +1261,16 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 }else {
                     imageSuccess = false;
                 }
-            }else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")) {
-                if (slfMediaDataList.get(i).getUploadThumPath() != null) {
-                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                    slfaddAttachAdapter.notifyDataSetChanged();
-                    imageThumbleSuccess = false;
-                }else {
-                    imageThumbleSuccess = false;
-                }
             }
+//            else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")) {
+//                if (slfMediaDataList.get(i).getUploadThumPath() != null) {
+//                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+//                    slfaddAttachAdapter.notifyDataSetChanged();
+//                    imageThumbleSuccess = false;
+//                }else {
+//                    imageThumbleSuccess = false;
+//                }
+//            }
         }
     }
 
