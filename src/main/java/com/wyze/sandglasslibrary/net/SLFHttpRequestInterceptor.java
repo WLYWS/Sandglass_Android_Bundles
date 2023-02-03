@@ -33,9 +33,9 @@ public class SLFHttpRequestInterceptor implements Interceptor {
         long duration = endTime - startTime;
         okhttp3.MediaType mediaType = response.body().contentType();
         String content = response.body().string();
-        if (request.body() != null) {
-            printParams(request.body());
-        }
+//        if (request.body() != null) {
+//            printParams(request.body());
+//        }
         SLFLogUtil.d("request", "请求体返回：| Response:" + content);
         SLFLogUtil.d("request", "----------请求耗时:" + duration + "毫秒----------");
         SLFLogUtil.d("request", "请求体返回：| Response 时间戳:" +System.currentTimeMillis());

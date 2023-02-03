@@ -14,12 +14,12 @@ public class SLFEventCompressVideo {
 
     public String filename;
 
-    public SLFMediaData slfMediaData;
+    public long id;
 
-    public SLFEventCompressVideo(boolean isCompelte,String path,String filename,SLFMediaData slfMediaData){
+    public SLFEventCompressVideo(boolean isCompelte,String path,String filename,long id){
         this.isCompelte = isCompelte;
         this.path = path;
         this.filename = filename;
-        this.slfMediaData = slfMediaData;
+        this.id = id;
     }
 }

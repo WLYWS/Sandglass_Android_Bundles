@@ -1383,10 +1383,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         return map;
     }
 
-    private synchronized void uploadvideo(String path, String filename, SLFMediaData slfMediaData) {
+    private synchronized void uploadvideo(String path, String filename,long id) {
         SLFLogUtil.d("videocompress", "slfMediaDataList.size()::" + slfMediaDataList.size());
-        for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-            if (slfMediaDataList.get(i).equals(slfMediaData)) {
+        for(int i=0;i<slfMediaDataList.size()-1;i++){
+            if(id == slfMediaDataList.get(i).getId()){
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
                 if (slfMediaDataList.get(i).getUploadPath() != null) {
@@ -1405,11 +1405,35 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
                     slfaddAttachAdapter.notifyDataSetChanged();
                 }
-            } else {
+            }else{
                 SLFLogUtil.d("videocompress", "compelete---object--not--equals");
             }
-
         }
+//        for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
+//            if (slfMediaDataList.get(i).equals(slfMediaData)) {
+//                slfMediaDataList.get(i).setOriginalPath(path);
+//                slfMediaDataList.get(i).setFileName(filename);
+//                if (slfMediaDataList.get(i).getUploadPath() != null) {
+//                    if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+//                        SLFLogUtil.d("videocompress", "compelete---");
+//                        File file = new File(slfMediaDataList.get(i).getOriginalPath());
+//                        File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
+//                        SLFLogUtil.d("videocompress", "compelete--222222-");
+//                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFFeedbackSubmitActivity.this);
+//                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId())+"thumb", SLFFeedbackSubmitActivity.this);
+//                        SLFLogUtil.d("videocompress", "compelete--33333-");
+//
+//                    }
+//                } else {
+//                    SLFLogUtil.d("videocompress", "compelete---url---null");
+//                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+//                    slfaddAttachAdapter.notifyDataSetChanged();
+//                }
+//            } else {
+//                SLFLogUtil.d("videocompress", "compelete---object--not--equals");
+//            }
+
+        //}
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -1434,7 +1458,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         singleUploadVideoExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                uploadvideo(event.path, event.filename, event.slfMediaData);
+                uploadvideo(event.path, event.filename, event.id);
             }
         });
 
@@ -1443,12 +1467,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SLFEventNoCompressVideo event) {
 
-        SLFLogUtil.d("videocompress", "onevent----compelete");
+        SLFLogUtil.d("videocompress", "onevent--no--compelete");
         singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
         singleUploadVideoExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                uploadvideo(event.path, event.filename, event.slfMediaData);
+                uploadvideo(event.path, event.filename, event.id);
             }
         });
 
