@@ -175,7 +175,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     }
 
     @Override
-    public void putHttpFile (Context context, String url, File file,String mediaType,int type, SLFHttpRequestCallback callBack) {
+    public void putHttpFile (Context context, String url, File file,String mediaType,String type, SLFHttpRequestCallback callBack) {
 
         // 生成单个文件
         RequestBody requestFile = RequestBody.create(MediaType.parse(mediaType), file);

@@ -168,7 +168,7 @@ public class SLFHttpUtils<T>{
      * @param callBack 结果返回接口
      */
 
-    public void executePutFile(Context context, String api, File file, String mediaType,int type, SLFHttpRequestCallback callBack){
+    public void executePutFile(Context context, String api, File file, String mediaType,String type, SLFHttpRequestCallback callBack){
         mHttpRequest.putHttpFile(context, api, file, mediaType,type, callBack);
     }
 }

@@ -259,10 +259,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private boolean imageSuccess2;
     private boolean imageThumbleSuccess2;
 
+    private boolean imageSuccessed;
+    private boolean imageThumbleSuccessed;
+
     private String appLogFileName;
     private String firmwareLogFileName;
     private Drawable mClearDrawable;
     private Drawable drawableRight;
+
+    private long pic_thumid_long;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -598,8 +603,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
                         contentType = "image/jpeg";
                     }
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, i, this);
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, i + 1000, this);
+                    String pic_thumid = slfMediaDataList.get(i).getId()+"1000";
+                    pic_thumid_long = Long.parseLong(pic_thumid);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType,String.valueOf(slfMediaDataList.get(i).getId())+"thumb" , this);
                 }
             } else {
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
@@ -1113,7 +1120,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
                                     SLFLogUtil.d(TAG, "logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", 6, SLFFeedbackSubmitActivity.this);
+                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "6", SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1174,10 +1181,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
                 SLFLogUtil.d("videocompress", "uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
             }
-        } else if (type instanceof Integer) {
-            int code = (int) type;
+        } else if (type instanceof String) {
+            String code = (String) type;
             SLFLogUtil.e(TAG, "requestScucess::Integer::" + ":::type:::" + type);
-            if (code == 6) {
+            if (code.equals("6")) {
                 SLFLogUtil.d(TAG, "logfile-----upload---complete");
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
             } else {
@@ -1211,26 +1218,25 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     }
 
-    private synchronized void resultUploadImageOrVideo(int code) {
-        switch (code) {
-            case 0:
-                imageSuccess0 = true;
-                break;
-            case 1:
-                imageSuccess1 = true;
-                break;
-            case 2:
-                imageSuccess2 = true;
-                break;
-            case 1000:
-                imageThumbleSuccess0 = true;
-                break;
-            case 1001:
-                imageThumbleSuccess1 = true;
-                break;
-            case 1002:
-                imageThumbleSuccess2 = true;
-                break;
+    private synchronized void resultUploadImageOrVideo(String code) {
+        for(int i=0;i<slfMediaDataList.size()-1;i++){
+            if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))){
+                if(i==0) {
+                    imageSuccess0 = true;
+                }else if(i==1){
+                    imageSuccess1 = true;
+                }else if(i==2){
+                    imageSuccess2 = true;
+                }
+            }else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")){
+                if(i==0) {
+                    imageThumbleSuccess0 = true;
+                }else if(i==1){
+                    imageThumbleSuccess1 = true;
+                }else if(i==2){
+                    imageThumbleSuccess2 = true;
+                }
+            }
         }
         if (imageSuccess0 && imageThumbleSuccess0) {
             resultCodeMethod(code, imageSuccess0, imageThumbleSuccess0);
@@ -1241,44 +1247,24 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
     }
 
-    private void resultCodeMethod(int code, boolean imageSuccess, boolean imageThumbleSuccess) {
-        if (code < 1000) {
-            if (slfMediaDataList.get(code).getUploadPath() != null) {
-                for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-                    if (slfMediaDataList.get(i).getUploadPath() != null) {
-                        if (slfMediaDataList.get(code).getUploadPath().equals(slfMediaDataList.get(i).getUploadPath())) {
-                            slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                            slfaddAttachAdapter.notifyDataSetChanged();
-                            imageSuccess = false;
-                            imageThumbleSuccess = false;
-                        }
-                    } else {
-                        imageSuccess = false;
-                        imageThumbleSuccess = false;
-                    }
+    private void resultCodeMethod(String code, boolean imageSuccess, boolean imageThumbleSuccess) {
+        for(int i=0;i<slfMediaDataList.size()-1;i++){
+            if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))){
+                if (slfMediaDataList.get(i).getUploadPath() != null) {
+                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                    slfaddAttachAdapter.notifyDataSetChanged();
+                    imageSuccess = false;
+                }else {
+                    imageSuccess = false;
                 }
-            } else {
-                imageSuccess = false;
-                imageThumbleSuccess = false;
-            }
-        } else {
-            if (slfMediaDataList.get(code - 1000).getUploadThumPath() != null) {
-                for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-                    if (slfMediaDataList.get(i).getUploadThumPath() != null) {
-                        if (slfMediaDataList.get(code - 1000).getUploadThumPath().equals(slfMediaDataList.get(i).getUploadThumPath())) {
-                            slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                            slfaddAttachAdapter.notifyDataSetChanged();
-                            imageSuccess = false;
-                            imageThumbleSuccess = false;
-                        }
-                    } else {
-                        imageSuccess = false;
-                        imageThumbleSuccess = false;
-                    }
+            }else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")) {
+                if (slfMediaDataList.get(i).getUploadThumPath() != null) {
+                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                    slfaddAttachAdapter.notifyDataSetChanged();
+                    imageThumbleSuccess = false;
+                }else {
+                    imageThumbleSuccess = false;
                 }
-            } else {
-                imageSuccess = false;
-                imageThumbleSuccess = false;
             }
         }
     }
@@ -1409,8 +1395,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
                         SLFLogUtil.d("videocompress", "compelete--222222-");
-                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", i, SLFFeedbackSubmitActivity.this);
-                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", i + 1000, SLFFeedbackSubmitActivity.this);
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFFeedbackSubmitActivity.this);
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId())+"thumb", SLFFeedbackSubmitActivity.this);
                         SLFLogUtil.d("videocompress", "compelete--33333-");
 
                     }

@@ -273,6 +273,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                                     }catch(Exception e){
                                         SLFLogUtil.e(TAG,"picPathList crop error::"+e.toString());
                                     }
+                                    picPathLists.get(i).setId(System.currentTimeMillis());
                                     picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH+fileName);
                                     picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH+fileName).length());
                                     picPathLists.get(i).setThumbnailSmallPath(thumPth);
@@ -289,6 +290,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
                                 String fileName = SLFUtils.getCharacterAndNumber()+".png";
                                 File thumFile = new File(thumPth);
+                                picPathLists.get(i).setId(System.currentTimeMillis());
                                 picPathLists.get(i).setThumbnailSmallPath(thumPth);
                                 try {
                                     Bitmap bmp = SLFViewUtil.getBitmapFromPath(path);
@@ -323,6 +325,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                                     if(btm!=null){
                                         SLFViewUtil.compressImage(btm,SLFConstants.CROP_IMAGE_PATH, fileThumbleName);
                                     }
+                                    picPathLists.get(i).setId(System.currentTimeMillis());
                                     picPathLists.get(i).setThumbnailSmallPath(SLFConstants.CROP_IMAGE_PATH+fileThumbleName);
                                     picPathLists.get(i).setUploadStatus(SLFConstants.UPLOADIDLE);
                                     picPathLists.get(i).setUploadPath(null);

@@ -41,5 +41,5 @@ public interface SLFIHttpRequest<T> {
     // 多文件上传
     void mHttpMultiFile(Context context, String api, List<File> list, List <String> fileList, TreeMap map, int type, SLFHttpRequestCallback mCallBack);
 
-    void putHttpFile(Context context,String url,File file ,String mediaType,int type,SLFHttpRequestCallback mCallBack);
+    void putHttpFile(Context context,String url,File file ,String mediaType,String type,SLFHttpRequestCallback mCallBack);
 }
