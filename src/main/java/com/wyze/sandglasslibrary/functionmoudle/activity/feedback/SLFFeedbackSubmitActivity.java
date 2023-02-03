@@ -371,7 +371,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     in.putParcelableArrayListExtra("photoPath", picPathLists);
                     startActivity(in);
                 } else {
-                    showCenterToast("正在上传……");
+                   // showCenterToast("正在上传……");
                 }
             }
         });
