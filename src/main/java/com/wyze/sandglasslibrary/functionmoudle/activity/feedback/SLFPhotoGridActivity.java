@@ -119,7 +119,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     private static Runnable confirmRunnable;
     private boolean isEvent;
     private TextView slf_preview_text;
-    private SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(false,"","",null);
+    private SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(false,"","",0);
     //private SLFCamraReceiver camraReceiver;
     //private SLFCamraContentObserver slfCamraContentObserver;
     private Handler handler = new Handler();
@@ -312,9 +312,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                                 }
                             }else if(picPathLists.get(i).getMimeType().contains("video")){
                                 final String path = picPathLists.get(i).getOriginalPath();
-                                SLFLogUtil.d("compressVedio","path---::"+path);
+                                SLFLogUtil.d("videocompress","path---::"+path);
                                 final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
-                                SLFLogUtil.d("compressVedio","thumPth---::"+thumPth);
+                                SLFLogUtil.d("videocompress","thumPth---::"+thumPth);
 
                                 String fileThumbleName = SLFUtils.getCharacterAndNumber()+"videoThumble.jpg";
                                 String fileName = SLFUtils.getCharacterAndNumber() + ".mp4";
@@ -333,7 +333,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                                     picPathLists.get(i).setUploadUrl(null);
                                     picPathLists.get(i).setUploadThumurl(null);
                                     SLFMediaData slfMediaData = picPathLists.get(i);
-                                    compressVideo(path,newFilePath,fileName,slfMediaData);
+                                    compressVideo(path,newFilePath,fileName,picPathLists.get(i).getId());
                                 }catch(Exception e){
                                     Log.e(TAG, Log.getStackTraceString(e));
                                 }
@@ -364,7 +364,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         return bitmap;
     }
     /**压缩视频*/
-    private synchronized void compressVideo(String path,String newFilePath,String filename,SLFMediaData slfMediaData){
+    private synchronized void compressVideo(String path,String newFilePath,String filename,long id){
 
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(path);
@@ -380,7 +380,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         SLFLogUtil.d("videocompress", "vido_height==before========" + height);
         SLFLogUtil.d("videocompress", "fileSize---before----:" + Formatter.formatFileSize(getContext(), fileSize));
         SLFLogUtil.d("videocompress", "fileSize---before--old--:" + fileSize);
-        SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(true,newFilePath,filename,slfMediaData);
+        SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(true,newFilePath,filename,id);
         if (Integer.parseInt(width) > Integer.parseInt(height)) {
             String temp = height;
             String temp2 = width;
@@ -414,16 +414,14 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                         SLFLogUtil.d("videocompress", "vido_height==after========" + height);
                         SLFLogUtil.d("videocompress", "fileSize---after----:" + Formatter.formatFileSize(getContext(), fileSize));
 
-                        EventBus.getDefault().post(new SLFEventCompressVideo(true,path,filename,slfMediaData));
+                        EventBus.getDefault().post(new SLFEventCompressVideo(true,path,filename,id));
                     } else {
                         SLFLogUtil.e("videocompress", "compress faile");
                         String fileName=path.substring(path.lastIndexOf("/")+1);
-
-                        SLFMediaData slfMediaData1 = slfMediaData;
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                EventBus.getDefault().post(new SLFEventNoCompressVideo(path,fileName,slfMediaData1));
+                                EventBus.getDefault().post(new SLFEventNoCompressVideo(path,fileName,id));
                             }
                         }, 1000);
 

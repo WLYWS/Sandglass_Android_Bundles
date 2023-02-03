@@ -13,11 +13,11 @@ public class SLFEventNoCompressVideo {
 
     public String filename;
 
-    public SLFMediaData slfMediaData;
+    public long id;
 
-    public SLFEventNoCompressVideo(String path, String filename, SLFMediaData slfMediaData){
+    public SLFEventNoCompressVideo(String path, String filename,long id){
         this.path = path;
         this.filename = filename;
-        this.slfMediaData = slfMediaData;
+        this.id = id;
     }
 }
