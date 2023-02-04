@@ -80,7 +80,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
     private static final int REQUEST_CODE = 101;
     private boolean isInsertAlbum;
     private String mode = SLFConstants.CAMERA_PHOTO;
-    private String videoStatus = "startRecroding";
+    private int videoStatus = 0;//开始录制 1录制中，2停止录制
 
     private TextView video_time;
     private  boolean flag =false;
@@ -191,12 +191,11 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                     }
                     takenPictureInternal(true);
                 }else{
-                    if(videoStatus.equals("recroding")){
-                        isTooShot  = true;
+                    if(videoStatus==1){
                         stopVideoMode();
                         stopTime();
                         toggleRecordingStatus();
-                        videoStatus = "recordstop";
+                        videoStatus = 2;
                         takePhotoBtn.setImageResource(R.drawable.slf_flash_camera_take_photo);
                     }else{
                         SLFPermissionManager.getInstance().chekPermissions(SLFTakePhotoActivity.this, permissionMic, permissionsMicrphoneResult);
@@ -432,7 +431,6 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
 
     @SuppressLint({"RestrictedApi", "MissingPermission"})
     private void recordVideo() {
-
         String name = SLFUtils.getCharacterAndNumber();
         String filePath = SLFConstants.CROP_IMAGE_PATH + name + ".mp4";
         File file = new File(SLFConstants.CROP_IMAGE_PATH);
@@ -444,7 +442,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
         //创建文件
         VideoCapture.OutputFileOptions videoOptions = new VideoCapture.OutputFileOptions.Builder(saveFile)
                 .build();
-
+        SLFLogUtil.d("recroding","recroding3333");
         try {
             mVideoCapture.startRecording(videoOptions,
                     CameraXExecutors.mainThreadExecutor(),
@@ -452,15 +450,14 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                         @RequiresApi(api = Build.VERSION_CODES.Q)
                         @Override
                         public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
-                            if (isTooShot) {
+                            long duration = System.currentTimeMillis() - startTime;
+                            if(duration<=1000){
                                 showCenterToast("Video time is too short !");
                                 return;
                             }
-                            long duration = System.currentTimeMillis() - startTime;
                             if(isInsertAlbum){
                                 SLFFileUtils.insertVideoToGalley(saveFile,"slf");
                             }
-
                             Intent intent = new Intent();
                             SLFMediaData mediaData = new SLFMediaData();
                             mediaData.setId(System.currentTimeMillis());
@@ -549,12 +546,13 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void passPermissons() {
+            SLFLogUtil.d("recroding","start recroding");
             startTime = System.currentTimeMillis();
-            videoStatus = "recording";
             takePhotoBtn.setImageResource(R.drawable.slf_flash_camera_recording);
             startVideoMode();
             flag = true;
             startTime();
+            videoStatus = 1;
             recordVideo();
 
         }
