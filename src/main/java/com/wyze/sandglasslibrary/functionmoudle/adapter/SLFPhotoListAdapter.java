@@ -92,8 +92,8 @@ public class SLFPhotoListAdapter extends BaseAdapter {
                 if(mSLFMediaData.getMimeType().contains("video")){
                     helper.setVisibility(R.id.slf_tv_media_type,false);
                     helper.setVisibility(R.id.slf_iv_video,true);
-                    helper.setVisibility(R.id.slf_tv_video_duration,true);
-                    helper.setText(R.id.slf_tv_video_duration, SLFDateFormatUtils.dateToString(mSLFMediaData.getDuration(),SLFDateFormatUtils.YMDHMS));
+                    helper.setVisibility(R.id.slf_tv_video_duration,false);
+                    //helper.setText(R.id.slf_tv_video_duration, SLFDateFormatUtils.dateToString(mSLFMediaData.getDuration(),SLFDateFormatUtils.YMDHMS));
                 }else if(mSLFMediaData.getMimeType().contains("gif")){
                     helper.setText(R.id.slf_tv_media_type,"gif");
                     helper.setVisibility(R.id.slf_iv_video,false);

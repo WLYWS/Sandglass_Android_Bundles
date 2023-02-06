@@ -133,9 +133,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         initView();
         requestPermission();
         initListener();
-
-
-
     }
 
     @Override

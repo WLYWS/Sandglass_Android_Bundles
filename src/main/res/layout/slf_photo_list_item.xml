@@ -51,9 +51,8 @@
         android:id="@+id/slf_iv_video"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/slf_photo_video_icon_light_play" />
+        android:layout_centerInParent="true"
+        android:src="@drawable/slf_video_icon_light_play" />
 
     <Button
         android:id="@+id/slf_tv_media_type"
@@ -64,7 +63,8 @@
         android:layout_margin="5dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        />
 
     <TextView
         android:id="@+id/slf_tv_video_duration"
@@ -74,6 +74,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
         android:textColor="@color/white"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:visibility="gone"/>
 
 </RelativeLayout>
