@@ -2,17 +2,24 @@ package com.wyze.sandglasslibrary.functionmoudle.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
@@ -29,8 +36,9 @@ import java.util.List;
 public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<SLFLeaveMsgRecord> datas;
     private Context context;
-    private int normalType = 0;
-    private int footType = 1;
+    private int usernormalType = 0;
+    private int workernormalType = 1;
+    private int footType = 2;
     private boolean hasMore = true;
     private boolean fadeTips = false;
     private OnItemClickLitener   mOnItemClickLitener;
@@ -44,8 +52,10 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == normalType) {
-            return new NormalHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_all_item, parent,false));
+        if (viewType == usernormalType) {
+            return new UserNormalHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_detail_item_user, parent,false));
+        } else if(viewType == workernormalType) {
+            return new WorkerNormalHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_detail_item_work, parent,false));
         } else {
             return new FootHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_footview, parent,false));
         }
@@ -53,17 +63,140 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        if (holder instanceof NormalHolder) {
+        if (holder instanceof UserNormalHolder) {
+            if(datas.get(position).getAttrList()!=null&&datas.get(position).getAttrList().size()>0){
+                ((UserNormalHolder) holder).slf_feedback_detail_show_photo_linear.setVisibility(View.VISIBLE);
+                if(datas.get(position).getAttrList().size()==1){
+                    ((UserNormalHolder) holder).slf_frist_media_data.setVisibility(View.VISIBLE);
+                    ((UserNormalHolder) holder).slf_second_media_data.setVisibility(View.GONE);
+                    ((UserNormalHolder) holder).slf_third_media_data.setVisibility(View.GONE);
+                    if(datas.get(position).getAttrList().get(0).getContentType().contains("video")){
+                        ((UserNormalHolder) holder).slf_first_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_first_iv_video.setVisibility(View.VISIBLE);
+                    }else{
+                        ((UserNormalHolder) holder).slf_first_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_first_iv_video.setVisibility(View.GONE);
+                    }
+                }else if(datas.get(position).getAttrList().size()==2){
+                    ((UserNormalHolder) holder).slf_frist_media_data.setVisibility(View.VISIBLE);
+                    ((UserNormalHolder) holder).slf_second_media_data.setVisibility(View.VISIBLE);
+                    ((UserNormalHolder) holder).slf_third_media_data.setVisibility(View.GONE);
+                    if(datas.get(position).getAttrList().get(0).getContentType().contains("video")){
+                        ((UserNormalHolder) holder).slf_first_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_first_iv_video.setVisibility(View.VISIBLE);
+                    }else{
+                        ((UserNormalHolder) holder).slf_first_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_first_iv_video.setVisibility(View.GONE);
+                    }
+                    if(datas.get(position).getAttrList().get(1).getContentType().contains("video")){
+                        ((UserNormalHolder) holder).slf_second_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_second_iv_video.setVisibility(View.VISIBLE);
+                    }else{
+                        ((UserNormalHolder) holder).slf_second_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_second_iv_video.setVisibility(View.GONE);
+                    }
+                }else {
+                    ((UserNormalHolder) holder).slf_frist_media_data.setVisibility(View.VISIBLE);
+                    ((UserNormalHolder) holder).slf_second_media_data.setVisibility(View.VISIBLE);
+                    ((UserNormalHolder) holder).slf_third_media_data.setVisibility(View.VISIBLE);
+                    if(datas.get(position).getAttrList().get(0).getContentType().contains("video")){
+                        ((UserNormalHolder) holder).slf_first_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_first_iv_video.setVisibility(View.VISIBLE);
+                    }else{
+                        ((UserNormalHolder) holder).slf_first_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_first_iv_video.setVisibility(View.GONE);
+                    }
+                    if(datas.get(position).getAttrList().get(1).getContentType().contains("video")){
+                        ((UserNormalHolder) holder).slf_second_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_second_iv_video.setVisibility(View.VISIBLE);
+                    }else{
+                        ((UserNormalHolder) holder).slf_second_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_second_iv_video.setVisibility(View.GONE);
+                    }
+                    if(datas.get(position).getAttrList().get(2).getContentType().contains("video")){
+                        ((UserNormalHolder) holder).slf_third_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_third_iv_video.setVisibility(View.VISIBLE);
+                    }else{
+                        ((UserNormalHolder) holder).slf_third_iv_photo.setVisibility(View.VISIBLE);
+                        ((UserNormalHolder) holder).slf_third_iv_video.setVisibility(View.GONE);
+                    }
+                }
+                for(int i=0;i<datas.get(position).getAttrList().size();i++){
+                        if (!TextUtils.isEmpty(datas.get(position).getAttrList().get(i).getThumbnailUrl())) {
+                            if(i==0) {
+                                if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_first_iv_photo.getTag(R.id.slf_iv_photo))) {
+
+                                } else {
+                                    //四周都是圆角的圆角矩形图片。
+                                    Glide.with(context).load(datas.get(position).getAttrList().get(0).getThumbnailUrl()).apply(
+                                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
+                                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+                                            //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+                                            .skipMemoryCache(false)
+                                            //取消Glide自带的动画
+                                            .dontAnimate()
+                                            .into((ImageView) ((UserNormalHolder) holder).slf_first_iv_photo);
+                                    ((UserNormalHolder) holder).slf_first_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(0).getThumbnailUrl());
+                                }
+                            }else if(i==1){
+                                if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_second_iv_photo.getTag(R.id.slf_iv_photo))) {
+
+                                } else {
+                                    //四周都是圆角的圆角矩形图片。
+                                    Glide.with(context).load(datas.get(position).getAttrList().get(0).getThumbnailUrl()).apply(
+                                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
+                                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+                                            //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+                                            .skipMemoryCache(false)
+                                            //取消Glide自带的动画
+                                            .dontAnimate()
+                                            .into((ImageView) ((UserNormalHolder) holder).slf_second_iv_photo);
+                                    ((UserNormalHolder) holder).slf_second_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
+                                }
+                            }else {
+                                if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_third_iv_photo.getTag(R.id.slf_iv_photo))) {
+
+                                } else {
+                                    //四周都是圆角的圆角矩形图片。
+                                    Glide.with(context).load(datas.get(position).getAttrList().get(0).getThumbnailUrl()).apply(
+                                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
+                                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+                                            //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+                                            .skipMemoryCache(false)
+                                            //取消Glide自带的动画
+                                            .dontAnimate()
+                                            .into((ImageView) ((UserNormalHolder) holder).slf_third_iv_photo);
+                                    ((UserNormalHolder) holder).slf_third_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
+                                }
+                            }
+                        } else {
+                            if(i==0) {
+                                ((UserNormalHolder) holder).slf_first_iv_photo.setImageResource(R.drawable.slf_photo_adapter_defult_icon);
+                            }else if(i==1){
+                                ((UserNormalHolder) holder).slf_second_iv_photo.setImageResource(R.drawable.slf_photo_adapter_defult_icon);
+                            }else {
+                                ((UserNormalHolder) holder).slf_third_iv_photo.setImageResource(R.drawable.slf_photo_adapter_defult_icon);
+                            }
+                        }
+                }
+            }else{
+                ((UserNormalHolder) holder).slf_feedback_detail_show_photo_linear.setVisibility(View.GONE);
+            }
+            ((UserNormalHolder) holder).slf_feedback_detail_question_content.setText(datas.get(position).getContent());
+            ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(datas.get(position).getReplyTs(),SLFDateFormatUtils.MDYT));
 
             //通过为条目设置点击事件触发回调
-            if (mOnItemClickLitener != null) {
-                ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mOnItemClickLitener.onItemClick(view, position);
-                    }
-                });
-            }
+//            if (mOnItemClickLitener != null) {
+//                ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        mOnItemClickLitener.onItemClick(view, position);
+//                    }
+//                });
+//            }
+        } else if(holder instanceof WorkerNormalHolder) {
+            ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content.setText(datas.get(position).getContent());
+            ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(datas.get(position).getReplyTs(),SLFDateFormatUtils.MDYT));
         } else {
             ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
             if (hasMore == true) {
@@ -108,18 +241,61 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyDataSetChanged();
     }
 
-    class NormalHolder extends RecyclerView.ViewHolder {
-        private TextView slf_feedback_list_item_title;
-        private TextView slf_feedback_list_item_date;
-        private TextView slf_feedback_list_item_content;
-        private ImageView slf_feedback_list_item_right_back;
-        private ImageView slf_feedback_list_item_content_point;
-        private TextView slf_feedback_list_item_bottom_title;
+    class UserNormalHolder extends RecyclerView.ViewHolder {
+        /**user*/
+        private ImageView slf_feedback_list_detail_user_header_img;
+        private TextView slf_feedback_detail_question_content;
+        private TextView slf_feedback_detail_user_time;
+        private RelativeLayout slf_frist_media_data;
+        private RelativeLayout slf_second_media_data;
+        private RelativeLayout slf_third_media_data;
+        private ImageView slf_first_iv_photo;
+        private ImageView slf_first_iv_video;
+        private ImageView slf_second_iv_photo;
+        private ImageView slf_second_iv_video;
+        private ImageView slf_third_iv_photo;
+        private ImageView slf_third_iv_video;
+        private LinearLayout slf_feedback_detail_show_photo_linear;
+
+
         private View itemView;
 
-        public NormalHolder(View itemView) {
+        public UserNormalHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
+            /**user*/
+            slf_feedback_list_detail_user_header_img = itemView.findViewById(R.id.slf_feedback_list_detail_user_header_img);
+            slf_feedback_detail_question_content = itemView.findViewById(R.id.slf_feedback_detail_question_content);
+            slf_feedback_detail_user_time = itemView.findViewById(R.id.slf_feedback_detail_user_time);
+            slf_frist_media_data = itemView.findViewById(R.id.slf_frist_media_data);
+            slf_second_media_data = itemView.findViewById(R.id.slf_second_media_data);
+            slf_third_media_data = itemView.findViewById(R.id.slf_third_media_data);
+            slf_first_iv_photo = itemView.findViewById(R.id.slf_first_iv_photo);
+            slf_first_iv_video = itemView.findViewById(R.id.slf_first_iv_video);
+            slf_second_iv_photo = itemView.findViewById(R.id.slf_second_iv_photo);
+            slf_second_iv_video = itemView.findViewById(R.id.slf_second_iv_video);
+            slf_third_iv_photo = itemView.findViewById(R.id.slf_third_iv_photo);
+            slf_third_iv_video = itemView.findViewById(R.id.slf_third_iv_video);
+            slf_feedback_detail_show_photo_linear = itemView.findViewById(R.id.slf_feedback_detail_show_photo_linear);
+        }
+    }
+
+    class WorkerNormalHolder extends RecyclerView.ViewHolder {
+        /**worker*/
+        private ImageView slf_feedback_list_detail_worker_header_img;
+        private TextView slf_feedback_detail_worker_question_content;
+        private TextView slf_feedback_detail_worker_time;
+
+
+        private View itemView;
+
+        public WorkerNormalHolder(View itemView) {
+            super(itemView);
+            this.itemView = itemView;
+            /**worker*/
+            slf_feedback_list_detail_worker_header_img = itemView.findViewById(R.id.slf_feedback_list_detail_worker_header_img);
+            slf_feedback_detail_worker_question_content = itemView.findViewById(R.id.slf_feedback_detail_worker_question_content);
+            slf_feedback_detail_worker_time = itemView.findViewById(R.id.slf_feedback_detail_worker_time);
         }
     }
 
@@ -145,7 +321,11 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         if (position == getItemCount() - 1) {
             return footType;
         } else {
-            return normalType;
+            if(datas.get(position).isUser()) {
+                return usernormalType;
+            }else{
+                return workernormalType;
+            }
         }
     }
 

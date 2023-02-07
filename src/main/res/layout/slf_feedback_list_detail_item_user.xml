@@ -14,21 +14,24 @@
         android:src="@drawable/slf_feedback_list_detail_user_header"/>
 
     <RelativeLayout
+        android:id="@+id/slf_feedback_detail_leave_relatvie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/slf_feedback_detail_leave_relatvie"
-        android:background="@drawable/slf_feedback_list_detail_card_bg"
-        android:layout_toLeftOf="@+id/slf_feedback_list_detail_user_header_img"
+        android:layout_alignTop="@+id/slf_feedback_list_detail_user_header_img"
         android:layout_marginRight="10dp"
-        android:layout_alignTop="@+id/slf_feedback_list_detail_user_header_img">
+        android:layout_toLeftOf="@+id/slf_feedback_list_detail_user_header_img"
+        android:background="@drawable/slf_feedback_list_detail_card_bg">
 
         <TextView
             android:id="@+id/slf_feedback_detail_question_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="left|top"
-            android:padding="12dp"
+            android:gravity="left"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:paddingRight="12dp"
+            android:text="sssssssss"
             android:textColor="@color/slf_detail_card_content_color"
             android:textSize="13sp" />
 
@@ -37,29 +40,91 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/slf_feedback_detail_question_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="2dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
-            <GridView
-                android:id="@+id/slf_feedback_detail_show_photo_grid"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:numColumns="5"
-                android:stretchMode="columnWidth" />
+            <RelativeLayout
+                android:id="@+id/slf_frist_media_data"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/slf_feedback_add_photo_bg">
+
+                <ImageView
+                    android:id="@+id/slf_first_iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+                <ImageView
+                    android:id="@+id/slf_first_iv_video"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/slf_video_icon_light_play" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/slf_second_media_data"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/slf_feedback_add_photo_bg">
+
+                <ImageView
+                    android:id="@+id/slf_second_iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+                <ImageView
+                    android:id="@+id/slf_second_iv_video"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/slf_video_icon_light_play" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/slf_third_media_data"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/slf_feedback_add_photo_bg">
+
+                <ImageView
+                    android:id="@+id/slf_third_iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+                <ImageView
+                    android:id="@+id/slf_third_iv_video"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/slf_video_icon_light_play" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <TextView
+            android:id="@+id/slf_feedback_detail_user_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/slf_feedback_detail_user_time"
             android:layout_below="@+id/slf_feedback_detail_show_photo_linear"
-            android:textSize="12sp"
+            android:layout_marginTop="2dp"
             android:paddingLeft="12dp"
-            android:textColor="@color/slf_detail_card_time_color"
+            android:paddingBottom="12dp"
             android:text="12/11/2022 7:23 AM"
-            android:paddingBottom="12dp"/>
+            android:textColor="@color/slf_detail_card_time_color"
+            android:textSize="12sp" />
     </RelativeLayout>
 </RelativeLayout>

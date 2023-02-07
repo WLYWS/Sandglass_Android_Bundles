@@ -12,4 +12,10 @@ public class SLFStringFormatUtil {
         String format = String.format(viewStr,value);
         return format;
     }
+
+    public static String getFormatString(int viewid,long value){
+        String viewStr = SLFResourceUtils.getString(viewid);
+        String format = String.format(viewStr,value);
+        return format;
+    }
 }

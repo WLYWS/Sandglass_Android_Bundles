@@ -52,14 +52,21 @@
         android:layout_below="@+id/slf_feedback_list_detail_header_relative"
         android:background="@color/slf_detail_line_color" />
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/slf_feedback_list_detail_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/slf_feedback_list_bottom_relative"
+        android:layout_below="@+id/slf_feedback_list_header_line"
+        >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/slf_feedback_list_leave_message_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/slf_feedback_list_bottom_relative"
-        android:layout_below="@+id/slf_feedback_list_header_line"
         android:background="@color/slf_detail_leave_message_list_color"
-        android:paddingTop="2dp" />
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/slf_feedback_list_bottom_relative"
