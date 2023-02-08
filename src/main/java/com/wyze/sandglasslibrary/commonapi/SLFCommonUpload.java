@@ -31,8 +31,8 @@ public class SLFCommonUpload {
         return mListInstance;
     }
 
-    public synchronized static void setSLFcommonUpload(SLFUploadFileReponseBean slfUploadFileReponseBean){
-        if(slfUploadFileReponseBean!=null&&slfUploadFileReponseBean.data!=null&&slfUploadFileReponseBean.data.size()==9){
+    public synchronized static void setSLFcommonUpload(SLFUploadFileReponseBean slfUploadFileReponseBean,int size){
+        if(slfUploadFileReponseBean!=null&&slfUploadFileReponseBean.data!=null&&slfUploadFileReponseBean.data.size()==size){
             if(mInstance==null){
                 mInstance = new HashMap<>();
             }
