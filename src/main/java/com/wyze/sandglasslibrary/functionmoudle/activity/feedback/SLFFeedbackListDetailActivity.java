@@ -292,8 +292,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             showLoading();
             //sumbitLogFiles();
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
-                SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl);
+                SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
+                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl);
             }
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
@@ -356,7 +356,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                                 public void run() {
                                     File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
                                     SLFLogUtil.d(TAG, "logFile.size------::" + logFile.length());
-                                    String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
+                                    String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
                                     SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
                                 }
                             });
@@ -403,10 +403,12 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     public void onRequestSuccess(String result, T type) {
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess::feedbackDetail::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,1);
-            /**分配1个链接给log上传*/
-            SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle = true;
-            SLFLogUtil.d("videocompress", "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(0));
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,2);
+            /**分配3个链接给log上传*/
+            for (int i = 0; i < 2; i++) {
+                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                SLFLogUtil.d(TAG, "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(i));
+            }
         }else if(type instanceof String){
             String code = (String) type;
             SLFLogUtil.e(TAG, "requestScucess::feedbackDetail：:Integer::" + ":::type:::" + type);
@@ -467,7 +469,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             logAttrFirmwareBean.setContentType("application/zip");
             /*pluginLogBean*/
             SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
-            logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(6));
+            logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(0));
             logAttrPluginBean.setFileName("pluginLog.zip");
             logAttrPluginBean.setContentType("application/zip");
             logAttrBeans.add(logAttrAppBean);

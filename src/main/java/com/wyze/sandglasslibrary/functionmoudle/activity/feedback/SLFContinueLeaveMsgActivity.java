@@ -304,7 +304,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private void setUploadUrl() {
         for (int position = 0; position < slfMediaDataList.size() - 1; position++) {
             if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADIDLE)) {
-                if (SLFCommonUpload.getListInstance().size() == 6 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)) != null && SLFCommonUpload.getInstance().size() == 9) {
+                if (SLFCommonUpload.getListInstance().size() == 6 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)) != null && SLFCommonUpload.getInstance().size() == 6) {
                     if (SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle) {
                         slfMediaDataList.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(0));
                         slfMediaDataList.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(1));
