@@ -27,6 +27,10 @@ import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
  */
 public class SLFFeedbackListActivity extends SLFBaseActivity {
 
+    //进行中
+    public final static int IN_PROGRESS = 1;
+    //全部
+    public final static int ALL = 2;
     ViewPager mViewPager;
     ImageView slf_back_img;
     SlidingTabLayout tabLayout;
@@ -51,8 +55,8 @@ public class SLFFeedbackListActivity extends SLFBaseActivity {
 
 
         fragments = new Fragment[2];
-        fragments[0] = new SLFFeedbackAllHistoryFragment("first");
-        fragments[1] = new SLFFeedbackAllHistoryFragment("second");
+        fragments[0] = new SLFFeedbackAllHistoryFragment(IN_PROGRESS);
+        fragments[1] = new SLFFeedbackAllHistoryFragment(ALL);
 
         adapter = new SLFFragmentAdapter(getSupportFragmentManager(), fragments, nameList);
         viewPager.setAdapter(adapter);

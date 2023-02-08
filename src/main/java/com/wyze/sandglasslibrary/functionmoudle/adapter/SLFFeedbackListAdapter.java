@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wyze.sandglasslibrary.R;
@@ -36,10 +37,11 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private OnItemClickLitener   mOnItemClickLitener;
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
-    public SLFFeedbackListAdapter(List<SLFRecode> datas, Context context, boolean hasMore) {
+
+    public SLFFeedbackListAdapter (List <SLFRecode> datas, FragmentActivity context, boolean hasMore) {
         this.datas = datas;
-        this.context = context;
         this.hasMore = hasMore;
+        this.context = context;
     }
 
     @Override

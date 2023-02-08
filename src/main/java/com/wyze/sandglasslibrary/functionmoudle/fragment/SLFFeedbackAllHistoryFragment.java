@@ -22,27 +22,37 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
+import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchResponseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemResponseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.net.SLFApiContant;
+import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
+import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
+import com.wyze.sandglasslibrary.net.SLFHttpUtils;
+import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 @SuppressLint("ValidFragment")
-public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<SLFFeedbackItemResponseBean> {
 
-    private String text;
+    private int type;
 
     private RecyclerView slf_histroy_feedback_list;
     private SwipeRefreshLayout slf_feedback_list_refreshLayout;
     private SLFFeedbackItemBean slfFeedbackItemBean;
     private LinearLayout slf_histroy_no_item_linear;
 
-    private List<SLFRecode> recodeList;
+    private List<SLFRecode> recodeList = new ArrayList <>();
 
     private SLFRecode slfRecode;
 
@@ -50,16 +60,18 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
     private final int PAGE_COUNT = 10;
     private LinearLayoutManager mLayoutManager;
     private SLFFeedbackListAdapter adapter;
+    private int current_page = 1;
     private Handler mHandler = new Handler(Looper.getMainLooper());
+    private boolean isInitData = false;
 
-    public SLFFeedbackAllHistoryFragment(String textString) {
-        this.text = textString;
+    public SLFFeedbackAllHistoryFragment(int type) {
+        this.type = type;
     }
 
-    public static SLFFeedbackAllHistoryFragment newInstance(String textString) {
-        SLFFeedbackAllHistoryFragment mFragment = new SLFFeedbackAllHistoryFragment(textString);
-        return mFragment;
-    }
+//    public static SLFFeedbackAllHistoryFragment newInstance(String textString) {
+//        SLFFeedbackAllHistoryFragment mFragment = new SLFFeedbackAllHistoryFragment(textString);
+//        return mFragment;
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +81,7 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
         slf_histroy_feedback_list = view.findViewById(R.id.slf_histroy_feedback_list);
         slf_feedback_list_refreshLayout = view.findViewById(R.id.slf_feedback_list_refreshLayout);
         slf_histroy_no_item_linear = view.findViewById(R.id.slf_feedback_list_no_item_linear);
-        initView();
+        //initView();
         initRefreshLayout();
         initRecyclerView();
         return view;
@@ -86,28 +98,16 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
     }
 
     private void initData() {
-        recodeList = new ArrayList<>();
-        recodeList.clear();
-        for (int i = 0; i < 50; i++) {
-            if (i <= 10) {
-                slfRecode = new SLFRecode(i, "ABC", "RVI", "RVI问题", "连接问题", "连接不上了",
-                        "not good enough", System.currentTimeMillis(), 0, 0, 0);
-            } else if (i > 10 && i < 30) {
-                slfRecode = new SLFRecode(i, "CEO", "NVI", "NVI问题", "硬件问题", "硬件不好用",
-                        "very very very bad", System.currentTimeMillis(), 0, 1, 1);
-            } else {
-                slfRecode = new SLFRecode(i, "PINK", "XVI", "XVI问题", "其他问题", "莫名问题",
-                        "OH MY GOD！！！", System.currentTimeMillis(), 4, 0, 1);
-            }
-            if (!text.equals("first")) {
-                recodeList.add(slfRecode);
-            } else {
-                if(slfRecode.getStatus()==1){
-                    recodeList.add(slfRecode);
-                }
-            }
-        }
-        slfFeedbackItemBean = new SLFFeedbackItemBean(1, 50, recodeList);
+        isInitData = true;
+        getFeedBackList(type,1);
+    }
+
+    private void getFeedBackList (int type,int current) {
+        TreeMap map = new TreeMap();
+        map.put("type", type);
+        map.put("current", current);
+        SLFHttpUtils.getInstance().executeGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LIST_URL, map, SLFFeedbackItemResponseBean.class, this);
     }
 
     private void initRefreshLayout() {
@@ -117,8 +117,8 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
     }
 
     private void initRecyclerView() {
-        adapter = new SLFFeedbackListAdapter(getDatas(0, PAGE_COUNT), getContext(), getDatas(0, PAGE_COUNT).size() > 0 ? true : false);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        adapter = new SLFFeedbackListAdapter(recodeList,getActivity(),recodeList!=null&&recodeList.size()>0?true:false);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         slf_histroy_feedback_list.setLayoutManager(mLayoutManager);
         slf_histroy_feedback_list.setAdapter(adapter);
         //slf_histroy_feedback_list.setItemAnimator(new DefaultItemAnimator());
@@ -132,7 +132,7 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                updateRecyclerView(adapter.getRealLastPosition(), adapter.getRealLastPosition() + PAGE_COUNT);
+                                getFeedBackList(type,current_page+1);
                             }
                         }, 500);
                     }
@@ -141,7 +141,7 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                updateRecyclerView(adapter.getRealLastPosition(), adapter.getRealLastPosition() + PAGE_COUNT);
+                                getFeedBackList(type,current_page+1);
                             }
                         }, 500);
                     }
@@ -161,30 +161,13 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
         });
     }
 
-    private List<SLFRecode> getDatas(final int firstIndex, final int lastIndex) {
-        List<SLFRecode> resList = new ArrayList<>();
-        for (int i = firstIndex; i < lastIndex; i++) {
-            if (i < recodeList.size()) {
-                resList.add(recodeList.get(i));
-            }
-        }
-        return resList;
-    }
-
-    private void updateRecyclerView(int fromIndex, int toIndex) {
-        List<SLFRecode> newDatas = getDatas(fromIndex, toIndex);
-        if (newDatas.size() > 0) {
-            adapter.updateList(newDatas, true);
-        } else {
-            adapter.updateList(null, false);
-        }
-    }
 
     @Override
     public void onRefresh() {
         slf_feedback_list_refreshLayout.setRefreshing(true);
         adapter.resetDatas();
-        updateRecyclerView(0, PAGE_COUNT);
+        current_page = 1;
+        getFeedBackList(type,current_page);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -198,5 +181,29 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
         in.setClass(getContext(), SLFFeedbackListDetailActivity.class);
         in.putExtra(SLFConstants.RECORD_DATA,recodeList.get(position));
         startActivity(in);
+    }
+
+    @Override
+    public void onRequestNetFail (SLFFeedbackItemResponseBean bean) {
+        initView();
+        SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
+    }
+
+    @Override
+    public void onRequestSuccess (String result, SLFFeedbackItemResponseBean bean) {
+        List<SLFRecode> newDatas = bean.data.getRecods();
+        if (newDatas!=null&&newDatas.size() > 0) {
+            adapter.updateList(newDatas, true);
+        } else {
+            adapter.updateList(null, false);
+        }
+        initView();
+        current_page++;
+    }
+
+    @Override
+    public void onRequestFail (String value, String failCode, SLFFeedbackItemResponseBean bean) {
+        initView();
+        SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));
     }
 }
