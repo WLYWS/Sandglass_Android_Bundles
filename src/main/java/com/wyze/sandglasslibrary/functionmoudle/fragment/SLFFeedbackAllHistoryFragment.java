@@ -68,10 +68,6 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
         this.type = type;
     }
 
-//    public static SLFFeedbackAllHistoryFragment newInstance(String textString) {
-//        SLFFeedbackAllHistoryFragment mFragment = new SLFFeedbackAllHistoryFragment(textString);
-//        return mFragment;
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,7 +77,6 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
         slf_histroy_feedback_list = view.findViewById(R.id.slf_histroy_feedback_list);
         slf_feedback_list_refreshLayout = view.findViewById(R.id.slf_feedback_list_refreshLayout);
         slf_histroy_no_item_linear = view.findViewById(R.id.slf_feedback_list_no_item_linear);
-        //initView();
         initRefreshLayout();
         initRecyclerView();
         return view;
@@ -121,8 +116,6 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
         mLayoutManager = new LinearLayoutManager(getActivity());
         slf_histroy_feedback_list.setLayoutManager(mLayoutManager);
         slf_histroy_feedback_list.setAdapter(adapter);
-        //slf_histroy_feedback_list.setItemAnimator(new DefaultItemAnimator());
-
         slf_histroy_feedback_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

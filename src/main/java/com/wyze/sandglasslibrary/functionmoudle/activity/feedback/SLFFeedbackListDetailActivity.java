@@ -35,7 +35,9 @@ import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLeaveMsgBean;
 import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLogAttrBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCreateFeedbackRepsonseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemResponseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemResponseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
@@ -129,6 +131,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private ExecutorService singleThreadExecutor;
     private String appLogFileName;
     private String firmwareLogFileName;
+    private int currentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,38 +158,22 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化数据
      */
     private void initData() {
+        slfRecode = (SLFRecode) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slfLeaveMsgRecordList = new ArrayList<>();
-        slfLeaveMsgRecordList.clear();
-        for (int i = 0; i < 50; i++) {
-            mediaList = new ArrayList<>();
-            mediaList.clear();
-            if (i == 2) {
-                for (int j = 0; j < 3; j++) {
-                    mediaData = new SLFLeveMsgRecordMoudle("", "video/mp4", "", "", "image/jpg");
-                    mediaList.add(mediaData);
-                }
-            }
-            if (i == 4) {
-                for (int j = 0; j < 4; j++) {
-                    mediaData = new SLFLeveMsgRecordMoudle("", "image/jpeg", "", "", "image/jpg");
-                    mediaList.add(mediaData);
-                }
-            }
-            if (i % 2 == 0) {
-                slfLeaveMsgRecord = new SLFLeaveMsgRecord("what are you doing?", System.currentTimeMillis(), true, mediaList);
-            } else {
-                slfLeaveMsgRecord = new SLFLeaveMsgRecord("hello,I'm worker!Can I help your?", System.currentTimeMillis(), false, null);
-            }
-            slfLeaveMsgRecordList.add(slfLeaveMsgRecord);
-        }
-        slfFeedbackDetailItemBean = new SLFFeedbackDetailItemBean(1, 50, slfLeaveMsgRecordList);
+        getFeedBackDetailList(currentPage);
     }
 
+
+    private void getFeedBackDetailList (int currentPage) {
+        TreeMap map = new TreeMap();
+        map.put("current", currentPage);
+        SLFHttpUtils.getInstance().executeGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}",String.valueOf(slfRecode.getId())), map, SLFFeedbackDetailItemResponseBean.class, this);
+    }
     /**
      * 初始化view
      */
     private void initView() {
-        slfRecode = (SLFRecode) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slf_title_status = findViewById(R.id.slf_feedback_list_item_title_status);
         slf_feedback_id = findViewById(R.id.slf_feedback_list_item_title_id);
         slf_feedback_question_type = findViewById(R.id.slf_feedback_list_item_type);
@@ -223,7 +210,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-        adapter = new SLFFeedbackDetailAdapter(getDatas(0, PAGE_COUNT), getContext(), getDatas(0, PAGE_COUNT).size() > 0 ? true : false);
+        adapter = new SLFFeedbackDetailAdapter(slfLeaveMsgRecordList, getContext(), false);
         mLayoutManager = new LinearLayoutManager(getContext());
         slf_feedback_leave_list.setLayoutManager(mLayoutManager);
         slf_feedback_leave_list.setAdapter(adapter);
@@ -238,7 +225,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                updateRecyclerView(adapter.getRealLastPosition(), adapter.getRealLastPosition() + PAGE_COUNT);
+                                getFeedBackDetailList(currentPage+1);
                             }
                         }, 500);
                     }
@@ -247,7 +234,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                updateRecyclerView(adapter.getRealLastPosition(), adapter.getRealLastPosition() + PAGE_COUNT);
+                                getFeedBackDetailList(currentPage+1);
                             }
                         }, 500);
                     }
@@ -278,24 +265,24 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slfRightTitle.setOnClickListener(this);
     }
 
-    private List<SLFLeaveMsgRecord> getDatas(final int firstIndex, final int lastIndex) {
-        List<SLFLeaveMsgRecord> resList = new ArrayList<>();
-        for (int i = firstIndex; i < lastIndex; i++) {
-            if (i < slfLeaveMsgRecordList.size()) {
-                resList.add(slfLeaveMsgRecordList.get(i));
-            }
-        }
-        return resList;
-    }
-
-    private void updateRecyclerView(int fromIndex, int toIndex) {
-        List<SLFLeaveMsgRecord> newDatas = getDatas(fromIndex, toIndex);
-        if (newDatas.size() > 0) {
-            adapter.updateList(newDatas, true);
-        } else {
-            adapter.updateList(null, false);
-        }
-    }
+//    private List<SLFLeaveMsgRecord> getDatas(final int firstIndex, final int lastIndex) {
+//        List<SLFLeaveMsgRecord> resList = new ArrayList<>();
+//        for (int i = firstIndex; i < lastIndex; i++) {
+//            if (i < slfLeaveMsgRecordList.size()) {
+//                resList.add(slfLeaveMsgRecordList.get(i));
+//            }
+//        }
+//        return resList;
+//    }
+//
+//    private void updateRecyclerView(int fromIndex, int toIndex) {
+//        List<SLFLeaveMsgRecord> newDatas = getDatas(fromIndex, toIndex);
+//        if (newDatas.size() > 0) {
+//            adapter.updateList(newDatas, true);
+//        } else {
+//            adapter.updateList(null, false);
+//        }
+//    }
 
     @Override
     public void onClick(View view) {
@@ -331,7 +318,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     public void onRefresh() {
         slf_feedback_list_detail_refreshLayout.setRefreshing(true);
         adapter.resetDatas();
-        updateRecyclerView(0, PAGE_COUNT);
+        //updateRecyclerView(0, PAGE_COUNT);
+        currentPage = 1;
+        getFeedBackDetailList(currentPage);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -428,7 +417,20 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             hideLoading();
         }else if(type instanceof SLFSendLogRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
+        }else if (type instanceof SLFFeedbackDetailItemResponseBean){
+            showFeedBackAdapter((SLFFeedbackDetailItemResponseBean)type);
         }
+    }
+
+    private void showFeedBackAdapter (SLFFeedbackDetailItemResponseBean bean) {
+        List<SLFLeaveMsgRecord> newDatas = bean.data.getRecods();
+        if (newDatas!=null&&newDatas.size() > 0) {
+            adapter.updateList(newDatas, true);
+        } else {
+            adapter.updateList(null, false);
+        }
+        initView();
+        currentPage++;
     }
 
     @Override
