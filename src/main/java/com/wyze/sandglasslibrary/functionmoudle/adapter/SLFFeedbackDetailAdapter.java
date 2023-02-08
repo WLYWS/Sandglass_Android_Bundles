@@ -2,7 +2,6 @@ package com.wyze.sandglasslibrary.functionmoudle.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -22,7 +21,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 

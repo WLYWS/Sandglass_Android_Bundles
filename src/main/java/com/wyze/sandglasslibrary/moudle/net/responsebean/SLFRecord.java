@@ -8,7 +8,7 @@ package com.wyze.sandglasslibrary.moudle.net.responsebean;
 import java.io.Serializable;
 
 /**问题记录模型*/
-public class SLFRecode implements Serializable {
+public class SLFRecord implements Serializable {
     /**反馈id*/
     private long id;
     /**deviceId*/
@@ -32,7 +32,7 @@ public class SLFRecode implements Serializable {
     /**是否查看了新消息 0=未读，1=读了*/
     private int read;
 
-    public SLFRecode(long id,String deviceId,String deviceModel,String serviceTypeText,String categoryText,String subCategoryText,String content,long lastReplyTs,int status,int sendLog,int read){
+    public SLFRecord(long id, String deviceId, String deviceModel, String serviceTypeText, String categoryText, String subCategoryText, String content, long lastReplyTs, int status, int sendLog, int read){
         this.id = id;
         this.deviceId = deviceId;
         this.deviceModel = deviceModel;
@@ -136,7 +136,7 @@ public class SLFRecode implements Serializable {
 
     @Override
     public String toString ( ) {
-        return "SLFRecode{" +
+        return "SLFRecord{" +
                 "id=" + id +
                 ", deviceId='" + deviceId + '\'' +
                 ", deviceModel='" + deviceModel + '\'' +

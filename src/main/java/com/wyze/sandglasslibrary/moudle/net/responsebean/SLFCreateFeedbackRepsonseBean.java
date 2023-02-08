@@ -5,13 +5,13 @@ package com.wyze.sandglasslibrary.moudle.net.responsebean;
  */
 public class SLFCreateFeedbackRepsonseBean extends SLFResponseBaseBean {
     public int data;
-    public String tid;
+    public String instance_id;
 
     @Override
     public String toString ( ) {
         return "SLFCreateFeedbackRepsonseBean{" +
                 "data=" + data +
-                ", tid='" + tid + '\'' +
+                ", instance_id='" + instance_id + '\'' +
                 ", code=" + code +
                 ", message='" + message + '\'' +
                 '}';

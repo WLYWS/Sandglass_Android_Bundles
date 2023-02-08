@@ -63,7 +63,5 @@ public class SLFFeedbackListActivity extends SLFBaseActivity {
         viewPager.setOffscreenPageLimit(2);
 
         tabLayout.setViewPager(viewPager, nameList);
-
-
     }
 }

@@ -9,13 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,14 +18,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
-import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchResponseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemResponseBean;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.wyze.sandglasslibrary.net.SLFApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestConstants;
@@ -52,9 +44,9 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
     private SLFFeedbackItemBean slfFeedbackItemBean;
     private LinearLayout slf_histroy_no_item_linear;
 
-    private List<SLFRecode> recodeList = new ArrayList <>();
+    private List<SLFRecord> recodeList = new ArrayList <>();
 
-    private SLFRecode slfRecode;
+    private SLFRecord slfRecode;
 
     private int lastVisibleItem = 0;
     private final int PAGE_COUNT = 10;
@@ -63,6 +55,10 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
     private int current_page = 1;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean isInitData = false;
+
+    public SLFFeedbackAllHistoryFragment(){
+
+    }
 
     public SLFFeedbackAllHistoryFragment(int type) {
         this.type = type;
@@ -191,7 +187,7 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
 
     @Override
     public void onRequestSuccess (String result, SLFFeedbackItemResponseBean bean) {
-        List<SLFRecode> newDatas = bean.data.getRecods();
+        List<SLFRecord> newDatas = bean.data.getRecods();
         if (newDatas!=null&&newDatas.size() > 0) {
             adapter.updateList(newDatas, true);
         } else {

@@ -13,9 +13,9 @@ public class SLFFeedbackItemBean{
     /**总条数*/
     private int total;
     /**问题记录列表*/
-    private List<SLFRecode> records;
+    private List<SLFRecord> records;
 
-    public SLFFeedbackItemBean(int pages,int total,List<SLFRecode> records){
+    public SLFFeedbackItemBean(int pages,int total,List<SLFRecord> records){
         this.pages = pages;
         this.total = total;
         this.records = records;
@@ -37,11 +37,11 @@ public class SLFFeedbackItemBean{
         this.total = total;
     }
 
-    public List<SLFRecode> getRecods() {
+    public List<SLFRecord> getRecods() {
         return records;
     }
 
-    public void setRecods(List<SLFRecode> recods) {
+    public void setRecods(List<SLFRecord> recods) {
         this.records = recods;
     }
 

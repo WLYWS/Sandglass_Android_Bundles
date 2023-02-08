@@ -1164,10 +1164,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,9);
-            /**分配前六个链接给图片和视频上传*/
-            for (int i = 0; i < 6; i++) {
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                SLFLogUtil.d("videocompress", "uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
+            if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
+                /**分配前六个链接给图片和视频上传*/
+                for (int i = 0; i < 6; i++) {
+                    SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                    SLFLogUtil.d("videocompress", "uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
+                }
             }
         } else if (type instanceof String) {
             String code = (String) type;

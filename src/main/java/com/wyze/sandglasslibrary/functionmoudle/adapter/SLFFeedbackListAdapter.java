@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wyze.sandglasslibrary.R;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -28,7 +27,7 @@ import java.util.List;
  */
 
 public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<SLFRecode> datas;
+    private List<SLFRecord> datas;
     private Context context;
     private int normalType = 0;
     private int footType = 1;
@@ -38,7 +37,7 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
 
-    public SLFFeedbackListAdapter (List <SLFRecode> datas, FragmentActivity context, boolean hasMore) {
+    public SLFFeedbackListAdapter (List <SLFRecord> datas, FragmentActivity context, boolean hasMore) {
         this.datas = datas;
         this.hasMore = hasMore;
         this.context = context;
@@ -119,7 +118,7 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    public void updateList(List<SLFRecode> newDatas, boolean hasMore) {
+    public void updateList(List<SLFRecord> newDatas, boolean hasMore) {
         if (newDatas != null) {
             datas.addAll(newDatas);
         }

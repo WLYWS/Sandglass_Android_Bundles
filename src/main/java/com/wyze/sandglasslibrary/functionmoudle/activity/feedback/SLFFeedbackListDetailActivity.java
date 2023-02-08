@@ -8,38 +8,27 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
 
-import com.flyco.tablayout.SlidingTabLayout;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
-import com.wyze.sandglasslibrary.bean.SLFUserCenter;
 import com.wyze.sandglasslibrary.commonapi.SLFApi;
 import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFeedbackDetailAdapter;
-import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
-import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFragmentAdapter;
-import com.wyze.sandglasslibrary.functionmoudle.fragment.SLFFeedbackAllHistoryFragment;
 import com.wyze.sandglasslibrary.interf.SLFUploadCompleteCallback;
-import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLeaveMsgBean;
 import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLogAttrBean;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCreateFeedbackRepsonseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemBean;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecode;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFSendLogRepsonseBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecord;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFSendLeaveMsgRepsonseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.net.SLFApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -95,7 +84,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     /**
      * 传过来的反馈对象
      */
-    private SLFRecode slfRecode;//记录对象
+    private SLFRecord slfRecode;//记录对象
     /**
      * 状态栏文字
      */
@@ -186,7 +175,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化view
      */
     private void initView() {
-        slfRecode = (SLFRecode) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
+        slfRecode = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slf_title_status = findViewById(R.id.slf_feedback_list_item_title_status);
         slf_feedback_id = findViewById(R.id.slf_feedback_list_item_title_id);
         slf_feedback_question_type = findViewById(R.id.slf_feedback_list_item_type);
@@ -306,7 +295,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             //sumbitLogFiles();
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl);
+                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
             }
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
@@ -324,6 +313,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     private void gotoContinueLeaveActivity() {
         Intent in = new Intent(SLFFeedbackListDetailActivity.this, SLFContinueLeaveMsgActivity.class);
+        in.putExtra(SLFConstants.RECORD_DATA,slfRecode);
         startActivity(in);
     }
 
@@ -390,7 +380,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      */
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
-        map.put("num", 1);
+        map.put("num", 3);
         showLoading();
         SLFHttpUtils.getInstance().executeGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
@@ -412,25 +402,28 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     @Override
     public void onRequestSuccess(String result, T type) {
+        hideLoading();
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess::feedbackDetail::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,2);
-            /**分配3个链接给log上传*/
-            for (int i = 0; i < 2; i++) {
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                SLFLogUtil.d(TAG, "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(i));
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,3);
+            if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
+                /**分配3个链接给log上传*/
+                for (int i = 0; i < 3; i++) {
+                    SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                    SLFLogUtil.d(TAG, "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(i));
+                }
             }
         }else if(type instanceof String){
             String code = (String) type;
             SLFLogUtil.e(TAG, "requestScucess::feedbackDetail：:Integer::" + ":::type:::" + type);
             if ("0".equals(code)) {
                 SLFLogUtil.d(TAG, "logfile--feedbackDetail---upload---complete");
-                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL+slfRecode.getId()+"/log", getSendLog(), SLFSendLogRepsonseBean.class, this);
+                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL+slfRecode.getId()+"/log", getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
             }
-            hideLoading();
-        }else if(type instanceof SLFSendLogRepsonseBean){
+        }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
         }
+
     }
 
     @Override
@@ -452,7 +445,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             TreeMap<String, Object> map = new TreeMap<>();
             SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();
             /**appLogBean*/
-            logAttrAppBean.setPath(SLFCommonUpload.getListInstance().get(7));
+            logAttrAppBean.setPath(SLFCommonUpload.getListInstance().get(1));
             if (!TextUtils.isEmpty(appLogFileName)) {
                 logAttrAppBean.setFileName(appLogFileName);
             }
@@ -460,7 +453,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             /**firmwareLogBean*/
             SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
 
-            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(8));
+            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(2));
             if (!TextUtils.isEmpty(firmwareLogFileName)) {
                 logAttrAppBean.setFileName(firmwareLogFileName);
             }

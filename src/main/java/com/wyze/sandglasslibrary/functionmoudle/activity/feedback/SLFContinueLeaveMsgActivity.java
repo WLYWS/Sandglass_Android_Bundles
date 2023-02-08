@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
-import com.wyze.sandglasslibrary.bean.SLFUserCenter;
 import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.commonui.SLFScrollView;
 import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
@@ -32,8 +31,9 @@ import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLeaveMsgBean;
-import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLogAttrBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCreateFeedbackRepsonseBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecord;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFSendLeaveMsgRepsonseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
 import com.wyze.sandglasslibrary.net.SLFApiContant;
 import com.wyze.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -42,13 +42,11 @@ import com.wyze.sandglasslibrary.net.SLFHttpUtils;
 import com.wyze.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
-import com.wyze.sandglasslibrary.utils.SLFCompressUtil;
 import com.wyze.sandglasslibrary.utils.SLFFastClickUtils;
 import com.wyze.sandglasslibrary.utils.SLFPermissionManager;
 import com.wyze.sandglasslibrary.utils.SLFPhotoSelectorUtils;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.SLFStringFormatUtil;
-import com.wyze.sandglasslibrary.utils.SLFViewUtil;
 import com.wyze.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -61,9 +59,6 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Greated by yangjie
@@ -149,6 +144,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private ExecutorService singleUploadVideoExecutor;
     private boolean imageSuccessed;
     boolean hasUploadingFile = false;
+    private SLFRecord slfRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +197,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfEditProblem.addTextChangedListener(this);
         slf_send_btn.setOnClickListener(this);
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
+        slfRecord = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
     }
 
     /**
@@ -399,7 +396,23 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         if (view.getId() == R.id.slf_iv_back) {
             finish();
         } else if (view.getId() == R.id.slf_continue_leave_send) {
-            //TODO 请求发送的接口
+            for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
+                if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                    hasUploadingFile = true;
+                } else {
+                    hasUploadingFile = false;
+                }
+            }
+            if (!hasUploadingFile) {
+                if(slfRecord!=null&&!TextUtils.isEmpty(slfRecord.getContent())) {
+                    SLFToastUtil.showLoading(SLFContinueLeaveMsgActivity.this);
+                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL + slfRecord.getId() + "/history", getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
+                }else{
+                    showCenterToast("data is error");
+                }
+            } else {
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_submit_if_uploading));
+            }
         }
     }
 
@@ -468,17 +481,20 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess:::contiuneLeave::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,6);
-            /**分配六个链接给图片和视频上传*/
-            for (int i = 0; i < 6; i++) {
-                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                SLFLogUtil.d("videocompress", "uploadPath--all-contiuneLeave---:::" + SLFCommonUpload.getListInstance().get(i));
+            if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
+                /**分配六个链接给图片和视频上传*/
+                for (int i = 0; i < 6; i++) {
+                    SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                    SLFLogUtil.d("videocompress", "uploadPath--all-contiuneLeave---:::" + SLFCommonUpload.getListInstance().get(i));
+                }
             }
         } else if (type instanceof String) {
             String code = (String) type;
             SLFLogUtil.e(TAG, "requestScucess::contiuneLeave：:Integer::" + ":::type:::" + type);
             resultUploadImageOrVideo(code);
-        } else if (type instanceof SLFCreateFeedbackRepsonseBean) {
-            SLFLogUtil.d("yj", "createFeedback---contiuneLeave--success:" + ((SLFCreateFeedbackRepsonseBean) type).data);
+        } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
+            SLFLogUtil.d("yj", "createFeedback---contiuneLeave--success:" + ((SLFSendLeaveMsgRepsonseBean) type));
+            showCenterToast("成功");
         }
         hideLoading();
     }
@@ -496,7 +512,6 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             }
             slfaddAttachAdapter.notifyDataSetChanged();
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
-
         } else {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
@@ -532,7 +547,6 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SLFEventCompressVideo event) {
-
         SLFLogUtil.d("videocompress", "continueleave:::onevent----compelete");
         singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
         singleUploadVideoExecutor.execute(new Runnable() {
@@ -579,6 +593,34 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 }
             }
         }
+    }
+
+    /**创建send对象*/
+    private TreeMap<String, Object> getSendHistory() {
+        ArrayList<SLFLeaveMsgBean> attrList = new ArrayList<>();
+        TreeMap<String, Object> map = new TreeMap<>();
+        map.put("content", slfEditProblem.getText().toString().trim());
+        if (slfMediaDataList.size() - 1 > 0) {
+            for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
+                SLFLeaveMsgBean slfLeaveMsgBean = new SLFLeaveMsgBean();
+                slfLeaveMsgBean.setPath(slfMediaDataList.get(i).getUploadPath());
+                slfLeaveMsgBean.setThumbnailPath(slfMediaDataList.get(i).getUploadThumPath());
+                slfLeaveMsgBean.setFileName(slfMediaDataList.get(i).getFileName());
+                slfLeaveMsgBean.setThumbnailContentType("image/png");
+                if (slfMediaDataList.get(i).getMimeType().contains("video")) {
+                    slfLeaveMsgBean.setContentType("video/mp4");
+                } else if (slfMediaDataList.get(i).getMimeType().contains("png")) {
+                    slfLeaveMsgBean.setContentType("image/png");
+                } else if (slfMediaDataList.get(i).getMimeType().contains("jpg")) {
+                    slfLeaveMsgBean.setContentType("image/jpg");
+                } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
+                    slfLeaveMsgBean.setContentType("image/jpeg");
+                }
+                attrList.add(slfLeaveMsgBean);
+            }
+            map.put("attrList", attrList);
+        }
+        return map;
     }
 
 }
