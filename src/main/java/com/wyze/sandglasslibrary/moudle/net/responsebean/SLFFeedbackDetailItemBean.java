@@ -13,12 +13,12 @@ public class SLFFeedbackDetailItemBean {
     /**总条数*/
     private int total;
     /**问题记录列表*/
-    private List<SLFLeaveMsgRecord> recods;
+    private List<SLFLeaveMsgRecord> records;
 
-    public SLFFeedbackDetailItemBean(int pages, int total, List<SLFLeaveMsgRecord> recods){
+    public SLFFeedbackDetailItemBean(int pages, int total, List<SLFLeaveMsgRecord> records){
         this.pages = pages;
         this.total = total;
-        this.recods = recods;
+        this.records = records;
     }
 
     public int getPages() {
@@ -38,11 +38,11 @@ public class SLFFeedbackDetailItemBean {
     }
 
     public List<SLFLeaveMsgRecord> getRecods() {
-        return recods;
+        return records;
     }
 
-    public void setRecods(List<SLFLeaveMsgRecord> recods) {
-        this.recods = recods;
+    public void setRecods(List<SLFLeaveMsgRecord> records) {
+        this.records = records;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SLFFeedbackDetailItemBean {
         return "SLFFeedbackItemBean{" +
                 "pages=" + pages +
                 ", total='" + total + '\'' +
-                ", recods='" + recods + '\'' +
+                ", recods='" + records + '\'' +
                 '}';
     }
 }
