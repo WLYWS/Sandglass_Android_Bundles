@@ -58,6 +58,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".functionmoudle.activity.feedback.SLFContinueLeaveMsgActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".functionmoudle.activity.feedback.SLFTakePhotoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

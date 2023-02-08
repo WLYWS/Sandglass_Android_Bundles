@@ -62,6 +62,8 @@
     <string name="slf_feedback_list_item_id">Feedback ID: %1$d</string>
     <string name="slf_feedback_list_leave_message_bottom_text">Continue to leave a message</string>
     <string name="slf_feedback_list_leave_message_title_text">Details</string>
+    <string name="slf_feedback_list_continue_leave_message_bottom_text">Send</string>
+    <string name="slf_feedback_list_send_log">Sent successfully.</string>
     <string name="slf_camera_mode_photo">PHOTO</string>
     <string name="slf_camera_mode_video">VIDEO</string>
 

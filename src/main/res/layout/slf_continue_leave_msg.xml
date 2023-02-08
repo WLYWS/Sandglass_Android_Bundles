@@ -1,0 +1,119 @@
+<com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/slf_detail_header_bg_color"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/slf_all_common_title" />
+
+    <com.wyze.sandglasslibrary.commonui.SLFScrollView
+        android:id="@+id/slf_continue_leave_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/slf_title_bar"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/slf_continue_leave_descripe_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/slf_feedback_problem_description_title"
+                android:textColor="@color/slf_feedback_question_type_title"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/slf_continue_leave_opinion_textnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="36dp"
+                android:gravity="center"
+                android:text="@string/slf_feedback_font_count"
+                android:textColor="@color/slf_feedback_question_type_title"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/slf_continue_leave_relative"
+                android:layout_width="match_parent"
+                android:layout_height="267dp"
+                android:layout_below="@id/slf_continue_leave_descripe_title"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/slf_feedback_page_child_bg">
+
+                <EditText
+                    android:id="@+id/slf_continue_leave_question_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|top"
+                    android:hint="@string/slf_feedback_problem_description"
+                    android:inputType="textVisiblePassword|textMultiLine"
+                    android:maxLength="1000"
+                    android:padding="16dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/slf_feedback_page_child_text"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/slf_continue_leave_edit_line_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/slf_continue_leave_question_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/slf_feedback_page_edit_line" />
+
+                <LinearLayout
+                    android:id="@+id/slf_leave_msg_photo_grid_img_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/slf_continue_leave_edit_line_view"
+                    android:layout_margin="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <GridView
+                        android:id="@+id/slf_continue_leave_gv_add_attach"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:numColumns="5"
+                        android:stretchMode="columnWidth" />
+
+                    <include
+                        layout="@layout/slf_add_img_layout"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </com.wyze.sandglasslibrary.commonui.SLFScrollView>
+    <Button
+        android:id="@+id/slf_continue_leave_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/slf_feedback_page_child_bg"
+        android:gravity="center"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:text="@string/slf_feedback_list_continue_leave_message_bottom_text"
+        android:textAllCaps="false"
+        android:textColor="@color/slf_feedback_question_type_title" />
+</com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout>

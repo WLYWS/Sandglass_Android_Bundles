@@ -177,15 +177,15 @@
                     android:id="@+id/question_content"
                     android:layout_width="match_parent"
                     android:layout_height="175dp"
-                    android:inputType="textVisiblePassword|textMultiLine"
                     android:background="@android:color/transparent"
                     android:gravity="left|top"
-                    android:maxLength="1000"
                     android:hint="@string/slf_feedback_problem_description"
+                    android:inputType="textVisiblePassword|textMultiLine"
+                    android:maxLength="1000"
                     android:padding="16dp"
-                    android:textSize="14sp"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/slf_feedback_page_child_text" />
+                    android:textColorHint="@color/slf_feedback_page_child_text"
+                    android:textSize="14sp" />
 
                 <View
                     android:id="@+id/edit_line_view"
@@ -212,14 +212,6 @@
                         android:layout_weight="1"
                         android:numColumns="5"
                         android:stretchMode="columnWidth" />
-
-                    <!--            <ImageView-->
-                    <!--                android:id="@+id/slf_img_add_attach"-->
-                    <!--                android:layout_width="60dp"-->
-                    <!--                android:layout_height="60dp"-->
-                    <!--                android:layout_margin="17dp"-->
-                    <!--                android:src="@drawable/slf_addimg"-->
-                    <!--                android:visibility="gone" />-->
                     <include layout="@layout/slf_add_img_layout"
                               android:visibility="gone"/>
 

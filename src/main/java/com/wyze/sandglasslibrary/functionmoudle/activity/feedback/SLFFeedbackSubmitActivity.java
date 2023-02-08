@@ -151,10 +151,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private GridView slfPhotoSelector;
     /**
-     * 图片选择统计控件
-     */
-    private TextView slfPhotoCount;
-    /**
      * 图片路径集合
      */
     private ArrayList<SLFMediaData> picPathLists;
@@ -252,22 +248,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     private SLFCategoriesResponseBean slfCategoriesResponseBean;
 
-    private boolean imageSuccess0;
-    private boolean imageThumbleSuccess0;
-    private boolean imageSuccess1;
-    private boolean imageThumbleSuccess1;
-    private boolean imageSuccess2;
-    private boolean imageThumbleSuccess2;
 
     private boolean imageSuccessed;
-    private boolean imageThumbleSuccessed;
 
     private String appLogFileName;
     private String firmwareLogFileName;
     private Drawable mClearDrawable;
     private Drawable drawableRight;
-
-    private long pic_thumid_long;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -300,7 +287,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfProblemOverviewSpinner = findViewById(R.id.spinner_problem_overview);
         slfPhotoSelector = findViewById(R.id.slf_gv_add_attach);
         slfFontCount = findViewById(R.id.slf_tv_opinion_textnum);
-        slfPhotoCount = findViewById(R.id.slf_photo_count);
         slfSendLogCheck = findViewById(R.id.slf_upload_log);
         slfSumbmit = findViewById(R.id.slf_submit_feedback);
         slfEmailEdit = findViewById(R.id.slf_email_eidt);
@@ -1151,19 +1137,21 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestNetFail(Object type) {
         SLFLogUtil.e(TAG, "requestNetFail");
         hideLoading();
-        if (type instanceof Integer) {
-            int code = (int) type;
-            if (code == 6) {
+        if (type instanceof String) {
+            String code = (String) type;
+            if ("6".equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             } else {
-                if (code >= 1000) {
-                    slfMediaDataList.get(code - 1000).setUploadStatus(SLFConstants.UPLOADFAIL);
-                } else {
-                    slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
+                for(int i=0;i<slfMediaDataList.size()-1;i++){
+                    if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))){
+                        slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADFAIL);
+                    }
                 }
                 slfaddAttachAdapter.notifyDataSetChanged();
-                showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
             }
+        }else{
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
         }
     }
 
@@ -1184,7 +1172,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (type instanceof String) {
             String code = (String) type;
             SLFLogUtil.e(TAG, "requestScucess::Integer::" + ":::type:::" + type);
-            if (code.equals("6")) {
+            if ("6".equals(code)) {
                 SLFLogUtil.d(TAG, "logfile-----upload---complete");
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
             } else {
@@ -1201,19 +1189,21 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestFail(String value, String failCode, Object type) {
         SLFLogUtil.e(TAG, "requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
-        if (type instanceof Integer) {
-            int code = (int) type;
-            if (code == 6) {
+        if (type instanceof String) {
+            String code = (String) type;
+            if ("6".equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             } else {
-                if (code >= 1000) {
-                    slfMediaDataList.get(code - 1000).setUploadStatus(SLFConstants.UPLOADFAIL);
-                } else {
-                    slfMediaDataList.get(code).setUploadStatus(SLFConstants.UPLOADFAIL);
+                for(int i=0;i<slfMediaDataList.size()-1;i++){
+                    if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))){
+                        slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADFAIL);
+                    }
                 }
                 slfaddAttachAdapter.notifyDataSetChanged();
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
             }
+        }else{
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
 
     }
@@ -1223,32 +1213,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if(code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
                 imageSuccessed = true;
                 resultCodeMethod(code, imageSuccessed);
-//                if (i == 0) {
-//                    imageSuccess0 = true;
-//                } else if (i == 1) {
-//                    imageSuccess1 = true;
-//                } else if (i == 2) {
-//                    imageSuccess2 = true;
-//                }
-
             }
-//            }else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")){
-//                if(i==0) {
-//                    imageThumbleSuccess0 = true;
-//                }else if(i==1){
-//                    imageThumbleSuccess1 = true;
-//                }else if(i==2){
-//                    imageThumbleSuccess2 = true;
-//                }
-//            }
         }
-//        if (imageSuccess0 && imageThumbleSuccess0) {
-//            resultCodeMethod(code, imageSuccess0);
-//        } else if (imageSuccess1 && imageThumbleSuccess1) {
-//            resultCodeMethod(code, imageSuccess1);
-//        } else if (imageSuccess2 && imageThumbleSuccess2) {
-//            resultCodeMethod(code, imageSuccess2);
-//        }
     }
 
     private void resultCodeMethod(String code, boolean imageSuccess) {
@@ -1262,15 +1228,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     imageSuccess = false;
                 }
             }
-//            else if(code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")) {
-//                if (slfMediaDataList.get(i).getUploadThumPath() != null) {
-//                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-//                    slfaddAttachAdapter.notifyDataSetChanged();
-//                    imageThumbleSuccess = false;
-//                }else {
-//                    imageThumbleSuccess = false;
-//                }
-//            }
         }
     }
 
