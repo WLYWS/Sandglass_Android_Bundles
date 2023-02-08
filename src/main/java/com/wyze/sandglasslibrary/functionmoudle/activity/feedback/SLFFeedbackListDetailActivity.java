@@ -1,5 +1,6 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -120,6 +125,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private String appLogFileName;
     private String firmwareLogFileName;
     private int currentPage = 1;
+    private List<SLFLeaveMsgRecord> newDatas;
+    private int REQUEST_CODE = 0;
+    private ActivityResultLauncher<Intent> intentActivityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +139,17 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         initView();
         initRefreshLayout();
         initRecyclerView();
+        intentActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                //此处是跳转的result回调方法
+                if (result.getData() != null && result.getResultCode() == Activity.RESULT_OK) {
+                    showToast(result.getData()+"+");
+                } else {
+                    showToast("跳转回来");
+                }
+            }
+        });
     }
 
     /**
@@ -162,7 +181,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化view
      */
     private void initView() {
-        slfRecode = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slf_title_status = findViewById(R.id.slf_feedback_list_item_title_status);
         slf_feedback_id = findViewById(R.id.slf_feedback_list_item_title_id);
         slf_feedback_question_type = findViewById(R.id.slf_feedback_list_item_type);
@@ -173,7 +191,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if (slfRecode.getStatus() == 0) {
                 slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_to_be_processed));
                 slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_warning_color));
-            } else if (slfRecode.getStatus() == 1) {
+            } else if (slfRecode.getStatus() == 1||slfRecode.getStatus() == 2) {
                 slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_in_progress));
                 slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
             } else if (slfRecode.getStatus() == 4) {
@@ -190,16 +208,25 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 slfRightTitle.setVisibility(View.GONE);
             }
             slf_feedback_id.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_list_item_id, slfRecode.getId()));
-            slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText() + "/" + slfRecode.getSubCategoryText());
+            if(TextUtils.isEmpty(slfRecode.getServiceTypeText())&&TextUtils.isEmpty(slfRecode.getCategoryText())&&TextUtils.isEmpty(slfRecode.getSubCategoryText())){
+                slf_feedback_question_type.setText("");
+            }else if(!TextUtils.isEmpty(slfRecode.getServiceTypeText())&&!TextUtils.isEmpty(slfRecode.getCategoryText())&&TextUtils.isEmpty(slfRecode.getSubCategoryText())){
+                slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText());
+            }else if(!TextUtils.isEmpty(slfRecode.getServiceTypeText())&&TextUtils.isEmpty(slfRecode.getCategoryText())&&TextUtils.isEmpty(slfRecode.getSubCategoryText())){
+                slf_feedback_question_type.setText(slfRecode.getServiceTypeText());
+            } else {
+                slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText() + "/" + slfRecode.getSubCategoryText());
+            }
         }
         slf_feedback_bottom_relative.setOnClickListener(this);
+
     }
 
     /**
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-        adapter = new SLFFeedbackDetailAdapter(slfLeaveMsgRecordList, getContext(), false);
+        adapter = new SLFFeedbackDetailAdapter(slfLeaveMsgRecordList, getContext(), (newDatas!=null&&newDatas.size()>0)?true:false);
         mLayoutManager = new LinearLayoutManager(getContext());
         slf_feedback_leave_list.setLayoutManager(mLayoutManager);
         slf_feedback_leave_list.setAdapter(adapter);
@@ -299,9 +326,10 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     }
 
     private void gotoContinueLeaveActivity() {
-        Intent in = new Intent(SLFFeedbackListDetailActivity.this, SLFContinueLeaveMsgActivity.class);
-        in.putExtra(SLFConstants.RECORD_DATA,slfRecode);
-        startActivity(in);
+
+        Intent intent = new Intent(SLFFeedbackListDetailActivity.this, SLFContinueLeaveMsgActivity.class);
+        intent.putExtra(SLFConstants.RECORD_DATA,slfRecode);
+        intentActivityResultLauncher.launch(intent);
     }
 
     @Override
@@ -407,7 +435,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             SLFLogUtil.e(TAG, "requestScucess::feedbackDetail：:Integer::" + ":::type:::" + type);
             if ("0".equals(code)) {
                 SLFLogUtil.d(TAG, "logfile--feedbackDetail---upload---complete");
-                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL+slfRecode.getId()+"/log", getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
+                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL.replace("{id}",String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
             }
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
@@ -418,13 +446,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     }
 
     private void showFeedBackAdapter (SLFFeedbackDetailItemResponseBean bean) {
-        List<SLFLeaveMsgRecord> newDatas = bean.data.getRecods();
+        newDatas = bean.data.getRecods();
         if (newDatas!=null&&newDatas.size() > 0) {
             adapter.updateList(newDatas, true);
         } else {
             adapter.updateList(null, false);
         }
-        initView();
+
         currentPage++;
     }
 
@@ -438,7 +466,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 SLFToastUtil.showCenterSubmitFailText();
             }
         }else{
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
     }
 

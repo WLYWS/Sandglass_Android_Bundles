@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,15 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
             ((NormalHolder) holder).slf_feedback_list_item_date.setText(SLFDateFormatUtils.getDateToMyString(datas.get(position).getLastReplyTs(),SLFDateFormatUtils.MDYT));
             ((NormalHolder) holder).slf_feedback_list_item_content.setText(datas.get(position).getContent());
-            ((NormalHolder) holder).slf_feedback_list_item_bottom_title.setText(datas.get(position).getServiceTypeText()+"/"+datas.get(position).getCategoryText()+"/"+datas.get(position).getSubCategoryText());
+            if(TextUtils.isEmpty(datas.get(position).getServiceTypeText())&&TextUtils.isEmpty(datas.get(position).getCategoryText())&&TextUtils.isEmpty(datas.get(position).getSubCategoryText())){
+                ((NormalHolder) holder).slf_feedback_list_item_bottom_title.setText("");
+            }else if(!TextUtils.isEmpty(datas.get(position).getServiceTypeText())&&!TextUtils.isEmpty(datas.get(position).getCategoryText())&&TextUtils.isEmpty(datas.get(position).getSubCategoryText())){
+                ((NormalHolder) holder).slf_feedback_list_item_bottom_title.setText(datas.get(position).getServiceTypeText()+"/"+datas.get(position).getCategoryText());
+            }else if(!TextUtils.isEmpty(datas.get(position).getServiceTypeText())&&TextUtils.isEmpty(datas.get(position).getCategoryText())&&TextUtils.isEmpty(datas.get(position).getSubCategoryText())){
+                ((NormalHolder) holder).slf_feedback_list_item_bottom_title.setText(datas.get(position).getServiceTypeText());
+            } else {
+                ((NormalHolder) holder).slf_feedback_list_item_bottom_title.setText(datas.get(position).getServiceTypeText()+"/"+datas.get(position).getCategoryText()+"/"+datas.get(position).getSubCategoryText());
+            }
             //通过为条目设置点击事件触发回调
             if (mOnItemClickLitener != null) {
                 ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {

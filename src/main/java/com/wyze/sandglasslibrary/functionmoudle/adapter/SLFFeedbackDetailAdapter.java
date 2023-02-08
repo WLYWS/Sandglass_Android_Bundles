@@ -196,26 +196,29 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content.setText(datas.get(position).getContent());
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(datas.get(position).getReplyTs(),SLFDateFormatUtils.MDYT));
         } else {
-            ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
             if (hasMore == true) {
                 fadeTips = false;
                 if (datas.size() > 0) {
                     //((FootHolder) holder).tips.setText("正在加载更多...");
-                    ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
+                    ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
                 }
             } else {
                 if (datas.size() > 0) {
                     //((FootHolder) holder).tips.setText("没有更多数据了");
-                    ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
+                    ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             //((FootHolder) holder).tips.setVisibility(View.GONE);
-                            ((FootHolder) holder).progressBar.setVisibility(View.GONE);
+                            ((FootHolder) holder).progressBar.clearAnimation();
+                            ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
                             fadeTips = true;
                             hasMore = true;
                         }
                     }, 500);
+                }else{
+                    ((FootHolder) holder).progressBar.clearAnimation();
+                    ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
                 }
             }
         }
@@ -299,9 +302,11 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     class FootHolder extends RecyclerView.ViewHolder {
         private ProgressBar progressBar;
+        private LinearLayout slf_more_loading_linear;
 
         public FootHolder(View itemView) {
             super(itemView);
+            slf_more_loading_linear = itemView.findViewById(R.id.slf_more_loading_linear);
             progressBar = (ProgressBar) itemView.findViewById(R.id.slf_more_loading);
         }
     }

@@ -1,6 +1,7 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -405,8 +406,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             }
             if (!hasUploadingFile) {
                 if(slfRecord!=null&&!TextUtils.isEmpty(slfRecord.getContent())) {
-                    SLFToastUtil.showLoading(SLFContinueLeaveMsgActivity.this);
-                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL + slfRecord.getId() + "/history", getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
+                    showLoading();
+                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL.replace("{id}",String.valueOf(slfRecord.getId())),getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
                 }else{
                     showCenterToast("data is error");
                 }
@@ -478,6 +479,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     @Override
     public void onRequestSuccess(String result, T type) {
+        SLFLogUtil.d(TAG,"type==="+type.getClass().getName().toString());
+        SLFLogUtil.d(TAG,"type==="+(type instanceof SLFSendLeaveMsgRepsonseBean));
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess:::contiuneLeave::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,6);
@@ -488,15 +491,20 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                     SLFLogUtil.d("videocompress", "uploadPath--all-contiuneLeave---:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
+            hideLoading();
         } else if (type instanceof String) {
             String code = (String) type;
             SLFLogUtil.e(TAG, "requestScucess::contiuneLeave：:Integer::" + ":::type:::" + type);
             resultUploadImageOrVideo(code);
+            hideLoading();
         } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
-            SLFLogUtil.d("yj", "createFeedback---contiuneLeave--success:" + ((SLFSendLeaveMsgRepsonseBean) type));
-            showCenterToast("成功");
+            SLFLogUtil.d(TAG, "createFeedback---contiuneLeave--success:" + ((SLFSendLeaveMsgRepsonseBean) type));
+            showCenterToast("我再这里啊啊啊 啊啊啊");
+            setResult(Activity.RESULT_OK);
+            hideLoading();
+            finish();
         }
-        hideLoading();
+
     }
 
     @Override
