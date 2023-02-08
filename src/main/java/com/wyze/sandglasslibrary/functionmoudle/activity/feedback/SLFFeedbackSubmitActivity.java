@@ -1163,7 +1163,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
         } else if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type);
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,9);
             /**分配前六个链接给图片和视频上传*/
             for (int i = 0; i < 6; i++) {
                 SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;

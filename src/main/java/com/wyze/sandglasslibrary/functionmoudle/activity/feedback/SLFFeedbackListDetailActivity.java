@@ -414,7 +414,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     public void onRequestSuccess(String result, T type) {
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess::feedbackDetail::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type);
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,1);
             /**分配1个链接给log上传*/
             SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle = true;
             SLFLogUtil.d("videocompress", "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(0));

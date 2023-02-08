@@ -467,8 +467,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     public void onRequestSuccess(String result, T type) {
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "requestScucess:::contiuneLeave::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type);
-            /**分配前六个链接给图片和视频上传*/
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,6);
+            /**分配六个链接给图片和视频上传*/
             for (int i = 0; i < 6; i++) {
                 SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
                 SLFLogUtil.d("videocompress", "uploadPath--all-contiuneLeave---:::" + SLFCommonUpload.getListInstance().get(i));
