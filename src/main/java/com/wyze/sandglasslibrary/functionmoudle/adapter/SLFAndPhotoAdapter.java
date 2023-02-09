@@ -83,6 +83,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
                             //取消Glide自带的动画
                             .dontAnimate()
                             .into((ImageView) helper.getView(R.id.slf_iv_photo));
+//                    SLFImageUtil.loadImage(getContext(),object.getThumbnailSmallPath(),,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon);
                     helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
                 }
             } else {

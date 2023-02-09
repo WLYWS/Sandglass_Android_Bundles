@@ -11,10 +11,12 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPreviewLeaveMsgPagerAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFPreviewPagerAdapter;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.commonui.SLFPhotoViewPager;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 //import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -25,7 +27,11 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
 
     private ArrayList<SLFMediaData> picPathLists;
 
+    private ArrayList<SLFLeveMsgRecordMoudle> leavePathLists;
+
     private SLFPreviewPagerAdapter mPreviewVpAdapter;
+
+    private SLFPreviewLeaveMsgPagerAdapter mPreViewLeaveMsgAdapter;
 
     private SLFMediaData mediaData;
 
@@ -50,17 +56,24 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
         final TextView re_take = findViewById(R.id.slf_retake);
         img_back.setOnClickListener(v -> finish());
         SLFPhotoViewPager mViewPager = findViewById(R.id.slf_vp_preview);
-
+        leavePathLists = (ArrayList<SLFLeveMsgRecordMoudle>) getIntent().getSerializableExtra("leaveMsg");
         picPathLists = getIntent().getParcelableArrayListExtra("photoPath");
         int position = getIntent().getIntExtra("position",0);
         String from = getIntent().getStringExtra("from");
         mediaData = getIntent().getParcelableExtra("take_photo");
-        mPreviewVpAdapter = new SLFPreviewPagerAdapter(getActivity(), picPathLists);
-        mViewPager.setAdapter(mPreviewVpAdapter);
+        if(picPathLists!=null) {
+            mPreviewVpAdapter = new SLFPreviewPagerAdapter(getActivity(), picPathLists);
+            mViewPager.setAdapter(mPreviewVpAdapter);
+        }else if(leavePathLists!=null){
+            mPreViewLeaveMsgAdapter = new SLFPreviewLeaveMsgPagerAdapter(getActivity(),leavePathLists);
+            mViewPager.setAdapter(mPreViewLeaveMsgAdapter);
+        }
         mViewPager.setCurrentItem(position);
 
         if(picPathLists!=null){
             tvTitle.setText(position+1+"/"+picPathLists.size());
+        }else if(leavePathLists!=null){
+            tvTitle.setText(position+1+"/"+leavePathLists.size());
         }
         final View viewParent = findViewById(R.id.slf_pic_preview_parent);
 
@@ -75,15 +88,15 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
             img_back.setVisibility(View.VISIBLE);
             bottomlayout.setVisibility(View.GONE);
         }
-        mPreviewVpAdapter.setOnClickListener(() -> {
-//            if(titleBar.getVisibility() == View.VISIBLE){
-//                titleBar.setVisibility(View.GONE);
-//                viewParent.setBackgroundColor(getResources().getColor(R.color.black));
-//            }else{
-//                titleBar.setVisibility(View.VISIBLE);
-//                viewParent.setBackgroundColor(getResources().getColor(R.color.transparent));
-//            }
-        });
+//        mPreviewVpAdapter.setOnClickListener(() -> {
+////            if(titleBar.getVisibility() == View.VISIBLE){
+////                titleBar.setVisibility(View.GONE);
+////                viewParent.setBackgroundColor(getResources().getColor(R.color.black));
+////            }else{
+////                titleBar.setVisibility(View.VISIBLE);
+////                viewParent.setBackgroundColor(getResources().getColor(R.color.transparent));
+////            }
+//        });
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -93,8 +106,13 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
             @Override
             public void onPageSelected(int i) {
                 //SLFLogUtil.d(TAG,"feedbackpreview onPageSelected");
-                if(tvTitle.getVisibility() == View.VISIBLE)
-                    tvTitle.setText(i+1+"/"+picPathLists.size());
+                if(picPathLists!=null) {
+                    if (tvTitle.getVisibility() == View.VISIBLE)
+                        tvTitle.setText(i + 1 + "/" + picPathLists.size());
+                }else if(leavePathLists!=null){
+                    if (tvTitle.getVisibility() == View.VISIBLE)
+                        tvTitle.setText(i + 1 + "/" + leavePathLists.size());
+                }
             }
             @Override
             public void onPageScrollStateChanged(int i) {

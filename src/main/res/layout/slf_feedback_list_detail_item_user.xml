@@ -15,7 +15,7 @@
 
     <RelativeLayout
         android:id="@+id/slf_feedback_detail_leave_relatvie"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/slf_feedback_list_detail_user_header_img"
         android:layout_marginRight="10dp"
@@ -24,10 +24,10 @@
 
         <TextView
             android:id="@+id/slf_feedback_detail_question_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="left"
+            android:gravity="right"
             android:paddingLeft="12dp"
             android:paddingTop="12dp"
             android:paddingRight="12dp"
@@ -37,10 +37,13 @@
 
         <LinearLayout
             android:id="@+id/slf_feedback_detail_show_photo_linear"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/slf_feedback_detail_question_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="visible">
@@ -49,10 +52,7 @@
                 android:id="@+id/slf_frist_media_data"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/slf_feedback_add_photo_bg">
 
                 <ImageView
@@ -74,7 +74,7 @@
                 android:id="@+id/slf_second_media_data"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_margin="5dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/slf_feedback_add_photo_bg">
 
                 <ImageView
@@ -96,7 +96,6 @@
                 android:id="@+id/slf_third_media_data"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/slf_feedback_add_photo_bg">
 
                 <ImageView
@@ -120,9 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/slf_feedback_detail_show_photo_linear"
-            android:layout_marginTop="2dp"
             android:paddingLeft="12dp"
             android:paddingBottom="12dp"
+            android:paddingRight="12dp"
             android:text="12/11/2022 7:23 AM"
             android:textColor="@color/slf_detail_card_time_color"
             android:textSize="12sp" />

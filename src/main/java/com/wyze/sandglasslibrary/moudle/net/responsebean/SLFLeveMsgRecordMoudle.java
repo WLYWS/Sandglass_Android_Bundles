@@ -1,10 +1,13 @@
 package com.wyze.sandglasslibrary.moudle.net.responsebean;
+
+import java.io.Serializable;
+
 /**
  * Greated by yangjie
  * describe:反馈留言历史多媒体moudle
  * time:2023/1/31
  */
-public class SLFLeveMsgRecordMoudle {
+public class SLFLeveMsgRecordMoudle implements Serializable {
     /**文件名 waa.png*/
     private String fileName;
     /**文件类型 image/png*/
@@ -15,6 +18,8 @@ public class SLFLeveMsgRecordMoudle {
     private String thumbnailUrl;
     /**缩略图文件类型*/
     private String thumbnailContentType;
+
+    public SLFLeveMsgRecordMoudle(){}
 
     public SLFLeveMsgRecordMoudle(String fileName,String contentType,String url,String thumbnailUrl,String thumbnailContentType){
         this.fileName = fileName;

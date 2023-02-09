@@ -128,6 +128,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private List<SLFLeaveMsgRecord> newDatas;
     private int REQUEST_CODE = 0;
     private ActivityResultLauncher<Intent> intentActivityResultLauncher;
+    private int pages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +145,11 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             public void onActivityResult(ActivityResult result) {
                 //此处是跳转的result回调方法
                 if (result.getData() != null && result.getResultCode() == Activity.RESULT_OK) {
-                    showToast(result.getData()+"+");
+                    SLFLeaveMsgRecord slfLeaveMsgRecord = (SLFLeaveMsgRecord) result.getData().getSerializableExtra(SLFConstants.LEAVE_MSG_DATA);
+                    slfLeaveMsgRecordList.add(slfLeaveMsgRecord);
+                    adapter.notifyDataSetChanged();
                 } else {
-                    showToast("跳转回来");
+                    //showToast("跳转回来");
                 }
             }
         });
@@ -226,7 +229,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-        adapter = new SLFFeedbackDetailAdapter(slfLeaveMsgRecordList, getContext(), (newDatas!=null&&newDatas.size()>0)?true:false);
+        adapter = new SLFFeedbackDetailAdapter(slfLeaveMsgRecordList, getContext());
         mLayoutManager = new LinearLayoutManager(getContext());
         slf_feedback_leave_list.setLayoutManager(mLayoutManager);
         slf_feedback_leave_list.setAdapter(adapter);
@@ -440,6 +443,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
         }else if (type instanceof SLFFeedbackDetailItemResponseBean){
+            pages = ((SLFFeedbackDetailItemResponseBean) type).data.getPages();
             showFeedBackAdapter((SLFFeedbackDetailItemResponseBean)type);
         }
 
@@ -447,13 +451,12 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     private void showFeedBackAdapter (SLFFeedbackDetailItemResponseBean bean) {
         newDatas = bean.data.getRecods();
-        if (newDatas!=null&&newDatas.size() > 0) {
-            adapter.updateList(newDatas, true);
-        } else {
-            adapter.updateList(null, false);
-        }
-
-        currentPage++;
+            if (newDatas != null && newDatas.size() > 0) {
+                adapter.updateList(newDatas, true);
+            } else {
+                adapter.updateList(null, false);
+            }
+                currentPage++;
     }
 
     @Override

@@ -25,14 +25,14 @@ import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.bean.SLFConstants;
 import com.wyze.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.wyze.sandglasslibrary.commonui.SLFScrollView;
-import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.wyze.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.wyze.sandglasslibrary.moudle.net.requestbean.SLFLeaveMsgBean;
-import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFCreateFeedbackRepsonseBean;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
+import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFSendLeaveMsgRepsonseBean;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
@@ -146,6 +146,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private boolean imageSuccessed;
     boolean hasUploadingFile = false;
     private SLFRecord slfRecord;
+    /**多媒体附件*/
+    private List<SLFLeveMsgRecordMoudle> attrlistResponselist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -499,8 +501,10 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             hideLoading();
         } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
             SLFLogUtil.d(TAG, "createFeedback---contiuneLeave--success:" + ((SLFSendLeaveMsgRepsonseBean) type));
-            showCenterToast("我再这里啊啊啊 啊啊啊");
-            setResult(Activity.RESULT_OK);
+            SLFLeaveMsgRecord slfLeaveMsgRecord = new SLFLeaveMsgRecord(slfEditProblem.getText().toString(),System.currentTimeMillis(),true,attrlistResponselist);
+            Intent in = new Intent();
+            in.putExtra(SLFConstants.LEAVE_MSG_DATA,slfLeaveMsgRecord);
+            setResult(Activity.RESULT_OK,in);
             hideLoading();
             finish();
         }
@@ -605,26 +609,37 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     /**创建send对象*/
     private TreeMap<String, Object> getSendHistory() {
-        ArrayList<SLFLeaveMsgBean> attrList = new ArrayList<>();
+        List<SLFLeaveMsgBean> attrList = new ArrayList<>();
+        attrlistResponselist.clear();
         TreeMap<String, Object> map = new TreeMap<>();
         map.put("content", slfEditProblem.getText().toString().trim());
         if (slfMediaDataList.size() - 1 > 0) {
             for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
                 SLFLeaveMsgBean slfLeaveMsgBean = new SLFLeaveMsgBean();
+                SLFLeveMsgRecordMoudle slfLeveMsgRecordMoudle = new SLFLeveMsgRecordMoudle();
                 slfLeaveMsgBean.setPath(slfMediaDataList.get(i).getUploadPath());
+                slfLeveMsgRecordMoudle.setUrl(slfMediaDataList.get(i).getOriginalPath());
                 slfLeaveMsgBean.setThumbnailPath(slfMediaDataList.get(i).getUploadThumPath());
+                slfLeveMsgRecordMoudle.setThumbnailUrl(slfMediaDataList.get(i).getThumbnailSmallPath());
                 slfLeaveMsgBean.setFileName(slfMediaDataList.get(i).getFileName());
+                slfLeveMsgRecordMoudle.setFileName(slfMediaDataList.get(i).getFileName());
                 slfLeaveMsgBean.setThumbnailContentType("image/png");
+                slfLeveMsgRecordMoudle.setThumbnailContentType("image/png");
                 if (slfMediaDataList.get(i).getMimeType().contains("video")) {
                     slfLeaveMsgBean.setContentType("video/mp4");
+                    slfLeveMsgRecordMoudle.setContentType("video/mp4");
                 } else if (slfMediaDataList.get(i).getMimeType().contains("png")) {
                     slfLeaveMsgBean.setContentType("image/png");
+                    slfLeveMsgRecordMoudle.setContentType("image/png");
                 } else if (slfMediaDataList.get(i).getMimeType().contains("jpg")) {
                     slfLeaveMsgBean.setContentType("image/jpg");
+                    slfLeveMsgRecordMoudle.setContentType("image/jpg");
                 } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
                     slfLeaveMsgBean.setContentType("image/jpeg");
+                    slfLeveMsgRecordMoudle.setContentType("image/jpeg");
                 }
                 attrList.add(slfLeaveMsgBean);
+                attrlistResponselist.add(slfLeveMsgRecordMoudle);
             }
             map.put("attrList", attrList);
         }
