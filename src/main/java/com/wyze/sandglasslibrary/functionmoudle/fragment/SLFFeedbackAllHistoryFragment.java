@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 @SuppressLint("ValidFragment")
-public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<SLFFeedbackItemResponseBean> {
+public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
 
     private int type;
 
@@ -168,30 +168,36 @@ public class SLFFeedbackAllHistoryFragment extends Fragment implements SwipeRefr
     private void gotoFeedbackDetail(int position){
         Intent in = new Intent();
         in.setClass(getContext(), SLFFeedbackListDetailActivity.class);
+        if(recodeList.get(position).getRead()==0){
+            recodeList.get(position).setRead(1);
+            adapter.notifyDataSetChanged();
+        }
         in.putExtra(SLFConstants.RECORD_DATA,recodeList.get(position));
         startActivity(in);
     }
 
     @Override
-    public void onRequestNetFail (SLFFeedbackItemResponseBean bean) {
+    public void onRequestNetFail (T bean) {
         initView();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
     }
 
     @Override
-    public void onRequestSuccess (String result, SLFFeedbackItemResponseBean bean) {
-        List<SLFRecord> newDatas = bean.data.getRecods();
-        if (newDatas!=null&&newDatas.size() > 0) {
-            adapter.updateList(newDatas, true);
-        } else {
-            adapter.updateList(null, false);
+    public void onRequestSuccess (String result, T bean) {
+        if(bean instanceof SLFFeedbackItemResponseBean) {
+            List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) bean).data.getRecods();
+            if (newDatas != null && newDatas.size() > 0) {
+                adapter.updateList(newDatas, true);
+            } else {
+                adapter.updateList(null, false);
+            }
+            initView();
+            current_page++;
         }
-        initView();
-        current_page++;
     }
 
     @Override
-    public void onRequestFail (String value, String failCode, SLFFeedbackItemResponseBean bean) {
+    public void onRequestFail (String value, String failCode, T bean) {
         initView();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));
     }

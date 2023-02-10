@@ -28,6 +28,8 @@ import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
+import com.wyze.sandglasslibrary.utils.SLFImageShapes;
+import com.wyze.sandglasslibrary.utils.SLFImageUtil;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -137,14 +139,16 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
                             } else {
                                 //四周都是圆角的圆角矩形图片。
-                                Glide.with(context).load(datas.get(position).getAttrList().get(0).getThumbnailUrl()).apply(
-                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
-                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-                                        .skipMemoryCache(false)
-                                        //取消Glide自带的动画
-                                        .dontAnimate()
-                                        .into((ImageView) ((UserNormalHolder) holder).slf_first_iv_photo);
+//                                Glide.with(context).load(datas.get(position).getAttrList().get(0).getThumbnailUrl()).apply(
+//                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
+//                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+//                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+//                                        .skipMemoryCache(false)
+//                                        //取消Glide自带的动画
+//                                        .dontAnimate()
+//                                        .into((ImageView) ((UserNormalHolder) holder).slf_first_iv_photo);
+                                SLFImageUtil.loadImage(context,datas.get(position).getAttrList().get(0).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_first_iv_photo,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(0).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -159,14 +163,16 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
                             } else {
                                 //四周都是圆角的圆角矩形图片。
-                                Glide.with(context).load(datas.get(position).getAttrList().get(1).getThumbnailUrl()).apply(
-                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
-                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-                                        .skipMemoryCache(false)
-                                        //取消Glide自带的动画
-                                        .dontAnimate()
-                                        .into((ImageView) ((UserNormalHolder) holder).slf_second_iv_photo);
+//                                Glide.with(context).load(datas.get(position).getAttrList().get(1).getThumbnailUrl()).apply(
+//                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
+//                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+//                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+//                                        .skipMemoryCache(false)
+//                                        //取消Glide自带的动画
+//                                        .dontAnimate()
+//                                        .into((ImageView) ((UserNormalHolder) holder).slf_second_iv_photo);
+                                SLFImageUtil.loadImage(context,datas.get(position).getAttrList().get(1).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_second_iv_photo,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -181,14 +187,16 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
                             } else {
                                 //四周都是圆角的圆角矩形图片。
-                                Glide.with(context).load(datas.get(position).getAttrList().get(2).getThumbnailUrl()).apply(
-                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
-                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-                                        .skipMemoryCache(false)
-                                        //取消Glide自带的动画
-                                        .dontAnimate()
-                                        .into((ImageView) ((UserNormalHolder) holder).slf_third_iv_photo);
+//                                Glide.with(context).load(datas.get(position).getAttrList().get(2).getThumbnailUrl()).apply(
+//                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
+//                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+//                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+//                                        .skipMemoryCache(false)
+//                                        //取消Glide自带的动画
+//                                        .dontAnimate()
+//                                        .into((ImageView) ((UserNormalHolder) holder).slf_third_iv_photo);
+                                SLFImageUtil.loadImage(context,datas.get(position).getAttrList().get(2).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_third_iv_photo,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override

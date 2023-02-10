@@ -1,13 +1,10 @@
 package com.wyze.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
@@ -15,9 +12,7 @@ import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseActivity;
 import com.wyze.sandglasslibrary.functionmoudle.adapter.SLFFragmentAdapter;
 import com.wyze.sandglasslibrary.functionmoudle.fragment.SLFFeedbackAllHistoryFragment;
-import com.wyze.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistoryFragment;
 import com.wyze.sandglasslibrary.uiutils.SLFStatusBarColorChange;
-import com.wyze.sandglasslibrary.utils.SLFCommonUtils;
 import com.wyze.sandglasslibrary.utils.SLFResourceUtils;
 
 /**

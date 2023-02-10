@@ -65,6 +65,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
         if (object.getUploadStatus().equals(SLFConstants.UPLOADING)) {
             helper.setVisible(R.id.slf_progress, true);
             helper.setVisible(R.id.slf_iv_delete, true);
+            helper.setImageResource(R.id.slf_iv_photo, R.drawable.slf_photo_adapter_defult_icon);
         } else {
             helper.getView(R.id.slf_progress).clearAnimation();
             helper.setVisible(R.id.slf_progress, false);
@@ -75,15 +76,16 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
 
                 } else {
                     //四周都是圆角的圆角矩形图片。
-                    Glide.with(mContext).load(object.getThumbnailSmallPath()).apply(
-                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
-                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-                            //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-                            .skipMemoryCache(false)
-                            //取消Glide自带的动画
-                            .dontAnimate()
-                            .into((ImageView) helper.getView(R.id.slf_iv_photo));
-//                    SLFImageUtil.loadImage(getContext(),object.getThumbnailSmallPath(),,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon);
+//                    Glide.with(mContext).load(object.getThumbnailSmallPath()).apply(
+//                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
+//                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
+//                            //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+//                            .skipMemoryCache(false)
+//                            //取消Glide自带的动画
+//                            .dontAnimate()
+//                            .into((ImageView) helper.getView(R.id.slf_iv_photo));
+                    SLFImageUtil.loadImage(getContext(),object.getThumbnailSmallPath(),(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                            ,SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                     helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
                 }
             } else {
