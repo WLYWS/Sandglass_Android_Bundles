@@ -98,6 +98,15 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (datas.size() > 0) {
                     //((FootHolder) holder).tips.setText("正在加载更多...");
                     ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //((FootHolder) holder).tips.setVisibility(View.GONE);
+                            ((FootHolder) holder).progressBar.setVisibility(View.GONE);
+                            fadeTips = true;
+                            hasMore = true;
+                        }
+                    }, 500);
                 }
             } else {
                 if (datas.size() > 0) {

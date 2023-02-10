@@ -1,19 +1,28 @@
 package com.wyze.sandglasslibrary.functionmoudle.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.wyze.sandglasslibrary.R;
+import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 import com.wyze.sandglasslibrary.interf.SLFIPhotoView;
 import com.wyze.sandglasslibrary.moudle.SLFMediaData;
 import com.wyze.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
@@ -21,6 +30,7 @@ import com.wyze.sandglasslibrary.uiutils.SLFPhotoViewAttacher;
 import com.wyze.sandglasslibrary.uiutils.SLFPhotoViewImpl;
 import com.wyze.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.wyze.sandglasslibrary.utils.SLFImageUtil;
+import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 
@@ -59,12 +69,26 @@ public class SLFPreviewLeaveMsgPagerAdapter extends PagerAdapter {
             RelativeLayout imgTub = itemView.findViewById(R.id.slf_previewView_rl_parent);
             ImageView videoThub = itemView.findViewById(R.id.slf_iv_photo);
             ImageView playVideo = itemView.findViewById(R.id.slf_iv_video);
-            TextView durningText = itemView.findViewById(R.id.slf_tv_video_duration);
+            FrameLayout slf_pre_progress = itemView.findViewById(R.id.slf_pre_progress);
             videoView.setVisibility(View.GONE);
             imgTub.setVisibility(View.VISIBLE);
             if(!TextUtils.isEmpty(mediaData.getUrl())){
-                SLFImageUtil.loadImage(mContext,mediaData.getUrl()
-                        ,videoThub,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon);
+                Glide.with(mContext).load(mediaData.getThumbnailUrl())
+                        .placeholder(R.drawable.slf_photo_adapter_defult_icon)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                //slf_pre_progress.setVisibility(View.GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                //slf_pre_progress.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
+                        .into(videoThub);
             }else{
                 videoThub.setImageBitmap(null);
             }
@@ -89,11 +113,21 @@ public class SLFPreviewLeaveMsgPagerAdapter extends PagerAdapter {
                             videoView.seekTo(0);
                         }
                         videoView.start();
-
+                        slf_pre_progress.setVisibility(View.VISIBLE);
                     }
                     videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
+                            mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+                                @Override
+                                public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
+                                    if(i==MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                                        slf_pre_progress.setVisibility(View.GONE);
+                                       return true;
+                                    }
+                                    return false;
+                                }
+                            });
                         }
                     });
                     videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -112,6 +146,7 @@ public class SLFPreviewLeaveMsgPagerAdapter extends PagerAdapter {
                             videoView.stopPlayback();
                             imgTub.setVisibility(View.VISIBLE);
                             videoView.setVisibility(View.GONE);
+                            slf_pre_progress.setVisibility(View.GONE);
                             return true;
                         }
                     });
@@ -121,7 +156,25 @@ public class SLFPreviewLeaveMsgPagerAdapter extends PagerAdapter {
         } else {
             itemView = new SLFPhotoViewImpl(mContext);
             String photoPath = picPathLists.get(position).getUrl();
-            Glide.with(mContext).load(photoPath).into((ImageView) itemView);
+//            FrameLayout slf_pre_progress = itemView.findViewById(R.id.slf_pre_progress);
+//            ProgressBar slf_pre_progressbar = itemView.findViewById(R.id.slf_pre_progressbar);
+            //slf_pre_progress.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(photoPath)
+                    .placeholder(R.drawable.slf_photo_adapter_defult_icon)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            //slf_pre_progress.setVisibility(View.GONE);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            //slf_pre_progress.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .into((ImageView) itemView);
             //mAttacher = new SLFPhotoViewAttacher(ivPic);
             ((SLFIPhotoView) itemView).setOnPhotoTapListener(new SLFPhotoViewAttacher.OnPhotoTapListener() {
                 @Override

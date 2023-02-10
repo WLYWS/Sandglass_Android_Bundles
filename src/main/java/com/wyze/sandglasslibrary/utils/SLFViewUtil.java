@@ -406,11 +406,11 @@ public class SLFViewUtil {
      * @param image
      * @return
      */
-    public static File compressImage(Bitmap image,String folderName,String fileName) {
+    public static File compressImage(Bitmap image,String folderName,String fileName,int crompress) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 90;
-        while (baos.size()/1024 > 300) { // 循环判断如果压缩后图片是否大于300kb,大于继续压缩
+        while (baos.size()/1024 > crompress) { // 循环判断如果压缩后图片是否大于300kb,大于继续压缩
             baos.reset(); // 重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             options = options - 10;// 每次都减少10

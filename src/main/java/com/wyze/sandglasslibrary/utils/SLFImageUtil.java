@@ -7,21 +7,29 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.wyze.sandglasslibrary.R;
 import com.wyze.sandglasslibrary.base.SLFBaseApplication;
 import com.wyze.sandglasslibrary.commonapi.SLFApi;
+import com.wyze.sandglasslibrary.commonui.SLFToastUtil;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -251,6 +259,42 @@ public class SLFImageUtil {
                 .error(errorImgResId)
 //              .thumbnail(0.2f)
 //		        .apply(RequestOptions.bitmapTransform(new ImageTransformation(context, shape).getTransformation()))
+                .transform(transformations)
+                //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
+                .skipMemoryCache(false)
+                //取消Glide自带的动画
+                .dontAnimate()
+                .into(img);
+    }
+
+    /**
+     * 历史留言展示图片
+     */
+    @SuppressWarnings("unchecked")
+    public static void loadImageShow(Context context, Object url, ImageView img,View view, int placeholderImgResId,int errorImgResId, SLFImageShapes... shape) {
+        Transformation<Bitmap>[] transformations = (Transformation<Bitmap>[]) Array.newInstance(Transformation.class, shape.length);
+        for (int i = 0; i < shape.length; i++) {
+            transformations[i] = new SLFImageTransformation(shape[i]).getTransformation();
+        }
+
+        Glide.with(context)
+                .load(url)
+                .placeholder(placeholderImgResId)
+                .thumbnail(0.1f)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        view.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_add_photo_bg));
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        view.setBackground(null);
+                        return false;
+                    }
+                })
+                .error(errorImgResId)
                 .transform(transformations)
                 //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
                 .skipMemoryCache(false)

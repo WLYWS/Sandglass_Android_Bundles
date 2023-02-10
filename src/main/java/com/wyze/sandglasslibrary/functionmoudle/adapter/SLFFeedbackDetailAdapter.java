@@ -138,16 +138,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                             if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_first_iv_photo.getTag(R.id.slf_iv_photo))) {
 
                             } else {
-                                //四周都是圆角的圆角矩形图片。
-//                                Glide.with(context).load(datas.get(position).getAttrList().get(0).getThumbnailUrl()).apply(
-//                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
-//                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-//                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-//                                        .skipMemoryCache(false)
-//                                        //取消Glide自带的动画
-//                                        .dontAnimate()
-//                                        .into((ImageView) ((UserNormalHolder) holder).slf_first_iv_photo);
-                                SLFImageUtil.loadImage(context,datas.get(position).getAttrList().get(0).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_first_iv_photo,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                                SLFImageUtil.loadImageShow(context,datas.get(position).getAttrList().get(0).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_first_iv_photo,((UserNormalHolder) holder).slf_frist_media_data,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
                                         , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(0).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setOnClickListener(new View.OnClickListener() {
@@ -162,16 +153,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                             if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_second_iv_photo.getTag(R.id.slf_iv_photo))) {
 
                             } else {
-                                //四周都是圆角的圆角矩形图片。
-//                                Glide.with(context).load(datas.get(position).getAttrList().get(1).getThumbnailUrl()).apply(
-//                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
-//                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-//                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-//                                        .skipMemoryCache(false)
-//                                        //取消Glide自带的动画
-//                                        .dontAnimate()
-//                                        .into((ImageView) ((UserNormalHolder) holder).slf_second_iv_photo);
-                                SLFImageUtil.loadImage(context,datas.get(position).getAttrList().get(1).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_second_iv_photo,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                                SLFImageUtil.loadImageShow(context,datas.get(position).getAttrList().get(1).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_second_iv_photo,((UserNormalHolder) holder).slf_frist_media_data,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
                                         , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setOnClickListener(new View.OnClickListener() {
@@ -186,16 +168,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                             if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_third_iv_photo.getTag(R.id.slf_iv_photo))) {
 
                             } else {
-                                //四周都是圆角的圆角矩形图片。
-//                                Glide.with(context).load(datas.get(position).getAttrList().get(2).getThumbnailUrl()).apply(
-//                                                RequestOptions.bitmapTransform(new RoundedCorners(10))).
-//                                        error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
-//                                        //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-//                                        .skipMemoryCache(false)
-//                                        //取消Glide自带的动画
-//                                        .dontAnimate()
-//                                        .into((ImageView) ((UserNormalHolder) holder).slf_third_iv_photo);
-                                SLFImageUtil.loadImage(context,datas.get(position).getAttrList().get(2).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_third_iv_photo,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
+                                SLFImageUtil.loadImageShow(context,datas.get(position).getAttrList().get(i).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_third_iv_photo,((UserNormalHolder) holder).slf_frist_media_data,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
                                         , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setOnClickListener(new View.OnClickListener() {
