@@ -1,4 +1,4 @@
-<com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -101,4 +101,4 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
-</com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout>
+</com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout>

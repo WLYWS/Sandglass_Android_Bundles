@@ -58,7 +58,7 @@
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <com.wyze.sandglasslibrary.commonui.SLFNoScrollListview
+        <com.sandglass.sandglasslibrary.commonui.SLFNoScrollListview
             android:id="@+id/lv_faq_feedback_list"
             android:layout_marginTop="6dp"
             android:divider="#FFCC00"
@@ -67,7 +67,7 @@
 
     </LinearLayout>
 
-    <com.wyze.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView
+    <com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotFaqListView
         android:id="@+id/sf_faq_feedback_question"
         android:textSize="14sp"
         android:textColor="@color/white"
