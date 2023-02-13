@@ -278,7 +278,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         SLFLogUtil.d("yj", "slfMediaDataList::contiuneLeave::::uploadFiles:::" + slfMediaDataList.size());
         String contentType = "";
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-            if (slfMediaDataList.get(i).getUploadPath() != null) {
+            if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
                 if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING) && !slfMediaDataList.get(i).getMimeType().contains("video")) {
                     File file = new File(slfMediaDataList.get(i).getOriginalPath());
                     File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
@@ -296,7 +296,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 }
             } else {
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                slfaddAttachAdapter.notifyDataSetChanged();
+                //slfaddAttachAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -535,7 +535,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             if (id == slfMediaDataList.get(i).getId()) {
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
-                if (slfMediaDataList.get(i).getUploadPath() != null) {
+                if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
                     if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                         SLFLogUtil.d("videocompress", "continueleave:::compelete---");
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
@@ -549,7 +549,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 } else {
                     SLFLogUtil.d("videocompress", "continueleave::::compelete---url---null");
                     slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                    slfaddAttachAdapter.notifyDataSetChanged();
+                    //slfaddAttachAdapter.notifyDataSetChanged();
                 }
             } else {
                 SLFLogUtil.d("videocompress", "continueleave:::compelete---object--not--equals");
