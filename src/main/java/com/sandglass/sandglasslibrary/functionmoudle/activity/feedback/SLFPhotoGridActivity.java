@@ -48,10 +48,10 @@ import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.SLFUtils;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
-//import com.wyze.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
+//import com.sandglass.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 import com.sandglass.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
-//import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+//import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

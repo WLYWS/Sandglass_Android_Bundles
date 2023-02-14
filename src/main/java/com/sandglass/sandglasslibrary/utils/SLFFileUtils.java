@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
-//import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+//import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
