@@ -46,6 +46,7 @@ public class SLFPhotoViewImpl extends androidx.appcompat.widget.AppCompatImageVi
      * @deprecated use {@link #setRotationTo(float)}
      */
     @Override
+    @Deprecated
     public void setPhotoViewRotation(float rotationDegree) {
         mAttacher.setRotationTo(rotationDegree);
     }

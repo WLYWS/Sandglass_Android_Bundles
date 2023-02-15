@@ -185,7 +185,10 @@
                     android:padding="16dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/slf_feedback_page_child_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:scrollbars="vertical"
+                    android:scrollbarThumbVertical="@color/slf_complete_text_color"
+                    android:scrollbarSize="2dp"/>
 
                 <View
                     android:id="@+id/edit_line_view"

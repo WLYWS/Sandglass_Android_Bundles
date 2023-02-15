@@ -42,7 +42,8 @@
                 android:text="@string/slf_feedback_font_count"
                 android:textColor="@color/slf_feedback_question_type_title"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <RelativeLayout
                 android:id="@+id/slf_continue_leave_relative"
@@ -66,7 +67,10 @@
                     android:padding="16dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/slf_feedback_page_child_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:scrollbars="vertical"
+                    android:scrollbarThumbVertical="@color/slf_complete_text_color"
+                    android:scrollbarSize="2dp"/>
 
                 <View
                     android:id="@+id/slf_continue_leave_edit_line_view"

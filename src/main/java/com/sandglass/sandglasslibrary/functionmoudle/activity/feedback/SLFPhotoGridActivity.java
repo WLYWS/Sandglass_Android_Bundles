@@ -70,7 +70,7 @@ import java.util.concurrent.Executors;
  *
  * @author yangjie
  */
-public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageCapture.OnImageSavedCallback {
+public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
 
 
     private ImageView ivBack;
@@ -139,16 +139,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     @Override
     protected void onResume() {
         super.onResume();
-        //SLFLogUtil.d(TAG,"photoGrid onResume");
-
-
-//        if(!isCreate){
-//            isEvent = true;
-//            getMediaData = getIntent().getParcelableExtra("mediaData");
-//            SLFLogUtil.d("yj","getmediadata-----"+getMediaData);
-//            getPhotos();
-//        }
-        //SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this,permissionStorage,permissionsResumeResult);
     }
 
     @Override
@@ -157,7 +147,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         if (!isCreate) {
             isEvent = true;
             getMediaData = intent.getParcelableExtra("mediaData");
-            SLFLogUtil.d("yj", "getmediadata-----" + getMediaData);
+            SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::onNewIntent getmediadata::" + getMediaData);
             getPhotos();
         }
     }
@@ -507,8 +497,15 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         gvPhotoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+
                 if (position == mCurPhotoList.size() - 1) {
-                    SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this, permissionCamrea, permissionsCamraResult);
+                    SLFLogUtil.d("pos","selectedNum:::"+selectedNum);
+                    SLFLogUtil.d("pos","mPhotoListAdapter.getPicList().size():::"+mPhotoListAdapter.getPicList().size());
+                    if (mPhotoListAdapter.getPicList().size()+1 <= selectedNum ) {
+                        SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this, permissionCamrea, permissionsCamraResult);
+                    } else {
+                        showCenterToast(SLFResourceUtils.getString(R.string.slf_only_select_3));
+                    }
                 } else {
                     mPhotoListAdapter.setCurrentPosition(position);
                     if (isDirectCrop) {
@@ -767,7 +764,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
                 intent.putExtra("direct_crop", isDirectCrop);
                 intent.putExtra("from", "photogrid");
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
+                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission pass goto preview page");
             } else {
+                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::no choose pictures");
                 showCenterToast("Please choose a picture!");
             }
 
@@ -778,6 +777,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
 //            finish();
 
             Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission not pass goto preview page");
             return;
         }
     };
@@ -786,16 +786,14 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void passPermissons() {
-            if (mPhotoListAdapter.getPicList().size() < 3) {
                 takePhoto();
-            } else {
-                showCenterToast(SLFResourceUtils.getString(R.string.slf_only_select_3));
-            }
+                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission not pass goto take photo");
         }
 
         @Override
         public void forbitPermissons() {
             Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission not pass goto take photo");
             return;
         }
     };
@@ -812,18 +810,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity implements ImageC
     public void onEvent(SLFEventUpdatePhotolist event) {
         if (event.success) {
             // 更新数据
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::onevent update photolist data");
             resumChecked();
         }
     }
-
-    @Override
-    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-        SLFLogUtil.d("yj", "save image callback");
-    }
-
-    @Override
-    public void onError(@NonNull ImageCaptureException exception) {
-        SLFLogUtil.d("yj", "save image callback error");
-    }
-
 }

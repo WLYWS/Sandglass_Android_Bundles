@@ -399,6 +399,14 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         if (view.getId() == R.id.slf_iv_back) {
             finish();
         } else if (view.getId() == R.id.slf_continue_leave_send) {
+            if (slfEditProblem.getText().toString().length() < 10) {
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
+                return;
+            }
+//            if(TextUtils.isEmpty(slfEditProblem.getText().toString().trim())){
+//                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
+//                return;
+//            }
             for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
                 if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                     hasUploadingFile = true;
@@ -454,10 +462,14 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     @Override
     public void afterTextChanged(Editable editable) {
         setFontCount();
-        if (slfProblemWordNum.length() < 10 || slfProblemWordNum.length() >= 1000) {
+        if (slfProblemWordNum.length() > 1000) {
             setSendBtnCanClick(false);
         } else {
-            setSendBtnCanClick(true);
+            if(slfProblemWordNum.length() >0) {
+                setSendBtnCanClick(true);
+            }else{
+                setSendBtnCanClick(false);
+            }
         }
     }
 

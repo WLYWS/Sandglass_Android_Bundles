@@ -292,6 +292,7 @@ public interface SLFIPhotoView {
      * @param rotationDegree - Degree to rotate PhotoView to, should be in range 0 to 360
      * @deprecated use {@link #setRotationTo(float)}
      */
+    @Deprecated
     void setPhotoViewRotation(float rotationDegree);
 
     /**

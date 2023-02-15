@@ -259,6 +259,7 @@ public class SLFPhotoViewAttacher implements SLFIPhotoView, View.OnTouchListener
     /**
      * @deprecated use {@link #setRotationTo(float)}
      */
+    @Deprecated
     @Override
     public void setPhotoViewRotation(float degrees) {
         mSuppMatrix.setRotate(degrees % 360);

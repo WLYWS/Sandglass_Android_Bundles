@@ -25,9 +25,12 @@ import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
+import com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackDetailAdapter;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
+import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
+import com.sandglass.sandglasslibrary.moudle.event.SLFSendLogSuceessEvent;
 import com.sandglass.sandglasslibrary.moudle.net.requestbean.SLFLogAttrBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemResponseBean;
@@ -46,6 +49,8 @@ import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +63,7 @@ import java.util.concurrent.Executors;
  * describe:反馈列表详情页
  * time:2023/1/30
  */
-public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
+public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements View.OnClickListener, SLFSwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
     /**
      * 处理状态
      */
@@ -82,7 +87,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     /**
      * 更新加载的布局
      */
-    private SwipeRefreshLayout slf_feedback_list_detail_refreshLayout;
+    private SLFSwipeRefreshLayout slf_feedback_list_detail_refreshLayout;
     /**
      * 留言列表adapter
      */
@@ -129,6 +134,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private int REQUEST_CODE = 0;
     private ActivityResultLauncher<Intent> intentActivityResultLauncher;
     private int pages;
+    private int position;
+    private boolean isRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +166,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化refreshlayout
      */
     private void initRefreshLayout() {
-        slf_feedback_list_detail_refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-                android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        slf_feedback_list_detail_refreshLayout.setProgressBackgroundColorSchemeResource(R.color.transparent);
+        slf_feedback_list_detail_refreshLayout.setColorSchemeResources(R.color.slf_theme_color);
         slf_feedback_list_detail_refreshLayout.setOnRefreshListener(this);
     }
 
@@ -168,6 +175,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化数据
      */
     private void initData() {
+        position = getIntent().getIntExtra(SLFConstants.RECORD_DATA_POSITION,-1);
         slfRecode = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slfLeaveMsgRecordList = new ArrayList<>();
         getFeedBackDetailList(currentPage);
@@ -341,6 +349,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         adapter.resetDatas();
         //updateRecyclerView(0, PAGE_COUNT);
         currentPage = 1;
+        isRefresh = true;
         getFeedBackDetailList(currentPage);
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -442,6 +451,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             }
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
+            slfRightTitle.setVisibility(View.GONE);
+            EventBus.getDefault().post(new SLFSendLogSuceessEvent(true,position));
         }else if (type instanceof SLFFeedbackDetailItemResponseBean){
             pages = ((SLFFeedbackDetailItemResponseBean) type).data.getPages();
             showFeedBackAdapter((SLFFeedbackDetailItemResponseBean)type);
@@ -452,9 +463,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void showFeedBackAdapter (SLFFeedbackDetailItemResponseBean bean) {
         newDatas = bean.data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
-                adapter.updateList(newDatas, true);
+                if(isRefresh){
+                    adapter.updateList(newDatas,false,true);
+                }else {
+                    adapter.updateList(newDatas, true,false);
+                }
             } else {
-                adapter.updateList(null, false);
+                adapter.updateList(null, false,false);
             }
                 currentPage++;
     }

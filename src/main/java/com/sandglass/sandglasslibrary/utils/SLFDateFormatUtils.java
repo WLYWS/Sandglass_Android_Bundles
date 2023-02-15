@@ -20,7 +20,8 @@ public class SLFDateFormatUtils {
     public static final String YMDHM_CN = "yyyy年MM月dd日";
     public static final String YYYYMMDD = "yyyyMMdd";
     public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
-    public static final String MDYT = "MM/dd/yy HH:mm";
+    public static final String MDYT = "MM/dd/yyyy HH:mm";
+    public static final String MDYT12 = "MM/dd/yyyy HH:mm aa";
     public static final SimpleDateFormat yymmdd = new SimpleDateFormat(YYYYMMDD);
     public static final SimpleDateFormat ymdhmsSDF = new SimpleDateFormat(YMDHMS);
     public static final SimpleDateFormat ymdhm_cnSDF = new SimpleDateFormat(YMDHM_CN);
@@ -79,9 +80,14 @@ public class SLFDateFormatUtils {
     /**
      * 时间戳转换成需要的格式
      */
-    public static String getDateToMyString(long second,String pattern){
+    public static String getDateToMyString(Context context,long second){
         Date date = new Date(second);
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        String typeTime = getSystemTimeFormat(context);
+        SimpleDateFormat format;
+            if (typeTime.equals("12"))
+                format = new SimpleDateFormat(MDYT12,Locale.getDefault());
+            else
+                format = new SimpleDateFormat(MDYT, Locale.getDefault());
         return format.format(date);
     }
 

@@ -47,6 +47,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
     private int workernormalType = 1;
     private int footType = 2;
     private boolean hasMore;
+    private boolean isRefresh;
     private boolean fadeTips = false;
     private OnItemClickLitener mOnItemClickLitener;
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -194,7 +195,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                 ((UserNormalHolder) holder).slf_feedback_detail_show_photo_linear.setVisibility(View.GONE);
             }
             ((UserNormalHolder) holder).slf_feedback_detail_question_content.setText(datas.get(position).getContent());
-            ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(datas.get(position).getReplyTs(), SLFDateFormatUtils.MDYT));
+            ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(context,datas.get(position).getReplyTs()));
             //通过为条目设置点击事件触发回调
 //            if (mOnItemClickLitener != null) {
 //                ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -206,41 +207,46 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 //            }
         } else if (holder instanceof WorkerNormalHolder) {
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content.setText(datas.get(position).getContent());
-            ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(datas.get(position).getReplyTs(), SLFDateFormatUtils.MDYT));
+            ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(context,datas.get(position).getReplyTs()));
         } else {
-            if (hasMore == true) {
-                fadeTips = false;
-                if (datas.size() > 0) {
-                    //((FootHolder) holder).tips.setText("正在加载更多...");
-                    ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //((FootHolder) holder).tips.setVisibility(View.GONE);
-                            ((FootHolder) holder).progressBar.clearAnimation();
-                            ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-                            fadeTips = true;
-                            hasMore = true;
-                        }
-                    }, 500);
-                }
-            } else {
-                if (datas.size() > 0) {
-                    //((FootHolder) holder).tips.setText("没有更多数据了");
-                    ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //((FootHolder) holder).tips.setVisibility(View.GONE);
-                            ((FootHolder) holder).progressBar.clearAnimation();
-                            ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-                            fadeTips = true;
-                            hasMore = true;
-                        }
-                    }, 500);
+            if(isRefresh){
+                fadeTips = true;
+                ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
+            }else {
+                if (hasMore == true) {
+                    fadeTips = false;
+                    if (datas.size() > 0) {
+                        //((FootHolder) holder).tips.setText("正在加载更多...");
+                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //((FootHolder) holder).tips.setVisibility(View.GONE);
+                                ((FootHolder) holder).progressBar.clearAnimation();
+                                ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
+                                fadeTips = true;
+                                hasMore = true;
+                            }
+                        }, 500);
+                    }
                 } else {
-                    ((FootHolder) holder).progressBar.clearAnimation();
-                    ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
+                    if (datas.size() > 0) {
+                        //((FootHolder) holder).tips.setText("没有更多数据了");
+                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //((FootHolder) holder).tips.setVisibility(View.GONE);
+                                ((FootHolder) holder).progressBar.clearAnimation();
+                                ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
+                                fadeTips = true;
+                                hasMore = true;
+                            }
+                        }, 500);
+                    } else {
+                        ((FootHolder) holder).progressBar.clearAnimation();
+                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
+                    }
                 }
             }
         }
@@ -256,11 +262,12 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
 
-    public void updateList(List<SLFLeaveMsgRecord> newDatas, boolean hasMore) {
+    public void updateList(List<SLFLeaveMsgRecord> newDatas, boolean hasMore,boolean isRefresh) {
         if (newDatas != null) {
             datas.addAll(newDatas);
         }
         this.hasMore = hasMore;
+        this.isRefresh = isRefresh;
         notifyDataSetChanged();
     }
 

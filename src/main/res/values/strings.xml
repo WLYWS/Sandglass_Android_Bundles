@@ -33,6 +33,7 @@
     <string name="slf_feedback_submit_feedback">Submit Feedback</string>
     <string name="slf_feedback_title_content">Feedback</string>
     <string name="slf_feedback_problem_font_least">Feedback description should be at least 10 characters.</string>
+    <string name="slf_feedback_problem_font_least_all_space">Feedback description should be at least 10 characters.</string>
     <string name="slf_feedback_dilaog_per_title">Request Phone Access</string>
     <string name="slf_feedback_dilaog_per_go_to_set">Go to Set</string>
     <string name="slf_feedback_dilaog_per_content">To enable this feature,the RVI app requests permission to access your phone\'s ablum.</string>

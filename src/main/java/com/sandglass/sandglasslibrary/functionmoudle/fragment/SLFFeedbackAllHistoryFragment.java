@@ -17,9 +17,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
+import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
+import com.sandglass.sandglasslibrary.moudle.event.SLFSendLogSuceessEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
@@ -30,17 +33,21 @@ import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
 @SuppressLint("ValidFragment")
-public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
+public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
 
     private int type;
 
     private RecyclerView slf_histroy_feedback_list;
-    private SwipeRefreshLayout slf_feedback_list_refreshLayout;
+    private SLFSwipeRefreshLayout slf_feedback_list_refreshLayout;
     private SLFFeedbackItemBean slfFeedbackItemBean;
     private LinearLayout slf_histroy_no_item_linear;
 
@@ -55,6 +62,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
     private int current_page = 1;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean isInitData = false;
+    private boolean isRefresh;
 
     public SLFFeedbackAllHistoryFragment(){
 
@@ -68,6 +76,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         initData();
         View view = inflater.inflate(R.layout.slf_list_history_feedback, container, false);
         slf_histroy_feedback_list = view.findViewById(R.id.slf_histroy_feedback_list);
@@ -102,8 +111,8 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
     }
 
     private void initRefreshLayout() {
-        slf_feedback_list_refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-                android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        slf_feedback_list_refreshLayout.setProgressBackgroundColorSchemeResource(R.color.transparent);
+        slf_feedback_list_refreshLayout.setColorSchemeResources(R.color.slf_theme_color);
         slf_feedback_list_refreshLayout.setOnRefreshListener(this);
     }
 
@@ -156,6 +165,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
         slf_feedback_list_refreshLayout.setRefreshing(true);
         adapter.resetDatas();
         current_page = 1;
+        isRefresh = true;
         getFeedBackList(type,current_page);
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -172,6 +182,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
             recodeList.get(position).setRead(1);
             adapter.notifyDataSetChanged();
         }
+        in.putExtra(SLFConstants.RECORD_DATA_POSITION,position);
         in.putExtra(SLFConstants.RECORD_DATA,recodeList.get(position));
         startActivity(in);
     }
@@ -187,9 +198,14 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
         if(bean instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) bean).data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
-                adapter.updateList(newDatas, true);
+                if(isRefresh){
+                    adapter.updateList(newDatas,false,true);
+                    isRefresh = false;
+                }else {
+                    adapter.updateList(newDatas, true,false);
+                }
             } else {
-                adapter.updateList(null, false);
+                adapter.updateList(null, false,false);
             }
             initView();
             current_page++;
@@ -197,8 +213,22 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SwipeR
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onRequestFail (String value, String failCode, T bean) {
         initView();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFSendLogSuceessEvent event) {
+       if(event.success){
+           if(event.position!=-1)
+            recodeList.get(event.position).setSendLog(1);
+       }
     }
 }

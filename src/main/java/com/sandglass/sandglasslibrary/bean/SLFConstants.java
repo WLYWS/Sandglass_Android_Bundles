@@ -81,6 +81,9 @@ public class SLFConstants {
     public static final String CAMERA_VIDEO = "camera_video";
     //recode对象数据
     public static final String RECORD_DATA = "record_data";
+    //recode对象position
+    public static final String RECORD_DATA_POSITION = "record_data_position";
+
     //历史留言对象
     public static final String LEAVE_MSG_DATA = "leave_msg_data";
 

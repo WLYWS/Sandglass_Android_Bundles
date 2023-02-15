@@ -7,7 +7,7 @@
     android:layout_marginBottom="16dp">
 
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout
         android:id="@+id/slf_feedback_list_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
             android:id="@+id/slf_histroy_feedback_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/slf_feedback_list_no_item_linear"
