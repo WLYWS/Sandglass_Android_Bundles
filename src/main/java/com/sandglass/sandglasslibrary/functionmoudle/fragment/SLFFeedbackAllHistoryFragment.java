@@ -197,7 +197,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     public void onRequestSuccess (String result, T bean) {
         if(bean instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) bean).data.getRecods();
-            if (newDatas != null && newDatas.size() > 0) {
+            if (newDatas != null && newDatas.size() > 0)
                 if(isRefresh){
                     adapter.updateList(newDatas,false,true);
                     isRefresh = false;
@@ -210,7 +210,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             initView();
             current_page++;
         }
-    }
+
 
     @Override
     public void onDestroyView() {

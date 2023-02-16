@@ -10,8 +10,10 @@
         >
         <activity
             android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback"

@@ -15,6 +15,7 @@ import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 /**
  * Greated by yangjie
@@ -36,6 +37,7 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_success);
+        SLFLogUtil.d(TAG,"");
         logId = getIntent().getIntExtra(SLFConstants.LOGID,-1);
         initTitle();
         initView();

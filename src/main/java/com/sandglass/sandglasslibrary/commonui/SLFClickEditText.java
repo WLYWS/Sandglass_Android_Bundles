@@ -26,13 +26,6 @@ public class SLFClickEditText extends AppCompatEditText {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public boolean onTouchEvent (MotionEvent event) {
-//        if (!isEnabled()){
-//            return false;
-//        }
-        return false;
-    }
 
     /**
      *  android:inputType="textMultiLine"
