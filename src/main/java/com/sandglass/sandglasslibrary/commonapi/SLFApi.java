@@ -2,13 +2,18 @@ package com.sandglass.sandglasslibrary.commonapi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Process;
 import android.os.StrictMode;
+import android.util.Log;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.sandglass.sandglasslibrary.base.SLFBaseApplication;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFCrashHandler;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -30,6 +35,8 @@ public class SLFApi  {
 
     private SLFUploadCompleteCallback slfUploadCompleteCallback;
 
+    private boolean isDebug;
+
     public static SLFApi getInstance(Context context){
         if(mInstance==null){
             mInstance = new SLFApi(context);
@@ -45,24 +52,26 @@ public class SLFApi  {
     public static Context getSLFContext(){
         return mContext;
     }
-    public void init(){
-        SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
-        long startTime = System.currentTimeMillis();
-//        ARouter.openLog();     // 打印日志
-//        ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-//        ARouter.init(this);
-        long endTime = System.currentTimeMillis();
-        SLFLogAPI.init();
-        SLFLogUtil.setUserInfo();
-        SLFLogUtil.initAPILog();
-        SLFLogUtil.getInstance().initPluginXlog("slf");
-        SLFLogUtil.e("ArouterInitTime:",(endTime-startTime)+"");
-        SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
+    public void init(boolean isDebug){
 
+        this.isDebug = isDebug;
+        try {
+            SLFConstants.isOpenConsoleLog = isDebug;
+        } catch (NullPointerException var10) {
+            SLFLogUtil.e("SLF", "BJA-115 *** AppConfig NullPointerException ***");
+            SLFLogUtil.e("SLF", Log.getStackTraceString(var10));
+        }
+        long startTime = System.currentTimeMillis();
+
+        long endTime = System.currentTimeMillis();
+        SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
+        SLFLogAPI.init();
+        SLFLogUtil.e("ArouterInitTime:", endTime - startTime + "");
+        SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
         List<File> logList = SLFFileUtils.listFileSortByName(SLFConstants.apiLogPath);
         if (logList.size() > 3) {
-            for (int i = 3; i < logList.size(); i++) {
-                SLFFileUtils.delete(logList.get(i));
+            for(int i = 3; i < logList.size(); ++i) {
+                SLFFileUtils.delete((File)logList.get(i));
             }
         }
 

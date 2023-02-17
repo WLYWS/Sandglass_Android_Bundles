@@ -1,13 +1,21 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.sandglass.sandglasslibrary.utils.logutil;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.os.Build.VERSION;
+import android.util.Log;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
-
+import com.tencent.mars.xlog.Xlog;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,359 +25,297 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import com.tencent.mars.xlog.Log;
-import com.tencent.mars.xlog.Xlog;
-
-/**
- * created by yangjie
- * describe:统一的Log打印工具类
- * time: 2022/12/10
- */
 public final class SLFLogUtil extends Xlog {
     private static final String TAG = "API SLFLogUtil";
     private static final String XLOG_PUBKEY = "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b";
-    @SuppressWarnings("java:S3077")
     private static volatile SLFLogUtil log = null;
-    private static final String PREFIX = "SLF_";
-    // 队列存放需要写入的内容
-    private static List<String> listValue = new ArrayList<>();
-    // 控制整个文件是否可写入，当存储空间不足或需全部关闭Log的时候置为false
+    private static final String PREFIX = "WYZE_";
+    private static List<String> listValue = new ArrayList();
     private static boolean canWirte = true;
-    // 写文件开关
     private static boolean toWrite = true;
-    // 加密文件 List
-    private static List<byte[]> listValueByte = new ArrayList<>();
+    private static List<byte[]> listValueByte = new ArrayList();
     private static FileWriter fileWriter = null;
     private static BufferedWriter writer = null;
+    private static SLFLogPrinter printer = new SLFLogPrinter();
 
-    /**
-     * 单利模式创建Log类的实例
-     *
-     * @return log
-     */
     public static SLFLogUtil getInstance() {
         if (null == log) {
-            synchronized (SLFLogUtil.class) {
+            Class var0 = SLFLogUtil.class;
+            synchronized(SLFLogUtil.class) {
                 if (null == log) {
                     fileWriter = null;
                     writer = null;
                     log = new SLFLogUtil();
-                    android.util.Log.i(TAG, "create new instance");
+                    Log.i("API SLFLogUtil", "create new instance");
                 }
             }
         } else {
-            android.util.Log.i(TAG, "exist one instance");
+            Log.i("API SLFLogUtil", "exist one instance");
         }
+
         return log;
     }
 
-
-    /**
-     * Log构造函数，当Log开关为“开”的时候调用创建日志文件方法
-     */
     private SLFLogUtil() {
-        Log.appenderFlush(true); //同步日志到文件
-        createFile(SLFConstants.isUseXlog);
-        Xlog.appenderOpen(Xlog.LEVEL_ALL, Xlog.AppednerModeAsync, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, PREFIX+"API",0, XLOG_PUBKEY);
+        com.tencent.mars.xlog.Log.appenderFlush(true);
+        createFile(true);
+        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "WYZE_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
     }
 
     public static void initAPILog() {
-        SLFLogUtil.getInstance();
-        SLFLogUtil.setUserInfo();
+        getInstance();
+        setUserInfo();
     }
 
-    /**
-     * 初始化插件xlog目录
-     */
-    public void initPluginXlog(String slf) {
-        Log.appenderFlush(true); //同步日志到文件
-        createFile(slf);
-        Log.appenderClose();
-        Xlog.appenderOpen(Xlog.LEVEL_ALL, Xlog.AppednerModeAsync, SLFFileUtils.getPluginDataPath(slf)+"/xlog/", SLFFileUtils.getPluginDataPath(slf)+"/log/", PREFIX+"API",0, XLOG_PUBKEY);
+    public void initPluginXlog(String pluginId) {
+        com.tencent.mars.xlog.Log.appenderFlush(true);
+        this.createFile(pluginId);
+        com.tencent.mars.xlog.Log.appenderClose();
+        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "WYZE_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
-        Log.setLogImp(new Xlog());
-        android.util.Log.i(TAG, "create new plugin instance");
-
+        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
+        Log.i("API SLFLogUtil", "create new plugin instance");
     }
 
-    public static void syncPermissonCreate(){
-        createFile(SLFConstants.isUseXlog);
-        Log.appenderClose();
-        Xlog.appenderOpen(Xlog.LEVEL_ALL, Xlog.AppednerModeAsync, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
+    public static void syncPermissonCreate() {
+        createFile(true);
+        com.tencent.mars.xlog.Log.appenderClose();
+        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "WYZE_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
     }
 
-
     public static void i(String tag, String content) {
-        if (SLFConstants.isShowLog) {
-            if (SLFConstants.isUseXlog) {
-//                checkFileExists();
-                Log.i(tag, content);
-            } else {
-                printer.i(tag, content);
-                log("info", tag, content);
-            }
-        }
+        com.tencent.mars.xlog.Log.i(tag, content);
     }
 
     public static void s(String tag, String content) {
-        if (SLFConstants.isShowLog && SLFConstants.isOpenConsoleLog) {
-            android.util.Log.i(tag, content);
+        if (SLFConstants.isOpenConsoleLog) {
+            Log.i(tag, content);
         }
+
     }
 
     public static void d(String tag, String content) {
-        if (SLFConstants.isShowLog) {
-            if (SLFConstants.isUseXlog) {
-//                checkFileExists();
-                Log.d(tag, content);
-            } else {
-                printer.d(tag,content);
-                log("debug", tag, content);
-            }
-        }
+        com.tencent.mars.xlog.Log.d(tag, content);
     }
 
     public static void e(String tag, String content) {
-        if (SLFConstants.isShowLog) {
-            if (SLFConstants.isUseXlog) {
-//                checkFileExists();
-                Log.e(tag, content);
-            } else {
-                printer.e(tag,content);
-                log("error", tag, content);
-            }
-        }
+        com.tencent.mars.xlog.Log.e(tag, content);
     }
 
     public static void v(String tag, String content) {
-        if (SLFConstants.isShowLog) {
-            if (SLFConstants.isUseXlog) {
-//                checkFileExists();
-                Log.v(tag, content);
-            } else {
-                printer.v(tag,content);
-                log("warning", tag, content);
-            }
-        }
+        com.tencent.mars.xlog.Log.v(tag, content);
     }
 
     public static void w(String tag, String content) {
-        if (SLFConstants.isShowLog) {
-            if (SLFConstants.isUseXlog) {
-//                checkFileExists();
-                Log.w(tag, content);
+        com.tencent.mars.xlog.Log.w(tag, content);
+    }
+
+    public static void f(String tag, String msg) {
+        if (tag != null && tag.length() != 0 && msg != null && msg.length() != 0) {
+            int segmentSize = 3072;
+            long length = (long)msg.length();
+            if (length <= (long)segmentSize) {
+                e(tag, "FLOG---->" + msg);
             } else {
-                printer.w(tag,content);
-                log("warning", tag, content);
+                while(msg.length() > segmentSize) {
+                    String logContent = msg.substring(0, segmentSize);
+                    msg = msg.replace(logContent, "");
+                    e(tag, "FLOG---->" + logContent);
+                }
+
+                e(tag, "FLOG---->" + msg);
             }
+
+            com.tencent.mars.xlog.Log.w(tag, msg);
         }
     }
 
-
-    /**
-     * 创建Log日志文件
-     */
     private static void createFile(boolean isUseXlog) {
-
         File tutkLog = new File(SLFConstants.tutkLogPath);
         if (!tutkLog.exists()) {
             boolean isTutkLogMkdirs = tutkLog.mkdirs();
-            SLFLogUtil.e("isTutkLogMkdirs",isTutkLogMkdirs+"");
+            e("isTutkLogMkdirs", isTutkLogMkdirs + "");
         }
 
         File filePath = new File(SLFConstants.feedbacklogPath);
-        // 判断feedbackLog文件夹是否存在，如果不存在：创建
+        boolean isApiLogPathMkdirs;
         if (!filePath.exists()) {
-            boolean isFeedbackLogMkdirs = filePath.mkdirs();
-            SLFLogUtil.e("isFeedbackLogMkdirs",isFeedbackLogMkdirs+"");
+            isApiLogPathMkdirs = filePath.mkdirs();
+            e("isFeedbackLogMkdirs", isApiLogPathMkdirs + "");
         }
 
         filePath = new File(SLFConstants.apiLogPath);
-        // 判断Log文件夹是否存在，如果不存在：创建
         if (!filePath.exists()) {
-            boolean isApiLogPathMkdirs = filePath.mkdirs();
-            SLFLogUtil.e("isApiLogPathMkdirs",isApiLogPathMkdirs+"");
+            isApiLogPathMkdirs = filePath.mkdirs();
+            e("isApiLogPathMkdirs", isApiLogPathMkdirs + "");
         }
 
         File alarmPicPath = new File(SLFConstants.apiLogPath);
         if (!alarmPicPath.exists()) {
             boolean isAlarmPicPath = alarmPicPath.mkdirs();
-            SLFLogUtil.e("isAlarmPicPath",isAlarmPicPath+"");
+            e("isAlarmPicPath", isAlarmPicPath + "");
         }
 
-        // 根据存储状态判断存储空间是否够大
         if (!isAvaiableSpace(0, 1)) {
-            // 如果不够大不做任何操作
             canWirte = false;
-            return;
+        } else {
+            createLogFile(isUseXlog, filePath);
         }
-        createLogFile(isUseXlog, filePath);
-
     }
 
-    @SuppressWarnings("java:S4042")
     private static void createLogFile(boolean isUseXlog, File filePath) {
-        // 获取当前日期，创建当前的日志文件
         SLFConstants.logTime = getTime(false).toString();
+        if (!isUseXlog) {
+            File[] fileList = filePath.listFiles();
+            String fileName;
+            if (null != fileList && fileList.length > 2) {
+                fileName = fileList[0].getName();
+                String name1 = fileList[1].getName();
+                String n0 = fileName.substring(0, fileName.length() - 4);
+                String n1 = name1.substring(0, name1.length() - 4);
 
-        if(isUseXlog){
-            return;
-        }
-
-        File[] fileList = filePath.listFiles();
-
-        // 后去log文件夹下的文件，并比较建立日期，删除日期较小的一个
-        if (null != fileList && fileList.length > 2) {
-            String name0 = fileList[0].getName();
-            String name1 = fileList[1].getName();
-            fileList[1].getPath();
-            String n0 = name0.substring(0, name0.length() - 4);
-            String n1 = name1.substring(0, name1.length() - 4);
-            try {
-                n0 = n0.replace(PREFIX, "");
-                n1 = n1.replace(PREFIX, "");
-                if (Long.parseLong(n0) < Long.parseLong(n1)) {
-                    boolean isDelete = fileList[0].delete();
-                    SLFLogUtil.e("flieList[0]_isDelete",isDelete+"");
-                } else {
-                    boolean isDelete = fileList[1].delete();
-                    SLFLogUtil.e("flieList[1]_isDelete",isDelete+"");
+                try {
+                    n0 = n0.replace("WYZE_", "");
+                    n1 = n1.replace("WYZE_", "");
+                    boolean isDelete;
+                    if (Long.parseLong(n0) < Long.parseLong(n1)) {
+                        isDelete = fileList[0].delete();
+                        e("flieList[0]_isDelete", isDelete + "");
+                    } else {
+                        isDelete = fileList[1].delete();
+                        e("flieList[1]_isDelete", isDelete + "");
+                    }
+                } catch (Exception var9) {
                 }
-            } catch (Exception e) {
-                //
             }
-        }
 
-        String fileName = PREFIX + getTime(false).append(".txt").toString();
-        File file1 = new File(filePath, fileName);
-        try {
-            fileWriter = new FileWriter(file1);
-            writer = new BufferedWriter(fileWriter);
-            writer.append("		Title:").append(getTime(false));
-            writer.newLine();
-            writer.newLine();
-        } catch (Exception e) {
-            android.util.Log.e("SLFLogUtil: CreateFile", "write file error:" + e.getMessage());
+            fileName = "WYZE_" + getTime(false).append(".txt").toString();
+            File file1 = new File(filePath, fileName);
+
+            try {
+                fileWriter = new FileWriter(file1);
+                writer = new BufferedWriter(fileWriter);
+                writer.append("\t\tTitle:").append(getTime(false));
+                writer.newLine();
+                writer.newLine();
+            } catch (Exception var8) {
+                Log.e("SLFLogUtil: CreateFile", "write file error:" + var8.getMessage());
+            }
+
         }
     }
 
-    private void createFile(String slf){
-
-        String pluginPath = SLFFileUtils.getPluginDataPath(slf);
-        File filePath = new File(pluginPath+"/log/");
-        // 判断feedbackLog文件夹是否存在，如果不存在：创建
+    private void createFile(String pluginId) {
+        String pluginPath = SLFFileUtils.getPluginDataPath(pluginId);
+        File filePath = new File(pluginPath + "/log/");
+        boolean isMkdirs;
         if (!filePath.exists()) {
-            boolean isMkdirs = filePath.mkdirs();
-            Log.e("isMkdirs",isMkdirs+"");
+            isMkdirs = filePath.mkdirs();
+            com.tencent.mars.xlog.Log.e("isMkdirs", isMkdirs + "");
         }
 
-        filePath = new File(pluginPath+"/xlog");
-        // 判断Log文件夹是否存在，如果不存在：创建
+        filePath = new File(pluginPath + "/xlog");
         if (!filePath.exists()) {
-            boolean isMkdirs = filePath.mkdirs();
-            Log.e("isMkdirs",isMkdirs+"");
+            isMkdirs = filePath.mkdirs();
+            com.tencent.mars.xlog.Log.e("isMkdirs", isMkdirs + "");
         }
 
     }
 
-    /**
-     * 写入用户名 同时包括所在时区和时间，时区和时间为当前运行的手机所设定的时区和时间
-     */
     public static void setUserInfo() {
         if (canWirte) {
             StringBuilder buf = new StringBuilder();
-            buf = buf.append("SLF_API ");
+            buf = buf.append("WYZE_API ");
             buf.append("\n\n");
-            // 用户名
             buf = buf.append("UserName:").append(SLFUserCenter.user_id).append("  ");
             buf.append("\n\n");
-            // 时区
             buf.append("TimeZone:").append(TimeZone.getDefault().getDisplayName());
             buf.append("\n\n");
-            // 时间
             buf.append("Time:").append(getTime(true).toString());
             buf.append("\n\n");
-            // 手机型号
-            buf.append("phone model:").append(android.os.Build.MODEL);
+            buf.append("phone model:").append(Build.MODEL);
             buf.append("\n\n");
-            // 系统版本
-            buf.append("Android version：").append(android.os.Build.VERSION.SDK_INT);
+            buf.append("Android version：").append(VERSION.SDK_INT);
             buf.append("\n\n");
-            if (SLFConstants.isUseXlog){
-                Log.i("", buf.toString());
-            }else{
-                log(buf.toString(), "", "");
-            }
+            com.tencent.mars.xlog.Log.i("", buf.toString());
         }
+
     }
 
-    /**
-     * 获取当前时间，用于构建文件名和文件中记录的时间
-     *
-     * @return StringBuffer
-     */
-    @SuppressWarnings("java:S3776")
     private static StringBuilder getTime(boolean isReadable) {
         Calendar cal = Calendar.getInstance();
         StringBuilder buffer = new StringBuilder();
-        Integer year;
-        Integer month;
-        Integer day;
-        Integer hour;
-        Integer mintute;
-        Integer second;
-        Integer millisecond;
-        year = cal.get(Calendar.YEAR);
+        Integer year = cal.get(1);
         buffer.append(year);
         if (isReadable) {
             buffer.append("-");
         }
-        if ((month = cal.get(Calendar.MONTH) + 1) < 10) {
+
+        Integer month;
+        month = cal.get(2) +1;
+        if (month < 10) {
             buffer.append("0").append(month);
         } else {
             buffer.append(month);
         }
+
         if (isReadable) {
             buffer.append("-");
         }
-        if ((day = cal.get(Calendar.DAY_OF_MONTH)) < 10) {
+
+        Integer day;
+        day = cal.get(5);
+        if (day < 10) {
             buffer.append("0").append(day);
         } else {
             buffer.append(day);
         }
+
         if (isReadable) {
             buffer.append("  ");
         }
-        if ((hour = cal.get(Calendar.HOUR_OF_DAY)) < 10) {
 
+        Integer hour;
+        hour =cal.get(11);
+        if (hour < 10) {
             buffer.append("0").append(hour);
         } else {
             buffer.append(hour);
         }
+
         if (isReadable) {
             buffer.append(":");
         }
-        if ((mintute = cal.get(Calendar.MINUTE)) < 10) {
+
+        Integer mintute;
+        mintute = cal.get(12);
+        if (mintute  < 10) {
             buffer.append("0").append(mintute);
         } else {
             buffer.append(mintute);
         }
+
         if (isReadable) {
             buffer.append(":");
         }
-        if ((second = cal.get(Calendar.SECOND)) < 10) {
+
+        Integer second;
+        second = cal.get(13);
+        if (second < 10) {
             buffer.append("0").append(second);
         } else {
             buffer.append(second);
         }
+
         if (isReadable) {
             buffer.append(".");
         }
-        millisecond = cal.get(Calendar.MILLISECOND);
+
+        Integer millisecond = cal.get(14);
         if (millisecond < 10) {
             buffer.append("00").append(millisecond);
         } else if (millisecond < 100) {
@@ -377,56 +323,47 @@ public final class SLFLogUtil extends Xlog {
         } else {
             buffer.append(millisecond);
         }
+
         return buffer;
     }
 
-    /**
-     * 向文件中写数据
-     *
-     * @param code log级别 如：debug、error等等
-     */
-    private  static synchronized void log(String code, String tag, String msg) {
-        if(!toWrite){
-            return;
-        }
-        String str = "\n" + code + "  " + tag + ":\n" + msg;
-        listValue.add(str);
-        listValueByte.add(str.getBytes());
+    private static void log(String code, String tag, String msg) {
+        if (toWrite) {
+            String str = "\n" + code + "  " + tag + ":\n" + msg;
+            listValue.add(str);
+            listValueByte.add(str.getBytes());
+            toWrite = false;
+            byte i = 0;
 
-        toWrite = false;
-        for (int i = 0; i < listValue.size(); ) {
-            try {
-                if (null != writer) {
-                    writer.write(getTime(true).toString() + "   " + System.currentTimeMillis());
+            while(i < listValue.size()) {
+                try {
+                    if (null != writer) {
+                        writer.write(getTime(true).toString() + "   " + System.currentTimeMillis());
+                        if (SLFConstants.isLogFileEncrypt) {
+                            writer.append(Arrays.toString((byte[])listValueByte.get(0)));
+                        } else {
+                            writer.append((CharSequence)listValue.get(0));
+                        }
 
-                    if (SLFConstants.isLogFileEncrypt) {
-                        writer.append(Arrays.toString(listValueByte.get(0)));
+                        writer.newLine();
+                        writer.newLine();
+                        writer.flush();
                     } else {
-                        writer.append(listValue.get(0));
+                        printer.e("SLFLogUtil: log", "write file error:writer is null", new Object[0]);
                     }
 
-                    writer.newLine(); // 回车
-                    writer.newLine(); // 空行
-                    writer.flush();
-                } else {
-                    printer.e("SLFLogUtil: log",
-                            "write file error:writer is null");
+                    move();
+                } catch (Exception var6) {
+                    printer.e("SLFLogUtil: log", "write file error:" + var6.getMessage(), new Object[0]);
+                    move();
+                    break;
                 }
-                move();
-            } catch (Exception e) {
-                printer.e("SLFLogUtil: log", "write file error:" + e.getMessage());
-                move();
-                break;
             }
 
+            toWrite = true;
         }
-        toWrite = true;
     }
 
-
-    /**
-     * 将写过的信息从list队列中删除
-     */
     private static void move() {
         if (null != listValue && !listValue.isEmpty()) {
             if (SLFConstants.isLogFileEncrypt) {
@@ -435,50 +372,40 @@ public final class SLFLogUtil extends Xlog {
             } else {
                 listValue.remove(0);
             }
-
         }
+
     }
 
-    /**
-     * 关闭文件流
-     */
     public static void closeFile() {
         if (canWirte) {
             try {
                 if (null != writer) {
                     writer.close();
                 }
+
                 if (null != fileWriter) {
                     fileWriter.close();
                 }
+
                 log = null;
-            } catch (Exception e) {
-                printer.e("SLFLogUtil: closeFile", "close file error:" + e.getMessage());
+            } catch (Exception var1) {
+                printer.e("SLFLogUtil: closeFile", "close file error:" + var1.getMessage(), new Object[0]);
             }
         }
+
     }
 
-    /**
-     * 关闭Log类
-     */
     public static void closeLog() {
         try {
             closeFile();
-        } catch (Exception e) {
-            printer.e("SLFLogUtil: closeLog", "close SLFLogUtil error:" + e.getMessage());
+        } catch (Exception var1) {
+            printer.e("SLFLogUtil: closeLog", "close SLFLogUtil error:" + var1.getMessage(), new Object[0]);
         }
+
         canWirte = false;
     }
 
-    /**
-     * 判断空间是否可用
-     *
-     * @param status 存储状态：0_sdcard存储 1_data目录下存储
-     * @param size   需要剩余的空间下线
-     * @return false 空间过小不可用 true 空间够大可用
-     */
-    @SuppressLint("LongLogTag")
-    @SuppressWarnings("deprecation")
+    @SuppressLint({"LongLogTag"})
     private static boolean isAvaiableSpace(int status, int size) {
         String sdcard;
         if (status == 0) {
@@ -486,19 +413,18 @@ public final class SLFLogUtil extends Xlog {
         } else {
             sdcard = Environment.getDataDirectory().getPath();
         }
+
         try {
             StatFs statFs = new StatFs(sdcard);
-            long blockSize = statFs.getBlockSize();
-            long blocks = statFs.getAvailableBlocks();
-            long availableSpare = (blocks * blockSize) / (1024 * 1024);
-            return size <= availableSpare;
-        } catch (Exception e) {
-            android.util.Log.d("SLFLogUtil:isAvaiableSpace", "Exception: " + e.getMessage());
+            long blockSize = (long)statFs.getBlockSize();
+            long blocks = (long)statFs.getAvailableBlocks();
+            long availableSpare = blocks * blockSize / 1048576L;
+            return (long)size <= availableSpare;
+        } catch (Exception var10) {
+            Log.d("SLFLogUtil:isAvaiableSpace", "Exception: " + var10.getMessage());
             return false;
         }
     }
-
-    private static SLFLogPrinter printer = new SLFLogPrinter();
 
     public static SLFLogSettings getSet() {
         return printer.getSet();
@@ -508,6 +434,7 @@ public final class SLFLogUtil extends Xlog {
         if (SLFConstants.isOpenConsoleLog) {
             printer.json(tag, json);
         }
+
     }
 
     public static void xml(String tag, String xml) {
@@ -517,5 +444,4 @@ public final class SLFLogUtil extends Xlog {
     public static SLFLogPrinter getPrinter() {
         return printer;
     }
-
 }

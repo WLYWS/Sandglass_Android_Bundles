@@ -28,11 +28,13 @@ public class SLFBaseApplication extends Application {
 
     private static List<Activity> mList = new LinkedList<>();//记录当前应用的Activity,用于退出整个应用销毁所有Activity
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        SLFApi.getInstance(this).init();
+        SLFApi.getInstance(this).init(true);
         initReceiver();
     }
 

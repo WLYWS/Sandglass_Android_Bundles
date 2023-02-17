@@ -344,11 +344,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Override
     public void onRequestNetFail(Object type) {
         showNetworkError();
+        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestNetFail:chatbot");
     }
 
     @Override
     public void onRequestSuccess(String result, Object type) {
         if (type instanceof SLFFaqWelcomeHotQResponseBean) {
+            SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestSuccess:chatbot");
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
         }
@@ -357,6 +359,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Override
     public void onRequestFail(String value, String failCode, Object type) {
         showCenterToast(getResources().getString(R.string.slf_common_request_error));
+        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestFail:chatbot");
     }
 
     /**

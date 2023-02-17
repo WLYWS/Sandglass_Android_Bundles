@@ -259,7 +259,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 SLFViewUtil.compressImage(SLFCropUtil.rotateImage(bmp, rotate), SLFConstants.CROP_IMAGE_PATH, fileName, 200);
                                 SLFViewUtil.compressImage(SLFCropUtil.rotateImage(thumBmp, rotate),SLFConstants.CROP_IMAGE_PATH, filethumbName, 50);
                             } catch (Exception e) {
-                                SLFLogUtil.e(TAG, "picPathList crop error::" + e.toString());
+                                SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":jpg jpeg picPathList crop error::" + e.toString());
                             }
                             picPathLists.get(i).setId(System.currentTimeMillis());
                             picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH + fileName);
@@ -291,6 +291,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                                 SLFViewUtil.compressImage(SLFCropUtil.rotateImage(thumBmp, rotate),SLFConstants.CROP_IMAGE_PATH, filethumbName, 50);
                             } catch (Exception e) {
                                 Log.e(TAG, Log.getStackTraceString(e));
+                                SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":png picPathList crop error::" + e.toString());
                             }
                             picPathLists.get(i).setOriginalPath(SLFConstants.CROP_IMAGE_PATH + fileName);
                             picPathLists.get(i).setLength(new File(SLFConstants.CROP_IMAGE_PATH + fileName).length());
@@ -304,11 +305,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         }
 
                     } else if (picPathLists.get(i).getMimeType().contains("video")) {
-                        SLFLogUtil.d("videocompress", "MimeType()---::" + picPathLists.get(i).getMimeType());
+                        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":video MimeType()---::" + picPathLists.get(i).getMimeType());
                         final String path = picPathLists.get(i).getOriginalPath();
-                        SLFLogUtil.d("videocompress", "path---::" + path);
                         final String thumPth = picPathLists.get(i).getThumbnailSmallPath();
-                        SLFLogUtil.d("videocompress", "thumPth---::" + thumPth);
 
                         String fileThumbleName = SLFUtils.getCharacterAndNumber() + "videoThumble.jpg";
                         String fileName = SLFUtils.getCharacterAndNumber() + ".mp4";
@@ -330,6 +329,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                             compressVideo(path, newFilePath, fileName, picPathLists.get(i).getId());
                         } catch (Exception e) {
                             Log.e(TAG, Log.getStackTraceString(e));
+                            SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":video picPathList compressvideo error::" + e.toString());
                         }
                     }
 
@@ -356,6 +356,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         MediaMetadataRetriever media = new MediaMetadataRetriever();
         media.setDataSource(videoPath);
         Bitmap bitmap = media.getFrameAtTime();
+        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":getVideoThumbnail::bitmap success" );
         return bitmap;
     }
 
@@ -374,10 +375,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         File f = new File(path);
         long fileSize = f.length();
-        SLFLogUtil.d("videocompress", "vido_width==before========" + width);
-        SLFLogUtil.d("videocompress", "vido_height==before========" + height);
-        SLFLogUtil.d("videocompress", "fileSize---before----:" + Formatter.formatFileSize(getContext(), fileSize));
-        SLFLogUtil.d("videocompress", "fileSize---before--old--:" + fileSize);
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":video_width==before::" + width);
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":video:" + height);
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":fileSize before:" + Formatter.formatFileSize(getContext(), fileSize));
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":fileSize before old:" + fileSize);
         SLFEventCompressVideo slfEventCompressVideo = new SLFEventCompressVideo(true, newFilePath, filename, id);
         if (Integer.parseInt(width) > Integer.parseInt(height)) {
             String temp = height;
@@ -396,7 +397,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
 
                     if (result) {
 
-                        SLFLogUtil.e("videocompress", "compress success");
+                        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::video compress success");
 
 
                         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
@@ -408,13 +409,13 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         File f = new File(newFilePath);
                         long fileSize = f.length();
 
-                        SLFLogUtil.d("videocompress", "vido_width==after========" + width);
-                        SLFLogUtil.d("videocompress", "vido_height==after========" + height);
-                        SLFLogUtil.d("videocompress", "fileSize---after----:" + Formatter.formatFileSize(getContext(), fileSize));
+                        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::vido_width after:" + width);
+                        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::vido_height after:" + height);
+                        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::fileSize after:" + Formatter.formatFileSize(getContext(), fileSize));
 
                         EventBus.getDefault().post(new SLFEventCompressVideo(true, path, filename, id));
                     } else {
-                        SLFLogUtil.e("videocompress", "compress faile");
+                        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":video compress faile");
                         String fileName = path.substring(path.lastIndexOf("/") + 1);
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -430,7 +431,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
 
                 @Override
                 public void onProgress(float percent) {
-                    SLFLogUtil.e("videocompress", "compress progress:::" + String.valueOf(percent) + "%");
+                    //SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":compress progress:::" + String.valueOf(percent) + "%");
                 }
             });
 
@@ -488,7 +489,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         selected_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                SLFLogUtil.d("yj", "click selected");
+                SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":click selected");
                 gotoFeedback();
                 finish();
             }
@@ -499,8 +500,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
 
                 if (position == mCurPhotoList.size() - 1) {
-                    SLFLogUtil.d("pos","selectedNum:::"+selectedNum);
-                    SLFLogUtil.d("pos","mPhotoListAdapter.getPicList().size():::"+mPhotoListAdapter.getPicList().size());
                     if (mPhotoListAdapter.getPicList().size()+1 <= selectedNum ) {
                         SLFPermissionManager.getInstance().chekPermissions(SLFPhotoGridActivity.this, permissionCamrea, permissionsCamraResult);
                     } else {
@@ -701,28 +700,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             SLFPhotoGridActivity.this.setResult(RESULT_OK, data);
             finish();
         } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            SLFLogUtil.d("yj", "camrea_request----imagecup");
         }
     }
-
-    //创建回调处理
-//创建监听权限的接口对象
-    SLFPermissionManager.IPermissionsResult permissionsResumeResult = new SLFPermissionManager.IPermissionsResult() {
-        @Override
-        public void passPermissons() {
-            // Toast.makeText(CameraActivity.this, "权限通过!", Toast.LENGTH_SHORT).show();
-            if (mCurPhotoList.isEmpty()) {
-                isEvent = false;
-                getPhotos();
-            }
-        }
-
-        @Override
-        public void forbitPermissons() {
-//            finish();
-            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
-        }
-    };
 
     SLFPermissionManager.IPermissionsResult permissionsRequestResult = new SLFPermissionManager.IPermissionsResult() {
         @Override
@@ -730,12 +709,13 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             // Toast.makeText(CameraActivity.this, "权限通过!", Toast.LENGTH_SHORT).show();
             isEvent = false;
             getPhotos();
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::preview permission pass goto preview page");
         }
 
         @Override
         public void forbitPermissons() {
 //            finish();
-            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -764,7 +744,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 intent.putExtra("direct_crop", isDirectCrop);
                 intent.putExtra("from", "photogrid");
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
-                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission pass goto preview page");
+                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::preview permission pass goto preview page");
             } else {
                 SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::no choose pictures");
                 showCenterToast("Please choose a picture!");
@@ -776,8 +756,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         public void forbitPermissons() {
 //            finish();
 
-            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission not pass goto preview page");
+//            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::preview permission not pass goto preview page");
             return;
         }
     };
@@ -787,13 +767,13 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         @Override
         public void passPermissons() {
                 takePhoto();
-                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission not pass goto take photo");
+                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::camera permission not pass goto take photo");
         }
 
         @Override
         public void forbitPermissons() {
-            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::permission not pass goto take photo");
+//            Toast.makeText(SLFPhotoGridActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::camera permission not pass goto take photo");
             return;
         }
     };

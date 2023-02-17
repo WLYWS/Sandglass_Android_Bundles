@@ -70,6 +70,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
 
     public SLFFeedbackAllHistoryFragment(int type) {
         this.type = type;
+        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","ActivityName:"+this.getClass().getSimpleName()+":fragment type :" + type);
     }
 
 
@@ -154,7 +155,6 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
         });
 
         adapter.setOnItemClickLitener((holder, position) -> {
-            SLFLogUtil.d("yj","position----"+position);
             gotoFeedbackDetail(position);
         });
     }
@@ -173,6 +173,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
                 slf_feedback_list_refreshLayout.setRefreshing(false);
             }
         }, 1000);
+        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onrefresh :" + type);
     }
 
     private void gotoFeedbackDetail(int position){
@@ -191,10 +192,12 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     public void onRequestNetFail (T bean) {
         initView();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
+        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestNetFail type:" + type);
     }
 
     @Override
     public void onRequestSuccess (String result, T bean) {
+        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestSuccess type:" + type);
         if(bean instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) bean).data.getRecods();
             if (newDatas != null && newDatas.size() > 0)
@@ -222,6 +225,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     public void onRequestFail (String value, String failCode, T bean) {
         initView();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));
+        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestFail type:" + type);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

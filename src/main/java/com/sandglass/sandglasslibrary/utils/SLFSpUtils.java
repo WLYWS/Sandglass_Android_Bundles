@@ -37,6 +37,78 @@ public class SLFSpUtils {
         }
     }
 
+    public static boolean put(String key, Object value) {
+        if (sp == null) {
+            return false;
+        } else {
+            SharedPreferences.Editor editor = sp.edit();
+            if (value == null) {
+                return false;
+            } else {
+                String type = value.getClass().getSimpleName();
+
+                boolean result;
+                try {
+                    byte var6 = -1;
+                    switch(type.hashCode()) {
+                        case -1808118735:
+                            if (type.equals("String")) {
+                                var6 = 3;
+                            }
+                            break;
+                        case -672261858:
+                            if (type.equals("Integer")) {
+                                var6 = 4;
+                            }
+                            break;
+                        case 2374300:
+                            if (type.equals("Long")) {
+                                var6 = 1;
+                            }
+                            break;
+                        case 67973692:
+                            if (type.equals("Float")) {
+                                var6 = 2;
+                            }
+                            break;
+                        case 1729365000:
+                            if (type.equals("Boolean")) {
+                                var6 = 0;
+                            }
+                    }
+
+                    switch(var6) {
+                        case 0:
+                            editor.putBoolean(key, (Boolean)value);
+                            break;
+                        case 1:
+                            editor.putLong(key, (Long)value);
+                            break;
+                        case 2:
+                            editor.putFloat(key, (Float)value);
+                            break;
+                        case 3:
+                            editor.putString(key, (String)value);
+                            break;
+                        case 4:
+                            editor.putInt(key, (Integer)value);
+                            break;
+                        default:
+                            String json = JSON.toJSONString(value);
+                            editor.putString(key, json);
+                    }
+
+                    result = true;
+                } catch (Exception var8) {
+                    result = false;
+                }
+
+                editor.apply();
+                return result;
+            }
+        }
+    }
+
     /**
      * 保存数据到SharedPreferences
      *

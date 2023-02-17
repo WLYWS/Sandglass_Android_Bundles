@@ -5,20 +5,22 @@ package com.sandglass.sandglasslibrary.utils.logutil;
  * time: 2022/12/10
  */
 public final class SLFLogSettings {
-
 	private int methodCount = 0;
 	private boolean showThreadInfo = false;
 	private boolean showTable = false;
 	private SLFLogAdapter logAdapter;
 	private boolean isLogOpen = true;
 
+	public SLFLogSettings() {
+	}
+
 	public SLFLogSettings showThreadInfo() {
-		showThreadInfo = true;
+		this.showThreadInfo = true;
 		return this;
 	}
 
 	public SLFLogSettings showTable() {
-		showTable = true;
+		this.showTable = true;
 		return this;
 	}
 
@@ -31,6 +33,7 @@ public final class SLFLogSettings {
 		if (methodCount < 0) {
 			methodCount = 0;
 		}
+
 		this.methodCount = methodCount;
 		return this;
 	}
@@ -41,24 +44,26 @@ public final class SLFLogSettings {
 	}
 
 	public int getMethodCount() {
-		return methodCount;
+		return this.methodCount;
 	}
 
 	public boolean isShowThreadInfo() {
-		return showThreadInfo;
+		return this.showThreadInfo;
 	}
 
 	public boolean isShowTable() {
-		return showTable;
+		return this.showTable;
 	}
+
 	public boolean isLogOpen() {
-		return isLogOpen;
+		return this.isLogOpen;
 	}
 
 	public SLFLogAdapter getLogAdapter() {
-		if (logAdapter == null) {
-			logAdapter = new SLFLogAdapter();
+		if (this.logAdapter == null) {
+			this.logAdapter = new SLFLogAdapter();
 		}
-		return logAdapter;
+
+		return this.logAdapter;
 	}
 }

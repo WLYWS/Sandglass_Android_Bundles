@@ -28,7 +28,6 @@ public class SLFSoftKeyBoardListener {
             Rect r = new Rect();
             rootView.getWindowVisibleDisplayFrame(r);
             int visibleHeight = r.height();
-            SLFLogUtil.i(TAG, "SoftKeyBoardListeners --> visibleHeight :" + visibleHeight);
             if (rootViewVisibleHeight == 0) {
                 rootViewVisibleHeight = visibleHeight;
                 return;

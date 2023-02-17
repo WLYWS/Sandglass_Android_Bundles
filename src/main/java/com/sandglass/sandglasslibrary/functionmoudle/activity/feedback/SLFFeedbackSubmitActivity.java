@@ -414,7 +414,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             // finish();
         } else if (view.getId() == R.id.slf_submit_feedback) {
             //TODO submit feedback
-            if (slfEditProblem.getText().toString().trim().length() < 10) {
+            if (slfEditProblem.getText().toString().length() < 10) {
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
                 return;
             }
@@ -1304,7 +1304,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         if (slfProblemOverviewLinear.getVisibility() == View.VISIBLE) {
             map.put("subCategory", slfProblemOverviewType.id);
         }
-        map.put("content", slfEditProblem.getText().toString().trim());
+        map.put("content", slfEditProblem.getText().toString());
         map.put("email", slfEmailEdit.getText().toString().trim());
         map.put("phone", "18611223366");
         if (slfSendLogCheck.isChecked()) {

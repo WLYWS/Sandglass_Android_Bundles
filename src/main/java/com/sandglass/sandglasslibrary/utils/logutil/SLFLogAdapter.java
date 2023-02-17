@@ -8,6 +8,8 @@ import android.util.Log;
  * time: 2022/12/10
  */
 class SLFLogAdapter {
+    SLFLogAdapter() {
+    }
     public void d(String tag, String message) {
         Log.d(tag, message);
     }

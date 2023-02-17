@@ -37,7 +37,6 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_success);
-        SLFLogUtil.d(TAG,"");
         logId = getIntent().getIntExtra(SLFConstants.LOGID,-1);
         initTitle();
         initView();

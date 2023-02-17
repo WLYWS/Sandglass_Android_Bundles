@@ -251,6 +251,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         @Override
         public void passPermissons() {
             // Toast.makeText(CameraActivity.this, "权限通过!", Toast.LENGTH_SHORT).show();
+            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":leaveMsg photo permission  pass !!!");
             SLFPhotoSelectorUtils.with(getContext())
                     .selectedNum(4 - slfMediaDataList.size())
                     .SLFMediaQuality(SLFMediaType.All)
@@ -267,7 +268,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         @Override
         public void forbitPermissons() {
 //            finish();
-            Toast.makeText(SLFContinueLeaveMsgActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SLFContinueLeaveMsgActivity.this, "权限不通过!", Toast.LENGTH_SHORT).show();
+            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":leaveMsg photo permission not pass");
         }
     };
 
@@ -275,7 +277,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
      * 上传图片或视频
      */
     private void uploadFiles() {
-        SLFLogUtil.d("yj", "slfMediaDataList::contiuneLeave::::uploadFiles:::" + slfMediaDataList.size());
+        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":leaveMsg upload files");
         String contentType = "";
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
@@ -296,6 +298,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 }
             } else {
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":leaveMsg upload files no network or uploadPath is null");
                 //slfaddAttachAdapter.notifyDataSetChanged();
             }
         }
@@ -475,7 +478,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     @Override
     public void onRequestNetFail(T type) {
-        SLFLogUtil.e(TAG, "continueleave  requestNetFail");
+        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":leaveMsg onRequestNetFail");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
@@ -493,26 +496,24 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     @Override
     public void onRequestSuccess(String result, T type) {
-        SLFLogUtil.d(TAG,"type==="+type.getClass().getName().toString());
-        SLFLogUtil.d(TAG,"type==="+(type instanceof SLFSendLeaveMsgRepsonseBean));
         if (type instanceof SLFUploadFileReponseBean) {
-            SLFLogUtil.e(TAG, "requestScucess:::contiuneLeave::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
+            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::requestScucess:::contiuneLeave::SLFUploadFileReponseBean::" + ":type:" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,6);
             if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
                 /**分配六个链接给图片和视频上传*/
                 for (int i = 0; i < 6; i++) {
                     SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                    SLFLogUtil.d("videocompress", "uploadPath--all-contiuneLeave---:::" + SLFCommonUpload.getListInstance().get(i));
+                    SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":uploadPath--all-contiuneLeave---:" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
             hideLoading();
         } else if (type instanceof String) {
             String code = (String) type;
-            SLFLogUtil.e(TAG, "requestScucess::contiuneLeave：:Integer::" + ":::type:::" + type);
+            SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestScucess::contiuneLeave：:Integer::" + ":::type:::" + type);
             resultUploadImageOrVideo(code);
             hideLoading();
         } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
-            SLFLogUtil.d(TAG, "createFeedback---contiuneLeave--success:" + ((SLFSendLeaveMsgRepsonseBean) type));
+            SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":createFeedback--request--success:" + ((SLFSendLeaveMsgRepsonseBean) type).toString());
             SLFLeaveMsgRecord slfLeaveMsgRecord = new SLFLeaveMsgRecord(slfEditProblem.getText().toString(),System.currentTimeMillis(),true,attrlistResponselist);
             Intent in = new Intent();
             in.putExtra(SLFConstants.LEAVE_MSG_DATA,slfLeaveMsgRecord);
@@ -525,7 +526,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
-        SLFLogUtil.e(TAG, "requestFail:::continueleave:::" + value + ":::failCode:::" + failCode);
+        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestFail:continueleave:" + value + ":failCode:" + failCode);
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
@@ -542,36 +543,33 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     }
 
     private synchronized void uploadvideo(String path, String filename, long id) {
-        SLFLogUtil.d("videocompress", "continueleave:::slfMediaDataList.size()::" + slfMediaDataList.size());
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::continueleave:slfMediaDataList.size()::" + slfMediaDataList.size());
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (id == slfMediaDataList.get(i).getId()) {
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
                 if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
                     if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
-                        SLFLogUtil.d("videocompress", "continueleave:::compelete---");
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                        SLFLogUtil.d("videocompress", "continueleave::::compelete--222222-");
                         SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFContinueLeaveMsgActivity.this);
                         SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFContinueLeaveMsgActivity.this);
-                        SLFLogUtil.d("videocompress", "continueleave:::compelete--33333-");
-
+                        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:compelete");
                     }
                 } else {
-                    SLFLogUtil.d("videocompress", "continueleave::::compelete---url---null");
+                    SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:compelete:url:null");
                     slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
                     //slfaddAttachAdapter.notifyDataSetChanged();
                 }
             } else {
-                SLFLogUtil.d("videocompress", "continueleave:::compelete---object--not--equals");
+                SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:::compelete object not equals");
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SLFEventCompressVideo event) {
-        SLFLogUtil.d("videocompress", "continueleave:::onevent----compelete");
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:onevent compelete");
         singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
         singleUploadVideoExecutor.execute(new Runnable() {
             @Override
@@ -585,7 +583,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SLFEventNoCompressVideo event) {
 
-        SLFLogUtil.d("videocompress", "continueleave::::onevent--no--compelete");
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:onevent no compelete");
         singleUploadVideoExecutor = Executors.newSingleThreadExecutor();
         singleUploadVideoExecutor.execute(new Runnable() {
             @Override
@@ -655,6 +653,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             }
             map.put("attrList", attrList);
         }
+        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":getSendHistory:map:"+map.toString());
         return map;
     }
 

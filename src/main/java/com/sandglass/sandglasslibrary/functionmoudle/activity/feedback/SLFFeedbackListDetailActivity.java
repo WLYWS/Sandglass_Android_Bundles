@@ -152,6 +152,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             public void onActivityResult(ActivityResult result) {
                 //此处是跳转的result回调方法
                 if (result.getData() != null && result.getResultCode() == Activity.RESULT_OK) {
+                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":onActivityReuslt:");
                     SLFLeaveMsgRecord slfLeaveMsgRecord = (SLFLeaveMsgRecord) result.getData().getSerializableExtra(SLFConstants.LEAVE_MSG_DATA);
                     slfLeaveMsgRecordList.add(slfLeaveMsgRecord);
                     adapter.notifyDataSetChanged();
@@ -228,6 +229,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             } else {
                 slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText() + "/" + slfRecode.getSubCategoryText());
             }
+        }else{
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":slfRecode is null:");
         }
         slf_feedback_bottom_relative.setOnClickListener(this);
 
@@ -275,9 +278,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             }
         });
 
-        adapter.setOnItemClickLitener((holder, position) -> {
-            SLFLogUtil.d("yj", "position----" + position);
-        });
     }
 
     /**
@@ -317,7 +317,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             finish();
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
-            //sumbitLogFiles();
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
                         SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
@@ -325,7 +324,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
-                    SLFLogUtil.d("yj", "complete--callback--");
+                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload log complete callback:");
                     appLogFileName = appFileName;
                     firmwareLogFileName = firmwarFileName;
                     sumbitLogFiles();
@@ -385,7 +384,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                                 @Override
                                 public void run() {
                                     File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
-                                    SLFLogUtil.d(TAG, "logFile.size------::" + logFile.length());
+                                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
                                     SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
                                 }
@@ -397,7 +396,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                     @Override
                     public void onFailure() {
                         isSubmit = false;
-                        SLFLogUtil.d("yj", "compress  error-----::");
+                        SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::application log compress  error::");
                     }
                 });
             }
@@ -417,7 +416,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     @Override
     public void onRequestNetFail(T type) {
-        SLFLogUtil.e(TAG, "feedbackDetail requestNetFail");
+        SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":FeedbackList Detail onRequestNetFail::");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
@@ -433,7 +432,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     public void onRequestSuccess(String result, T type) {
         hideLoading();
         if (type instanceof SLFUploadFileReponseBean) {
-            SLFLogUtil.e(TAG, "requestScucess::feedbackDetail::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
+            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail::SLFUploadFileReponseBean" + ":type:" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,3);
             if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
                 /**分配3个链接给log上传*/
@@ -444,18 +443,20 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             }
         }else if(type instanceof String){
             String code = (String) type;
-            SLFLogUtil.e(TAG, "requestScucess::feedbackDetail：:Integer::" + ":::type:::" + type);
+            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
             if ("0".equals(code)) {
-                SLFLogUtil.d(TAG, "logfile--feedbackDetail---upload---complete");
+                SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::logfile--feedbackDetail---upload---complete");
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL.replace("{id}",String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
             }
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
             slfRightTitle.setVisibility(View.GONE);
             EventBus.getDefault().post(new SLFSendLogSuceessEvent(true,position));
+            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFSendLeaveMsgRepsonseBean");
         }else if (type instanceof SLFFeedbackDetailItemResponseBean){
             pages = ((SLFFeedbackDetailItemResponseBean) type).data.getPages();
             showFeedBackAdapter((SLFFeedbackDetailItemResponseBean)type);
+            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFFeedbackDetailItemResponseBean");
         }
 
     }
@@ -476,7 +477,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
-        SLFLogUtil.e(TAG, "feedbackDetail requestOptionFail");
+        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackDetail requestOptionFail");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
@@ -515,7 +516,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             logAttrBeans.add(logAttrFirmwareBean);
             logAttrBeans.add(logAttrPluginBean);
             map.put("logAttrList", logAttrBeans);
-
+        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());
         return map;
     }
 }
