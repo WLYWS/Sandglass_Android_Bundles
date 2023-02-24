@@ -12,6 +12,7 @@ import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFragmentAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackAllHistoryFragment;
+import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistoryFragment;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -50,7 +51,7 @@ public class SLFFeedbackListActivity extends SLFBaseActivity {
 
 
         fragments = new Fragment[2];
-        fragments[0] = new SLFFeedbackAllHistoryFragment(IN_PROGRESS);
+        fragments[0] = new SLFFeedbackHistoryFragment(IN_PROGRESS);
         fragments[1] = new SLFFeedbackAllHistoryFragment(ALL);
 
         adapter = new SLFFragmentAdapter(getSupportFragmentManager(), fragments, nameList);
@@ -59,4 +60,6 @@ public class SLFFeedbackListActivity extends SLFBaseActivity {
 
         tabLayout.setViewPager(viewPager, nameList);
     }
+
+
 }

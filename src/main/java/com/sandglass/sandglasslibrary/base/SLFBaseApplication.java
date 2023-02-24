@@ -34,7 +34,7 @@ public class SLFBaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        SLFApi.getInstance(this).init(true);
+        SLFApi.getInstance(this).init(false);
         initReceiver();
     }
 

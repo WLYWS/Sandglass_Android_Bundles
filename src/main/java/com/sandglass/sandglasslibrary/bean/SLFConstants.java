@@ -87,4 +87,10 @@ public class SLFConstants {
     //历史留言对象
     public static final String LEAVE_MSG_DATA = "leave_msg_data";
 
+    //问题详情页
+    public static final String FAQ_TITLE_NAME = "faq_title_name";
+
+    //faq id
+    public static final String FAQ_ID = "faq_id";
+
 }

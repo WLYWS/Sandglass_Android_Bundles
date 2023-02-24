@@ -3,114 +3,138 @@
     android:id="@+id/slf_help_and_feedback_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/slf_first_page_bg">
 
     <include layout="@layout/slf_all_common_title" />
 
-    <TextView
-        android:id="@+id/slf_all_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/slf_title_bar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="14dp"
-        android:text="@string/slf_help_and_feedback_grid_title"
-        android:textColor="@color/slf_feedback_question_type_title"
-        android:textSize="13sp" />
+        android:id="@+id/slf_first_page_has_data_relate"
+        android:visibility="gone">
 
-    <LinearLayout
-        android:id="@+id/slf_all_devices_grid_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/slf_help_and_feedback_bottom"
-        android:layout_below="@id/slf_all_title"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <GridView
-            android:id="@+id/slf_all_devices_grid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:numColumns="3"
-            android:gravity="center"
-            android:stretchMode="columnWidth" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/slf_help_and_feedback_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/slf_help_feedback_bottom_bg"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-       >
-
-        <RelativeLayout
-            android:id="@+id/slf_help_and_feedback_chat_bot"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/slf_all_devices_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="28dp"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <ExpandableListView
+            android:id="@+id/slf_devices_category_question"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/slf_help_and_feedback_bottom"
+            android:layout_below="@+id/slf_all_devices_recycler"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <!--    <androidx.recyclerview.widget.RecyclerView-->
+        <!--        android:id="@+id/slf_devices_category_question"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"-->
+        <!--        android:layout_marginLeft="20dp"-->
+        <!--        android:layout_marginRight="20dp"-->
+        <!--        android:layout_above="@+id/slf_help_and_feedback_bottom"-->
+        <!--        android:layout_below="@+id/slf_all_devices_recycler"-->
+        <!--        android:overScrollMode="never"-->
+        <!--        android:scrollbars="none" />-->
+
+        <LinearLayout
+            android:id="@+id/slf_help_and_feedback_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/slf_first_page_bottom_bg"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/slf_goto_feedback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="3"
+                android:background="@drawable/slf_first_page_bottom_button_bg"
+                android:gravity="center"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="@string/slf_feedback_title_content"
+                android:textAllCaps="false"
+                android:textColor="@color/slf_theme_color" />
 
             <ImageView
                 android:id="@+id/slf_help_and_feedback_chat_bot_img"
-                android:layout_width="21dp"
-                android:layout_height="23dp"
-                android:layout_centerInParent="true"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:src="@drawable/slf_help_feedback_chatbot_img" />
+        </LinearLayout>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/slf_help_and_feedback_chat_bot_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/slf_help_and_feedback_chat_bot_img"
-                android:text="@string/slf_help_and_feedback_chat_bot"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-        </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/slf_first_page_no_network_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:visibility="visible">
 
-        <View
-            android:id="@+id/slf_help_and_feedback_line"
-            android:layout_width="2dp"
-            android:layout_height="22dp"
-            android:background="@drawable/slf_help_feedback_bottom_line"
-            android:layout_marginTop="17dp"
-            />
+        <ImageView
+            android:id="@+id/slf_first_page_no_item_img"
+            android:layout_width="227dp"
+            android:layout_height="161dp"
+            android:src="@drawable/slf_feedback_list_no_item" />
 
-        <RelativeLayout
-            android:id="@+id/slf_help_and_feedback_feedback"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:id="@+id/slf_first_page_no_network_title"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/slf_first_page_no_network"
+            android:textColor="@color/slf_first_page_no_network_warning"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:id="@+id/slf_first_page_no_network_describe"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/slf_first_page_no_network_sub"
+            android:textColor="@color/slf_sub_title_color"
+            android:textSize="20sp" />
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="17dp">
-
-            <ImageView
-                android:id="@+id/slf_help_and_feedback_feedback_img"
-                android:layout_width="21dp"
-                android:layout_height="23dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/slf_help_feedback_img" />
-
-            <TextView
-                android:id="@+id/slf_help_and_feedback_feedback_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/slf_help_and_feedback_feedback_img"
-                android:text="@string/slf_help_and_feedback_feed_back"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-        </RelativeLayout>
+            android:id="@+id/slf_first_page_try_again"
+            android:background="@drawable/slf_first_page_no_network_btn_bg"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:textSize="20sp"
+            android:textColor="@color/slf_first_page_try_again_text"
+            android:text="@string/slf_first_page_no_network_try_again"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:layout_marginTop="90dp"/>
     </LinearLayout>
 </RelativeLayout>

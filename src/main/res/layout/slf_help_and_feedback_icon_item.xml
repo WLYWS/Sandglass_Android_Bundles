@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="48dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="12dp"
+    >
+    <RelativeLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/slf_first_page_icon_relate">
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/slf_device_item_checked"
+        android:background="@drawable/slf_first_page_icon_item_bg"
+        android:button="@null"
+        android:clickable="false"/>
+
+    <ImageView
+        android:layout_width="31dp"
+        android:layout_height="35dp"
+        android:id="@+id/slf_device_item_icon_img"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"/>
+</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_device_item_name"
+        android:text="RVI"
+        android:textColor="@color/white"
+        android:layout_below="@+id/slf_first_page_icon_relate"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="12sp"
+        android:maxWidth="48dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"/>
+</RelativeLayout>

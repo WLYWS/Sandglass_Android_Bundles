@@ -67,6 +67,12 @@
     <string name="slf_feedback_list_send_log">Sent successfully.</string>
     <string name="slf_camera_mode_photo">PHOTO</string>
     <string name="slf_camera_mode_video">VIDEO</string>
+    <string name="slf_first_page_no_network">No Internet connection</string>
+    <string name="slf_first_page_no_network_sub">Please check your network connection and try again.</string>
+    <string name="slf_first_page_request_fail">Request Failed</string>
+    <string name="slf_first_page_request_fail_sub">The network is weak or the server is down, request for data failed</string>
+    <string name="slf_first_page_no_network_try_again">Try Again</string>
+    <string name="slf_faq_detail_btton_text">问题未解决，提交反馈</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>

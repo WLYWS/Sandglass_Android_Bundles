@@ -1,7 +1,9 @@
 package com.sandglass.sandglasslibrary.commonapi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Process;
 import android.os.StrictMode;
 import android.util.Log;
@@ -12,12 +14,14 @@ import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
+import com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFCrashHandler;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,6 +41,10 @@ public class SLFApi  {
 
     private boolean isDebug;
 
+    private SLFNetworkChangeReceiver mNetworkChangedReceiver;
+
+    private static List<Activity> mList = new LinkedList<>();//记录当前应用的Activity,用于退出整个应用销毁所有Activity
+
     public static SLFApi getInstance(Context context){
         if(mInstance==null){
             mInstance = new SLFApi(context);
@@ -47,6 +55,7 @@ public class SLFApi  {
 
     public SLFApi(Context context){
         mContext = context;
+        initReceiver();
     }
 
     public static Context getSLFContext(){
@@ -66,6 +75,7 @@ public class SLFApi  {
         long endTime = System.currentTimeMillis();
         SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
         SLFLogAPI.init();
+        SLFLogUtil.syncPermissonCreate();
         SLFLogUtil.e("ArouterInitTime:", endTime - startTime + "");
         SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
         List<File> logList = SLFFileUtils.listFileSortByName(SLFConstants.apiLogPath);
@@ -101,4 +111,36 @@ public class SLFApi  {
     public SLFUploadCompleteCallback getUploadLogCompleteCallBack(){
         return slfUploadCompleteCallback;
     }
+
+    private void initReceiver() {
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction("android.net.wifi.STATE_CHANGE");
+        mNetworkChangedReceiver = new SLFNetworkChangeReceiver();
+        mContext.registerReceiver(mNetworkChangedReceiver, filter);
+    }
+
+    public static void addActivity(Activity activity) {
+        mList.add(activity);
+    }
+
+    public static void exitAllActivity() {
+        try {
+            for (Activity activity : mList) {
+                if (activity != null) {
+                    activity.finish();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public static void exitActivity(Activity activity){
+        mList.remove(activity);
+    }
+
 }

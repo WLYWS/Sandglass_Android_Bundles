@@ -27,6 +27,11 @@
         </activity>
 
         <activity
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -93,7 +98,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 照相的特征 -->
+    <!-- 照相的权限 -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />

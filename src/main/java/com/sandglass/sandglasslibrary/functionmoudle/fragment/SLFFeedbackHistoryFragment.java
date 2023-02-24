@@ -2,7 +2,6 @@ package com.sandglass.sandglasslibrary.functionmoudle.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.metrics.Event;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
@@ -23,7 +21,6 @@ import com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
-import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 import com.sandglass.sandglasslibrary.moudle.event.SLFSendLogSuceessEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUnReadFeedbackEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUnReadtoReadAllEvent;
@@ -47,7 +44,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 @SuppressLint("ValidFragment")
-public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
+public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
 
     private int type;
 
@@ -69,10 +66,10 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     private boolean isInitData = false;
     private boolean isRefresh;
 
-    public SLFFeedbackAllHistoryFragment(){
+    public SLFFeedbackHistoryFragment(){
     }
 
-    public SLFFeedbackAllHistoryFragment(int type) {
+    public SLFFeedbackHistoryFragment(int type) {
         this.type = type;
         SLFLogUtil.d("SLFFeedbackAllHistoryFragment","ActivityName:"+this.getClass().getSimpleName()+":fragment type :" + type);
     }
@@ -187,7 +184,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             recodeList.get(position).setRead(1);
             adapter.notifyDataSetChanged();
         }
-        EventBus.getDefault().post(new SLFUnReadtoReadEvent(recodeList.get(position)));
+        EventBus.getDefault().post(new SLFUnReadtoReadAllEvent(recodeList.get(position)));
         in.putExtra(SLFConstants.RECORD_DATA_POSITION,position);
         in.putExtra(SLFConstants.RECORD_DATA,recodeList.get(position));
         startActivity(in);
@@ -252,9 +249,8 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
        }
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(SLFUnReadtoReadAllEvent event) {
+    public void onEvent(SLFUnReadtoReadEvent event) {
         for(int i=0;i<recodeList.size();i++){
             if(recodeList.get(i).getId() == event.slfRecord.getId()){
                 recodeList.get(i).setRead(1);
@@ -262,4 +258,5 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             }
         }
     }
+
 }

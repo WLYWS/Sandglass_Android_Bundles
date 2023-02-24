@@ -1321,7 +1321,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
             logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(8));
             if (!TextUtils.isEmpty(firmwareLogFileName)) {
-                logAttrAppBean.setFileName(firmwareLogFileName);
+                logAttrFirmwareBean.setFileName(firmwareLogFileName);
             }
             logAttrFirmwareBean.setContentType("application/zip");
             /*pluginLogBean*/
