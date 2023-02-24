@@ -32,4 +32,12 @@
             android:src="@drawable/slf_btn_icon_right"
             android:layout_centerVertical="true"
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/slf_child_devider"
+            android:layout_below="@+id/slf_problem_sub_title"
+            android:background="@drawable/slf_feedback_first_page_line"
+            android:visibility="gone"/>
 </RelativeLayout>

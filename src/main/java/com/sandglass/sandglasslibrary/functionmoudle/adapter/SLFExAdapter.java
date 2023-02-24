@@ -50,7 +50,6 @@ public class SLFExAdapter extends BaseExpandableListAdapter
                              ViewGroup parent) {
         // TODO Auto-generated method stub
         View view = convertView;
-        Log.i("++++++++++", "groupPosition="+groupPosition+","+"childPosition"+childPosition);
         if (null == view)
         {
             //获取LayoutInflater
@@ -60,11 +59,13 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         }
         TextView textView = (TextView)view.findViewById(R.id.slf_problem_sub_title);
         ImageView imgView = (ImageView) view.findViewById(R.id.slf_problem_sub);
+        View devider =view.findViewById(R.id.slf_child_devider);
         textView.setText(arrayList_memberData.get(groupPosition).getFaqList().get(childPosition).getTitle());
         imgView.setImageResource(R.drawable.slf_btn_icon_right);
-        if (selectChildItem == childPosition && selectParentItem == groupPosition)
-        {
-            Log.i("++++++++++", "点击："+groupPosition+","+childPosition);
+        if(isLastChild){
+            devider.setVisibility(View.VISIBLE);
+        }else{
+            devider.setVisibility(View.GONE);
         }
 
         return view;
