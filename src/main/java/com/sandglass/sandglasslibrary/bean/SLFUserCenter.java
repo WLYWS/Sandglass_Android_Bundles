@@ -1,16 +1,22 @@
 package com.sandglass.sandglasslibrary.bean;
 
+import static android.content.Context.ALARM_SERVICE;
 import static com.sandglass.sandglasslibrary.utils.SLFResourceUtils.getResources;
 
+import android.app.AlarmManager;
+import android.os.Build;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.sandglass.sandglasslibrary.BuildConfig;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSystemUtil;
 
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
@@ -37,9 +43,9 @@ public class SLFUserCenter {
     /**设备model*/
     public static String deviceModel="RVI";
     /**设备时区*/
-    public static String deviceTimeZone = "Asia/shanghai";
+    public static String deviceTimeZone = "";
     /**固件版本号*/
-    public static String firmwareVersion= "2.13.56";
+    public static String firmwareVersion= "0.0.0";
     /**phone type  1.ios,2.android*/
     public static int   phontType = 2;
     @SuppressWarnings("java:S1444")
@@ -74,11 +80,11 @@ public class SLFUserCenter {
     }
     /**获取手机型号*/
     public static String getPhoneModel(){
-        return android.os.Build.BRAND;
+        return Build.BRAND +" "+ Settings.Global.getString(SLFApi.getSLFContext().getContentResolver(), Settings.Global.DEVICE_NAME);
     }
     /**获取手机系统版本*/
     public static String getOSVersion(){
-        return android.os.Build.VERSION.RELEASE;
+        return "Android " + android.os.Build.VERSION.RELEASE;
     }
     /**获取手机唯一识别码*/
     public static String getPhone_id(){
@@ -97,6 +103,10 @@ public class SLFUserCenter {
 //        String uuid = SLFMD5Util.encode(getUniquePsuedoID() + System.currentTimeMillis() + (int) ((Math.random() * 9 + 1) * 10000));
 //        return uuid;
 //    }
+
+    public static String getDeviceTimeZone(){
+        return TimeZone.getDefault().getID();
+    }
 
     /**
      * 获取手机的唯一标识

@@ -21,7 +21,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.sandglass.sandglasslibrary.R;
@@ -257,7 +260,7 @@ public class SLFImageUtil {
 //		        .apply(RequestOptions.bitmapTransform(new ImageTransformation(context, shape).getTransformation()))
                 .transform(transformations)
                 //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-                .skipMemoryCache(false)
+                .skipMemoryCache(true)
                 //取消Glide自带的动画
                 .dontAnimate()
                 .into(img);
@@ -293,7 +296,8 @@ public class SLFImageUtil {
                 .error(errorImgResId)
                 .transform(transformations)
                 //注:是否跳过内存缓存，设置为false，如为true的话每次闪烁也正常~
-                .skipMemoryCache(false)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 //取消Glide自带的动画
                 .dontAnimate()
                 .into(img);

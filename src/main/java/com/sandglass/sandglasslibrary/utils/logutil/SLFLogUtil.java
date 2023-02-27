@@ -59,7 +59,7 @@ public final class SLFLogUtil extends Xlog {
     private SLFLogUtil() {
         com.tencent.mars.xlog.Log.appenderFlush(true);
         createFile(true);
-        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "WYZE_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
+        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
     }
@@ -73,7 +73,7 @@ public final class SLFLogUtil extends Xlog {
         com.tencent.mars.xlog.Log.appenderFlush(true);
         this.createFile(pluginId);
         com.tencent.mars.xlog.Log.appenderClose();
-        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "WYZE_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
+        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "SLF_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
         Log.i("API SLFLogUtil", "create new plugin instance");
@@ -82,7 +82,7 @@ public final class SLFLogUtil extends Xlog {
     public static void syncPermissonCreate() {
         createFile(true);
         com.tencent.mars.xlog.Log.appenderClose();
-        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "WYZE_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
+        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
     }
@@ -229,7 +229,7 @@ public final class SLFLogUtil extends Xlog {
     public static void setUserInfo() {
         if (canWirte) {
             StringBuilder buf = new StringBuilder();
-            buf = buf.append("WYZE_API ");
+            buf = buf.append("SLF_API ");
             buf.append("\n\n");
             buf = buf.append("UserName:").append(SLFUserCenter.user_id).append("  ");
             buf.append("\n\n");

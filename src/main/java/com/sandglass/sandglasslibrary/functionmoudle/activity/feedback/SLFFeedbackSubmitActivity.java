@@ -1296,7 +1296,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         TreeMap<String, Object> map = new TreeMap<>();
         map.put("deviceId", SLFUserCenter.deviceId);
         map.put("deviceModel", SLFUserCenter.deviceModel);
-        map.put("deviceTimezone", SLFUserCenter.deviceTimeZone);
+        map.put("deviceTimezone", SLFUserCenter.getDeviceTimeZone());
         map.put("serviceType", slfServiceType.id);
         if (slfProblemLinear.getVisibility() == View.VISIBLE) {
             map.put("category", slfProblemType.id);
@@ -1360,6 +1360,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         map.put("appVersion", SLFUserCenter.getAppVersionName());
         map.put("pluginVersion", SLFUserCenter.getPluginversion());
         map.put("phoneType", 2);
+        SLFLogUtil.d("yj","手机型号："+SLFUserCenter.getPhoneModel());
         map.put("phoneModel", SLFUserCenter.getPhoneModel());
         map.put("phoneOsVersion", SLFUserCenter.getOSVersion());
         map.put("phoneId", SLFUserCenter.getPhone_id());

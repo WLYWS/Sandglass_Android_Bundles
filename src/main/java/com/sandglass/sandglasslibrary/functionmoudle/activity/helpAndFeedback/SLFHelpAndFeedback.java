@@ -1,8 +1,9 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
@@ -105,6 +107,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_help_and_feedback);
+        SLFLogUtil.d("yj","apilog---:"+SLFConstants.apiLogPath);
         initTitle();
         initView();
         initRecyclerView();
@@ -250,7 +253,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     public void onRequestSuccess(String result, T type) {
         if(type instanceof SLFUnReadCount){
-            Log.d("yj","data===weidu===="+((SLFUnReadCount)type).data);
+            SLFLogUtil.d("yj","data===weidu===="+((SLFUnReadCount)type).data);
             if(((SLFUnReadCount)type).data >0){
                 /**有未读反馈*/
                 imgRight.setImageResource(R.drawable.slf_first_page_new_feedback);
@@ -258,7 +261,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
                 imgRight.setImageResource(R.drawable.slf_help_feedback_format);
             }
         }else if(type instanceof SLFFirstPageFAQResponseBean){
-            Log.d("yj","data===SLFFirstPageFAQResponseBean===="+((SLFFirstPageFAQResponseBean)type).data.toString());
+            SLFLogUtil.d("yj","data===SLFFirstPageFAQResponseBean===="+((SLFFirstPageFAQResponseBean)type).data.toString());
             List<SLFFirstPageFAQBean> newDatas =((SLFFirstPageFAQResponseBean)type).data;
             List<SLFFirstPageFAQBean> checkDatas = FaitleData(newDatas);
             deviceTypesList.clear();
@@ -324,7 +327,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         problemRecycler.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPostion, long id) {
-                Log.d("yj","groupPosition::::"+groupPosition+":::childPostion:::"+childPostion);
+                SLFLogUtil.d("yj","groupPosition::::"+groupPosition+":::childPostion:::"+childPostion);
                 slfExAdapter.setChildSelection(groupPosition,childPostion);
                 slfExAdapter.notifyDataSetChanged();
                 gotoFAQDetail(groupPosition,childPostion);

@@ -3,7 +3,6 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
@@ -26,6 +25,7 @@ import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +127,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     }
 
     private void getFaqDetaiData(){
-        Log.d("yj","url::"+SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
+        SLFLogUtil.d("yj","url::"+SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
         SLFHttpUtils.getInstance().executePathGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id, SLFFaqDetailResponseBean.class, this);
     }
@@ -195,6 +195,6 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
-        Log.e("yj","error____");
+        SLFLogUtil.e("yj","error____");
     }
 }
