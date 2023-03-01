@@ -309,6 +309,11 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
                              newDatas.get(i).getSub().remove(j);
                              j--;
                             problemSize--;
+                            if(problemSize==0){
+                                newDatas.remove(i);
+                                i--;
+                                dataSize--;
+                            }
                         }
                     }
                }

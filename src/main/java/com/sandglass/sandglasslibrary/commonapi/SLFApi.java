@@ -17,6 +17,7 @@ import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
 import com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFCrashHandler;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFDebugConfig;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -84,7 +85,9 @@ public class SLFApi  {
                 SLFFileUtils.delete((File)logList.get(i));
             }
         }
-
+        SLFCrashHandler.getInstance().init(mContext);
+        SLFDebugConfig.setOpenLogEnable(true);
+        SLFCrashHandler.getInstance().addCrashListener((ex, appId) -> SLFLogUtil.e("slf_crash", appId));
         // android 7.0系统解决拍照的问题
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());

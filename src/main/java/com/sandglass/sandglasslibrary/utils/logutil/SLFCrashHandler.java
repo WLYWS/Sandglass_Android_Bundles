@@ -3,6 +3,7 @@ package com.sandglass.sandglasslibrary.utils.logutil;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Looper;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -105,12 +106,13 @@ public class SLFCrashHandler implements Thread.UncaughtExceptionHandler {
 //        collectDeviceInfo(mContext)
         //添加自定义信息
 //        addCustomInfo()
-//        saveErrorMessages(ex)
+//        saveErrorMessages(ex);
         //使用Toast来显示异常信息
         new Thread() {
             @Override
             public void run() {
                 Looper.prepare();
+                //Toast.makeText(mContext,"很抱歉，程序出现异常，即将退出",Toast.LENGTH_LONG).show();
                 Looper.loop();
             }
         }.start();
