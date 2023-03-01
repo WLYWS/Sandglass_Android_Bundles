@@ -10,6 +10,7 @@ import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerAdatper;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public class SLFDeviceGridAdapter extends SLFRecyclerAdatper<SLFFirstPageFAQBean
             slf_device_item_icon_img.setImageResource(R.drawable.slf_center_default_icon);
         }
         slf_device_item_name.setText(object.getName());
+        SLFFontSet.setSLF_RegularFont(mContext, slf_device_item_name);
         slf_device_item_checked.setChecked(object.isChecked());
     }
 

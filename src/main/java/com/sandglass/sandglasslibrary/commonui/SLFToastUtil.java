@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFConvertUtil;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
@@ -76,6 +77,7 @@ public class SLFToastUtil {
         tvContent.setText(text);
         tvContent.setLayoutParams(tvContent.getLayoutParams());
         relativeLayout.measure(0, 0);
+        SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
 
         mToast.show();
     }
@@ -105,6 +107,7 @@ public class SLFToastUtil {
         //设置各个控件的点击响应
         TextView tvContent = viewParent.findViewById(R.id.tv_content);
         tvContent.setText(text);
+        SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
         viewParent.measure(0,0);
 
         //显示的位置
@@ -147,6 +150,7 @@ public class SLFToastUtil {
 
         TextView tvContent = relativeLayout.findViewById(R.id.slf_common_toast_tv_content);
         tvContent.setText(text);
+        SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
         tvContent.setLayoutParams(tvContent.getLayoutParams());
         relativeLayout.measure(0, 0);
 
@@ -172,6 +176,7 @@ public class SLFToastUtil {
 
         TextView tvContent = relativeLayout.findViewById(R.id.slf_center_submit_fail_content);
         tvContent.setText(SLFResourceUtils.getString(R.string.slf_submit_fail_text));
+        SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
         tvContent.setLayoutParams(tvContent.getLayoutParams());
         relativeLayout.measure(0, 0);
 
@@ -202,6 +207,7 @@ public class SLFToastUtil {
         relativeLayout.setLayoutParams(layoutParams);
         TextView tvContent = (TextView) relativeLayout.findViewById(R.id.slf_common_toast_tv_content);
         tvContent.setText(text);
+        SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
         tvContent.setLayoutParams(tvContent.getLayoutParams());
         relativeLayout.measure(0, 0);
         mToast.show();
@@ -276,6 +282,7 @@ public class SLFToastUtil {
                 //当点击popwindow以外的地方关闭窗口
                 tvContent = contentView.findViewById(R.id.slf_common_loading_tv_content);
                 ivLoading = contentView.findViewById(R.id.slf_common_laoding_iv_loading);
+                SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
                 SLFImageUtil.loadDefaultImage(act, R.drawable.slf_common_loading_img, ivLoading);
                 SLFViewUtil.slfImageViewStartAnim(ivLoading);
             }else if (type == LOADING_TYPE_BLACK){
@@ -359,6 +366,7 @@ public class SLFToastUtil {
             mLoadingView.setContentView(contentView);
             //当点击popwindow以外的地方关闭窗口
             tvContent = contentView.findViewById(R.id.slf_common_loading_tv_content);
+            SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
             ImageView ivLoading = contentView.findViewById(R.id.slf_common_laoding_iv_loading);
             SLFImageUtil.loadDefaultImage(act, R.drawable.slf_common_loading_img, ivLoading);
             SLFViewUtil.slfImageViewStartAnim(ivLoading);

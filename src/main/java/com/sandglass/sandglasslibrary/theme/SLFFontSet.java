@@ -1,6 +1,8 @@
 package com.sandglass.sandglasslibrary.theme;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
@@ -45,4 +47,14 @@ public class SLFFontSet {
         Typeface typeFace =Typeface.createFromAsset(context.getAssets(),SLF_BoldFont);
         textView.setTypeface(typeFace);
     }
+
+    public static String setStringFont(Context context,String s){
+        Typeface fontString = Typeface.createFromAsset(context.getAssets(),SLF_RegularFont);
+        Canvas mCanvas = new Canvas();
+        Paint paint = new Paint();
+        paint.setTypeface(fontString);
+        mCanvas.drawText(s,0,0,paint);
+        return s;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.base.SLFBaseApplication;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
@@ -27,6 +29,8 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
     private TextView slf_logid;
 
     private TextView slf_copy;
+
+    private TextView slf_feed_back_succeeded;
 
     private Button slf_finish_Btn;
 
@@ -48,12 +52,14 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
         iv_Back.setVisibility(View.GONE);
         TextView iv_title = findViewById(R.id.slf_tv_title_name);
         iv_title.setText(SLFResourceUtils.getString(R.string.slf_feedback_title_content));
+        SLFFontSet.setSLF_RegularFont(getContext(),iv_title);
     }
 
     private void initView(){
         slf_logid = findViewById(R.id.slf_feed_back_sucess_logid);
         slf_copy = findViewById(R.id.slf_feed_back_success_copy);
         slf_finish_Btn = findViewById(R.id.slf_success_finish);
+        slf_feed_back_succeeded = findViewById(R.id.slf_feed_back_succeeded);
         slf_logid.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_success_center_logid,logId));
         slf_copy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,5 +76,19 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
                 SLFBaseApplication.exitAllActivity();
             }
         });
+        SLFFontSet.setSLF_MediumFontt(getContext(),slf_feed_back_succeeded);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_logid);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_copy);
+        SLFFontSet.setSLF_MediumFontt(getContext(),slf_finish_Btn);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            SLFBaseApplication.exitAllActivity();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

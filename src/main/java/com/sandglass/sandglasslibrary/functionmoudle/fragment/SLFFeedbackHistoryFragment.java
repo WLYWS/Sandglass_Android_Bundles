@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
+import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 import com.sandglass.sandglasslibrary.moudle.event.SLFSendLogSuceessEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUnReadFeedbackEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUnReadtoReadAllEvent;
@@ -32,6 +35,8 @@ import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
+import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -52,6 +57,9 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
     private SLFSwipeRefreshLayout slf_feedback_list_refreshLayout;
     private SLFFeedbackItemBean slfFeedbackItemBean;
     private LinearLayout slf_histroy_no_item_linear;
+    private TextView slf_feedback_no_feedback;
+    private TextView slf_feedback_no_network;
+    private Button slf_feedback_list_try_again;
 
     private List<SLFRecord> recodeList = new ArrayList <>();
 
@@ -79,25 +87,59 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        initData();
         View view = inflater.inflate(R.layout.slf_list_history_feedback, container, false);
         slf_histroy_feedback_list = view.findViewById(R.id.slf_histroy_feedback_list);
         slf_feedback_list_refreshLayout = view.findViewById(R.id.slf_feedback_list_refreshLayout);
         slf_histroy_no_item_linear = view.findViewById(R.id.slf_feedback_list_no_item_linear);
+        slf_feedback_no_feedback = view.findViewById(R.id.slf_feedback_no_feedback);
+        slf_feedback_no_network = view.findViewById(R.id.slf_feedback_no_network);
+        slf_feedback_list_try_again = view.findViewById(R.id.slf_feedback_list_try_again);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_no_feedback);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_no_network);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_list_try_again);
+        slf_feedback_list_try_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initData();
+            }
+        });
         initRefreshLayout();
         initRecyclerView();
+        if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
+            initData();
+        }else{
+            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+            slf_feedback_no_network.setVisibility(View.VISIBLE);
+            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
     private void initView(){
-        if(recodeList==null||recodeList.size()==0){
-            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
-            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
-        }else{
-            slf_feedback_list_refreshLayout.setVisibility(View.VISIBLE);
-            slf_histroy_no_item_linear.setVisibility(View.GONE);
+            if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
+                if (recodeList == null || recodeList.size() == 0) {
+                    slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+                    slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+                    slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_no_item));
+                    slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_top_text_normal));
+                    slf_feedback_no_network.setVisibility(View.GONE);
+                    slf_feedback_list_try_again.setVisibility(View.GONE);
+                } else {
+                    slf_feedback_list_refreshLayout.setVisibility(View.VISIBLE);
+                    slf_histroy_no_item_linear.setVisibility(View.GONE);
+                }
+            }else{
+                slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+                slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+                slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+                slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+                slf_feedback_no_network.setVisibility(View.VISIBLE);
+                slf_feedback_list_try_again.setVisibility(View.VISIBLE);
+            }
         }
-    }
 
     private void initData() {
         isInitData = true;
@@ -256,6 +298,19 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
                 recodeList.get(i).setRead(1);
                 adapter.notifyDataSetChanged();
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFEventNetWorkChange event) {
+        if (event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)) {
+            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+            slf_feedback_no_network.setVisibility(View.VISIBLE);
+            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
+        } else {
         }
     }
 

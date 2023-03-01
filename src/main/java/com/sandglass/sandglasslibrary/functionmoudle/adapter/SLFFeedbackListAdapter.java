@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -83,6 +84,10 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 ((NormalHolder) holder).slf_feedback_list_item_bottom_title.setText(datas.get(position).getServiceTypeText()+"/"+datas.get(position).getCategoryText()+"/"+datas.get(position).getSubCategoryText());
             }
+            SLFFontSet.setSLF_RegularFont(context,((NormalHolder) holder).slf_feedback_list_item_title);
+            SLFFontSet.setSLF_RegularFont(context,((NormalHolder) holder).slf_feedback_list_item_date);
+            SLFFontSet.setSLF_RegularFont(context,((NormalHolder) holder).slf_feedback_list_item_content);
+            SLFFontSet.setSLF_RegularFont(context,((NormalHolder) holder).slf_feedback_list_item_bottom_title);
             //通过为条目设置点击事件触发回调
             if (mOnItemClickLitener != null) {
                 ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {

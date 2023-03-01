@@ -46,6 +46,7 @@ import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.theme.SLFSetTheme;
+import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
@@ -94,6 +95,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.activity_slfchat_bot);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         slfdbEngine = new SLFDBEngine(this);

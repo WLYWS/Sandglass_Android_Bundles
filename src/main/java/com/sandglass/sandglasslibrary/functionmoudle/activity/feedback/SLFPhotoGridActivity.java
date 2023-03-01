@@ -39,6 +39,7 @@ import com.sandglass.sandglasslibrary.moudle.SLFPhotoFolderInfo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventUpdatePhotolist;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCropUtil;
 import com.sandglass.sandglasslibrary.utils.SLFPermissionManager;
@@ -183,9 +184,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         } else {
             tvFileName.setText("All pictures");
         }
-
         selected_btn.setText(SLFResourceUtils.getString(R.string.slf_feedback_grid_bottom_right_no_selected));
-
+        SLFFontSet.setSLF_RegularFont(getContext(),tvFileName);
+        SLFFontSet.setSLF_RegularFont(getContext(),selected_btn);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_preview_text);
 
 //        selected_btn.updateBackGround(getColor());
 //        if (isDirectCrop) {

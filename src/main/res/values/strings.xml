@@ -81,11 +81,11 @@
     <string name="slf_help_and_feedback_chat_bot">Chat Bot</string>
 
     <string name="slf_help_and_feedback_feed_back">Feedback</string>
-    <string name="loading1">Loading   </string>
-    <string name="loading2">Loading.  </string>
-    <string name="loading3">Loading.. </string>
+    <string name="loading1">loading   </string>
+    <string name="loading2">loading.  </string>
+    <string name="loading3">loading.. </string>
 
 
     <!--Adapter utils-->
-    <string name="loading4">Loading...</string>
+    <string name="loading4">loading...</string>
 </resources>

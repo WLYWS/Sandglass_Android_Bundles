@@ -54,6 +54,7 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
@@ -93,6 +94,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * scollrview控件
      */
     private SLFScrollView slfScrollView;
+    /**
+     * 三级菜单标题
+     */
+    private TextView selector_service_title;
+    private TextView selector_problem_title;
+    private TextView selector_problem_overview_title;
+    private TextView problem_description_title;
+    private TextView selector_email_title;
     /**
      * service下拉控件
      */
@@ -278,6 +287,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void initView() {
         //SLFLogUtil.d(TAG,"feedbacksubmit initView");
         slfScrollView = findViewById(R.id.slf_feed_back_scroll_view);
+        selector_service_title = findViewById(R.id.selector_service_title);
+        selector_problem_title = findViewById(R.id.selector_problem_title);
+        selector_problem_overview_title = findViewById(R.id.selector_problem_overview_title);
+        problem_description_title = findViewById(R.id.problem_description_title);
+        selector_email_title = findViewById(R.id.selector_email_title);
         slfProblemLinear = findViewById(R.id.problem_type_seletor_linear);
         slfProblemOverviewLinear = findViewById(R.id.problem_overview_seletor_linear);
         slfEditProblem = findViewById(R.id.question_content);
@@ -301,6 +315,20 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         //slfEmailEdit.setOnKeyListener(emailKeyLister);
         slfEmailEdit.setOnTouchListener(emailTouchListener);
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
+        SLFFontSet.setSLF_RegularFont(getContext(),selector_service_title);
+        SLFFontSet.setSLF_RegularFont(getContext(),selector_problem_title);
+        SLFFontSet.setSLF_RegularFont(getContext(),selector_problem_overview_title);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfServiceSpinner);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfProblemSpinner);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfProblemOverviewSpinner);
+        SLFFontSet.setSLF_RegularFont(getContext(),problem_description_title);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfFontCount);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfEditProblem);
+        SLFFontSet.setSLF_RegularFont(getContext(),selector_email_title);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfEmailError);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfEmailEdit);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfSendLogCheck);
+        SLFFontSet.setSLF_MediumFontt(getContext(),slfSumbmit);
         setSubmitBtnCanClick(canSubmit());
         changeTextAndImg(slfServiceSpinner);
         changeTextAndImg(slfProblemSpinner);
@@ -330,6 +358,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfTitle = findViewById(R.id.slf_tv_title_name);
         slfBack = findViewById(R.id.slf_iv_back);
         slfTitle.setText(getResources().getText(R.string.slf_feedback_title_content));
+        SLFFontSet.setSLF_RegularFont(getContext(),slfTitle);
         slfBack.setOnClickListener(this);
     }
 

@@ -40,6 +40,7 @@ import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
@@ -75,6 +76,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
      * 标题栏标题文本
      */
     private TextView slfTitle;
+    private TextView slf_continue_leave_descripe_title;
     /**
      * 状态栏返回按钮
      */
@@ -182,6 +184,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfTitle = findViewById(R.id.slf_tv_title_name);
         slfBack = findViewById(R.id.slf_iv_back);
         slfTitle.setText(getResources().getText(R.string.slf_feedback_list_leave_message_bottom_text));
+        SLFFontSet.setSLF_MediumFontt(getContext(),slfTitle);
         slfBack.setOnClickListener(this);
     }
 
@@ -195,12 +198,17 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfPhotoSelector = findViewById(R.id.slf_continue_leave_gv_add_attach);
         slfFontCount = findViewById(R.id.slf_continue_leave_opinion_textnum);
         slf_send_btn = findViewById(R.id.slf_continue_leave_send);
+        slf_continue_leave_descripe_title = findViewById(R.id.slf_continue_leave_descripe_title);
         setListenerFotEditTexts();
         slfEditProblem.setOnTouchListener(new SLFEditTextScrollListener(slfEditProblem));
         slfEditProblem.addTextChangedListener(this);
         slf_send_btn.setOnClickListener(this);
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
         slfRecord = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfEditProblem);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfFontCount);
+        SLFFontSet.setSLF_MediumFontt(getContext(),slf_send_btn);
+        SLFFontSet.setSLF_MediumFontt(getContext(),slf_continue_leave_descripe_title);
     }
 
     /**

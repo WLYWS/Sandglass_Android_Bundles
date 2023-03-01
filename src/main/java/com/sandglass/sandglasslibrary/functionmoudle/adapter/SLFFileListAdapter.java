@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.moudle.SLFPhotoFolderInfo;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFViewHolder;
 
 import java.util.List;
@@ -47,10 +48,10 @@ public class SLFFileListAdapter extends BaseAdapter {
                 helper.setImageByUrl(R.id.slf_iv_photo, mFolderInfo.getCoverPhoto().getOriginalPath());
             }
             helper.setText(R.id.slf_tv_file_name, mFolderInfo.getFolderName()+" ("+mFolderInfo.getPhotoList().size()+")");
+            SLFFontSet.setSLF_RegularFont(context,helper.getView(R.id.slf_tv_file_name));
         }
 
         convertView = helper.getConvertView();
-
         return convertView;
     }
 

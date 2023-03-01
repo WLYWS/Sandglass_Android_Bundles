@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQProblemBean;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         ImageView imgView = (ImageView) view.findViewById(R.id.slf_problem_sub);
         View devider =view.findViewById(R.id.slf_child_devider);
         textView.setText(arrayList_memberData.get(groupPosition).getFaqList().get(childPosition).getTitle());
+        SLFFontSet.setSLF_RegularFont(context, textView);
         imgView.setImageResource(R.drawable.slf_btn_icon_right);
         if(isLastChild){
             devider.setVisibility(View.VISIBLE);
@@ -108,6 +110,7 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         }
         TextView textView = (TextView)view.findViewById(R.id.slf_problem_title);
         textView.setText(arrayList_memberData.get(groupPosition).getName());
+        SLFFontSet.setSLF_MediumFontt(context, textView);
         ImageView image=(ImageView) view.findViewById(R.id.slf_problem_isExtend);
         if(isExpanded)
         {

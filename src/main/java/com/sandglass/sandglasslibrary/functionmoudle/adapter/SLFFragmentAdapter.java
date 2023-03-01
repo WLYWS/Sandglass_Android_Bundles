@@ -1,8 +1,13 @@
 package com.sandglass.sandglasslibrary.functionmoudle.adapter;
 
+import android.text.SpannableStringBuilder;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 
 public class SLFFragmentAdapter extends FragmentPagerAdapter {
 	private String[] mTitle;
@@ -27,6 +32,9 @@ public class SLFFragmentAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public CharSequence getPageTitle(int position) {
-		return mTitle[position];
+		return SLFFontSet.setStringFont(SLFApi.getSLFContext(),mTitle[position]);
 	}
+
+
+
 }

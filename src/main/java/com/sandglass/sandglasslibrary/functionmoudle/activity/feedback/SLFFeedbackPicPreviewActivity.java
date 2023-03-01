@@ -17,6 +17,7 @@ import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.commonui.SLFPhotoViewPager;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 //import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -54,6 +55,8 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
         final RelativeLayout bottomlayout = findViewById(R.id.slf_bottom_use_relative);
         final TextView use_btn =findViewById(R.id.slf_use_photo);
         final TextView re_take = findViewById(R.id.slf_retake);
+        SLFFontSet.setSLF_RegularFont(getContext(),use_btn);
+        SLFFontSet.setSLF_RegularFont(getContext(),re_take);
         img_back.setOnClickListener(v -> finish());
         SLFPhotoViewPager mViewPager = findViewById(R.id.slf_vp_preview);
         leavePathLists = (ArrayList<SLFLeveMsgRecordMoudle>) getIntent().getSerializableExtra("leaveMsg");
@@ -83,6 +86,7 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
             SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::null");
             SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::null");
         }
+        SLFFontSet.setSLF_RegularFont(getContext(),tvTitle);
         final View viewParent = findViewById(R.id.slf_pic_preview_parent);
 
         if(from.equals("takephoto")){

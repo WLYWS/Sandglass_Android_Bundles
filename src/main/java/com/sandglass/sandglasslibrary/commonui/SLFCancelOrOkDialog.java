@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFClickableSpan;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -52,6 +53,11 @@ public class SLFCancelOrOkDialog extends Dialog {
         tbRight = findViewById(R.id.tb_right);
         tvOk = findViewById(R.id.tv_ok);
         tvCancel = findViewById(R.id.tv_cancel);
+        SLFFontSet.setSLF_RegularFont(context,tvTitle);
+        SLFFontSet.setSLF_RegularFont(context,tvContent);
+        SLFFontSet.setSLF_RegularFont(context,tbLeft);
+        SLFFontSet.setSLF_RegularFont(context,tbRight);
+        SLFFontSet.setSLF_RegularFont(context,tvCancel);
         tvContent.setVisibility(View.GONE);
 
         switch (style) {

@@ -20,6 +20,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryCommonB
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryDetailBean;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFBottomDialogListAdapter;
 import com.sandglass.sandglasslibrary.base.SLFBaseBottomDialog;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -57,6 +58,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
         slf_tvTitle = findViewById(R.id.slf_bottom_dialog_title);
         slf_cancel_img = findViewById(R.id.slf_bottom_dialog_title_img);
         slf_recycler = findViewById(R.id.slf_feed_back_bottom_dialog_list);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_tvTitle);
         mAdapter = new SLFBottomDialogListAdapter(context, list);
         slf_cancel_img.setOnClickListener(new View.OnClickListener() {
             @Override

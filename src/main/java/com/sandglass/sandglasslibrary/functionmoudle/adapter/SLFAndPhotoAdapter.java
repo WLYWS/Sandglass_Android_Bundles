@@ -14,6 +14,7 @@ import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFQuickAdapter;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFAdapterUtils;
 import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
@@ -45,6 +46,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
         } else {
             helper.getView().setVisibility(View.VISIBLE);
             helper.setText(R.id.slf_photo_count, SLFStringFormatUtil.getFormatString(R.string.slf_feedback_photo_count, getCount() - 1));
+            SLFFontSet.setSLF_RegularFont(mContext,helper.getView(R.id.slf_photo_count));
             if (TextUtils.isEmpty(object.getMimeType())) {
                 helper.setVisible(R.id.slf_iv_video, false);
                 helper.setVisible(R.id.slf_iv_delete, false);

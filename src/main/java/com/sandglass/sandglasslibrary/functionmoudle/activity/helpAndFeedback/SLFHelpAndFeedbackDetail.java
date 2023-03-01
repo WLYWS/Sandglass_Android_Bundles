@@ -1,6 +1,7 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -68,12 +70,13 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         mWebView = findViewById(R.id.slf_faq_detail_web);
         mFeedbackBtn = findViewById(R.id.slf_faq_to_feedback);
         mFeedbackBtn.setOnClickListener(this);
+        SLFFontSet.setSLF_MediumFontt(getContext(),mFeedbackBtn);
         WebSettings settings = mWebView.getSettings();
         // 設置WebView支持JavaScript
         settings.setJavaScriptEnabled(true);
         //支持自動適配
         settings.setLoadWithOverviewMode(true);
-        settings.setSupportZoom(true);  //支持放大縮小
+        settings.setSupportZoom(false);  //支持放大縮小
         settings.setBuiltInZoomControls(true); //顯示縮放按鈕
         settings.setBlockNetworkImage(true);// 把圖片加載放在最後來加載渲染
         settings.setAllowFileAccess(true); // 容許訪問文件
@@ -81,6 +84,8 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         settings.setGeolocationEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);/// 支持經過JS打開新窗口
+//        Typeface typeFace =Typeface.createFromAsset(getContext().getAssets(),"fonts/Rany.otf");
+//        settings.setfont(getAssets()+"/fonts/Rany.otf");
         mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
         //設置不讓其跳轉瀏覽器
         mWebView.setWebViewClient(new WebViewClient() {
@@ -123,6 +128,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         slfTitle = findViewById(R.id.slf_tv_title_name);
         slfBack = findViewById(R.id.slf_iv_back);
         slfTitle.setText(titleName);
+        SLFFontSet.setSLF_MediumFontt(getContext(),slfTitle);
         slfBack.setOnClickListener(this);
     }
 

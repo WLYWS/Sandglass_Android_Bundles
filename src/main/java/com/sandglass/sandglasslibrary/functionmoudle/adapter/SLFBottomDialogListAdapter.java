@@ -12,6 +12,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryCommonB
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryDetailBean;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerAdatper;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -46,7 +47,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
     private final int TYPE_LEFT_TOP_ROUND = 1;//左上角圆角
     private final int TYPE_LEFT_BOTTOM_ROUND = 2;//左下角圆角
     private final int TYPE_EMPTY_ROUND = 3;//四角都是直角
-    private final int TYPE_TITLE_TITLE = 4;//是年份
+    private final int TYPE_TITLE_TITLE = 4;//是标题
 
     private final int TYPE_CLEAN = 5;
     private final int TYPE_MOP = 6;
@@ -121,7 +122,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                     serviceTypeTitle.setText(((SLFCategoryCommonBean) object).name);
                     checkBox.setChecked(((SLFCategoryCommonBean) object).isChecked());
                 }
-
+                SLFFontSet.setSLF_RegularFont(mContext,serviceTypeTitle);
 
                 if(checkBox.isChecked()){
                     checkBox.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_bottom_dialog_selected));
@@ -134,6 +135,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
 
         } else {
             TextView serviceType_title = recyclerHolder.getView(R.id.slf_tv_content);
+            SLFFontSet.setSLF_RegularFont(mContext,serviceType_title);
             serviceType_title.setText((String) object);
         }
 

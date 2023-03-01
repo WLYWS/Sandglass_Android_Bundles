@@ -45,6 +45,7 @@ import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
@@ -107,7 +108,6 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_help_and_feedback);
-        SLFLogUtil.d("yj","apilog---:"+SLFConstants.apiLogPath);
         initTitle();
         initView();
         initRecyclerView();
@@ -130,6 +130,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         TextView title = findViewById(R.id.slf_tv_title_name);
         imgRight = findViewById(R.id.slf_iv_right);
         title.setText(SLFResourceUtils.getString(R.string.slf_help_and_feedback_bar_title));
+        SLFFontSet.setSLF_MediumFontt(this, title);
         imgRight.setVisibility(View.VISIBLE);
         imgRight.setImageResource(R.drawable.slf_help_feedback_format);
         setWH(imgRight,SLFResourceUtils.dp2px(getContext(),30),SLFResourceUtils.dp2px(getContext(),44));
@@ -152,6 +153,10 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         no_network_describe = findViewById(R.id.slf_first_page_no_network_describe);
         has_data_relative = findViewById(R.id.slf_first_page_has_data_relate);
         try_again_btn = findViewById(R.id.slf_first_page_try_again);
+        SLFFontSet.setSLF_MediumFontt(getContext(), feedbackBtn);
+        SLFFontSet.setSLF_RegularFont(getContext(), try_again_btn);
+        SLFFontSet.setSLF_RegularFont(getContext(), no_network_text);
+        SLFFontSet.setSLF_RegularFont(getContext(), no_network_describe);
         chatBotView.setOnClickListener(this);
         feedbackBtn.setOnClickListener(this);
         try_again_btn.setOnClickListener(this);

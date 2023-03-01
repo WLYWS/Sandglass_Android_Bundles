@@ -43,6 +43,7 @@ import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCompressUtil;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
@@ -84,6 +85,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 底部继续留言按钮
      */
     private RelativeLayout slf_feedback_bottom_relative;
+    private TextView slf_feedback_list_leave_message_bottom_text;
     /**
      * 更新加载的布局
      */
@@ -198,6 +200,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slf_feedback_question_type = findViewById(R.id.slf_feedback_list_item_type);
         slf_feedback_leave_list = findViewById(R.id.slf_feedback_list_leave_message_list);
         slf_feedback_bottom_relative = findViewById(R.id.slf_feedback_list_bottom_relative);
+        slf_feedback_list_leave_message_bottom_text = findViewById(R.id.slf_feedback_list_leave_message_bottom_text);
         slf_feedback_list_detail_refreshLayout = findViewById(R.id.slf_feedback_list_detail_refreshLayout);
         if (slfRecode != null) {
             if (slfRecode.getStatus() == 0) {
@@ -232,6 +235,10 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         }else{
             SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":slfRecode is null:");
         }
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_title_status);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_id);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_question_type);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_list_leave_message_bottom_text);
         slf_feedback_bottom_relative.setOnClickListener(this);
 
     }
@@ -290,6 +297,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slfTitle.setText(getResources().getText(R.string.slf_feedback_list_leave_message_title_text));
         slfBack.setOnClickListener(this);
         slfRightTitle.setOnClickListener(this);
+        SLFFontSet.setSLF_RegularFont(getContext(),slfTitle);
+        SLFFontSet.setSLF_MediumFontt(getContext(),slfRightTitle);
     }
 
 //    private List<SLFLeaveMsgRecord> getDatas(final int firstIndex, final int lastIndex) {
