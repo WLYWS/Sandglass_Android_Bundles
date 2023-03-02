@@ -1,7 +1,9 @@
 package com.sandglass.sandglasslibrary.functionmoudle.adapter;
 
 import android.text.SpannableStringBuilder;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -35,6 +37,8 @@ public class SLFFragmentAdapter extends FragmentPagerAdapter {
 		return SLFFontSet.setStringFont(SLFApi.getSLFContext(),mTitle[position]);
 	}
 
-
-
+	@Override
+	public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+		//super.destroyItem(container, position, object);
+	}
 }

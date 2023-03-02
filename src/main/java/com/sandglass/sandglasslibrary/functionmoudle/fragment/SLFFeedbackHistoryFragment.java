@@ -73,6 +73,7 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean isInitData = false;
     private boolean isRefresh;
+    private boolean isViewShow;
 
     public SLFFeedbackHistoryFragment(){
     }
@@ -86,6 +87,7 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SLFLogUtil.d("yj","oncreateview");
         EventBus.getDefault().register(this);
         View view = inflater.inflate(R.layout.slf_list_history_feedback, container, false);
         slf_histroy_feedback_list = view.findViewById(R.id.slf_histroy_feedback_list);
@@ -116,6 +118,15 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
             slf_feedback_list_try_again.setVisibility(View.VISIBLE);
         }
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            initData();
+        }else{
+        }
     }
 
     private void initView(){
@@ -197,9 +208,7 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
             }
         });
 
-        adapter.setOnItemClickLitener((holder, position) -> {
-            gotoFeedbackDetail(position);
-        });
+
     }
 
 
@@ -256,6 +265,9 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
             }
             initView();
             current_page++;
+        adapter.setOnItemClickLitener((holder, position) -> {
+            gotoFeedbackDetail(position);
+        });
         }
 
     @Override

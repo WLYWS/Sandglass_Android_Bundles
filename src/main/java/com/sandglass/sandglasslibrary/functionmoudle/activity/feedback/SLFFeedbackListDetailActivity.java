@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sandglass.sandglasslibrary.R;
@@ -247,12 +248,26 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-        adapter = new SLFFeedbackDetailAdapter(slfLeaveMsgRecordList, getContext());
+        adapter = new SLFFeedbackDetailAdapter(getContext(),slfLeaveMsgRecordList);
+//        adapter.setHasStableIds(true);
+
+//关闭动画效果
+        SimpleItemAnimator sa=(SimpleItemAnimator )slf_feedback_leave_list.getItemAnimator();
+        sa.setSupportsChangeAnimations(false);
+//设置动画为空
+        slf_feedback_leave_list.setItemAnimator(null);
+        slf_feedback_leave_list.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         slf_feedback_leave_list.setLayoutManager(mLayoutManager);
+//        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
+//        pool.setMaxRecycledViews(0,10);
+//        slf_feedback_leave_list.setRecycledViewPool(pool);
+//        slf_feedback_leave_list.getItemAnimator().setChangeDuration(0);
+        //只要设置为false，就可以不显示动画了，也就解决了闪烁问题
+        //((SimpleItemAnimator)slf_feedback_leave_list.getItemAnimator()).setSupportsChangeAnimations(false);
         slf_feedback_leave_list.setAdapter(adapter);
+        //adapter.setHasStableIds(true);
         //slf_histroy_feedback_list.setItemAnimator(new DefaultItemAnimator());
-
         slf_feedback_leave_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -267,14 +282,14 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                         }, 500);
                     }
 
-                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackDetailList(currentPage+1);
-                            }
-                        }, 500);
-                    }
+//                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackDetailList(currentPage+1);
+//                            }
+//                        }, 500);
+//                    }
                 }
             }
 
@@ -354,7 +369,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     @Override
     public void onRefresh() {
         slf_feedback_list_detail_refreshLayout.setRefreshing(true);
-        adapter.resetDatas();
+        //adapter.resetDatas();
         //updateRecyclerView(0, PAGE_COUNT);
         currentPage = 1;
         isRefresh = true;
@@ -384,7 +399,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             @Override
             public void run() {
                 /**压缩成zip*/
-                SLFCompressUtil.zipFile(SLFConstants.apiLogPath, "*", SLFConstants.feedbacklogPath + "pluginLog.zip", new SLFCompressUtil.OnCompressSuccessListener() {
+                SLFCompressUtil.zipFile(SLFConstants.apiLogPath, "*", SLFConstants.feedbacklogPath + "sdkLog.zip", new SLFCompressUtil.OnCompressSuccessListener() {
                     @Override
                     public void onSuccess() {
                         isSubmit = true;
@@ -392,7 +407,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
+                                    File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
                                     SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
@@ -482,6 +497,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 adapter.updateList(null, false,false);
             }
                 currentPage++;
+        slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
+
     }
 
     @Override
@@ -516,10 +533,10 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 logAttrAppBean.setFileName(firmwareLogFileName);
             }
             logAttrFirmwareBean.setContentType("application/zip");
-            /*pluginLogBean*/
+            /*sdkLogBean*/
             SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
             logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(0));
-            logAttrPluginBean.setFileName("pluginLog.zip");
+            logAttrPluginBean.setFileName("sdkLog.zip");
             logAttrPluginBean.setContentType("application/zip");
             logAttrBeans.add(logAttrAppBean);
             logAttrBeans.add(logAttrFirmwareBean);

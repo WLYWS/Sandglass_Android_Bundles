@@ -1144,7 +1144,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             @Override
             public void run() {
                 /**压缩成zip*/
-                SLFCompressUtil.zipFile(SLFConstants.apiLogPath, "*", SLFConstants.feedbacklogPath + "pluginLog.zip", new SLFCompressUtil.OnCompressSuccessListener() {
+                SLFCompressUtil.zipFile(SLFConstants.apiLogPath, "*", SLFConstants.feedbacklogPath + "sdkLog.zip", new SLFCompressUtil.OnCompressSuccessListener() {
                     @Override
                     public void onSuccess() {
                         isSubmit = true;
@@ -1152,7 +1152,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    File logFile = new File(SLFConstants.feedbacklogPath + "pluginLog.zip");
+                                    File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
                                     SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "6", SLFFeedbackSubmitActivity.this);
@@ -1353,10 +1353,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 logAttrFirmwareBean.setFileName(firmwareLogFileName);
             }
             logAttrFirmwareBean.setContentType("application/zip");
-            /*pluginLogBean*/
+            /*sdkLogBean*/
             SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
             logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(6));
-            logAttrPluginBean.setFileName("pluginLog.zip");
+            logAttrPluginBean.setFileName("sdkLog.zip");
             logAttrPluginBean.setContentType("application/zip");
             logAttrBeans.add(logAttrAppBean);
             logAttrBeans.add(logAttrFirmwareBean);

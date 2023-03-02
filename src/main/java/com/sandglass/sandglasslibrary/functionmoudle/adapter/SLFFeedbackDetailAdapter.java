@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -24,7 +25,10 @@ import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackPicPreviewActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
+import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerAdatper;
+import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
@@ -42,8 +46,9 @@ import java.util.List;
  */
 
 public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<SLFLeaveMsgRecord> datas;
+
     private Context context;
+    private List<SLFLeaveMsgRecord> datas;
     private int usernormalType = 0;
     private int workernormalType = 1;
     private int footType = 2;
@@ -57,9 +62,10 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
      */
     private ArrayList<SLFLeveMsgRecordMoudle> picPathLists = new ArrayList<>();
 
-    public SLFFeedbackDetailAdapter(List<SLFLeaveMsgRecord> datas, Context context) {
-        this.datas = datas;
+
+    public SLFFeedbackDetailAdapter(Context context, List<SLFLeaveMsgRecord> list) {
         this.context = context;
+        this.datas = list;
     }
 
     @Override
@@ -72,6 +78,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             return new FootHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_footview, parent, false));
         }
     }
+
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -133,21 +140,21 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                         ((UserNormalHolder) holder).slf_third_iv_video.setVisibility(View.GONE);
                     }
                 }
-                SLFMediaData  slfMediaData = new SLFMediaData();
+                SLFMediaData slfMediaData = new SLFMediaData();
                 for (int i = 0; i < datas.get(position).getAttrList().size(); i++) {
                     if (!TextUtils.isEmpty(datas.get(position).getAttrList().get(i).getThumbnailUrl())) {
                         if (i == 0) {
                             if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_first_iv_photo.getTag(R.id.slf_iv_photo))) {
 
                             } else {
-                                SLFImageUtil.loadImageShow(context,datas.get(position).getAttrList().get(0).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_first_iv_photo,((UserNormalHolder) holder).slf_frist_media_data,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-                                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
+                                SLFImageUtil.loadImageShow(context, datas.get(position).getAttrList().get(0).getThumbnailUrl(), (ImageView) ((UserNormalHolder) holder).slf_first_iv_photo, ((UserNormalHolder) holder).slf_frist_media_data, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                                        , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(0).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         SLFLogUtil.d("yj", "frist image");
-                                        gotoPicPriewActivity(position,0);
+                                        gotoPicPriewActivity(position, 0);
                                     }
                                 });
                             }
@@ -155,14 +162,14 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                             if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_second_iv_photo.getTag(R.id.slf_iv_photo))) {
 
                             } else {
-                                SLFImageUtil.loadImageShow(context,datas.get(position).getAttrList().get(1).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_second_iv_photo,((UserNormalHolder) holder).slf_frist_media_data,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-                                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
+                                SLFImageUtil.loadImageShow(context, datas.get(position).getAttrList().get(1).getThumbnailUrl(), (ImageView) ((UserNormalHolder) holder).slf_second_iv_photo, ((UserNormalHolder) holder).slf_frist_media_data, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                                        , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         SLFLogUtil.d("yj", "second image");
-                                        gotoPicPriewActivity(position,1);
+                                        gotoPicPriewActivity(position, 1);
                                     }
                                 });
                             }
@@ -170,14 +177,14 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                             if (datas.get(position).getAttrList().get(i).getThumbnailUrl().equals(((UserNormalHolder) holder).slf_third_iv_photo.getTag(R.id.slf_iv_photo))) {
 
                             } else {
-                                SLFImageUtil.loadImageShow(context,datas.get(position).getAttrList().get(i).getThumbnailUrl(),(ImageView) ((UserNormalHolder) holder).slf_third_iv_photo,((UserNormalHolder) holder).slf_frist_media_data,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-                                        , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
+                                SLFImageUtil.loadImageShow(context, datas.get(position).getAttrList().get(i).getThumbnailUrl(), (ImageView) ((UserNormalHolder) holder).slf_third_iv_photo, ((UserNormalHolder) holder).slf_frist_media_data, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                                        , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setTag(R.id.slf_iv_photo, datas.get(position).getAttrList().get(1).getThumbnailUrl());
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         SLFLogUtil.d("yj", "third image");
-                                        gotoPicPriewActivity(position,2);
+                                        gotoPicPriewActivity(position, 2);
                                     }
                                 });
                             }
@@ -196,9 +203,9 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                 ((UserNormalHolder) holder).slf_feedback_detail_show_photo_linear.setVisibility(View.GONE);
             }
             ((UserNormalHolder) holder).slf_feedback_detail_question_content.setText(datas.get(position).getContent());
-            ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(context,datas.get(position).getReplyTs()));
-            SLFFontSet.setSLF_RegularFont(context,((UserNormalHolder) holder).slf_feedback_detail_question_content);
-            SLFFontSet.setSLF_RegularFont(context,((UserNormalHolder) holder).slf_feedback_detail_user_time);
+            ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(context, datas.get(position).getReplyTs()));
+            SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_question_content);
+            SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_user_time);
             //通过为条目设置点击事件触发回调
 //            if (mOnItemClickLitener != null) {
 //                ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -210,9 +217,9 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 //            }
         } else if (holder instanceof WorkerNormalHolder) {
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content.setText(datas.get(position).getContent());
-            ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(context,datas.get(position).getReplyTs()));
-            SLFFontSet.setSLF_RegularFont(context,((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content);
-            SLFFontSet.setSLF_RegularFont(context,((WorkerNormalHolder) holder).slf_feedback_detail_worker_time);
+            ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(context, datas.get(position).getReplyTs()));
+            SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content);
+            SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time);
         } else {
             if(isRefresh){
                 fadeTips = true;
@@ -237,7 +244,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                 } else {
                     if (datas.size() > 0) {
                         //((FootHolder) holder).tips.setText("没有更多数据了");
-                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
+                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -245,7 +252,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                                 ((FootHolder) holder).progressBar.clearAnimation();
                                 ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
                                 fadeTips = true;
-                                hasMore = true;
+                                hasMore = false;
                             }
                         }, 500);
                     } else {
@@ -255,6 +262,30 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
             }
         }
+
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == getItemCount() - 1) {
+            return footType;
+        } else {
+            if (datas.get(position).isUser()) {
+                return usernormalType;
+            } else {
+                return workernormalType;
+            }
+        }
+    }
+
+    public int getType(int position) {
+        return 0;
     }
 
     @Override
@@ -262,21 +293,38 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         return datas.size() + 1;
     }
 
-    public int getRealLastPosition() {
-        return datas.size();
-    }
-
-
     public void updateList(List<SLFLeaveMsgRecord> newDatas, boolean hasMore,boolean isRefresh) {
         if (newDatas != null) {
-            datas.addAll(newDatas);
+            if(isRefresh){
+                datas.clear();
+                datas.addAll(newDatas);
+            }else {
+                datas.addAll(newDatas);
+            }
         }
         this.hasMore = hasMore;
         this.isRefresh = isRefresh;
         notifyDataSetChanged();
+        //notifyItemRangeChanged(0,10);
     }
 
-    class UserNormalHolder extends RecyclerView.ViewHolder {
+    public boolean isFadeTips() {
+        return fadeTips;
+    }
+
+
+    private void gotoPicPriewActivity(int position,int index) {
+        picPathLists.clear();
+        picPathLists.addAll(datas.get(position).getAttrList());
+        Intent in = new Intent();
+        in.putExtra("from", "feedback");
+        in.setClass(context, SLFFeedbackPicPreviewActivity.class);
+        in.putExtra("position", index);
+        in.putExtra("leaveMsg",picPathLists);
+        context.startActivity(in);
+    }
+
+    class UserNormalHolder extends SLFRecyclerHolder {
         /**
          * user
          */
@@ -293,6 +341,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         private ImageView slf_third_iv_photo;
         private ImageView slf_third_iv_video;
         private LinearLayout slf_feedback_detail_show_photo_linear;
+        private RelativeLayout itemview;
 
 
         private View itemView;
@@ -301,6 +350,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             this.itemView = itemView;
             /**user*/
+            itemview = itemView.findViewById(R.id.slf_user_feedback);
             slf_feedback_list_detail_user_header_img = itemView.findViewById(R.id.slf_feedback_list_detail_user_header_img);
             slf_feedback_detail_question_content = itemView.findViewById(R.id.slf_feedback_detail_question_content);
             slf_feedback_detail_user_time = itemView.findViewById(R.id.slf_feedback_detail_user_time);
@@ -317,13 +367,14 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    class WorkerNormalHolder extends RecyclerView.ViewHolder {
+    class WorkerNormalHolder extends SLFRecyclerHolder {
         /**
          * worker
          */
         private ImageView slf_feedback_list_detail_worker_header_img;
         private TextView slf_feedback_detail_worker_question_content;
         private TextView slf_feedback_detail_worker_time;
+        private RelativeLayout itemview;
 
 
         private View itemView;
@@ -332,13 +383,14 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             this.itemView = itemView;
             /**worker*/
+            itemview = itemView.findViewById(R.id.slf_worker_feedback);
             slf_feedback_list_detail_worker_header_img = itemView.findViewById(R.id.slf_feedback_list_detail_worker_header_img);
             slf_feedback_detail_worker_question_content = itemView.findViewById(R.id.slf_feedback_detail_worker_question_content);
             slf_feedback_detail_worker_time = itemView.findViewById(R.id.slf_feedback_detail_worker_time);
         }
     }
 
-    class FootHolder extends RecyclerView.ViewHolder {
+    class FootHolder extends SLFRecyclerHolder {
         private ProgressBar progressBar;
         private LinearLayout slf_more_loading_linear;
 
@@ -349,27 +401,6 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    public boolean isFadeTips() {
-        return fadeTips;
-    }
-
-    public void resetDatas() {
-        datas = new ArrayList<>();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return footType;
-        } else {
-            if (datas.get(position).isUser()) {
-                return usernormalType;
-            } else {
-                return workernormalType;
-            }
-        }
-    }
-
     //设置回调接口
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
@@ -377,16 +408,5 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
-    }
-
-    private void gotoPicPriewActivity(int position,int index) {
-        picPathLists.clear();
-        picPathLists.addAll(datas.get(position).getAttrList());
-        Intent in = new Intent();
-        in.putExtra("from", "feedback");
-        in.setClass(context, SLFFeedbackPicPreviewActivity.class);
-        in.putExtra("position", index);
-        in.putExtra("leaveMsg",picPathLists);
-        context.startActivity(in);
     }
 }

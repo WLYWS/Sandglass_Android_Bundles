@@ -109,17 +109,27 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
         slf_feedback_list_try_again.setVisibility(View.GONE);
         initRefreshLayout();
         initRecyclerView();
-        if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
-            initData();
-        }else{
-            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
-            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
-            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
-            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
-            slf_feedback_no_network.setVisibility(View.VISIBLE);
-            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
-        }
+//        if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
+//            initData();
+//        }else{
+//            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+//            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+//            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+//            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+//            slf_feedback_no_network.setVisibility(View.VISIBLE);
+//            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
+//        }
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+           initData();
+        }else{
+
+        }
     }
 
     private void initView(){
@@ -201,9 +211,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             }
         });
 
-        adapter.setOnItemClickLitener((holder, position) -> {
-            gotoFeedbackDetail(position);
-        });
+
     }
 
 
@@ -260,6 +268,9 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             }
             initView();
             current_page++;
+            adapter.setOnItemClickLitener((holder, position) -> {
+            gotoFeedbackDetail(position);
+        });
         }
 
     @Override
