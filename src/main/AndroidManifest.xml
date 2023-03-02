@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wyze.sandglasslibrary"
+    package="com.sandglass.sandglasslibrary"
     >
 
     <application
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         >
         <activity
-            android:name=".functionmoudle.activity.chatbot.SLFChatBotActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,48 +28,48 @@
         </activity>
 
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFFeedbackSubmitActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFPhotoGridActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFPhotoGridActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFPhotoPreviewActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackPicPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFFeedbackPicPreviewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name=".functionmoudle.activity.feedback.SLFFeedbackSuccessActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFFeedbackListActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFFeedbackListDetailActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFContinueLeaveMsgActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFContinueLeaveMsgActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".functionmoudle.activity.feedback.SLFTakePhotoActivity"
+            android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFTakePhotoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <provider
-            android:name=".utils.SLFFileProvider"
+            android:name="com.sandglass.sandglasslibrary.utils.SLFFileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -96,7 +99,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 照相的特征 -->
+    <!-- 照相的权限 -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />

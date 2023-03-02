@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.wyze.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity"
+    tools:context="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity"
     tools:ignore="MergeRootFrame">
     <FrameLayout
         android:layout_width="match_parent"

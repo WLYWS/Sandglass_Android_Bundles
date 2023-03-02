@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ CopyRight(c) SLF
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_checked="true"
+        android:drawable="@drawable/slf_first_page_icon_item_selected_bg" />
+    <item android:state_enabled="true" android:state_checked="false"
+        android:drawable="@drawable/slf_first_page_bottom_button_bg" />
+    <item android:state_enabled="false" android:state_checked="true"
+        android:drawable="@drawable/slf_first_page_icon_item_selected_bg"/>
+    <item android:state_enabled="false" android:state_checked="false"
+        android:drawable="@drawable/slf_first_page_bottom_button_bg"/>
+    <item android:drawable="@drawable/slf_first_page_bottom_button_bg"/>
+
+</selector>

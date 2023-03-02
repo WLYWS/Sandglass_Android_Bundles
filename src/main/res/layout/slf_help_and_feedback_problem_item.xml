@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/slf_problem_item_relate"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_problem_title"
+        android:textSize="16sp"
+        android:textColor="@color/slf_first_page_category_item_text"
+        android:text="Register/Login/Setting"
+        android:layout_centerVertical="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="10dp"
+        android:id="@+id/slf_problem_isExtend"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slf_worker_feedback"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
@@ -13,7 +14,7 @@
         android:src="@drawable/slf_feedback_list_detail_worker_header"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/slf_feedback_detail_worker_leave_relatvie"
         android:background="@drawable/slf_feedback_list_detail_card_bg"
@@ -23,7 +24,7 @@
 
         <TextView
             android:id="@+id/slf_feedback_detail_worker_question_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:gravity="left|top"
@@ -41,6 +42,7 @@
             android:textSize="12sp"
             android:paddingLeft="12dp"
             android:layout_marginTop="2dp"
+            android:paddingRight="12dp"
             android:textColor="@color/slf_detail_card_time_color"
             android:text="12/11/2022 7:23 AM"
             android:paddingBottom="12dp"/>

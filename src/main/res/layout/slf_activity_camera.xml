@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         >
 
-        <com.wyze.sandglasslibrary.uiutils.SLFHorizontalPickerViewFromLayout
+        <com.sandglass.sandglasslibrary.uiutils.SLFHorizontalPickerViewFromLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:id="@+id/slf_camera_mode_tab"
@@ -70,7 +70,7 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-<!--        <com.wyze.sandglasslibrary.commonui.SLFRecordButton-->
+<!--        <com.sandglass.sandglasslibrary.commonui.SLFRecordButton-->
 <!--            android:id="@+id/iv_take_photo"-->
 <!--            android:layout_width="100dp"-->
 <!--            android:layout_height="100dp"-->

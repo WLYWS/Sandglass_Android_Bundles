@@ -47,7 +47,7 @@
                 android:src="@mipmap/slf_chat_bot_update"
                 />
         </RelativeLayout>
-        <com.wyze.sandglasslibrary.commonui.SLFNoScrollListview
+        <com.sandglass.sandglasslibrary.commonui.SLFNoScrollListview
             android:id="@+id/lv_faq_list"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="12dp"

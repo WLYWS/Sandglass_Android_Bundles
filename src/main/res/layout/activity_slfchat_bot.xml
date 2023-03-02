@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chat_bot_root"
     android:layout_width="match_parent"
@@ -14,7 +14,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/slf_chat_bot_all_linear">
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/sw_faq_recycle"
             android:layout_width="match_parent"
@@ -31,8 +32,9 @@
             android:orientation="vertical"
             android:clickable="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.wyze.sandglasslibrary.commonui.SLFClickEditText
+            android:layout_height="wrap_content"
+            >
+            <com.sandglass.sandglasslibrary.commonui.SLFClickEditText
                 android:layout_marginTop="8dp"
                 android:id="@+id/et_faq_input"
                 android:paddingRight="16dp"
@@ -53,8 +55,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:singleLine="false"
+                android:maxHeight="90dp"
+                android:scrollbarSize="2dp"
+                android:scrollbarThumbVertical="@color/slf_complete_text_color"
+                android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+               />
         </LinearLayout>
     </LinearLayout>
 <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
@@ -87,4 +94,4 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="48dp"/>-->
 
-</com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout>
+</com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout>

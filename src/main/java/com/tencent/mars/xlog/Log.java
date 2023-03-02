@@ -6,7 +6,7 @@ import android.os.Looper;
 import android.os.Process;
 import android.widget.Toast;
 
-import com.wyze.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 
 /**

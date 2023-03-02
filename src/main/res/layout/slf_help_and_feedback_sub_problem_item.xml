@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/slf_problem_item_relate"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slf_problem_sub_title"
+        android:textSize="14sp"
+        android:textColor="@color/slf_first_page_sub_item_text"
+        android:text="Register/Login/Setting"
+        android:layout_centerVertical="true"
+        android:maxLines="2"
+        android:maxWidth="306dp"
+        android:layout_toLeftOf="@+id/slf_problem_sub"
+        android:layout_alignParentLeft="true"
+        android:ellipsize="end"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        />
+
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:id="@+id/slf_problem_sub"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/slf_btn_icon_right"
+            android:layout_centerVertical="true"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/slf_child_devider"
+            android:layout_below="@+id/slf_problem_sub_title"
+            android:background="@drawable/slf_feedback_first_page_line"
+            android:visibility="gone"/>
+</RelativeLayout>

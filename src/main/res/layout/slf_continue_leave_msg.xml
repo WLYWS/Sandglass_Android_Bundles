@@ -1,4 +1,4 @@
-<com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,7 @@
 
     <include layout="@layout/slf_all_common_title" />
 
-    <com.wyze.sandglasslibrary.commonui.SLFScrollView
+    <com.sandglass.sandglasslibrary.commonui.SLFScrollView
         android:id="@+id/slf_continue_leave_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +42,8 @@
                 android:text="@string/slf_feedback_font_count"
                 android:textColor="@color/slf_feedback_question_type_title"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <RelativeLayout
                 android:id="@+id/slf_continue_leave_relative"
@@ -64,6 +65,9 @@
                     android:inputType="textVisiblePassword|textMultiLine"
                     android:maxLength="1000"
                     android:padding="16dp"
+                    android:scrollbarSize="2dp"
+                    android:scrollbarThumbVertical="@color/slf_complete_text_color"
+                    android:scrollbars="vertical"
                     android:textColor="@color/white"
                     android:textColorHint="@color/slf_feedback_page_child_text"
                     android:textSize="14sp" />
@@ -100,7 +104,7 @@
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
-    </com.wyze.sandglasslibrary.commonui.SLFScrollView>
+    </com.sandglass.sandglasslibrary.commonui.SLFScrollView>
     <Button
         android:id="@+id/slf_continue_leave_send"
         android:layout_width="match_parent"
@@ -116,4 +120,4 @@
         android:text="@string/slf_feedback_list_continue_leave_message_bottom_text"
         android:textAllCaps="false"
         android:textColor="@color/slf_feedback_question_type_title" />
-</com.wyze.sandglasslibrary.commonui.SLFFITRelativeLayout>
+</com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout>

@@ -33,6 +33,7 @@
     <string name="slf_feedback_submit_feedback">Submit Feedback</string>
     <string name="slf_feedback_title_content">Feedback</string>
     <string name="slf_feedback_problem_font_least">Feedback description should be at least 10 characters.</string>
+    <string name="slf_feedback_problem_font_least_all_space">Feedback description should be at least 10 characters.</string>
     <string name="slf_feedback_dilaog_per_title">Request Phone Access</string>
     <string name="slf_feedback_dilaog_per_go_to_set">Go to Set</string>
     <string name="slf_feedback_dilaog_per_content">To enable this feature,the RVI app requests permission to access your phone\'s ablum.</string>
@@ -66,6 +67,12 @@
     <string name="slf_feedback_list_send_log">Sent successfully.</string>
     <string name="slf_camera_mode_photo">PHOTO</string>
     <string name="slf_camera_mode_video">VIDEO</string>
+    <string name="slf_first_page_no_network">No Internet connection</string>
+    <string name="slf_first_page_no_network_sub">Please check your network connection and try again.</string>
+    <string name="slf_first_page_request_fail">Request Failed</string>
+    <string name="slf_first_page_request_fail_sub">The network is weak or the server is down, request for data failed</string>
+    <string name="slf_first_page_no_network_try_again">Try Again</string>
+    <string name="slf_faq_detail_btton_text">Unsolved？ Submit feedback ~</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>
@@ -74,11 +81,11 @@
     <string name="slf_help_and_feedback_chat_bot">Chat Bot</string>
 
     <string name="slf_help_and_feedback_feed_back">Feedback</string>
-    <string name="loading1">Loading   </string>
-    <string name="loading2">Loading.  </string>
-    <string name="loading3">Loading.. </string>
+    <string name="loading1">loading   </string>
+    <string name="loading2">loading.  </string>
+    <string name="loading3">loading.. </string>
 
 
     <!--Adapter utils-->
-    <string name="loading4">Loading...</string>
+    <string name="loading4">loading...</string>
 </resources>

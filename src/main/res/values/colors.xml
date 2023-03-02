@@ -89,4 +89,19 @@
     <color name="slf_chat_cell_time_color">#A7A7A7</color>//单个时间颜色
     <color name="slf_chat_content_color">#FFFFFF</color>//聊天文字颜色
     <color name="slf_chat_line_color">#404040</color>//回答问题线的颜色
+
+    <!--首页-->
+    <color name="slf_first_page_bottom_bg">#131313</color>//首页底部区域背景色
+    <color name="slf_first_page_bottom_button_bg">#272727</color>//首页底部反馈按钮背景色
+    <color name="slf_first_page_bg">#000000</color>//首页背景色
+    <color name="slf_first_page_top_text_selected">#FFFFFF</color>//一级菜单选中字体颜色
+    <color name="slf_first_page_no_network_warning">#FFFFFF</color>//无网络提示字体颜色
+    <color name="slf_first_page_top_text_normal">#808080</color>//一级菜单未选中字体颜色
+    <color name="slf_first_page_category_item_text">#FFFFFF</color>//二级菜单字体颜色
+    <color name="slf_first_page_sub_item_text">#808080</color>//三级菜单字体颜色
+    <color name="slf_first_page_try_again">#C9FF43</color>//try again按钮背景色
+    <color name="slf_first_page_try_again_text">#000000</color>//try again按钮字体颜色
+    <color name="slf_faq_detail_btn_color">#1B1B1B</color>//faq详情页按钮背景色
+    <color name="slf_faq_detail_btn_text_color">#A7A7A7</color>//faq详情页按钮字体颜色
+    <color name="slf_faq_detail_bg">#000000</color>//详情页背景色
 </resources>
