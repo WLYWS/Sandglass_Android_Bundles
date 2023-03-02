@@ -81,7 +81,7 @@
         android:textColor="@color/slf_chat_input_ph_color"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="4dp"
+        android:layout_marginTop="4dp"
         android:paddingBottom="8dp"
         android:text="Service type/Problem type/Problem overviewProblem overviewProblem overviewProblem overview"/>
 </RelativeLayout>

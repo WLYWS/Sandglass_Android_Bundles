@@ -41,7 +41,7 @@
             android:layout_below="@+id/slf_feedback_detail_worker_question_content"
             android:textSize="12sp"
             android:paddingLeft="12dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="8dp"
             android:paddingRight="12dp"
             android:textColor="@color/slf_detail_card_time_color"
             android:text="12/11/2022 7:23 AM"

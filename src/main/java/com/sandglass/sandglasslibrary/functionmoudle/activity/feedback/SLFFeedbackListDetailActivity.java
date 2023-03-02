@@ -159,6 +159,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                     SLFLeaveMsgRecord slfLeaveMsgRecord = (SLFLeaveMsgRecord) result.getData().getSerializableExtra(SLFConstants.LEAVE_MSG_DATA);
                     slfLeaveMsgRecordList.add(slfLeaveMsgRecord);
                     adapter.notifyDataSetChanged();
+                    slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
                 } else {
                     //showToast("跳转回来");
                 }
@@ -282,14 +283,14 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                         }, 500);
                     }
 
-//                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
-//                        mHandler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                getFeedBackDetailList(currentPage+1);
-//                            }
-//                        }, 500);
-//                    }
+                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getFeedBackDetailList(currentPage+1);
+                            }
+                        }, 500);
+                    }
                 }
             }
 
@@ -497,7 +498,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 adapter.updateList(null, false,false);
             }
                 currentPage++;
-        slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
+         if(!isRefresh) {
+             slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
+         }
 
     }
 
