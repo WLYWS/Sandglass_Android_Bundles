@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.functions.Function;
 public class SLFRetryFunction implements Function<Observable<Throwable>, ObservableSource <?>> {
 
     // 可重试次数
-    private int maxConnectCount = 3;
+    private int maxConnectCount = 0;
     // 当前已重试次数
     private int currentRetryCount = 0;
     // 重试等待时间
