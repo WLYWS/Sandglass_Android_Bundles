@@ -189,20 +189,3 @@ public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCa
             }
         });
 ```
-
-## 演示工程
-[演示工程](https://github.com/WLYWS/Sandglass_Project_android)
-
-## Author
-
-
-emphasized text
-“yangjie”, yfijwan431@163.com
-
-
-
-## License
-
-
-
-SLFeedback is available under the MIT license. See the LICENSE file for more info.strong text
