@@ -107,7 +107,7 @@ public class MyApplication extends Application {
     }
 }
 ```
-###自定义SDK字体样式
+### 自定义SDK字体样式
 SDK提供了修改粗,中,细三种字体样式的接口,接入方可通过配置对应的字体名称来修改对应字体的样式. 注:字体样式为全局样式,只需要配置一次即可
 ```
 	//细
