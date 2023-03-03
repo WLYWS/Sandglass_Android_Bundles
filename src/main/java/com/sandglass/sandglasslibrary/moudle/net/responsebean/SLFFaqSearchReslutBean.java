@@ -9,5 +9,4 @@ public class SLFFaqSearchReslutBean {
     public String noDataText;
     public SLFFaqAnswerBean answer;
     public List <String> faqList;
-
 }

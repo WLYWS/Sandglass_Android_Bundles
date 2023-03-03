@@ -366,11 +366,11 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFEventNetWorkChange event) {
         if (event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)) {
-            noDataPage(true);
+           // noDataPage(true);
         } else {
-            hasDataPage();
-            requestNewFeed();
-            getDeviceTypesList();
+//            hasDataPage();
+//            requestNewFeed();
+//            getDeviceTypesList();
         }
     }
 }

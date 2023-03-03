@@ -320,12 +320,12 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFEventNetWorkChange event) {
         if (event.avisible.equals(SLFConstants.NETWORK_UNAVAILABILITY)) {
-            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
-            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
-            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
-            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
-            slf_feedback_no_network.setVisibility(View.VISIBLE);
-            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
+//            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+//            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+//            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+//            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+//            slf_feedback_no_network.setVisibility(View.VISIBLE);
+//            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
         } else {
         }
     }

@@ -208,12 +208,15 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if (slfRecode.getStatus() == 0) {
                 slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_to_be_processed));
                 slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_warning_color));
+                slf_feedback_bottom_relative.setVisibility(View.VISIBLE);
             } else if (slfRecode.getStatus() == 1||slfRecode.getStatus() == 2) {
                 slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_in_progress));
                 slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
+                slf_feedback_bottom_relative.setVisibility(View.VISIBLE);
             } else if (slfRecode.getStatus() == 4) {
                 slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_finished));
                 slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_add_photos_text_color));
+                slf_feedback_bottom_relative.setVisibility(View.GONE);
             }
             if (slfRecode.getSendLog() == 0) {
                 requestUploadUrls();

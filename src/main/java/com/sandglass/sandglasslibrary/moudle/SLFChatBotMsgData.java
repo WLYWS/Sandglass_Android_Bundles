@@ -10,14 +10,14 @@ import androidx.room.PrimaryKey;
 public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
     @PrimaryKey(autoGenerate = true)
     private int id ;//数据库id
-    private int faqId;//获得解答answer的id
+    //private int faqId;//获得解答answer的id
     private long msgTime;//消息时间戳
     private int type;//消息类型
-    private String title;//消息title
+    //private String title;//消息title
     private String content;//消息内容
-    private String question;//已知问题
+    //private String question;//已知问题
     private int msg_from;//谁发的消息
-    private int answer_effective;//解答是否有效
+    //private int answer_effective;//解答是否有效
     private int send_msg_status;//发送消息的状态
     private int question_index = 0;//问题的第一个索引
     private boolean isUpdate;//是否显示更新问题按钮
@@ -29,16 +29,12 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
 
     @Ignore
     public SLFChatBotMsgData(){}
-    public SLFChatBotMsgData (int id, int faqId, long msgTime, int type, String title, String content, String question, int msg_from, int answer_effective, int send_msg_status, int question_index) {
+    public SLFChatBotMsgData (int id,long msgTime, int type, String content, int msg_from, int send_msg_status, int question_index) {
         this.id = id;
-        this.faqId = faqId;
         this.msgTime = msgTime;
         this.type = type;
-        this.title = title;
         this.content = content;
-        this.question = question;
         this.msg_from = msg_from;
-        this.answer_effective = answer_effective;
         this.send_msg_status = send_msg_status;
         this.question_index = question_index;
     }
@@ -126,10 +122,6 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         this.id = id;
     }
 
-    public void setFaqId (int faqId) {
-        this.faqId = faqId;
-    }
-
     public void setIsUpdate (boolean update) {
         isUpdate = update;
     }
@@ -146,25 +138,16 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         this.type = type;
     }
 
-    public void setTitle (String title) {
-        this.title = title;
-    }
 
     public void setContent (String content) {
         this.content = content;
     }
 
-    public void setQuestion (String question) {
-        this.question = question;
-    }
 
     public void setMsg_from (int msg_from) {
         this.msg_from = msg_from;
     }
 
-    public void setAnswer_effective (int answer_effective) {
-        this.answer_effective = answer_effective;
-    }
 
     public void setSend_msg_status (int send_msg_status) {
         this.send_msg_status = send_msg_status;
@@ -172,10 +155,6 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
 
     public int getId ( ) {
         return id;
-    }
-
-    public int getFaqId ( ) {
-        return faqId;
     }
 
     public boolean getIsUpdate ( ) {
@@ -194,24 +173,12 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         return type;
     }
 
-    public String getTitle ( ) {
-        return title;
-    }
-
     public String getContent ( ) {
         return content;
     }
 
-    public String getQuestion ( ) {
-        return question;
-    }
-
     public int getMsg_from ( ) {
         return msg_from;
-    }
-
-    public int getAnswer_effective ( ) {
-        return answer_effective;
     }
 
     public int getSend_msg_status ( ) {
@@ -223,11 +190,8 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         return "SLFChatBotMsgData{" +
                 "msgTime=" + msgTime +
                 ", type=" + type +
-                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", question='" + question + '\'' +
                 ", msg_from=" + msg_from +
-                ", answer_effective=" + answer_effective +
                 ", send_msg_status=" + send_msg_status +
                 '}';
     }

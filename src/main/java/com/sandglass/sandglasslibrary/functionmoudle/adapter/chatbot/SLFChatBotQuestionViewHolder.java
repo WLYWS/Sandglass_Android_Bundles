@@ -85,7 +85,7 @@ public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
     public void bindView (SLFChatBotMsgData bean,int position) {
         setPostion(position);
         setQustionType(bean.getType());
-        setQuestionList(bean.getQuestion(),bean.getQuestion_index(),position);
+        //setQuestionList(bean.getQuestion(),bean.getQuestion_index(),position);
     }
 
     public void setQustionType (int type) {
