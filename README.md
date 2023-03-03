@@ -1,6 +1,4 @@
-# Sandglass_Android
-客服反馈组件Android端
-# SLFeedback
+# Android 反馈SDK接⼊⽂档
 
 ## 功能介绍
 
@@ -20,21 +18,19 @@
 4. 可上传APP Log和Device Log
 
 ### 智能助手：
-1. 可获取常见的热门问题及解答
+1. 可获取常⻅的热⻔问题及解答
 
-2. 可查询自定义问题解答
-
-3. 可查询相关问题及解答
+2. 可查询⾃定义问题解答
 
 ### 反馈列表：
 1. 可查看已提交反馈的进度状态
 2. 可在详情页针对该反馈继续与客服问答
 
 ## 系统版本要求
-Android 26及以上
+Android 8.0及以上
 
-## 语言版本
-Java11
+## JDK版本
+JDK11
 
 
 ## 导入
@@ -45,9 +41,16 @@ SLFeedback 通过aar方式导入
 ```ruby
 在dependencies里添加：
 
-implementation project(':SLFFeedback')
+android {
+      .........
+}
 
-后期maven仓库建立，这里将直接引入maven仓库地址，目前以aar方式添加
+dependencies {
+    .........
+    implementation project(':SLFFeedback')
+	注：这里目前是以aar方式接入，后期会以maven仓库方式接入，如下方式：
+	例如： implementation 'com.xxx.xxxx.sandlglass:1.0.0'
+}
 
 end
 
@@ -56,8 +59,34 @@ end
 ## 工程配置
 
 ### 权限配置
-所需权限均在sdk里已配置
-
+所需权限均在sdk里已配置，如下权限：
+```
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+<uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.CAMERA" />
+<!-- 照相的权限 -->
+<uses-feature android:name="android.hardware.camera" />
+<uses-feature android:name="android.hardware.camera.autofocus" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+```
 ## SDK使用说明
 
 ### 初始化SDK
@@ -65,13 +94,18 @@ end
 ```
 在App的Application的onCreate方法里添加：
 
-SLFApi.getInstance(this).init(true);
+public class MyApplication extends Application {
 
-参数说明
-：
-1.this是context上下文
-
-2.true 是指isDebug模式，false为关闭，关闭情况下不显示插件log，true会显示插件log
+    /**
+     * params:this 上下文环境
+     * params:true isDebug(是否开启debug模式，true为开启，false为关闭，若为false则控制台不显示插件log)
+     */
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SLFApi.getInstance(this).init(true);
+    }
+}
 ```
 ### 写入Log
 SDK提供了写入Log的方法
@@ -90,31 +124,43 @@ SDK将上传APP Log 和 Device log的权限开放给接入方，接入方可根�
 实现：getUploadAppLogUrl方法。
 ```
 例如：
+	/**
+     * 
+     * @param appLogUrl  APPlog上传路径
+     * @param firmwareLogUrl  固件上传路径
+     */
 public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCallback {
-......
+					......//do something
 @Override
     public void getUploadAppLogUrl(String appLogUrl, String firmwareLogUrl) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SLFApi.getInstance(MainActivity.this).getUploadLogCompleteCallBack().isUploadComplete(true,"appLog.zip","firmwareLog.zip");
-            }
-        }, 5000);  //延迟5s// 秒执行
+	
+          //TODO 根据拿到的appLogUrl和firmwareLogUrl上传log
+             .............
+			 
+			//上传成功回调如下方法： 
+		  	/**
+                 * @param isComplete  true上传成功，false上传失败
+                 * @param appFileName  压缩上传的applog的文件名称，一般是.zip
+                 * @param firmwarFilName 压缩上传的固件log的文件名称，一般是.zip
+                 */
+				 SLFApi.getInstance(MainActivity.this).getUploadLogCompleteCallBack().isUploadComplete(true,"appLog.zip","firmwareLog.zip");
+        
     }
 }
-
-//getUploadAppLogUrl(String appLogUrl, String firmwareLogUrl)
-参数说明：
-1.appLogUrl    appLog上传url获取
-2.firmwareLogUrl   固件log上传url获取
-
-调用此回调通知插件上传完成：
-SLFApi.getInstance(MainActivity.this).getUploadLogCompleteCallBack().isUploadComplete(true,"appLog.zip","firmwareLog.zip");
-
 ```
 ### 进入SDK路由
 ```
-SLFApi.getInstance(MainActivity.this).gotoHelpAndFeedback(MainActivity.this);
+点击进入插件，调用此方法：
+
+ textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+				//进入插件：
+                SLFApi.getInstance(MainActivity.this).gotoHelpAndFeedback(MainActivity.this);
+
+
+            }
+        });
 ```
 
 ## 演示工程
