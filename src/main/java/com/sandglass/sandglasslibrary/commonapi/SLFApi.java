@@ -53,7 +53,6 @@ public class SLFApi  {
         return mInstance;
     }
 
-
     public SLFApi(Context context){
         mContext = context;
         initReceiver();
@@ -93,9 +92,15 @@ public class SLFApi  {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
     }
+
+    /**设置token*/
+    public void setToken(String token){
+        SLFConstants.token = token;
+    }
     /**跳转到插件反馈*/
-    public void gotoHelpAndFeedback(Context context){
+    public void gotoHelpAndFeedback(Context context,String token){
         Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
+        setToken(token);
         context.startActivity(in);
     }
     /**设置监听获取上传applog的路径和固件log的地址*/

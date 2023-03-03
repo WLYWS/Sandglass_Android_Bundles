@@ -16,6 +16,7 @@ import java.io.File;
 public class SLFConstants {
 
     public static boolean isGreyed = false;
+    public static String token;
 
     public static final boolean isShowLog = true;
     public static final boolean isUseXlog = false;
@@ -92,5 +93,6 @@ public class SLFConstants {
 
     //faq id
     public static final String FAQ_ID = "faq_id";
+    public static final String TOKEN = "token";
 
 }

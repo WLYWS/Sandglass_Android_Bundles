@@ -107,6 +107,21 @@ public class MyApplication extends Application {
     }
 }
 ```
+###自定义SDK字体样式
+SDK提供了修改粗,中,细三种字体样式的接口,接入方可通过配置对应的字体名称来修改对应字体的样式. 注:字体样式为全局样式,只需要配置一次即可
+```
+	//细
+    public static String SLF_RegularFont = "fonts/Rany.otf";
+    //中
+    public static String SLF_MediumFont = "fonts/Rany-Medium.otf";
+    //粗
+    public static String SLF_BoldFont = "fonts/Rany-Bold.otf";
+	
+	例如：
+	SLFFontSet.SLF_MediumFont = "自定义字体库路径"
+```
+
+
 ### 写入Log
 SDK提供了写入Log的方法
 ```
@@ -130,6 +145,14 @@ SDK将上传APP Log 和 Device log的权限开放给接入方，接入方可根�
      * @param firmwareLogUrl  固件上传路径
      */
 public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCallback {
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+		//在onCreate方法里设置当前回调
+        SLFApi.getInstance(MainActivity.this,token).setAppLogCallBack(this);
+        }
+	}
 					......//do something
 @Override
     public void getUploadAppLogUrl(String appLogUrl, String firmwareLogUrl) {
@@ -151,12 +174,16 @@ public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCa
 ### 进入SDK路由
 ```
 点击进入插件，调用此方法：
-
+/**
+   * @param context 上下文环境
+   * @param context 上下文环境
+   * @param String    token
+   */
  textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				//进入插件：
-                SLFApi.getInstance(MainActivity.this).gotoHelpAndFeedback(MainActivity.this);
+				//进入插件，将token传进来
+               SLFApi.getInstance(MainActivity.this).gotoHelpAndFeedback(MainActivity.this,token);
 
 
             }
