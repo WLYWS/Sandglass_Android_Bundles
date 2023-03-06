@@ -5,6 +5,7 @@ import android.os.Environment;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * created by yangjie
@@ -93,6 +94,13 @@ public class SLFConstants {
 
     //faq id
     public static final String FAQ_ID = "faq_id";
+    //token
     public static final String TOKEN = "token";
+    //当前时间戳
+    public static final String CURRENTTIME ="currenttime" ;
+    //存储获取到的map sharedprefence的key
+    public static final String PARAMSMAP = "PARAMSMAP";
+    public static final String LASTSENDTIME = "LASTSENDTIME";
+    public static final String UUID = "UUID";
 
 }

@@ -22,8 +22,10 @@ import com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Greated by yangjie
@@ -98,9 +100,10 @@ public class SLFApi  {
         SLFConstants.token = token;
     }
     /**跳转到插件反馈*/
-    public void gotoHelpAndFeedback(Context context,String token){
+    public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap, String token){
         Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
         setToken(token);
+        SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
         context.startActivity(in);
     }
     /**设置监听获取上传applog的路径和固件log的地址*/

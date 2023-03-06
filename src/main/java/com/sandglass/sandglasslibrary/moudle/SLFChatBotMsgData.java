@@ -11,6 +11,7 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
     @PrimaryKey(autoGenerate = true)
     private int id ;//数据库id
     //private int faqId;//获得解答answer的id
+    private String uuid;//问题唯一标识
     private long msgTime;//消息时间戳
     private int type;//消息类型
     //private String title;//消息title
@@ -29,8 +30,9 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
 
     @Ignore
     public SLFChatBotMsgData(){}
-    public SLFChatBotMsgData (int id,long msgTime, int type, String content, int msg_from, int send_msg_status, int question_index) {
+    public SLFChatBotMsgData (int id,String uuid,long msgTime, int type, String content, int msg_from, int send_msg_status, int question_index) {
         this.id = id;
+        this.uuid = uuid;
         this.msgTime = msgTime;
         this.type = type;
         this.content = content;
@@ -185,9 +187,18 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         return send_msg_status;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     @Override
     public String toString ( ) {
         return "SLFChatBotMsgData{" +
+                "msgTime=" + msgTime +
                 "msgTime=" + msgTime +
                 ", type=" + type +
                 ", content='" + content + '\'' +

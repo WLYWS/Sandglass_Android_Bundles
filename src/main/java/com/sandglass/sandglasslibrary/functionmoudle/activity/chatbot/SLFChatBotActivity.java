@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonui.SLFClickEditText;
 import com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
@@ -95,6 +96,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private int slfKeyBoardHeight;
 
     private LinearLayout slf_chat_bot_all_linear;
+    private long fromHelpTime = 0;
+    private  String uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +111,30 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     }
 
     private void initData() {
-
+        fromHelpTime = getIntent().getLongExtra(SLFConstants.CURRENTTIME,0);
         if ((System.currentTimeMillis() - SLFSpUtils.getLong(LAST_ENTER_PAGE, 0)) / (1000 * 60 * 60 * 24) > 7) {
             slfdbEngine.delete_all_msg();
+            uuid = getUUid();
+            SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
             getWelcomeHotQuestion();
         } else {
             //请求数据库查找记录
-            slfdbEngine.quary_ten_msg(msg_id);
+            lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0);
+                if (((fromHelpTime - lastSendTime) /1000 /60) > 5) {
+                    slfdbEngine.quary_ten_msg(msg_id);
+                    uuid = getUUid();
+                    SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
+                    getWelcomeHotQuestion();
+                }else {
+                    uuid = SLFSpUtils.getString(SLFConstants.UUID,"");
+                    if(TextUtils.isEmpty(uuid)){
+                        uuid = getUUid();
+                        SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
+                    }
+                    slfdbEngine.quary_ten_msg(msg_id);
+                }
+
+                fromHelpTime = 0;
         }
 
         SLFSpUtils.putCommit(LAST_ENTER_PAGE, System.currentTimeMillis());
@@ -134,10 +154,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * //@param returnOther 是否返回 faqList 默认为true
      * @param hotQuestion 1为点击热门问题，0为点击发送
      */
-    private void postSearch(String content, int hotQuestion, long requesTime) {
+    private void postSearch(String content, int hotQuestion, long requesTime,String uuid) {
         TreeMap requestMap = new TreeMap();
-        String uuid = getUUid();
-        SLFLogUtil.e("yj","uuid:::"+uuid);
 //        requestMap.put("content", content);
 //        requestMap.put("returnOther", returnOther);
         //SLFHttpUtils.getInstance().executePost(this, SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_SEARCH, requestMap, SLFFaqSearchResponseBean.class, requesTime, this);
@@ -345,7 +363,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * @return
      */
     private boolean exceedFiveMi() {
-        return (System.currentTimeMillis() - lastSendTime) / 6000 > 5;
+        lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0);
+        return ((System.currentTimeMillis() - lastSendTime) /1000 /60) > 5;
     }
 
     /**
@@ -374,6 +393,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         if (type instanceof SLFFaqWelcomeHotQResponseBean) {
             SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestSuccess:chatbot");
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
+            SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
         }
     }
@@ -411,6 +431,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             slfChatBotRobotAnswerData.setMsgTime(System.currentTimeMillis());
             slfChatBotRobotAnswerData.setType(SLFChatBotMsgData.MsgType.FEEDBACK_ROBOT_MSG.getValue());
             slfChatBotRobotAnswerData.setContent(slfFaqOpenAiResponseBean.getData());
+            slfChatBotRobotAnswerData.setUuid(uuid);
             faqMsgList.add(slfChatBotRobotAnswerData);
             notiftyAdapter();
             //保存数据库
@@ -452,6 +473,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         slfChatBotWelcomeData.setMsgTime(System.currentTimeMillis());
         slfChatBotWelcomeData.setType(SLFChatBotMsgData.MsgType.SINGLE_ROBOT_MSG.getValue());
         slfChatBotWelcomeData.setContent(sLFFaqWelcomeHotQResponseBean.data.welcome);
+        slfChatBotWelcomeData.setUuid(uuid);
         faqMsgList.add(slfChatBotWelcomeData);
         slfdbEngine.insert_msg(slfChatBotWelcomeData);
 
@@ -461,6 +483,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             SLFChatBotMsgData slfChatBotHotData = new SLFChatBotMsgData();
             slfChatBotHotData.setMsgTime(System.currentTimeMillis() + 1);
             slfChatBotHotData.setType(SLFChatBotMsgData.MsgType.HOT_ROBOT_MSG.getValue());
+            slfChatBotHotData.setUuid(uuid);
             for (String question : sLFFaqWelcomeHotQResponseBean.data.hotFaq) {
                 faqSize++;
                 sb.append(question);
@@ -484,6 +507,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         SLFChatBotMsgData slfChatBotTimeItemData = new SLFChatBotMsgData();
         slfChatBotTimeItemData.setMsgTime(System.currentTimeMillis() - 2);
         slfChatBotTimeItemData.setType(SLFChatBotMsgData.MsgType.SINGLE_TIME_MSG.getValue());
+        slfChatBotTimeItemData.setUuid(uuid);
         faqMsgList.add(slfChatBotTimeItemData);
         notiftyAdapter();
         slfdbEngine.insert_msg(slfChatBotTimeItemData);
@@ -509,6 +533,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         slfChatBotMarkReponseData.setMsgTime(System.currentTimeMillis());
         slfChatBotMarkReponseData.setType(SLFChatBotMsgData.MsgType.SINGLE_ROBOT_MSG.getValue());
         slfChatBotMarkReponseData.setContent(sLFFaqMarkResponseBean.data);
+        slfChatBotMarkReponseData.setUuid(uuid);
         faqMsgList.add(slfChatBotMarkReponseData);
         notiftyAdapter();
         //刷新数据库
@@ -546,17 +571,21 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * @param fromType
      */
     private void sendMsg(String question, int fromType) {
-        lastSendTime = System.currentTimeMillis();
         if (isAddTimeItem()) {
-            addTimeItem();
-            isFirstGetFromDataBase = false;
+            uuid = getUUid();
+            SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
+//            addTimeItem();
+//            isFirstGetFromDataBase = false;
         }
+//        lastSendTime = System.currentTimeMillis();
+//        SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME,lastSendTime);
         SLFChatBotMsgData slfChatBotItemClickQuesionData = new SLFChatBotMsgData();
         long time = System.currentTimeMillis();
         slfChatBotItemClickQuesionData.setMsgTime(time);
         slfChatBotItemClickQuesionData.setType(SLFChatBotMsgData.MsgType.SINGLE_USER_MSG.getValue());
         slfChatBotItemClickQuesionData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SENDING_MSG.getValue());
         slfChatBotItemClickQuesionData.setContent(question);
+        slfChatBotItemClickQuesionData.setUuid(uuid);
         faqMsgList.add(slfChatBotItemClickQuesionData);
         notiftyAdapter();
         //发送question数据
@@ -565,7 +594,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         }else if(fromType==SLFChatBotMsgData.SEND_FROM_CLICK_HOT){
             hotQuestion = 1;
         }
-        postSearch(question,hotQuestion,time);
+
+        postSearch(question,hotQuestion,time,uuid);
 //        if (fromType == SLFChatBotMsgData.SEND_FROM_CLICK_RELATE) {
 //            postSearch(question, false, time);
 //        } else {
@@ -603,17 +633,20 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFChatBotClickNoSendWarnEvent event) {
         hotQuestion = 0;
-        lastSendTime = System.currentTimeMillis();
+//        lastSendTime = System.currentTimeMillis();
+//        SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME,lastSendTime);
 //        if (isAddTimeItem()){
-//            addTimeItem();
-//            isFirstGetFromDataBase = false;
+//            uuid = getUUid();
+//            SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
+////            addTimeItem();
+////            isFirstGetFromDataBase = false;
 //        }
         SLFChatBotMsgData slfChatBotClickNoSendData = faqMsgList.get(event.position);
         slfChatBotClickNoSendData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SENDING_MSG.getValue());
         sLFChatBotRecyclerAdapter.notifyDataSetChanged();
         //重新发送数据
         //postSearch(event.question, true, slfChatBotClickNoSendData.getMsgTime());
-        postSearch(event.question, hotQuestion, slfChatBotClickNoSendData.getMsgTime());
+        postSearch(event.question, hotQuestion, slfChatBotClickNoSendData.getMsgTime(),slfChatBotClickNoSendData.getUuid());
         //刷新数据库
         slfdbEngine.update_msg(slfChatBotClickNoSendData);
     }
@@ -631,7 +664,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             faqMsgList.addAll(slfChatBotMsgData);
             setRcycleApdater();
             rv_faq_chat_bot.scrollToPosition(faqMsgList.size() - 1);
-            isFirstGetFromDataBase = true;
+           // isFirstGetFromDataBase = true;
         }
 
     }
@@ -670,7 +703,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 Collections.sort(faqMsgList);
                 setRcycleApdater();
                 rv_faq_chat_bot.scrollToPosition(faqMsgList.size() - 1);
-                isFirstGetFromDataBase = true;
+               // isFirstGetFromDataBase = true;
             }
         }
         minIdfaqMsgList();
@@ -767,6 +800,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 //        }
         if (type instanceof SLFFaqOpenAiResponseBean) {
             SLFFaqOpenAiResponseBean slfFaqOpenAiResponseBean = (SLFFaqOpenAiResponseBean) type;
+            SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showSearchReslutData(slfFaqOpenAiResponseBean, requestTime);
         }
         else if (type instanceof SLFFaqMarkResponseBean) {

@@ -1,6 +1,17 @@
 # Android 反馈SDK接⼊⽂档
 
-## 功能介绍
+## 目录
+- 一、功能介绍
+- 二、系统版本要求
+- 三、JDK版本
+- 四、导入
+- 五、工程配置
+- 六、SDK使用说明
+- 七、版本变更记录
+
+
+---
+## 一、功能介绍
 
 ### 收集/上传APP Log和Crash 日志
 
@@ -26,14 +37,14 @@
 1. 可查看已提交反馈的进度状态
 2. 可在详情页针对该反馈继续与客服问答
 
-## 系统版本要求
+## 二、系统版本要求
 Android 8.0及以上
 
-## JDK版本
+## 三、JDK版本
 JDK11
 
 
-## 导入
+## 四、导入
 SLFeedback 通过aar方式导入
 
 在app的build.gradle文件中添加如下配置
@@ -52,11 +63,33 @@ dependencies {
 	例如： implementation 'com.xxx.xxxx.sandlglass:1.0.0'
 }
 
-end
-
 ```
-
-## 工程配置
+在setting.gradle里配置
+```ruby
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+		//需要配置链接
+        //jcenter
+        maven {url "https://maven.aliyun.com/repository/public"}
+        //必须添加的
+        maven {url "https://maven.aliyun.com/repository/google"}
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+.....
+//include 插件工程
+include ':SLFFeedback'
+```
+## 五、工程配置
 
 ### 权限配置
 所需权限均在sdk里已配置，如下权限：
@@ -87,7 +120,7 @@ end
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 ```
-## SDK使用说明
+## 六、SDK使用说明
 
 ### 初始化SDK
 在APP的Application中初始化SDK
@@ -110,7 +143,7 @@ public class MyApplication extends Application {
 ### 自定义SDK字体样式
 SDK提供了修改粗,中,细三种字体样式的接口,接入方可通过配置对应的字体名称来修改对应字体的样式. 注:字体样式为全局样式,只需要配置一次即可
 ```
-    //细
+//细
     public static String SLF_RegularFont = "fonts/Rany.otf";
     //中
     public static String SLF_MediumFont = "fonts/Rany-Medium.otf";
@@ -150,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 		//在onCreate方法里设置当前回调
-        SLFApi.getInstance(MainActivity.this,token).setAppLogCallBack(this);
+        SLFApi.getInstance(MainActivity.this).setAppLogCallBack(this);
         }
 	}
 					......//do something
@@ -166,7 +199,8 @@ public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCa
                  * @param appFileName  压缩上传的applog的文件名称，一般是.zip
                  * @param firmwarFilName 压缩上传的固件log的文件名称，一般是.zip
                  */
-				 SLFApi.getInstance(MainActivity.this).getUploadLogCompleteCallBack().isUploadComplete(true,"appLog.zip","firmwareLog.zip");
+				 SLFApi.getInstance(MainActivity.this).getUploadLogCompleteCallBack()
+				 		  .isUploadComplete(true,"appLog.zip","firmwareLog.zip");
         
     }
 }
@@ -177,15 +211,22 @@ public class MainActivity extends AppCompatActivity implements SLFUploadAppLogCa
 /**
    * @param context 上下文环境
    * @param context 上下文环境
-   * @param String    token
+   * @param String    token  接入方用户信息标识
+   * @param HashMap  需要传入的参数列表
    */
  textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 				//进入插件，将token传进来
-               SLFApi.getInstance(MainActivity.this).gotoHelpAndFeedback(MainActivity.this,token);
-
-
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("deviceModule","RVI");
+ 	            ...//添加传给插件的参数列表
+				SLFApi.getInstance(MainActivity.this).gotoHelpAndFeedback(MainActivity.this,map,token);
             }
         });
 ```
+##  七、版本变更记录
+| 版本号  |      变更记录      |  日期|
+|----------|:-------------:|------:|
+| v0.1.0 |  创建 | 2023年3月3日|
+

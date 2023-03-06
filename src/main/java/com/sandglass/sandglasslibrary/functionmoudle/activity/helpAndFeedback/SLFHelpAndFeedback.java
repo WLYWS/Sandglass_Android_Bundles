@@ -3,6 +3,7 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
@@ -234,6 +235,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     private void gotoChatBot ( ) {
         Intent in = new Intent(getContext(), SLFChatBotActivity.class);
+        in.putExtra(SLFConstants.CURRENTTIME, System.currentTimeMillis());
         startActivity(in);
     }
 
