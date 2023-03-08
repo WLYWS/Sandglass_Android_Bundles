@@ -75,6 +75,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean isInitData = false;
     private boolean isRefresh;
+    private int currentType;
 
     public SLFFeedbackAllHistoryFragment(){
     }
@@ -88,6 +89,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        currentType = this.type;
         EventBus.getDefault().register(this);
         View view = inflater.inflate(R.layout.slf_list_history_feedback, container, false);
         slf_histroy_feedback_list = view.findViewById(R.id.slf_histroy_feedback_list);
@@ -109,16 +111,15 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
         slf_feedback_list_try_again.setVisibility(View.GONE);
         initRefreshLayout();
         initRecyclerView();
-//        if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
-//            initData();
-//        }else{
-//            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
-//            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
-//            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
-//            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
-//            slf_feedback_no_network.setVisibility(View.VISIBLE);
-//            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
-//        }
+        if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
+        }else{
+            slf_feedback_list_refreshLayout.setVisibility(View.GONE);
+            slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
+            slf_feedback_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+            slf_feedback_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+            slf_feedback_no_network.setVisibility(View.VISIBLE);
+            slf_feedback_list_try_again.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
@@ -126,9 +127,7 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-           initData();
-        }else{
-
+            initData();
         }
     }
 
@@ -157,6 +156,9 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
 
     private void initData() {
         isInitData = true;
+        if(recodeList!=null){
+            recodeList.clear();
+        }
         getFeedBackList(type,1);
     }
 
@@ -184,23 +186,29 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackList(type,current_page+1);
-                            }
-                        }, 500);
-                    }
-
-                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackList(type,current_page+1);
-                            }
-                        }, 500);
-                    }
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getFeedBackList(type,current_page);
+                        }
+                    }, 500);
+//                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackList(type,current_page+1);
+//                            }
+//                        }, 500);
+//                    }
+//
+//                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackList(type,current_page+1);
+//                            }
+//                        }, 500);
+//                    }
                 }
             }
 
@@ -253,25 +261,25 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
 
     @Override
     public void onRequestSuccess (String result, T bean) {
-        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestSuccess type:" + type);
-        if(bean instanceof SLFFeedbackItemResponseBean) {
+        SLFLogUtil.d("SLFFeedbackAllHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
+        if (bean instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) bean).data.getRecods();
-            if (newDatas != null && newDatas.size() > 0)
-                if(isRefresh){
-                    adapter.updateList(newDatas,false,true);
-                    isRefresh = false;
-                }else {
-                    adapter.updateList(newDatas, true,false);
+            if (newDatas != null && newDatas.size() > 0) {
+                if (isRefresh) {
+                    adapter.updateList(newDatas, false, true);
+                } else {
+                    adapter.updateList(newDatas, true, false);
                 }
             } else {
-                adapter.updateList(null, false,false);
+                adapter.updateList(null, false, false);
             }
             initView();
             current_page++;
             adapter.setOnItemClickLitener((holder, position) -> {
-            gotoFeedbackDetail(position);
-        });
+                gotoFeedbackDetail(position);
+            });
         }
+    }
 
     @Override
     public void onPause() {

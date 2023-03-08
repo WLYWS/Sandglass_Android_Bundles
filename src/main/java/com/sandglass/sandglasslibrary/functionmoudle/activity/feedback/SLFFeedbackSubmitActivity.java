@@ -1156,7 +1156,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "6", SLFFeedbackSubmitActivity.this);
+                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1190,7 +1190,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
-            if ("6".equals(code)) {
+            if (SLFConstants.photoCode.equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             } else {
                 for(int i=0;i<slfMediaDataList.size()-1;i++){
@@ -1225,7 +1225,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (type instanceof String) {
             String code = (String) type;
             SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestScucess::Integer::" + ":::type:::" + type);
-            if ("6".equals(code)) {
+            if (SLFConstants.photoCode.equals(code)) {
                 SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::logfile-----upload---complete");
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
             } else {
@@ -1244,7 +1244,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
-            if ("6".equals(code)) {
+            if (SLFConstants.photoCode.equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             } else {
                 for(int i=0;i<slfMediaDataList.size()-1;i++){

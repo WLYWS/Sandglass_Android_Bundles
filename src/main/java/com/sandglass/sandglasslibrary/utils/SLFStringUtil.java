@@ -30,10 +30,4 @@ public class SLFStringUtil {
         return dest;
 
     }
-
-    public static String getClassName(String type){
-        int last = type.toString().lastIndexOf(".");
-        String className = type.toString().substring(last+1);
-        return className;
-    }
 }

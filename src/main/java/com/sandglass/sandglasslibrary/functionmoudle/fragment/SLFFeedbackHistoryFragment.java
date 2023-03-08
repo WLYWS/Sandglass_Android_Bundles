@@ -108,7 +108,6 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
         initRefreshLayout();
         initRecyclerView();
         if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
-            initData();
         }else{
             slf_feedback_list_refreshLayout.setVisibility(View.GONE);
             slf_histroy_no_item_linear.setVisibility(View.VISIBLE);
@@ -154,6 +153,9 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
 
     private void initData() {
         isInitData = true;
+        if(recodeList!=null){
+            recodeList.clear();
+        }
         getFeedBackList(type,1);
     }
 
@@ -181,23 +183,29 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
+                    mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                getFeedBackList(type,current_page+1);
+                                getFeedBackList(type,current_page);
                             }
                         }, 500);
-                    }
-
-                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackList(type,current_page+1);
-                            }
-                        }, 500);
-                    }
+//                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackList(type,current_page+1);
+//                            }
+//                        }, 500);
+//                    }
+//
+//                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackList(type,current_page+1);
+//                            }
+//                        }, 500);
+//                    }
                 }
             }
 
@@ -250,26 +258,25 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
 
     @Override
     public void onRequestSuccess (String result, T bean) {
-        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestSuccess type:" + type);
-        if(bean instanceof SLFFeedbackItemResponseBean) {
+        SLFLogUtil.d("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
+        if (bean instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) bean).data.getRecods();
-            if (newDatas != null && newDatas.size() > 0)
-                if(isRefresh){
-                    adapter.updateList(newDatas,false,true);
-                    isRefresh = false;
-                }else {
-                    adapter.updateList(newDatas, true,false);
+            if (newDatas != null && newDatas.size() > 0) {
+                if (isRefresh) {
+                    adapter.updateList(newDatas, false, true);
+                } else {
+                    adapter.updateList(newDatas, true, false);
                 }
             } else {
-                adapter.updateList(null, false,false);
+                adapter.updateList(null, false, false);
             }
             initView();
             current_page++;
-        adapter.setOnItemClickLitener((holder, position) -> {
-            gotoFeedbackDetail(position);
-        });
+            adapter.setOnItemClickLitener((holder, position) -> {
+                gotoFeedbackDetail(position);
+            });
         }
-
+    }
     @Override
     public void onPause() {
         super.onPause();

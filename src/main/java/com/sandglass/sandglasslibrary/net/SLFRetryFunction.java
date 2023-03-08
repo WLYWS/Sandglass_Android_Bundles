@@ -30,7 +30,7 @@ public class SLFRetryFunction implements Function<Observable<Throwable>, Observa
         return throwableObservable.flatMap(new Function <Throwable, ObservableSource<?>>() {
             @Override
             public ObservableSource<?> apply(@NonNull Throwable throwable) throws Exception {
-
+                SLFLogUtil.e("SLFRetryFunction","throwable:::"+throwable.getMessage());
                 // 输出异常信息
                // LogUtil.d(SLFHttpRequestConstants.TAG, "发生异常 = " + throwable.toString());
 

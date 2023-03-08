@@ -251,10 +251,9 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     public void onRequestNetFail(T type) {
         hideLoading();
-        String name = SLFStringUtil.getClassName(type.toString());
-        if(name.equals("SLFFirstPageFAQResponseBean")){
-            noDataPage(true);
-        }
+       if( type == SLFFirstPageFAQResponseBean.class){
+           noDataPage(true);
+       }
     }
 
     @Override
@@ -287,8 +286,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     public void onRequestFail(String value, String failCode, T type) {
         hideLoading();
-        String name = SLFStringUtil.getClassName(type.toString());
-        if(name.equals("SLFFirstPageFAQResponseBean")){
+        if(type == SLFFirstPageFAQResponseBean.class){
             noDataPage(false);
         }
     }

@@ -139,6 +139,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private int pages;
     private int position;
     private boolean isRefresh;
+    private boolean isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,23 +278,31 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackDetailList(currentPage+1);
-                            }
-                        }, 500);
-                    }
-
-                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackDetailList(currentPage+1);
-                            }
-                        }, 500);
-                    }
+//                    if(!adapter.isFadeTips()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackDetailList(currentPage);
+//                            }
+//                        }, 500);
+//                    }
+//                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackDetailList(currentPage+1);
+//                            }
+//                        }, 500);
+//                    }
+//
+//                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                getFeedBackDetailList(currentPage+1);
+//                            }
+//                        }, 500);
+//                    }
                 }
             }
 
@@ -301,6 +310,25 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                if (lastVisibleItem+1==adapter.getItemCount()){
+                    SLFLogUtil.d("test", "loading executed");
+                    boolean isRefreshing=slf_feedback_list_detail_refreshLayout.isRefreshing();
+                    if (isRefreshing){
+                        adapter.notifyItemRemoved(adapter.getItemCount());
+                        return;
+                    }
+                    if (!isLoading){
+                        isLoading=true;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getFeedBackDetailList(currentPage);
+                                SLFLogUtil.d("test", "load more completed");
+                                isLoading = false;
+                            }
+                        },500);
+                    }
+                }
             }
         });
 

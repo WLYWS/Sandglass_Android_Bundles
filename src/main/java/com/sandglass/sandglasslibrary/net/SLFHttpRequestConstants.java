@@ -6,7 +6,8 @@ package com.sandglass.sandglasslibrary.net;
 public class SLFHttpRequestConstants {
     public static final String APP_ID = "test";
     //public static final String BASE_URL = "http://app.gateway.chenyanjin.top";
-    public static final String BASE_URL = "http://172.16.100.230:10003";
+    //public static final String BASE_URL = "http://172.16.100.230:10003";
+    public static final String BASE_URL = "https://rvi-app-gateway.kivolabs.com";
     public static final String APP_KEY = "test";
 
     public static final String REQUEST_METHOD_GET = "GET";

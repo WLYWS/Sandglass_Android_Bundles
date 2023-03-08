@@ -102,5 +102,6 @@ public class SLFConstants {
     public static final String PARAMSMAP = "PARAMSMAP";
     public static final String LASTSENDTIME = "LASTSENDTIME";
     public static final String UUID = "UUID";
+    public static final String photoCode = "6";
 
 }

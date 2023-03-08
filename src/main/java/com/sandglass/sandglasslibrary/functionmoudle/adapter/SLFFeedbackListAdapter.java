@@ -20,6 +20,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +154,10 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void updateList(List<SLFRecord> newDatas, boolean hasMore,boolean isRefresh) {
         if (newDatas != null) {
+            if(isRefresh){
+                resetDatas();
+                isRefresh = false;
+            }
             datas.addAll(newDatas);
         }
         this.hasMore = hasMore;
@@ -195,7 +200,7 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void resetDatas() {
-        datas = new ArrayList<>();
+        datas.clear();
     }
 
     @Override

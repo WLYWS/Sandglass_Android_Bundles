@@ -29,12 +29,12 @@
 -dontwarn com.tencent.mars.**
 
 # so
-#-libraryjars libs/armeabi/libmarsxlog.so
-#-libraryjars libs/armeabi/libc++_shared.so
--libraryjars libs/armeabi-v7a/libmarsxlog.so
--libraryjars libs/armeabi-v7a/libc++_shared.so
--libraryjars libs/arm64-v8a/libmarsxlog.so
--libraryjars libs/arm64-v8a/libc++_shared.so
+#-libraryjars libs/armeabi-v7a/libmarsxlog.so
+#-libraryjars libs/armeabi-v7a/libc++_shared.so
+#-libraryjars libs/arm64-v8a/libmarsxlog.so
+#-libraryjars libs/arm64-v8a/libc++_shared.so
+
+-ignorewarnings
 
 # 代码混淆压缩比，在0~7之间，默认为5，一般不做修改
 -optimizationpasses 5
@@ -65,6 +65,8 @@
 # 抛出异常时保留代码行号
 -keepattributes SourceFile,LineNumberTable
 
+-printmapping proguardMapping.txt
+
 -keepclassmembers class * {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
@@ -80,12 +82,23 @@
 -keep class android.support.** {*;}
 
 # 保留四大组件，自定义的Application等这些类不被混淆
+-keep public class * extends android.support.v7.app.AppCompatActivity
 -keep public class * extends android.app.Activity
+-keep public class * extends androidx.fragment.app.FragmentActivity
+-keep public class * extends androidx.fragment.app.Fragment
 -keep public class * extends android.app.Appliction
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.preference.Preference
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.view.View
+-keep public class com.android.vending.licensing.ILicensingService
+-keep class android.support.** {*;}
+
+-keepclassmembers class * extends android.support.v7.app.AppCompatActivity{
+  public void *(android.view.View);
+}
 
 # 保留本地native方法不被混淆
 -keepclasseswithmembernames class * {
@@ -160,6 +173,10 @@
 
 #gson
 -keep class com.google.gson.**
+-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.examples.android.model.** { *; }
+#bean
+-keep class com.xxx.xxx.bean.** { *; }
 
 # 保留本地native方法不被混淆
 -keepclasseswithmembernames class * {
@@ -196,3 +213,57 @@
     void *(**On*Event);
     void *(**On*Listener);
 }
+
+
+# OkHttp3
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+
+# Retrofit
+-keepattributes Exceptions
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+
+#rxjava
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+-dontnote rx.internal.util.PlatformDependent
+
+#flycoTabLayout
+-keep class io.github.h07000223.**{*;}
+
+# ARouter
+-keep public class com.alibaba.android.arouter.routes.**{*;}
+-keep public class com.alibaba.android.arouter.facade.**{*;}
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
+#SLFApi
+-keep public class com.sandglass.sandglasslibrary.commonapi.**{*;}
+#interface
+-keep public class com.sandglass.sandglasslibrary.interf.**{*;}
+#theme
+-keep public class  com.sandglass.sandglasslibrary.theme.**{*;}
+#logutil
+-keep public class com.sandglass.sandglasslibrary.utils.logutil.**{*;}
+#moudle
+-keep public class com.sandglass.sandglasslibrary.moudle.event.**{*;}
+-keep public class com.sandglass.sandglasslibrary.moudle.net.**{*;}
+-keep public class com.sandglass.sandglasslibrary.moudle.**{*;}
+
+# androidx 混淆
+-keep class com.google.android.material.** {*;}
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**

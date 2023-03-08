@@ -43,10 +43,10 @@ public class SLFDeviceGridAdapter extends SLFRecyclerAdatper<SLFFirstPageFAQBean
         CheckBox slf_device_item_checked = holder.getView(R.id.slf_device_item_checked);
         ImageView slf_device_item_icon_img = holder.getView(R.id.slf_device_item_icon_img);
         TextView slf_device_item_name = holder.getView(R.id.slf_device_item_name);
-        if(!TextUtils.isEmpty(object.getIconUrl())){
-            SLFImageUtil.loadImage(mContext,object.getIconUrl(),slf_device_item_icon_img,R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon);
+        if(object.getIconUrl()!=null) {
+            SLFImageUtil.loadImage(mContext, object.getIconUrl(), slf_device_item_icon_img, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon);
         }else{
-            slf_device_item_icon_img.setImageResource(R.drawable.slf_center_default_icon);
+            SLFImageUtil.loadImage(mContext,"", slf_device_item_icon_img, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon);
         }
         slf_device_item_name.setText(object.getName());
         SLFFontSet.setSLF_RegularFont(mContext, slf_device_item_name);
