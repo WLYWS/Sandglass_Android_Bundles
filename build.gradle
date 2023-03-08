@@ -141,7 +141,8 @@ afterEvaluate {
             maven {
                 // test, upload local maven repository
                 //url = "file:" + new File(project.rootProject.rootDir, "local_test_repo").path
-                url = "file:///Users/kingmac/Downloads/maven_android"
+                //url = "file:///Users/kingmac/Downloads/maven_android"
+                url = "file:///Users/yangjie/Downloads/maven_android"
             }
         }
     }
