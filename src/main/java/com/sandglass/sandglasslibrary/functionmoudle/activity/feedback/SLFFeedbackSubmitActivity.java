@@ -904,7 +904,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 serviceType = false;
                             }
                         } else {
-                            showCenterToast("获取服务类型失败");
+                            //showCenterToast("获取服务类型失败");
                         }
 
                     }
@@ -926,7 +926,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 slfProblemOverviewLinear.setVisibility(View.GONE);
                             }
                         } else {
-                            showCenterToast("获取问题类型失败");
+                            //showCenterToast("获取问题类型失败");
                         }
                     }
                 } else {
@@ -1011,7 +1011,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     slfServiceTypes.addAll(serviceTypeTitle.sub);
                     slfServiceTitleMap.put(serviceTypeTitle.id, serviceTypeTitle.sub);
                     for (int j = 0; j < serviceTypeTitle.sub.size(); j++) {
-                        SLFCategoryBean slfServiceType = serviceTypeTitle.sub.get(i);
+                        SLFCategoryBean slfServiceType = serviceTypeTitle.sub.get(j);
                         slfServiceMap.put(slfServiceType.id, slfServiceType.sub);
                     }
                 }
@@ -1021,9 +1021,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
             SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":get servicetype data success");
         } else {
-            showCenterToast("没有获取到问题数据类型");
+            //showCenterToast("没有获取到问题数据类型");
             SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":get servicetype data fail");
         }
+        SLFLogUtil.d("yj","slfserviceTyps--:"+slfServiceTypes.toString());
         return slfServiceTypes;
     }
 
