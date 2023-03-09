@@ -298,7 +298,6 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             if(isRefresh){
                 datas.clear();
                 datas.addAll(newDatas);
-                isRefresh = false;
             }else {
                 datas.addAll(newDatas);
             }
@@ -400,10 +399,6 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             slf_more_loading_linear = itemView.findViewById(R.id.slf_more_loading_linear);
             progressBar = (ProgressBar) itemView.findViewById(R.id.slf_more_loading);
         }
-    }
-
-    public void resetDatas() {
-        datas.clear();
     }
 
     //设置回调接口
