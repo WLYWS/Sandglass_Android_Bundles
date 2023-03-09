@@ -81,6 +81,7 @@
     <string name="slf_help_and_feedback_chat_bot">Chat Bot</string>
 
     <string name="slf_help_and_feedback_feed_back">Feedback</string>
+    <string name="slf_help_and_feedback_faq_list">FAQ</string>
     <string name="loading1">loading   </string>
     <string name="loading2">loading.  </string>
     <string name="loading3">loading.. </string>

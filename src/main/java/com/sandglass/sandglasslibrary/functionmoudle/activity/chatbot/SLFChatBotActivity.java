@@ -111,7 +111,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     }
 
     private void initData() {
-        fromHelpTime = getIntent().getLongExtra(SLFConstants.CURRENTTIME,0);
+        fromHelpTime = System.currentTimeMillis();
         if ((System.currentTimeMillis() - SLFSpUtils.getLong(LAST_ENTER_PAGE, 0)) / (1000 * 60 * 60 * 24) > 7) {
             slfdbEngine.delete_all_msg();
             uuid = getUUid();
