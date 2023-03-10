@@ -210,7 +210,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     private void initView() {
         TextView slf_tv_title_name = findViewById(R.id.slf_tv_title_name);
-        slf_tv_title_name.setText(R.string.slf_faq_title);
+        slf_tv_title_name.setText(R.string.slf_help_and_feedback_bar_title);
         SLFFontSet.setSLF_MediumFontt(this, slf_tv_title_name);
         imgRight = findViewById(R.id.slf_iv_right);
         sw_faq_recycle = findViewById(R.id.sw_faq_recycle);

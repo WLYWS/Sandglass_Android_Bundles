@@ -8,10 +8,10 @@
     android:layout_marginTop="12dp">
 
     <ImageView
+        android:id="@+id/slf_feedback_list_detail_worker_header_img"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:id="@+id/slf_feedback_list_detail_worker_header_img"
-        android:src="@drawable/slf_feedback_list_detail_worker_header"/>
+        android:src="@drawable/slf_feedback_list_detail_worker_header" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

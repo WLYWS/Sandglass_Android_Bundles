@@ -11,7 +11,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="16dp"
-        android:src="@mipmap/slf_chat_bot_robot_icon"
         />
     <TextView
         android:id="@+id/tv_chat_bot_user_text"

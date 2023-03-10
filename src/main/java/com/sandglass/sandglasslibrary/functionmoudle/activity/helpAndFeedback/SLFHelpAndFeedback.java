@@ -127,7 +127,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     private void initTitle(){
         TextView title = findViewById(R.id.slf_tv_title_name);
-        title.setText(SLFResourceUtils.getString(R.string.slf_help_and_feedback_bar_title));
+        title.setText(SLFResourceUtils.getString(R.string.slf_help_and_feedback_faq_list));
         SLFFontSet.setSLF_MediumFontt(this, title);
     }
 
