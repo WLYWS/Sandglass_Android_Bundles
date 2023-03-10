@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -284,6 +285,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private String firmwareLogFileName;
     private Drawable mClearDrawable;
     private Drawable drawableRight;
+    private LinearLayout slf_common_loading_linear_submit;
+    private TextView slf_common_loading_text_submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -340,6 +343,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slf_submit_page_no_network_describe = findViewById(R.id.slf_submit_page_no_network_describe);
         slf_submit_page_no_item_img = findViewById(R.id.slf_submit_page_no_item_img);
         slf_submit_page_try_again = findViewById(R.id.slf_submit_page_try_again);
+        //loading
+        slf_common_loading_linear_submit = findViewById(R.id.slf_common_loading_linear_submit);
+        slf_common_loading_text_submit = findViewById(R.id.slf_common_loading_tv_content_submit);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_common_loading_text_submit);
 
         slfServiceSpinner.setOnClickListener(this);
         slfProblemSpinner.setOnClickListener(this);
@@ -352,6 +359,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfEmailEdit.addTextChangedListener(editWatcher);
         //slfEmailEdit.setOnKeyListener(emailKeyLister);
         slfEmailEdit.setOnTouchListener(emailTouchListener);
+        slf_common_loading_linear_submit.setVisibility(View.GONE);
+        changeViewFoucs();
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
         SLFFontSet.setSLF_RegularFont(getContext(),selector_service_title);
         SLFFontSet.setSLF_RegularFont(getContext(),selector_problem_title);
@@ -416,24 +425,26 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
-            if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
-                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": click add photo or video permissions");
-                SLFPermissionManager.getInstance().chekPermissions(SLFFeedbackSubmitActivity.this, permissionStorage, permissionsStroageResult);
-            } else {
-                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": click goto preview");
-                picPathLists.clear();
-                picPathLists.addAll(slfMediaDataList);
-                picPathLists.remove(slfMediaData);
-                if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING)&&!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
-                    Intent in = new Intent();
-                    in.putExtra("from","feedback");
-                    in.setClass(SLFFeedbackSubmitActivity.this, SLFFeedbackPicPreviewActivity.class);
-                    in.putExtra("position", position);
-                    in.putParcelableArrayListExtra("photoPath", picPathLists);
-                    startActivity(in);
-                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": goto preview complete"+":picPathLists size:"+picPathLists.size());
+            if(slf_common_loading_linear_submit.getVisibility()==View.GONE) {
+                if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
+                    SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": click add photo or video permissions");
+                    SLFPermissionManager.getInstance().chekPermissions(SLFFeedbackSubmitActivity.this, permissionStorage, permissionsStroageResult);
                 } else {
-                   // showCenterToast("正在上传……");
+                    SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": click goto preview");
+                    picPathLists.clear();
+                    picPathLists.addAll(slfMediaDataList);
+                    picPathLists.remove(slfMediaData);
+                    if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING) && !slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
+                        Intent in = new Intent();
+                        in.putExtra("from", "feedback");
+                        in.setClass(SLFFeedbackSubmitActivity.this, SLFFeedbackPicPreviewActivity.class);
+                        in.putExtra("position", position);
+                        in.putParcelableArrayListExtra("photoPath", picPathLists);
+                        startActivity(in);
+                        SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": goto preview complete" + ":picPathLists size:" + picPathLists.size());
+                    } else {
+                        // showCenterToast("正在上传……");
+                    }
                 }
             }
         });
@@ -506,7 +517,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
             if (!hasUploadingFile) {
                 if (slfSendLogCheck.isChecked()) {
-                    showLoading();
+                    //showLoading();
+                    slf_common_loading_linear_submit.setVisibility(View.VISIBLE);
+                    changeViewFoucs();
                     //sumbitLogFiles();
 
                     SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
@@ -523,7 +536,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
                     }
                 } else {
-                    showLoading();
+                    //showLoading();
+                    slf_common_loading_linear_submit.setVisibility(View.VISIBLE);
+                    changeViewFoucs();
                     SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
                 }
             } else {
@@ -613,6 +628,34 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slfSumbmit.setClickable(false);
         }
 
+    }
+
+    /**
+     *
+     * @param
+     */
+    private void changeViewFoucs(){
+        if(slf_common_loading_linear_submit.getVisibility()==View.VISIBLE){
+            slfServiceSpinner.setClickable(false);
+            slfProblemSpinner.setClickable(false);
+            slfProblemOverviewSpinner.setClickable(false);
+            slfEditProblem.setFocusable(false);
+            slfEditProblem.setFocusableInTouchMode(false);
+            slfEmailEdit.setFocusable(false);
+            slfEmailEdit.setFocusableInTouchMode(false);
+            slfSendLogCheck.setClickable(false);
+            slfSumbmit.setClickable(false);
+        }else{
+            slfServiceSpinner.setClickable(true);
+            slfProblemSpinner.setClickable(true);
+            slfProblemOverviewSpinner.setClickable(true);
+            slfEditProblem.setFocusable(true);
+            slfEditProblem.setFocusableInTouchMode(true);
+            slfEmailEdit.setFocusable(true);
+            slfEmailEdit.setFocusableInTouchMode(true);
+            slfSendLogCheck.setClickable(true);
+            slfSumbmit.setClickable(canSubmit());
+        }
     }
 
     //创建回调处理
@@ -1232,6 +1275,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestNetFail(Object type) {
         SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestNetFail");
         hideLoading();
+        slf_common_loading_linear_submit.setVisibility(View.GONE);
+        changeViewFoucs();
         if (type instanceof String) {
             String code = (String) type;
             if (SLFConstants.photoCode.equals(code)) {
@@ -1256,6 +1301,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         if (type instanceof SLFCategoriesResponseBean) {
             SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestScucess::SLFCategoriesResponseBean::" + ":::type:::" + type.toString());
             this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
+            hideLoading();
         } else if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,9);
@@ -1266,6 +1312,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
+            hideLoading();
         } else if (type instanceof String) {
             String code = (String) type;
             SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestScucess::Integer::" + ":::type:::" + type);
@@ -1275,11 +1322,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             } else {
                 resultUploadImageOrVideo(code);
             }
+            hideLoading();
         } else if (type instanceof SLFCreateFeedbackRepsonseBean) {
             SLFLogUtil.d("yj", "ActivityName:"+this.getClass().getSimpleName()+"::createFeedback-----success:" + ((SLFCreateFeedbackRepsonseBean) type).data);
             gotoFeedbackSuccess(((SLFCreateFeedbackRepsonseBean) type).data);
+            slf_common_loading_linear_submit.setVisibility(View.GONE);
+            changeViewFoucs();
         }
-        hideLoading();
+
     }
 
 
@@ -1287,6 +1337,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestFail(String value, String failCode, Object type) {
         SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
+        slf_common_loading_linear_submit.setVisibility(View.GONE);
+        changeViewFoucs();
         if (type instanceof String) {
             String code = (String) type;
             if (SLFConstants.photoCode.equals(code)) {

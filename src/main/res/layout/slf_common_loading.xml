@@ -22,15 +22,25 @@
         <!--android:layout_height="20dp" />-->
 
 
-        <ImageView
-            android:id="@+id/slf_common_laoding_iv_loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+<!--        <ImageView-->
+<!--            android:id="@+id/slf_common_laoding_iv_loading"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_above="@+id/slf_common_loading_tv_content"-->
+<!--            android:padding="6dp"-->
+<!--            android:src="@drawable/slf_common_loading_img"/>-->
+        <ProgressBar
+            android:id="@+id/slf_progressbar_common"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/slf_common_loading_tv_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="30dp"
-            android:layout_above="@+id/slf_common_loading_tv_content"
-            android:padding="6dp"
-            android:src="@drawable/slf_common_loading_img"/>
+            android:layout_centerHorizontal="true"
+            style="@style/slf_ProgressBar_common"
+            />
 
 
         <TextView

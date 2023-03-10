@@ -34,6 +34,11 @@
         <item name="android:indeterminateDuration">1000</item>
     </style>
 
+    <style name="slf_ProgressBar_common" parent="android:style/Widget.Holo.ProgressBar">
+        <item name="android:indeterminateDrawable">@anim/slf_anim_common_loading_progress</item>
+        <item name="android:indeterminateDuration">1000</item>
+    </style>
+
     <style name="slf_feedback_list_more_ProgressBar" parent="android:style/Widget.Holo.ProgressBar">
         <item name="android:indeterminateDrawable">@anim/slf_anim_feed_back_list_more_progress</item>
         <item name="android:indeterminateDuration">1000</item>

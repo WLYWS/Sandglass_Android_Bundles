@@ -14,6 +14,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -223,6 +224,7 @@ public class SLFToastUtil {
     public static final int LOADING_TYPE_WHITE2 = 3;
     public static final int LOADING_TYPE_GREY = 4;
     public static  ImageView ivLoading;
+    public static ProgressBar ivProgressBar;
 
     public static void showLoading(final Activity act) {
         showLoading(act, false, LOADING_TYPE_WHITE,SHORT_LOADING_DURATION);
@@ -281,10 +283,12 @@ public class SLFToastUtil {
                 mLoadingView.setContentView(contentView);
                 //当点击popwindow以外的地方关闭窗口
                 tvContent = contentView.findViewById(R.id.slf_common_loading_tv_content);
-                ivLoading = contentView.findViewById(R.id.slf_common_laoding_iv_loading);
+                //ivLoading = contentView.findViewById(R.id.slf_common_laoding_iv_loading);
+                ivProgressBar = contentView.findViewById(R.id.slf_progressbar_common);
+
                 SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
-                SLFImageUtil.loadDefaultImage(act, R.drawable.slf_common_loading_img, ivLoading);
-                SLFViewUtil.slfImageViewStartAnim(ivLoading);
+//                SLFImageUtil.loadDefaultImage(act, R.drawable.slf_common_loading_img, ivLoading);
+//                SLFViewUtil.slfImageViewStartAnim(ivLoading);
             }else if (type == LOADING_TYPE_BLACK){
                 //设置contentView
             }else if (type == LOADING_TYPE_WHITE2) {
@@ -309,19 +313,19 @@ public class SLFToastUtil {
             loadingTimer = new CountDownTimer(duration, 500) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    if(tvContent == null) {
-                        return;
-                    }
-                    count++;
-                    if (count % 4 == 1) {
-                        tvContent.setText(act.getResources().getString(R.string.loading1));
-                    } else if (count % 4 == 2) {
-                        tvContent.setText(act.getResources().getString(R.string.loading2));
-                    } else if (count % 4 == 3) {
-                        tvContent.setText(act.getResources().getString(R.string.loading3));
-                    } else if (count % 4 == 0) {
-                        tvContent.setText(act.getResources().getString(R.string.loading4));
-                    }
+//                    if(tvContent == null) {
+//                        return;
+//                    }
+//                    count++;
+//                    if (count % 4 == 1) {
+//                        tvContent.setText(act.getResources().getString(R.string.loading1));
+//                    } else if (count % 4 == 2) {
+//                        tvContent.setText(act.getResources().getString(R.string.loading2));
+//                    } else if (count % 4 == 3) {
+//                        tvContent.setText(act.getResources().getString(R.string.loading3));
+//                    } else if (count % 4 == 0) {
+//                        tvContent.setText(act.getResources().getString(R.string.loading4));
+//                    }
                 }
 
                 @Override
@@ -367,9 +371,10 @@ public class SLFToastUtil {
             //当点击popwindow以外的地方关闭窗口
             tvContent = contentView.findViewById(R.id.slf_common_loading_tv_content);
             SLFFontSet.setSLF_RegularFont(SLFApi.getSLFContext(),tvContent);
-            ImageView ivLoading = contentView.findViewById(R.id.slf_common_laoding_iv_loading);
-            SLFImageUtil.loadDefaultImage(act, R.drawable.slf_common_loading_img, ivLoading);
-            SLFViewUtil.slfImageViewStartAnim(ivLoading);
+            ivProgressBar = contentView.findViewById(R.id.slf_progressbar_common);
+//            ImageView ivLoading = contentView.findViewById(R.id.slf_common_laoding_iv_loading);
+//            SLFImageUtil.loadDefaultImage(act, R.drawable.slf_common_loading_img, ivLoading);
+//            SLFViewUtil.slfImageViewStartAnim(ivLoading);
         }else if (type == LOADING_TYPE_BLACK){
             //设置contentView
         }else if (type == LOADING_TYPE_WHITE2) {
@@ -398,16 +403,16 @@ public class SLFToastUtil {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                count++;
-                if (count % 4 == 1) {
-                    tvContent.setText(act.getResources().getString(R.string.loading1));
-                } else if (count % 4 == 2) {
-                    tvContent.setText(act.getResources().getString(R.string.loading2));
-                } else if (count % 4 == 3) {
-                    tvContent.setText(act.getResources().getString(R.string.loading3));
-                } else if (count % 4 == 0) {
-                    tvContent.setText(act.getResources().getString(R.string.loading4));
-                }
+//                count++;
+//                if (count % 4 == 1) {
+//                    tvContent.setText(act.getResources().getString(R.string.loading1));
+//                } else if (count % 4 == 2) {
+//                    tvContent.setText(act.getResources().getString(R.string.loading2));
+//                } else if (count % 4 == 3) {
+//                    tvContent.setText(act.getResources().getString(R.string.loading3));
+//                } else if (count % 4 == 0) {
+//                    tvContent.setText(act.getResources().getString(R.string.loading4));
+//                }
             }
 
             @Override

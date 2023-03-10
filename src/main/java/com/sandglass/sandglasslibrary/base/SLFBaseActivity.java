@@ -118,7 +118,7 @@ public class SLFBaseActivity extends FragmentActivity {
         if(isFinishing()){
             mDestroyed = true;
             EventBus.getDefault().unregister(this);
-            hideLoading();
+            //hideLoading();
             SLFBaseApplication.exitActivity(this);
         }
     }
@@ -127,6 +127,9 @@ public class SLFBaseActivity extends FragmentActivity {
     protected void onStop() {
         super.onStop();
         SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onStop");
+        if(isFinishing()) {
+            hideLoading();
+        }
         isOnStop = true;
     }
 
