@@ -73,9 +73,9 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     /**设备数据faqlist数据集合*/
     private List<SLFFirstPageFAQFapListBean> faqFapListBeans = new ArrayList<>();
     /**智能机器人按钮*/
-    private ImageView chatBotView;
+    //private ImageView chatBotView;
     /**反馈按钮*/
-    private Button feedbackBtn;
+    //private Button feedbackBtn;
     /**设备icon列表*/
     private RecyclerView deviceRecycler;
     /**设备问题列表*/
@@ -87,8 +87,6 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     private SLFDeviceGridAdapter slfDeviceGridAdapter;
     /**设备问题 adapter*/
     private SLFExAdapter slfExAdapter;
-    /**标题栏右边图标*/
-    private ImageView imgRight;
     /**无网络，请求失败页面linearlayout*/
     private LinearLayout no_network_linear;
     /**无网络，提示*/
@@ -124,42 +122,31 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        requestNewFeed();
+
     }
 
     private void initTitle(){
         TextView title = findViewById(R.id.slf_tv_title_name);
-        imgRight = findViewById(R.id.slf_iv_right);
         title.setText(SLFResourceUtils.getString(R.string.slf_help_and_feedback_bar_title));
         SLFFontSet.setSLF_MediumFontt(this, title);
-        imgRight.setVisibility(View.VISIBLE);
-        imgRight.setImageResource(R.drawable.slf_help_feedback_format);
-        setWH(imgRight,SLFResourceUtils.dp2px(getContext(),30),SLFResourceUtils.dp2px(getContext(),44));
-        imgRight.setOnClickListener(this);
     }
 
-    //动态设置view的宽高
-    public void setWH(View view, int width,int height) {
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = width;
-        layoutParams.height=height;
-        view.setLayoutParams(layoutParams);
-    }
+
 
     private void initView(){
-        chatBotView = findViewById(R.id.slf_help_and_feedback_chat_bot_img);
-        feedbackBtn = findViewById(R.id.slf_goto_feedback);
+//        chatBotView = findViewById(R.id.slf_help_and_feedback_chat_bot_img);
+//        feedbackBtn = findViewById(R.id.slf_goto_feedback);
         no_network_linear = findViewById(R.id.slf_first_page_no_network_linear);
         no_network_text = findViewById(R.id.slf_first_page_no_network_title);
         no_network_describe = findViewById(R.id.slf_first_page_no_network_describe);
         has_data_relative = findViewById(R.id.slf_first_page_has_data_relate);
         try_again_btn = findViewById(R.id.slf_first_page_try_again);
-        SLFFontSet.setSLF_MediumFontt(getContext(), feedbackBtn);
+        //SLFFontSet.setSLF_MediumFontt(getContext(), feedbackBtn);
         SLFFontSet.setSLF_RegularFont(getContext(), try_again_btn);
         SLFFontSet.setSLF_RegularFont(getContext(), no_network_text);
         SLFFontSet.setSLF_RegularFont(getContext(), no_network_describe);
-        chatBotView.setOnClickListener(this);
-        feedbackBtn.setOnClickListener(this);
+//        chatBotView.setOnClickListener(this);
+//        feedbackBtn.setOnClickListener(this);
         try_again_btn.setOnClickListener(this);
     }
 
@@ -188,23 +175,9 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.slf_iv_right){
-            //TODO gotoFeedbackFormat
-            gotoFeedbackHistoryList();
-        }else if(view.getId() == R.id.slf_help_and_feedback_chat_bot_img){
-            //TODO gotoChatBot
-            gotoChatBot();
-        }else if(view.getId() == R.id.slf_goto_feedback){
-            gotoFeedback();
-        }else if(view.getId() == R.id.slf_first_page_try_again){
-                requestNewFeed();
+      if(view.getId() == R.id.slf_first_page_try_again){
                 getDeviceTypesList();
         }
-    }
-    /**是否有未读消息**/
-    private void requestNewFeed(){
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_UN_READ_COUNT, SLFUnReadCount.class, this);
     }
 
     /**设置选中的状态*/
@@ -233,20 +206,20 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         no_network_linear.setVisibility(View.GONE);
     }
 
-    private void gotoChatBot ( ) {
-        Intent in = new Intent(getContext(), SLFChatBotActivity.class);
-        in.putExtra(SLFConstants.CURRENTTIME, System.currentTimeMillis());
-        startActivity(in);
-    }
-
-    private void gotoFeedback(){
-        Intent in = new Intent(getContext(), SLFFeedbackSubmitActivity.class);
-        startActivity(in);
-    }
-    private void gotoFeedbackHistoryList(){
-        Intent in = new Intent(getContext(), SLFFeedbackListActivity.class);
-        startActivity(in);
-    }
+//    private void gotoChatBot ( ) {
+//        Intent in = new Intent(getContext(), SLFChatBotActivity.class);
+//        in.putExtra(SLFConstants.CURRENTTIME, System.currentTimeMillis());
+//        startActivity(in);
+//    }
+//
+//    private void gotoFeedback(){
+//        Intent in = new Intent(getContext(), SLFFeedbackSubmitActivity.class);
+//        startActivity(in);
+//    }
+//    private void gotoFeedbackHistoryList(){
+//        Intent in = new Intent(getContext(), SLFFeedbackListActivity.class);
+//        startActivity(in);
+//    }
 
     @Override
     public void onRequestNetFail(T type) {
@@ -258,15 +231,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     @Override
     public void onRequestSuccess(String result, T type) {
-        if(type instanceof SLFUnReadCount){
-            SLFLogUtil.d("yj","data===weidu===="+((SLFUnReadCount)type).data);
-            if(((SLFUnReadCount)type).data >0){
-                /**有未读反馈*/
-                imgRight.setImageResource(R.drawable.slf_first_page_new_feedback);
-            }else{
-                imgRight.setImageResource(R.drawable.slf_help_feedback_format);
-            }
-        }else if(type instanceof SLFFirstPageFAQResponseBean){
+        if(type instanceof SLFFirstPageFAQResponseBean){
             SLFLogUtil.d("yj","data===SLFFirstPageFAQResponseBean===="+((SLFFirstPageFAQResponseBean)type).data.toString());
             List<SLFFirstPageFAQBean> newDatas =((SLFFirstPageFAQResponseBean)type).data;
             List<SLFFirstPageFAQBean> checkDatas = FaitleData(newDatas);
@@ -351,16 +316,6 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         in.putExtra(SLFConstants.FAQ_TITLE_NAME,deviceTypesList.get(fristPostion).getName());
         in.putExtra(SLFConstants.FAQ_ID,deviceTypesList.get(fristPostion).getSub().get(position).getFaqList().get(childPostion).getId());
         startActivity(in);
-    }
-
-    /**获取是否有未读反馈*/
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(SLFUnReadFeedbackEvent event) {
-       if(event.hasUnRead){
-           imgRight.setImageResource(R.drawable.slf_first_page_new_feedback);
-       }else{
-           imgRight.setImageResource(R.drawable.slf_help_feedback_format);
-       }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

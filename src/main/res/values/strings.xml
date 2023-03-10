@@ -27,7 +27,7 @@
     <string name="slf_feedback_font_count">%1$d/1000</string>
     <string name="slf_feedback_photo_count">%1$d/3</string>
     <string name="slf_feedback_email_title">Email:</string>
-    <string name="slf_feedback_email_hint">Email address</string>
+    <string name="slf_feedback_email_hint">Please enter email address</string>
     <string name="slf_feedback_email_error">Please enter a valid email address</string>
     <string name="slf_feedback_send_log">Send Log</string>
     <string name="slf_feedback_submit_feedback">Submit Feedback</string>

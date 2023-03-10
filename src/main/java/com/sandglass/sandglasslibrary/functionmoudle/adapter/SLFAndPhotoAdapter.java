@@ -4,7 +4,9 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -19,6 +21,7 @@ import com.sandglass.sandglasslibrary.utils.SLFAdapterUtils;
 import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,13 +72,21 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
         } else {
             helper.getView(R.id.slf_progress).clearAnimation();
             helper.setVisible(R.id.slf_progress, false);
-            if (!TextUtils.isEmpty(object.getThumbnailSmallPath())) {
+            if(object.getUploadStatus().equals(SLFConstants.UPLOADFAIL)){
+                helper.setVisible(R.id.slf_iv_video, false);
+                helper.setImageResource(R.id.slf_iv_photo,R.drawable.slf_submit_photo_fail);
+//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(70,
+//                        70);//两个400分别为添加图片的大小
+//                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+//                helper.getView(R.id.slf_iv_photo).setLayoutParams(params);
+            }else {
+                if (object.getThumbnailSmallPath() != null) {
 //                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
 //                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-                if (object.getThumbnailSmallPath().equals(helper.getView(R.id.slf_iv_photo).getTag(R.id.slf_iv_photo))) {
+                    if (object.getThumbnailSmallPath().equals(helper.getView(R.id.slf_iv_photo).getTag(R.id.slf_iv_photo))) {
 
-                } else {
-                    //四周都是圆角的圆角矩形图片。
+                    } else {
+                        //四周都是圆角的圆角矩形图片。
 //                    Glide.with(mContext).load(object.getThumbnailSmallPath()).apply(
 //                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
 //                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
@@ -84,12 +95,14 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
 //                            //取消Glide自带的动画
 //                            .dontAnimate()
 //                            .into((ImageView) helper.getView(R.id.slf_iv_photo));
-                    SLFImageUtil.loadImage(getContext(),object.getThumbnailSmallPath(),(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-                            , SLFImageShapes.SQUARE,SLFImageShapes.ROUND);
-                    helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
+                        SLFImageUtil.loadImage(getContext(), object.getThumbnailSmallPath(), (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                                , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
+                        helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
+                    }
+                } else {
+                    SLFImageUtil.loadImage(getContext(), "", (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                            , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                 }
-            } else {
-                helper.setImageResource(R.id.slf_iv_photo, R.drawable.slf_photo_adapter_defult_icon);
             }
 
         }
@@ -104,6 +117,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
                     }
                 }
             }
+            SLFLogUtil.d("yj","delete-----object---:"+object.getUploadStatus());
             getList().remove(object);
             notifyDataSetChanged();
         });

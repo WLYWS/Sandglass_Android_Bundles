@@ -183,21 +183,16 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mHandler.postDelayed(new Runnable() {
+                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
+                        current_page = current_page +1;
+                        mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 getFeedBackList(type,current_page);
                             }
                         }, 500);
-//                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
-//                        mHandler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                getFeedBackList(type,current_page+1);
-//                            }
-//                        }, 500);
-//                    }
-//
+                    }
+
 //                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
 //                        mHandler.postDelayed(new Runnable() {
 //                            @Override
@@ -266,12 +261,13 @@ public class SLFFeedbackHistoryFragment<T> extends Fragment implements SLFSwipeR
                     adapter.updateList(newDatas, false, true);
                 } else {
                     adapter.updateList(newDatas, true, false);
+                    current_page++;
                 }
             } else {
                 adapter.updateList(null, false, false);
             }
             initView();
-            current_page++;
+
             adapter.setOnItemClickLitener((holder, position) -> {
                 gotoFeedbackDetail(position);
             });

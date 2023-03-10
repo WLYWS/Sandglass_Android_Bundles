@@ -106,8 +106,8 @@
     <color name="slf_faq_detail_bg">#000000</color>//详情页背景色
 
     <!--改版首页-->
-    <color name="slf_first_page_btn_bg">#131313</color> //按钮背景色
-    <color name="slf_first_page_btn_stroke">#80404040</color> //按钮边框色
+    <color name="slf_first_page_btn_bg">#00000000</color> //按钮背景色
+    <color name="slf_first_page_btn_stroke">#404040</color> //按钮边框色
     <color name="slf_first_page_btn_text">#FFFFFF</color>//按钮字体色
     <color name="slf_first_page_bottom_bg">#131313</color>//首页底部区域背景色
 </resources>

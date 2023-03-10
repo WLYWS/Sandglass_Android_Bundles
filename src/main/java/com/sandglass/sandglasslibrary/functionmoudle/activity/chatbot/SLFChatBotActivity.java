@@ -3,7 +3,9 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,11 +14,14 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +33,10 @@ import com.sandglass.sandglasslibrary.commonui.SLFClickEditText;
 import com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.dao.SLFDBEngine;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFContinueLeaveMsgActivity;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot.SLFChatBotRecyclerAdapter;
 import com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotAnswerEffectEvent;
@@ -41,6 +49,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiRespon
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchReslutBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUnReadCount;
 import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -52,6 +61,7 @@ import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
+import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -82,6 +92,9 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private final String SPLIT_STR = "\"@%&\"";
     private SLFDBEngine slfdbEngine;
     private LinearLayout ll_et_input;
+    private LinearLayout gotoFeedback;
+    private LinearLayout gotoFaq;
+    private LinearLayout slf_bottom_btn_linear;
     //是否需要增加时间item
     private boolean isFirstGetFromDataBase = false;
     private Handler handler;
@@ -98,6 +111,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private LinearLayout slf_chat_bot_all_linear;
     private long fromHelpTime = 0;
     private  String uuid;
+    /**标题栏右边图标*/
+    private ImageView imgRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,13 +120,20 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.activity_slfchat_bot);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+        setKeyboardListener();
         slfdbEngine = new SLFDBEngine(this);
         initView();
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         fromHelpTime = System.currentTimeMillis();
+        requestNewFeed();
+    }
+
+    private void initData() {
         if ((System.currentTimeMillis() - SLFSpUtils.getLong(LAST_ENTER_PAGE, 0)) / (1000 * 60 * 60 * 24) > 7) {
             slfdbEngine.delete_all_msg();
             uuid = getUUid();
@@ -120,19 +142,26 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         } else {
             //请求数据库查找记录
             lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0);
-                if (((fromHelpTime - lastSendTime) /1000 /60) > 5) {
+            if(lastSendTime==0) {
+                slfdbEngine.quary_ten_msg(msg_id);
+                uuid = getUUid();
+                SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
+                getWelcomeHotQuestion();
+            }else {
+                if (((fromHelpTime - lastSendTime) / 1000 / 60) > 5) {
                     slfdbEngine.quary_ten_msg(msg_id);
                     uuid = getUUid();
-                    SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
+                    SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                     getWelcomeHotQuestion();
-                }else {
-                    uuid = SLFSpUtils.getString(SLFConstants.UUID,"");
-                    if(TextUtils.isEmpty(uuid)){
+                } else {
+                    uuid = SLFSpUtils.getString(SLFConstants.UUID, "");
+                    if (TextUtils.isEmpty(uuid)) {
                         uuid = getUUid();
-                        SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
+                        SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                     }
                     slfdbEngine.quary_ten_msg(msg_id);
                 }
+            }
 
                 fromHelpTime = 0;
         }
@@ -182,37 +211,89 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private void initView() {
         TextView slf_tv_title_name = findViewById(R.id.slf_tv_title_name);
         slf_tv_title_name.setText(R.string.slf_faq_title);
+        SLFFontSet.setSLF_MediumFontt(this, slf_tv_title_name);
+        imgRight = findViewById(R.id.slf_iv_right);
         sw_faq_recycle = findViewById(R.id.sw_faq_recycle);
         rv_faq_chat_bot = findViewById(R.id.rv_faq_chat_bot);
         et_faq_input = findViewById(R.id.et_faq_input);
         ll_et_input = findViewById(R.id.ll_et_input);
         slf_chat_bot_all_linear = findViewById(R.id.slf_chat_bot_all_linear);
+        gotoFeedback = findViewById(R.id.slf_feedback_linear);
+        gotoFaq = findViewById(R.id.slf_faq_linear);
+        slf_bottom_btn_linear = findViewById(R.id.slf_bottom_btn_linear);
+        imgRight.setVisibility(View.VISIBLE);
+        imgRight.setImageResource(R.drawable.slf_help_feedback_format);
+        setWH(imgRight,SLFResourceUtils.dp2px(getContext(),30),SLFResourceUtils.dp2px(getContext(),44));
+        imgRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         SLFFITRelativeLayout chat_bot_root = findViewById(R.id.chat_bot_root);
         setListenerFotEditTexts();
         chat_bot_root.setBackgroundColor(SLFSetTheme.defaultBackgroundColor);
         SLFFontSet.setSLF_RegularFont(this, slf_tv_title_name);
-        // 复写EditText的onTouch方法
-//        et_faq_input.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                // 当触摸的是EditText & 当前EditText可滚动时，则将事件交给EditText处理；
-//                if ((v.getId() == R.id.et_faq_input && canVerticalScroll(et_faq_input))) {
-//                    v.getParent().requestDisallowInterceptTouchEvent(true);
-//                    // 否则将事件交由其父类处理
-//                    if (event.getAction() == MotionEvent.ACTION_UP) {
-//                        v.getParent().requestDisallowInterceptTouchEvent(false);
-//                    }
-//                }
-//                return false;
-//            }
-//        });
 
         sLFChatBotRecyclerAdapter = new SLFChatBotRecyclerAdapter(this);
         //et_faq_input.setEnabled(false);
         view_click();
         handler = new Handler(getMainLooper());
+        gotoFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoFeedback();
+            }
+        });
+        gotoFaq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoFaq();
+            }
+        });
+        imgRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoFeedbackHistoryList();
+            }
+        });
     }
 
+    /**是否有未读消息**/
+    private void requestNewFeed(){
+        SLFHttpUtils.getInstance().executePathGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_UN_READ_COUNT, SLFUnReadCount.class, this);
+    }
+
+    //动态设置view的宽高
+    public void setWH(View view, int width,int height) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height=height;
+        view.setLayoutParams(layoutParams);
+    }
+
+    private void gotoFaq () {
+        Intent in = new Intent(getContext(), SLFHelpAndFeedback.class);
+        startActivity(in);
+    }
+
+    private void gotoFeedback(){
+        Intent in = new Intent(getContext(), SLFFeedbackSubmitActivity.class);
+        startActivity(in);
+    }
+    private void gotoFeedbackHistoryList(){
+        Intent in = new Intent(getContext(), SLFFeedbackListActivity.class);
+        startActivity(in);
+    }
+
+    private void setDrawableLeftSize(Button button,Drawable drawable) {
+        //Drawable drawable = getResources().getDrawable(R.drawable.viewid);
+        //图片宽度和高度
+        drawable.setBounds(0,0,SLFResourceUtils.dp2px(getContext(),30),SLFResourceUtils.dp2px(getContext(),30));
+        //把图片设置在左边
+        button.setCompoundDrawables(drawable,null,null,null); //左上右下
+    }
     // 判断当前EditText是否可滚动
     private boolean canVerticalScroll(EditText editText) {
 
@@ -285,6 +366,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         rv_faq_chat_bot.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                slf_bottom_btn_linear.setVisibility(View.VISIBLE);
                 hideSoftInput(SLFChatBotActivity.this, et_faq_input);
                 return false;
             }
@@ -372,6 +454,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      */
     private void onInput() {
         et_faq_input.requestFocus();
+        slf_bottom_btn_linear.setVisibility(View.GONE);
         showSoftInput(SLFChatBotActivity.this, et_faq_input);
 //        Handler handler = new Handler(getMainLooper());
 //        handler.postDelayed(new Runnable() {
@@ -395,6 +478,14 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
             SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
+        }else if(type instanceof SLFUnReadCount){
+            SLFLogUtil.d("yj","data===weidu===="+((SLFUnReadCount)type).data);
+            if(((SLFUnReadCount)type).data >0){
+                /**有未读反馈*/
+                imgRight.setImageResource(R.drawable.slf_first_page_new_feedback);
+            }else{
+                imgRight.setImageResource(R.drawable.slf_help_feedback_format);
+            }
         }
     }
 
@@ -491,16 +582,17 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                     sb.append(SPLIT_STR);
                 }
             }
-            //slfChatBotHotData.setQuestion(sb.toString());
+            slfChatBotHotData.setQuestion(sb.toString());
             faqMsgList.add(slfChatBotHotData);
             slfdbEngine.insert_msg(slfChatBotHotData);
         }
 
-        if (faqMsgList.size() > 3) {//表示不是新的faq
-
-        } else {//表示新faq
-            setRcycleApdater();
-        }
+            if(faqMsgList.size()>3){
+                setRcycleApdater();
+                notiftyAdapter();
+            }else {
+                setRcycleApdater();
+            }
     }
 
     private void addTimeItem() {
@@ -511,6 +603,24 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         faqMsgList.add(slfChatBotTimeItemData);
         notiftyAdapter();
         slfdbEngine.insert_msg(slfChatBotTimeItemData);
+    }
+
+    //键盘监听事件
+    public void setKeyboardListener() {
+        //键盘监听事件
+        SLFSoftKeyBoardListener.setListener(SLFChatBotActivity.this,
+                new SLFSoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+
+                    @Override
+                    public void keyBoardShow(int height) {
+                        slf_bottom_btn_linear.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void keyBoardHide(int height) {
+                        slf_bottom_btn_linear.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     /**

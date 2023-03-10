@@ -306,6 +306,62 @@
         android:paddingBottom="14dp"
         android:text="@string/slf_feedback_submit_feedback"
         android:textAllCaps="false"
-        android:textColor="@color/slf_feedback_question_type_title" />
+        android:textColor="@color/slf_feedback_question_type_title"
+        />
 
+    <LinearLayout
+        android:id="@+id/slf_submit_page_no_network_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/slf_submit_page_no_item_img"
+            android:layout_width="227dp"
+            android:layout_height="161dp"
+            android:src="@drawable/slf_feedback_list_no_item" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:id="@+id/slf_submit_page_no_network_title"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/slf_first_page_no_network"
+            android:textColor="@color/slf_first_page_no_network_warning"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:id="@+id/slf_submit_page_no_network_describe"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/slf_first_page_no_network_sub"
+            android:textColor="@color/slf_sub_title_color"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/slf_submit_page_try_again"
+            android:background="@drawable/slf_first_page_no_network_btn_bg"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:textSize="20sp"
+            android:textColor="@color/slf_first_page_try_again_text"
+            android:text="@string/slf_first_page_no_network_try_again"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:layout_marginTop="90dp"/>
+    </LinearLayout>
 </com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout>

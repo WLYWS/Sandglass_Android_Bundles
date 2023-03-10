@@ -16,7 +16,7 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
     private int type;//消息类型
     //private String title;//消息title
     private String content;//消息内容
-    //private String question;//已知问题
+    private String question;//已知问题
     private int msg_from;//谁发的消息
     //private int answer_effective;//解答是否有效
     private int send_msg_status;//发送消息的状态
@@ -30,7 +30,7 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
 
     @Ignore
     public SLFChatBotMsgData(){}
-    public SLFChatBotMsgData (int id,String uuid,long msgTime, int type, String content, int msg_from, int send_msg_status, int question_index) {
+    public SLFChatBotMsgData (int id,String uuid,long msgTime, int type, String content, int msg_from, int send_msg_status,String question, int question_index) {
         this.id = id;
         this.uuid = uuid;
         this.msgTime = msgTime;
@@ -38,6 +38,7 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         this.content = content;
         this.msg_from = msg_from;
         this.send_msg_status = send_msg_status;
+        this.question = question;
         this.question_index = question_index;
     }
 
@@ -193,6 +194,14 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     @Override

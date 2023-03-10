@@ -156,10 +156,12 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
 
     private void initData() {
         isInitData = true;
+        isRefresh = true;
         if(recodeList!=null){
             recodeList.clear();
         }
-        getFeedBackList(type,1);
+        current_page = 1;
+        getFeedBackList(type,current_page);
     }
 
     private void getFeedBackList (int type,int current) {
@@ -186,21 +188,17 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            getFeedBackList(type,current_page);
-                        }
-                    }, 500);
-//                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
-//                        mHandler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                getFeedBackList(type,current_page+1);
-//                            }
-//                        }, 500);
-//                    }
-//
+
+                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
+                        current_page = current_page +1;
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getFeedBackList(type,current_page);
+                            }
+                        }, 500);
+                    }
+
 //                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
 //                        mHandler.postDelayed(new Runnable() {
 //                            @Override
@@ -267,17 +265,33 @@ public class SLFFeedbackAllHistoryFragment<T> extends Fragment implements SLFSwi
             if (newDatas != null && newDatas.size() > 0) {
                 if (isRefresh) {
                     adapter.updateList(newDatas, false, true);
+                    initView();
+                    SLFLogUtil.d("yj","current_page--111--"+current_page);
+                    adapter.setOnItemClickLitener((holder, position) -> {
+                        gotoFeedbackDetail(position);
+                    });
+                    return;
                 } else {
                     adapter.updateList(newDatas, true, false);
+                    SLFLogUtil.d("yj","current_page--000--"+current_page);
+                    current_page++;
+                    initView();
+                    SLFLogUtil.d("yj","current_page--111--"+current_page);
+                    adapter.setOnItemClickLitener((holder, position) -> {
+                        gotoFeedbackDetail(position);
+                    });
+                    return;
                 }
             } else {
                 adapter.updateList(null, false, false);
+                initView();
+                SLFLogUtil.d("yj","current_page--111--"+current_page);
+                adapter.setOnItemClickLitener((holder, position) -> {
+                    gotoFeedbackDetail(position);
+                });
+                return;
             }
-            initView();
-            current_page++;
-            adapter.setOnItemClickLitener((holder, position) -> {
-                gotoFeedbackDetail(position);
-            });
+
         }
     }
 

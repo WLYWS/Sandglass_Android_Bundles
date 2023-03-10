@@ -8,10 +8,12 @@
         android:id="@+id/slf_iv_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scaleType="centerCrop"
-        android:layout_margin="8dp"
-        android:src="@drawable/slf_photo_adapter_defult_icon"
-        />
+        android:src="@drawable/slf_photo_adapter_defult_icon" />
     <TextView
         android:id="@+id/slf_tv_file_name"
         android:layout_width="wrap_content"

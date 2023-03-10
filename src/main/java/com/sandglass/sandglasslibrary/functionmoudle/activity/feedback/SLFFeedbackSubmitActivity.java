@@ -65,6 +65,7 @@ import com.sandglass.sandglasslibrary.utils.SLFPhotoSelectorUtils;
 import com.sandglass.sandglasslibrary.utils.SLFRegular;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
+import com.sandglass.sandglasslibrary.utils.SLFUtils;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -221,6 +222,26 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * 获取到dialog选中的type
      */
     private String typeSelected;
+    /**
+     * 无网页
+     */
+    private LinearLayout slf_submit_page_no_network_linear;
+    /**
+     * 无网页title
+     */
+    private TextView slf_submit_page_no_network_title;
+    /**
+     * 无网页内容
+     */
+    private TextView slf_submit_page_no_network_describe;
+    /**
+     * 无网页图片
+     */
+    private ImageView slf_submit_page_no_item_img;
+    /**
+     * try agaiin按钮
+     */
+    private Button slf_submit_page_try_again;
     private int service_checkedPosition = -1;
     private int problem_checkedPosition = -1;
     private int problem_overview_checkedPosition = -1;
@@ -272,13 +293,22 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         initTitle();
         initView();
+        checkNetWork();
+        initPhontoSelector();
+    }
+
+    private void checkNetWork(){
         if (SLFCommonUtils.isNetworkAvailable(this)) {
+            slfScrollView.setVisibility(View.VISIBLE);
+            slfSumbmit.setVisibility(View.VISIBLE);
+            slf_submit_page_no_network_linear.setVisibility(View.GONE);
             requestUploadUrls();
             requestAllData();
         } else {
-            showNetworkError();
+            slf_submit_page_no_network_linear.setVisibility(View.VISIBLE);
+            slfScrollView.setVisibility(View.GONE);
+            slfSumbmit.setVisibility(View.GONE);
         }
-        initPhontoSelector();
     }
 
     /**
@@ -304,8 +334,16 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfSumbmit = findViewById(R.id.slf_submit_feedback);
         slfEmailEdit = findViewById(R.id.slf_email_eidt);
         slfEmailError = findViewById(R.id.slf_email_error);
+        //无网页控件
+        slf_submit_page_no_network_linear = findViewById(R.id.slf_submit_page_no_network_linear);
+        slf_submit_page_no_network_title = findViewById(R.id.slf_submit_page_no_network_title);
+        slf_submit_page_no_network_describe = findViewById(R.id.slf_submit_page_no_network_describe);
+        slf_submit_page_no_item_img = findViewById(R.id.slf_submit_page_no_item_img);
+        slf_submit_page_try_again = findViewById(R.id.slf_submit_page_try_again);
+
         slfServiceSpinner.setOnClickListener(this);
         slfProblemSpinner.setOnClickListener(this);
+        slf_submit_page_try_again.setOnClickListener(this);
         slfProblemOverviewSpinner.setOnClickListener(this);
         slfEditProblem.setOnTouchListener(new SLFEditTextScrollListener(slfEditProblem));
         slfEditProblem.addTextChangedListener(this);
@@ -386,7 +424,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 picPathLists.clear();
                 picPathLists.addAll(slfMediaDataList);
                 picPathLists.remove(slfMediaData);
-                if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING)&&!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
                     Intent in = new Intent();
                     in.putExtra("from","feedback");
                     in.setClass(SLFFeedbackSubmitActivity.this, SLFFeedbackPicPreviewActivity.class);
@@ -417,6 +455,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         view.setCompoundDrawables(view.getCompoundDrawables()[0], view.getCompoundDrawables()[1], drawableRight, view.getCompoundDrawables()[3]);
     }
 
+
+
     /**
      * 箭头方向切换
      */
@@ -443,6 +483,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             // finish();
         } else if (view.getId() == R.id.slf_submit_feedback) {
             //TODO submit feedback
+
             if (slfEditProblem.getText().toString().length() < 10) {
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
                 return;
@@ -467,10 +508,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 if (slfSendLogCheck.isChecked()) {
                     showLoading();
                     //sumbitLogFiles();
-                    if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
-                        SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
-                                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
-                    }
+
                     SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                         @Override
                         public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
@@ -480,6 +518,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                             sumbitLogFiles();
                         }
                     });
+                    if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {
+                        SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
+                                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
+                    }
                 } else {
                     showLoading();
                     SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
@@ -500,6 +542,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             //TODO selector problem overview
             showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_problem_overview_title), getSlfProblemOverviewData(slfProblemType, slfProblemMap), problem_overview_checkedPosition);
             changeTextAndImg(slfProblemOverviewSpinner);
+        } else if(view.getId() == R.id.slf_submit_page_try_again) {
+            checkNetWork();
         }
     }
 
@@ -1237,6 +1281,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         hideLoading();
     }
+
 
     @Override
     public void onRequestFail(String value, String failCode, Object type) {
