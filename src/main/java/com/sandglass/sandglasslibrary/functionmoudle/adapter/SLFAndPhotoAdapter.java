@@ -48,6 +48,8 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
             helper.getView().setVisibility(View.GONE);
         } else {
             helper.getView().setVisibility(View.VISIBLE);
+            helper.setVisible(R.id.slf_center_addimg,true);
+            helper.setVisible(R.id.slf_photo_count,true);
             helper.setText(R.id.slf_photo_count, SLFStringFormatUtil.getFormatString(R.string.slf_feedback_photo_count, getCount() - 1));
             SLFFontSet.setSLF_RegularFont(mContext,helper.getView(R.id.slf_photo_count));
             if (TextUtils.isEmpty(object.getMimeType())) {
@@ -68,18 +70,25 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
         if (object.getUploadStatus().equals(SLFConstants.UPLOADING)) {
             helper.setVisible(R.id.slf_progress, true);
             helper.setVisible(R.id.slf_iv_delete, true);
+            helper.setVisible(R.id.slf_center_addimg,true);
+            helper.setVisible(R.id.slf_photo_count,true);
             helper.setImageResource(R.id.slf_iv_photo, R.drawable.slf_photo_adapter_defult_icon);
-        } else {
+        } else if(object.getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
             helper.getView(R.id.slf_progress).clearAnimation();
             helper.setVisible(R.id.slf_progress, false);
-            if(object.getUploadStatus().equals(SLFConstants.UPLOADFAIL)){
-                helper.setVisible(R.id.slf_iv_video, false);
-                helper.setImageResource(R.id.slf_iv_photo,R.drawable.slf_submit_photo_fail);
-//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(70,
-//                        70);//两个400分别为添加图片的大小
-//                params.addRule(RelativeLayout.CENTER_IN_PARENT);
-//                helper.getView(R.id.slf_iv_photo).setLayoutParams(params);
-            }else {
+            helper.setVisible(R.id.slf_center_addimg,false);
+            helper.setVisible(R.id.slf_photo_count,false);
+            helper.setVisible(R.id.slf_iv_video, false);
+            SLFImageUtil.loadDefaultImage(mContext,R.drawable.slf_submit_photo_fail,helper.getView(R.id.slf_iv_photo));
+            ViewGroup.LayoutParams lp = helper.getView(R.id.slf_iv_photo).getLayoutParams();
+            lp.width = 70;
+            lp.height = 70;
+            helper.getView(R.id.slf_iv_photo).setLayoutParams(lp);
+        }else {
+            helper.getView(R.id.slf_progress).clearAnimation();
+            helper.setVisible(R.id.slf_progress, false);
+            helper.setVisible(R.id.slf_center_addimg,true);
+            helper.setVisible(R.id.slf_photo_count,true);
                 if (object.getThumbnailSmallPath() != null) {
 //                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
 //                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
@@ -95,6 +104,10 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
 //                            //取消Glide自带的动画
 //                            .dontAnimate()
 //                            .into((ImageView) helper.getView(R.id.slf_iv_photo));
+                        ViewGroup.LayoutParams lp = helper.getView(R.id.slf_iv_photo).getLayoutParams();
+                        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                        helper.getView(R.id.slf_iv_photo).setLayoutParams(lp);
                         SLFImageUtil.loadImage(getContext(), object.getThumbnailSmallPath(), (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
                                 , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                         helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
@@ -103,8 +116,6 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
                     SLFImageUtil.loadImage(getContext(), "", (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
                             , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                 }
-            }
-
         }
 
         helper.setOnClickListener(R.id.slf_iv_delete, v -> {

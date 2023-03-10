@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
@@ -434,7 +435,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     picPathLists.clear();
                     picPathLists.addAll(slfMediaDataList);
                     picPathLists.remove(slfMediaData);
-                    if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING) && !slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
+                    if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADED)) {
                         Intent in = new Intent();
                         in.putExtra("from", "feedback");
                         in.setClass(SLFFeedbackSubmitActivity.this, SLFFeedbackPicPreviewActivity.class);
@@ -442,8 +443,26 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         in.putParcelableArrayListExtra("photoPath", picPathLists);
                         startActivity(in);
                         SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": goto preview complete" + ":picPathLists size:" + picPathLists.size());
-                    } else {
-                        // showCenterToast("正在上传……");
+                    } else if(slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)){
+                        slfMediaDataList.get(position).setUploadStatus(SLFConstants.UPLOADING);
+                        slfaddAttachAdapter.notifyDataSetChanged();
+                        File file = new File(slfMediaDataList.get(position).getOriginalPath());
+                        File thumbFile = new File(slfMediaDataList.get(position).getThumbnailSmallPath());
+                        String contentType="";
+                        if (slfMediaDataList.get(position).getMimeType().contains("png")) {
+                            contentType = "image/png";
+                        } else if (slfMediaDataList.get(position).getMimeType().contains("jpg")) {
+                            contentType = "image/jpg";
+                        } else if (slfMediaDataList.get(position).getMimeType().contains("jpeg")) {
+                            contentType = "image/jpeg";
+                        } else if (slfMediaDataList.get(position).getMimeType().contains("video")) {
+                            contentType = "video/mp4";
+                        }
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), this);
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType,String.valueOf(slfMediaDataList.get(position).getId())+"thumb" , this);
+                        SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":uploadFiles requested completed");
+                    } else{
+                        //
                     }
                 }
             }
@@ -701,7 +720,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":uploadFiles:::" + slfMediaDataList.size());
         String contentType = "";
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-            if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
+            if (slfMediaDataList.get(i).getUploadPath() == null) {
+                slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                //slfaddAttachAdapter.notifyDataSetChanged();
+                SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":uploadFiles uploadUrl is null");
+            } else {
                 if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING) && !slfMediaDataList.get(i).getMimeType().contains("video")) {
                     File file = new File(slfMediaDataList.get(i).getOriginalPath());
                     File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
@@ -718,10 +741,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType,String.valueOf(slfMediaDataList.get(i).getId())+"thumb" , this);
                     SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":uploadFiles requested completed");
                 }
-            } else {
-                slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                //slfaddAttachAdapter.notifyDataSetChanged();
-                SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":uploadFiles uploadUrl is null");
             }
         }
     }
@@ -1465,21 +1484,23 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         if (slfMediaDataList.size() - 1 > 0) {
             for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-                SLFLeaveMsgBean slfLeaveMsgBean = new SLFLeaveMsgBean();
-                slfLeaveMsgBean.setPath(slfMediaDataList.get(i).getUploadPath());
-                slfLeaveMsgBean.setThumbnailPath(slfMediaDataList.get(i).getUploadThumPath());
-                slfLeaveMsgBean.setFileName(slfMediaDataList.get(i).getFileName());
-                slfLeaveMsgBean.setThumbnailContentType("image/png");
-                if (slfMediaDataList.get(i).getMimeType().contains("video")) {
-                    slfLeaveMsgBean.setContentType("video/mp4");
-                } else if (slfMediaDataList.get(i).getMimeType().contains("png")) {
-                    slfLeaveMsgBean.setContentType("image/png");
-                } else if (slfMediaDataList.get(i).getMimeType().contains("jpg")) {
-                    slfLeaveMsgBean.setContentType("image/jpg");
-                } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
-                    slfLeaveMsgBean.setContentType("image/jpeg");
+                if(slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADED)){
+                    SLFLeaveMsgBean slfLeaveMsgBean = new SLFLeaveMsgBean();
+                    slfLeaveMsgBean.setPath(slfMediaDataList.get(i).getUploadPath());
+                    slfLeaveMsgBean.setThumbnailPath(slfMediaDataList.get(i).getUploadThumPath());
+                    slfLeaveMsgBean.setFileName(slfMediaDataList.get(i).getFileName());
+                    slfLeaveMsgBean.setThumbnailContentType("image/png");
+                    if (slfMediaDataList.get(i).getMimeType().contains("video")) {
+                        slfLeaveMsgBean.setContentType("video/mp4");
+                    } else if (slfMediaDataList.get(i).getMimeType().contains("png")) {
+                        slfLeaveMsgBean.setContentType("image/png");
+                    } else if (slfMediaDataList.get(i).getMimeType().contains("jpg")) {
+                        slfLeaveMsgBean.setContentType("image/jpg");
+                    } else if (slfMediaDataList.get(i).getMimeType().contains("jpeg")) {
+                        slfLeaveMsgBean.setContentType("image/jpeg");
+                    }
+                    attrList.add(slfLeaveMsgBean);
                 }
-                attrList.add(slfLeaveMsgBean);
             }
             map.put("attrList", attrList);
         }
@@ -1502,7 +1523,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if(id == slfMediaDataList.get(i).getId()){
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
-                if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
+                if (slfMediaDataList.get(i).getUploadPath() == null) {
+                    SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::uploadvideo url is null");
+                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                } else {
+                    //slfaddAttachAdapter.notifyDataSetChanged();
                     if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                         SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::uploadvideo start");
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
@@ -1511,10 +1536,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId())+"thumb", SLFFeedbackSubmitActivity.this);
                         SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::request uploadvideo net");
                     }
-                } else {
-                    SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::uploadvideo url is null");
-                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                    //slfaddAttachAdapter.notifyDataSetChanged();
                 }
             }else{
                 SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::not current video");
