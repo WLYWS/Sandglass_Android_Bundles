@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
@@ -7,17 +8,23 @@
     android:layout_marginBottom="16dp">
 
 
-    <com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout
+    <com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout
         android:id="@+id/slf_feedback_list_refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        app:srlAccentColor="@color/transparent"
+        app:srlPrimaryColor="@color/transparent"
+        android:overScrollMode="never"
+        android:fadingEdge="none"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/slf_histroy_feedback_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout>
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:fadingEdge="none"/>
+    </com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout>
 
     <LinearLayout
         android:id="@+id/slf_feedback_list_no_item_linear"
@@ -25,7 +32,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/slf_feedback_list_no_item_img"

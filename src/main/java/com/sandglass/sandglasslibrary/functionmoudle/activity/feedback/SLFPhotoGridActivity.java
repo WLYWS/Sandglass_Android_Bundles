@@ -318,7 +318,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                         try {
                             Bitmap btm = getVideoThumbnail(path);
                             if (btm != null) {
-                                SLFViewUtil.compressImage(btm, SLFConstants.CROP_IMAGE_PATH, fileThumbleName, 100);
+                                SLFViewUtil.compressImage(btm, SLFConstants.CROP_IMAGE_PATH, fileThumbleName, 300);
                             }
                             picPathLists.get(i).setId(System.currentTimeMillis());
                             picPathLists.get(i).setThumbnailSmallPath(SLFConstants.CROP_IMAGE_PATH + fileThumbleName);

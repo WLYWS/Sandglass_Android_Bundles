@@ -1,5 +1,6 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,9 @@ import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
+import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFRefreshFooter;
+import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFRereshHeader;
+import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackDetailAdapter;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
@@ -50,6 +54,9 @@ import com.sandglass.sandglasslibrary.utils.SLFCompressUtil;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -65,7 +72,7 @@ import java.util.concurrent.Executors;
  * describe:反馈列表详情页
  * time:2023/1/30
  */
-public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements View.OnClickListener, SLFSwipeRefreshLayout.OnRefreshListener, SLFHttpRequestCallback<T> {
+public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements View.OnClickListener,SLFHttpRequestCallback<T> {
     /**
      * 处理状态
      */
@@ -90,7 +97,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     /**
      * 更新加载的布局
      */
-    private SLFSwipeRefreshLayout slf_feedback_list_detail_refreshLayout;
+    private SLFSmartRefreshLayout slf_feedback_list_detail_refreshLayout;
     /**
      * 留言列表adapter
      */
@@ -139,16 +146,17 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private int pages;
     private int position;
     private boolean isRefresh;
+    private boolean isCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_list_detail);
-        initData();
+        isCreate = true;
+        initFromData();
         initTitleBar();
         initView();
-        initRefreshLayout();
         initRecyclerView();
         intentActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -168,23 +176,23 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     }
 
     /**
-     * 初始化refreshlayout
+     * 初始化必须数据
+     *
      */
-    private void initRefreshLayout() {
-        slf_feedback_list_detail_refreshLayout.setProgressBackgroundColorSchemeResource(R.color.transparent);
-        slf_feedback_list_detail_refreshLayout.setColorSchemeResources(R.color.slf_theme_color);
-        slf_feedback_list_detail_refreshLayout.setOnRefreshListener(this);
-    }
-
-    /**
-     * 初始化数据
-     */
-    private void initData() {
+    private void initFromData(){
         position = getIntent().getIntExtra(SLFConstants.RECORD_DATA_POSITION,-1);
         slfRecode = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slfLeaveMsgRecordList = new ArrayList<>();
+    }
+    /**
+     * 刷新数据
+     */
+    private void initData() {
+        currentPage = 1;
+        isRefresh = true;
         getFeedBackDetailList(currentPage);
     }
+
 
 
     private void getFeedBackDetailList (int currentPage) {
@@ -248,6 +256,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     /**
      * 初始化RecyclerView
      */
+    @SuppressLint("ResourceAsColor")
     private void initRecyclerView() {
         adapter = new SLFFeedbackDetailAdapter(getContext(),slfLeaveMsgRecordList);
 //        adapter.setHasStableIds(true);
@@ -260,47 +269,27 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slf_feedback_leave_list.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         slf_feedback_leave_list.setLayoutManager(mLayoutManager);
-//        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
-//        pool.setMaxRecycledViews(0,10);
-//        slf_feedback_leave_list.setRecycledViewPool(pool);
-//        slf_feedback_leave_list.getItemAnimator().setChangeDuration(0);
-        //只要设置为false，就可以不显示动画了，也就解决了闪烁问题
-        //((SimpleItemAnimator)slf_feedback_leave_list.getItemAnimator()).setSupportsChangeAnimations(false);
         slf_feedback_leave_list.setAdapter(adapter);
-        //adapter.setHasStableIds(true);
-        //slf_histroy_feedback_list.setItemAnimator(new DefaultItemAnimator());
-        slf_feedback_leave_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        slf_feedback_list_detail_refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
+        slf_feedback_list_detail_refreshLayout.setEnableFooterTranslationContent(true);//是否上拉Footer的时候向上平移列表或者内容
+        slf_feedback_list_detail_refreshLayout.setEnableLoadMoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
+        slf_feedback_list_detail_refreshLayout.setEnableFooterFollowWhenNoMoreData(true);
+        slf_feedback_list_detail_refreshLayout.setPrimaryColors(R.color.transparent, android.R.color.transparent);
+        slf_feedback_list_detail_refreshLayout.setRefreshHeader(new SLFRereshHeader(getContext()));
+        slf_feedback_list_detail_refreshLayout.setRefreshFooter(new SLFRefreshFooter(getContext()));
+        slf_feedback_list_detail_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (adapter.isFadeTips() == false && lastVisibleItem + 1 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackDetailList(currentPage+1);
-                            }
-                        }, 500);
-                    }
-
-                    if (adapter.isFadeTips() == true && lastVisibleItem + 2 == adapter.getItemCount()) {
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                getFeedBackDetailList(currentPage+1);
-                            }
-                        }, 500);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initData();
             }
         });
-
+        slf_feedback_list_detail_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                getFeedBackDetailList(currentPage);
+            }
+        });
+        slf_feedback_list_detail_refreshLayout.autoRefresh();//自动刷新
     }
 
     /**
@@ -316,25 +305,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         SLFFontSet.setSLF_RegularFont(getContext(),slfTitle);
         SLFFontSet.setSLF_MediumFontt(getContext(),slfRightTitle);
     }
-
-//    private List<SLFLeaveMsgRecord> getDatas(final int firstIndex, final int lastIndex) {
-//        List<SLFLeaveMsgRecord> resList = new ArrayList<>();
-//        for (int i = firstIndex; i < lastIndex; i++) {
-//            if (i < slfLeaveMsgRecordList.size()) {
-//                resList.add(slfLeaveMsgRecordList.get(i));
-//            }
-//        }
-//        return resList;
-//    }
-//
-//    private void updateRecyclerView(int fromIndex, int toIndex) {
-//        List<SLFLeaveMsgRecord> newDatas = getDatas(fromIndex, toIndex);
-//        if (newDatas.size() > 0) {
-//            adapter.updateList(newDatas, true);
-//        } else {
-//            adapter.updateList(null, false);
-//        }
-//    }
 
     @Override
     public void onClick(View view) {
@@ -367,21 +337,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         intentActivityResultLauncher.launch(intent);
     }
 
-    @Override
-    public void onRefresh() {
-        slf_feedback_list_detail_refreshLayout.setRefreshing(true);
-        //adapter.resetDatas();
-        //updateRecyclerView(0, PAGE_COUNT);
-        currentPage = 1;
-        isRefresh = true;
-        getFeedBackDetailList(currentPage);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                slf_feedback_list_detail_refreshLayout.setRefreshing(false);
-            }
-        }, 1000);
-    }
 
     /**
      * sendlog
@@ -434,7 +389,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
         map.put("num", 3);
-        showLoading();
+        //showLoading();
         SLFHttpUtils.getInstance().executeGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
     }
@@ -448,7 +403,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if ("0".equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             }
-        }else{
+        }else if(type instanceof SLFFeedbackDetailItemResponseBean){
+            if(isRefresh){
+                slf_feedback_list_detail_refreshLayout.finishRefresh();
+                isRefresh = false;
+            } else{
+                slf_feedback_list_detail_refreshLayout.finishLoadMore();
+            }
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
         }
     }
@@ -491,13 +452,19 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if (newDatas != null && newDatas.size() > 0) {
                 if(isRefresh){
                     adapter.updateList(newDatas,false,true);
+                    slf_feedback_list_detail_refreshLayout.finishRefresh();
+                    isRefresh = false;
                 }else {
                     adapter.updateList(newDatas, true,false);
+                    slf_feedback_list_detail_refreshLayout.finishLoadMore();
                 }
+                currentPage++;
             } else {
                 adapter.updateList(null, false,false);
+                slf_feedback_list_detail_refreshLayout.finishLoadMore();
             }
                 currentPage++;
+            adapter.notifyDataSetChanged();
          if(!isRefresh) {
              slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
          }
@@ -513,7 +480,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if ("0".equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             }
-        }else{
+        }else if(type instanceof SLFFeedbackDetailItemResponseBean){
+            if(isRefresh){
+                slf_feedback_list_detail_refreshLayout.finishRefresh();
+                isRefresh = false;
+            } else{
+                slf_feedback_list_detail_refreshLayout.finishLoadMore();
+            }
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
     }

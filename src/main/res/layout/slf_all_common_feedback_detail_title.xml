@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ 公共title
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slf_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/std_titlebar_height"
+    android:background="@color/slf_detail_header_bg_color"
+    >
+
+    <ImageView
+        android:id="@+id/slf_iv_back"
+        android:layout_width="26dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|left"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/slf_title_icon_white_back"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/slf_tv_title_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|left"
+        android:layout_marginStart="17dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/slf_title_cancel"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/slf_tv_title_name"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/slf_tv_title_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_marginEnd="9dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/slf_title_save"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical">
+
+        <ImageView
+            android:id="@+id/slf_iv_second_right"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/slf_iv_right"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -49,11 +49,12 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == normalType) {
+//        if (viewType == normalType) {
             return new NormalHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_all_item, parent,false));
-        } else {
-            return new FootHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_footview, parent,false));
-        }
+//        }
+//        else {
+//            return new FootHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_footview, parent,false));
+//        }
     }
 
     @Override
@@ -98,53 +99,55 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 });
             }
-        } else {
-            if(isRefresh){
-                fadeTips = true;
-                ((FootHolder) holder).progressBar.setVisibility(View.GONE);
-            }else {
-                if (hasMore == true) {
-                    fadeTips = false;
-                    if (datas.size() > 0) {
-                        //((FootHolder) holder).tips.setText("正在加载更多...");
-                        ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //((FootHolder) holder).tips.setVisibility(View.GONE);
-                                ((FootHolder) holder).progressBar.clearAnimation();
-                                ((FootHolder) holder).progressBar.setVisibility(View.GONE);
-                                fadeTips = true;
-                                hasMore = true;
-                            }
-                        }, 500);
-                    }
-                } else {
-                    if (datas.size() > 0) {
-                        //((FootHolder) holder).tips.setText("没有更多数据了");
-                        ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //((FootHolder) holder).tips.setVisibility(View.GONE);
-                                ((FootHolder) holder).progressBar.clearAnimation();
-                                ((FootHolder) holder).progressBar.setVisibility(View.GONE);
-                                fadeTips = true;
-                                hasMore = true;
-                            }
-                        }, 500);
-                    } else {
-                        ((FootHolder) holder).progressBar.clearAnimation();
-                        ((FootHolder) holder).progressBar.setVisibility(View.GONE);
-                    }
-                }
-            }
         }
+//        else {
+//            if(isRefresh){
+//                fadeTips = true;
+//                ((FootHolder) holder).progressBar.setVisibility(View.GONE);
+//            }
+//            else {
+//                if (hasMore == true) {
+//                    fadeTips = false;
+//                    if (datas.size() > 0) {
+//                        //((FootHolder) holder).tips.setText("正在加载更多...");
+//                        ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //((FootHolder) holder).tips.setVisibility(View.GONE);
+//                                ((FootHolder) holder).progressBar.clearAnimation();
+//                                ((FootHolder) holder).progressBar.setVisibility(View.GONE);
+//                                fadeTips = true;
+//                                hasMore = true;
+//                            }
+//                        }, 500);
+//                    }
+//                } else {
+//                    if (datas.size() > 0) {
+//                        //((FootHolder) holder).tips.setText("没有更多数据了");
+//                        ((FootHolder) holder).progressBar.setVisibility(View.VISIBLE);
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //((FootHolder) holder).tips.setVisibility(View.GONE);
+//                                ((FootHolder) holder).progressBar.clearAnimation();
+//                                ((FootHolder) holder).progressBar.setVisibility(View.GONE);
+//                                fadeTips = true;
+//                                hasMore = true;
+//                            }
+//                        }, 500);
+//                    } else {
+//                        ((FootHolder) holder).progressBar.clearAnimation();
+//                        ((FootHolder) holder).progressBar.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//        }
     }
 
     @Override
     public int getItemCount() {
-        return datas.size() + 1;
+        return datas.size();
     }
 
     public int getRealLastPosition() {
@@ -186,14 +189,14 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    class FootHolder extends RecyclerView.ViewHolder {
-        private ProgressBar progressBar;
-
-        public FootHolder(View itemView) {
-            super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.slf_more_loading);
-        }
-    }
+//    class FootHolder extends RecyclerView.ViewHolder {
+//        private ProgressBar progressBar;
+//
+//        public FootHolder(View itemView) {
+//            super(itemView);
+//            progressBar = (ProgressBar) itemView.findViewById(R.id.slf_more_loading);
+//        }
+//    }
 
     public boolean isFadeTips() {
         return fadeTips;
@@ -205,11 +208,11 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return footType;
-        } else {
+//        if (position == getItemCount() - 1) {
+//            return footType;
+//        } else {
             return normalType;
-        }
+//        }
     }
 
     //设置回调接口

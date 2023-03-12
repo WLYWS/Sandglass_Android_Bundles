@@ -72,10 +72,8 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == usernormalType) {
             return new UserNormalHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_detail_item_user, parent, false));
-        } else if (viewType == workernormalType) {
+        } else{
             return new WorkerNormalHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_detail_item_work, parent, false));
-        } else {
-            return new FootHolder(LayoutInflater.from(context).inflate(R.layout.slf_feedback_list_footview, parent, false));
         }
     }
 
@@ -220,49 +218,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(context, datas.get(position).getReplyTs()));
             SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content);
             SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time);
-        } else {
-            if(isRefresh){
-                fadeTips = true;
-                ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-            }else {
-                if (hasMore == true) {
-                    fadeTips = false;
-                    if (datas.size() > 0) {
-                        //((FootHolder) holder).tips.setText("正在加载更多...");
-                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.VISIBLE);
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //((FootHolder) holder).tips.setVisibility(View.GONE);
-                                ((FootHolder) holder).progressBar.clearAnimation();
-                                ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-                                fadeTips = true;
-                                hasMore = true;
-                            }
-                        }, 500);
-                    }
-                } else {
-                    if (datas.size() > 0) {
-                        //((FootHolder) holder).tips.setText("没有更多数据了");
-                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //((FootHolder) holder).tips.setVisibility(View.GONE);
-                                ((FootHolder) holder).progressBar.clearAnimation();
-                                ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-                                fadeTips = true;
-                                hasMore = false;
-                            }
-                        }, 500);
-                    } else {
-                        ((FootHolder) holder).progressBar.clearAnimation();
-                        ((FootHolder) holder).slf_more_loading_linear.setVisibility(View.GONE);
-                    }
-                }
-            }
         }
-
     }
 
     @Override
@@ -273,15 +229,11 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return footType;
-        } else {
             if (datas.get(position).isUser()) {
                 return usernormalType;
             } else {
                 return workernormalType;
             }
-        }
     }
 
     public int getType(int position) {
@@ -290,7 +242,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemCount() {
-        return datas.size() + 1;
+        return datas.size();
     }
 
     public void updateList(List<SLFLeaveMsgRecord> newDatas, boolean hasMore,boolean isRefresh) {
@@ -387,17 +339,6 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             slf_feedback_list_detail_worker_header_img = itemView.findViewById(R.id.slf_feedback_list_detail_worker_header_img);
             slf_feedback_detail_worker_question_content = itemView.findViewById(R.id.slf_feedback_detail_worker_question_content);
             slf_feedback_detail_worker_time = itemView.findViewById(R.id.slf_feedback_detail_worker_time);
-        }
-    }
-
-    class FootHolder extends SLFRecyclerHolder {
-        private ProgressBar progressBar;
-        private LinearLayout slf_more_loading_linear;
-
-        public FootHolder(View itemView) {
-            super(itemView);
-            slf_more_loading_linear = itemView.findViewById(R.id.slf_more_loading_linear);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.slf_more_loading);
         }
     }
 

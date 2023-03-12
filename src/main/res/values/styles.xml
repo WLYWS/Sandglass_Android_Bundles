@@ -41,6 +41,8 @@
 
     <style name="slf_feedback_list_more_ProgressBar" parent="android:style/Widget.Holo.ProgressBar">
         <item name="android:indeterminateDrawable">@anim/slf_anim_feed_back_list_more_progress</item>
+        <item name="android:maxWidth">25dip</item>
+        <item name="android:maxHeight">25dip</item>
         <item name="android:indeterminateDuration">1000</item>
     </style>
 </resources>

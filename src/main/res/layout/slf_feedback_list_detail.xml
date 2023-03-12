@@ -1,20 +1,22 @@
 <com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slf_detail_header_bg_color"
+    android:background="@color/slf_detail_leave_message_list_color"
     android:fitsSystemWindows="true">
-
-    <include layout="@layout/slf_all_common_title" />
+    android:background="@color/slf_detail_header_bg_color"
+    <include layout="@layout/slf_all_common_feedback_detail_title" />
 
     <RelativeLayout
         android:id="@+id/slf_feedback_list_detail_header_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/slf_title_bar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginRight="20dp">
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/slf_detail_header_bg_color">
 
         <TextView
             android:id="@+id/slf_feedback_list_item_title_status"
@@ -52,27 +54,37 @@
         android:layout_below="@+id/slf_feedback_list_detail_header_relative"
         android:background="@color/slf_detail_line_color" />
 
-    <com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout
+
+    <com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout
         android:id="@+id/slf_feedback_list_detail_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/slf_feedback_list_bottom_relative"
         android:layout_below="@+id/slf_feedback_list_header_line"
+        android:background="@color/black"
+        app:srlAccentColor="@color/transparent"
+        app:srlPrimaryColor="@color/transparent"
+        android:overScrollMode="never"
+        android:fadingEdge="none"
         >
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/slf_feedback_list_leave_message_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/slf_detail_leave_message_list_color"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"/>
-    </com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/slf_feedback_list_leave_message_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/slf_detail_leave_message_list_color"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:overScrollMode="never"
+            android:fadingEdge="none"/>
+    </com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/slf_feedback_list_bottom_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/slf_detail_header_bg_color">
 
         <View
             android:id="@+id/slf_feedback_list_bottom_line"
