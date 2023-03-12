@@ -18,4 +18,5 @@ public class SLFApiContant {
     public static final String FEEDBACK_UN_READ_COUNT = "/feedback/unread_count";//获取反馈未读数量
     public static final String FEEDBACK_FAQ_DETAIL = "/feedback/faq/";//获取FAQ详情
     public static final String FEEDBACK_OPENAI = "/feedback/openai";//用户提问问题openai
+    public static final String FEEDBACK_ILLEGLA_WORD ="/feedback/openai/moderation";//敏感词汇校验(提交反馈)
 }

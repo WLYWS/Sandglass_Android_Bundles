@@ -51,6 +51,7 @@ import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFillagelWordResponseBean;
 import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -535,31 +536,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 }
             }
             if (!hasUploadingFile) {
-                if (slfSendLogCheck.isChecked()) {
-                    //showLoading();
-                    slf_common_loading_linear_submit.setVisibility(View.VISIBLE);
-                    changeViewFoucs();
-                    //sumbitLogFiles();
-
-                    SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
-                        @Override
-                        public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
-                            SLFLogUtil.d("yj", "complete--callback--");
-                            appLogFileName = appFileName;
-                            firmwareLogFileName = firmwarFileName;
-                            sumbitLogFiles();
-                        }
-                    });
-                    if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {
-                        SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
-                                SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
-                    }
-                } else {
-                    //showLoading();
-                    slf_common_loading_linear_submit.setVisibility(View.VISIBLE);
-                    changeViewFoucs();
-                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
-                }
+                slf_common_loading_linear_submit.setVisibility(View.VISIBLE);
+                changeViewFoucs();
+                requestIllegalWorld();
             } else {
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_submit_if_uploading));
             }
@@ -578,6 +557,34 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             changeTextAndImg(slfProblemOverviewSpinner);
         } else if(view.getId() == R.id.slf_submit_page_try_again) {
             checkNetWork();
+        }
+    }
+
+    /**
+     * 处理sendlog选中和未选中接口提交
+     */
+    private void checkedSendLog(){
+        if (slfSendLogCheck.isChecked()) {
+            //showLoading();
+            //sumbitLogFiles();
+
+            SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
+                @Override
+                public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
+                    SLFLogUtil.d("yj", "complete--callback--");
+                    appLogFileName = appFileName;
+                    firmwareLogFileName = firmwarFileName;
+                    sumbitLogFiles();
+                }
+            });
+            if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {
+                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
+                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
+            }
+        } else {
+            //showLoading();
+
+            SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
         }
     }
 
@@ -794,21 +801,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         setSubmitBtnCanClick(canSubmit());
     }
 
-    /**
-     * email的删除输入监听
-     */
-//    View.OnKeyListener emailKeyLister = new View.OnKeyListener() {
-//        @Override
-//        public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-//            if (keyCode == KeyEvent.KEYCODE_DEL) {
-//                hideEmailError();
-//                if (type && problemEdit && emailEdit) {
-//                    setSubmitBtnCanClick(true);
-//                }
-//            }
-//            return false;
-//        }
-//    };
+
 
     /**
      * 设置问题描述的字数限制显示
@@ -1094,6 +1087,21 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     }
 
     /**
+     * 敏感词汇校验
+     */
+    private void requestIllegalWorld(){
+        if(TextUtils.isEmpty(slfEditProblem.getText().toString().trim())){
+            showToast("Content is empty!");
+            return;
+        }else{
+            String content = slfEditProblem.getText().toString();
+            TreeMap<String, Object> contentMap = new TreeMap<>();
+            contentMap.put("content", content);
+            SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_ILLEGLA_WORD, contentMap, SLFillagelWordResponseBean.class, this);
+        }
+    }
+
+    /**
      * 得到后台配置数据解析
      */
     private SLFCategoriesResponseBean getSLFCategoriesResponseBean() {
@@ -1309,7 +1317,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 slfaddAttachAdapter.notifyDataSetChanged();
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
             }
-        }else{
+        }else if(type instanceof SLFillagelWordResponseBean){
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+        }
+        else{
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
         }
     }
@@ -1332,7 +1343,18 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 }
             }
             hideLoading();
-        } else if (type instanceof String) {
+        } else if(type instanceof SLFillagelWordResponseBean){
+            boolean isIllagelWorld = (boolean) ((SLFillagelWordResponseBean) type).isData();
+
+            if(isIllagelWorld){
+                slf_common_loading_linear_submit.setVisibility(View.GONE);
+                changeViewFoucs();
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_create_feedback_illegal_world_text));
+            }else{
+                checkedSendLog();
+            }
+        }
+        else if (type instanceof String) {
             String code = (String) type;
             SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+"::requestScucess::Integer::" + ":::type:::" + type);
             if (SLFConstants.photoCode.equals(code)) {
@@ -1371,7 +1393,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 slfaddAttachAdapter.notifyDataSetChanged();
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
             }
-        }else{
+        }else if(type instanceof SLFillagelWordResponseBean){
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+        }
+        else{
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
 
