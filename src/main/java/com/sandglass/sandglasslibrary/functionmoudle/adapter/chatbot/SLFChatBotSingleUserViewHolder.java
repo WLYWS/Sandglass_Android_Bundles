@@ -34,6 +34,7 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
     private int position;
     private AnimationSet animationSet;
     private ObjectAnimator animator;
+    private int sendFlag = -1;//区分敏感词失败
 
 
     public SLFChatBotSingleUserViewHolder (@NonNull View itemView, Context context) {
@@ -48,7 +49,7 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
         iv_chat_bot_user_warn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                EventBus.getDefault().post(new SLFChatBotClickNoSendWarnEvent(tv_chat_bot_user_text.getText().toString(),position));
+                EventBus.getDefault().post(new SLFChatBotClickNoSendWarnEvent(tv_chat_bot_user_text.getText().toString(),position,sendFlag));
             }
         });
     }
@@ -76,13 +77,22 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
             iv_chat_bot_user_warn.setImageResource(R.mipmap.slf_chat_bot_user_warn);
             iv_chat_bot_user_warn.setVisibility(View.VISIBLE);
             iv_chat_bot_user_warn.setRotation(0);
+            sendFlag = 1;
             //animationSet.reset();
-        }else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue()){
+        }
+        else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SEND_ILLEGAL_WORD.getValue()){
+            iv_chat_bot_user_warn.setImageResource(R.mipmap.slf_chat_bot_send_illegal);
+            iv_chat_bot_user_warn.setVisibility(View.VISIBLE);
+            iv_chat_bot_user_warn.setRotation(0);
+            sendFlag = 2;
+        }
+        else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue()){
             iv_chat_bot_user_warn.setVisibility(View.GONE);
             //animationSet.reset();
             if (animator!=null&&animator.isRunning()){
                 animator.cancel();
             }
+            sendFlag = 3;
         }else if (send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDING_MSG.getValue()){
             //显示正在加载
             iv_chat_bot_user_warn.setImageResource(R.mipmap.slf_chat_bot_sending);
@@ -92,6 +102,7 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
             animator.setRepeatCount(ValueAnimator.INFINITE);  // 无限循环
             animator.setRepeatMode(ValueAnimator.RESTART);
             animator.start();
+            sendFlag = 4;
             //iv_chat_bot_user_warn.startAnimation(animationSet);
         }
     }

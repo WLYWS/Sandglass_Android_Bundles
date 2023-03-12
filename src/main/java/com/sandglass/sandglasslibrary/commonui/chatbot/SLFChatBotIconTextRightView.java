@@ -26,6 +26,7 @@ public class SLFChatBotIconTextRightView extends ConstraintLayout {
     private TextView tv_chat_bot_user_text;
     private ImageView iv_chat_bot_user_warn;
     private int position;
+    private int sendFlag;
 
     public SLFChatBotIconTextRightView (Context context) {
         super(context);
@@ -52,7 +53,7 @@ public class SLFChatBotIconTextRightView extends ConstraintLayout {
         iv_chat_bot_user_warn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick (View v) {
-                EventBus.getDefault().post(new SLFChatBotClickNoSendWarnEvent(tv_chat_bot_user_text.getText().toString(),position));
+                EventBus.getDefault().post(new SLFChatBotClickNoSendWarnEvent(tv_chat_bot_user_text.getText().toString(),position,sendFlag));
             }
         });
 
@@ -65,11 +66,20 @@ public class SLFChatBotIconTextRightView extends ConstraintLayout {
         if (send_msg_status == SLFChatBotMsgData.MsgSendStatus.SEND_FAIL_MSG.getValue()){
             iv_chat_bot_user_warn.setImageResource(R.mipmap.slf_chat_bot_user_warn);
             iv_chat_bot_user_warn.setVisibility(View.VISIBLE);
-        }else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue()){
+            sendFlag = 1;
+        }
+        else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SEND_ILLEGAL_WORD.getValue()){
+            iv_chat_bot_user_warn.setImageResource(R.mipmap.slf_chat_bot_send_illegal);
+            iv_chat_bot_user_warn.setVisibility(View.VISIBLE);
+            sendFlag = 2;
+        }
+        else if(send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue()){
             iv_chat_bot_user_warn.setVisibility(View.GONE);
+            sendFlag = 3;
         }else if (send_msg_status == SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue()){
             //显示正在加载
             iv_chat_bot_user_warn.setVisibility(View.VISIBLE);
+            sendFlag = 4;
         }
     }
 

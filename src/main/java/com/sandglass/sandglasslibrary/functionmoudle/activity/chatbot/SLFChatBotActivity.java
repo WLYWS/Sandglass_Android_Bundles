@@ -29,6 +29,8 @@ import android.widget.TextView;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.SLFClickEditText;
 import com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
@@ -44,12 +46,14 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEven
 import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotUpdateQuesionEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoriesResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchReslutBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUnReadCount;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
 import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
@@ -79,6 +83,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+/**
+ * @author wangjian  yangjie
+ */
 public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpRequestCallback, SLFHttpChatBotRequestCallback {
     //记录上次进入此页面的时间
     private static final int MAX_ID = 100000000;
@@ -121,6 +128,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         setContentView(R.layout.activity_slfchat_bot);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         setKeyboardListener();
+        getUserInfo();
         slfdbEngine = new SLFDBEngine(this);
         initView();
         initData();
@@ -131,6 +139,12 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         super.onResume();
         fromHelpTime = System.currentTimeMillis();
         requestNewFeed();
+    }
+    /**获取用户信息**/
+    private void getUserInfo(){
+        showLoading();
+        SLFHttpUtils.getInstance().executePathGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FIRST_PAGE_GET_USERINO, SLFUserInfoResponseBean.class, this);
     }
 
     private void initData() {
@@ -467,7 +481,9 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     @Override
     public void onRequestNetFail(Object type) {
+        hideLoading();
         showNetworkError();
+        SLFLogUtil.d("yj","open ai request fail 含有敏感词：：network no");
         SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestNetFail:chatbot");
     }
 
@@ -486,11 +502,19 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             }else{
                 imgRight.setImageResource(R.drawable.slf_help_feedback_format);
             }
+        }else if(type instanceof SLFUserInfoResponseBean){
+            hideLoading();
+            SLFUserCenter.userInfoBean = (SLFUserInfoResponseBean) type;
         }
     }
 
     @Override
     public void onRequestFail(String value, String failCode, Object type) {
+        hideLoading();
+        if(failCode.equals(SLFHttpStatusCode.TOKEN_FAILED)){
+            //TODO 重新请求token
+            return;
+        }
         showCenterToast(getResources().getString(R.string.slf_common_request_error));
         SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestFail:chatbot");
     }
@@ -505,7 +529,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         //SLFFaqSearchReslutBean slfFaqSearchReslutBean = sLFFaqSearchResponseBean.data;
         String answer = slfFaqOpenAiResponseBean.getData();
         //先更新用户发送的小心状态
-        showSendMsgStatus(true, requestTime);
+        showSendMsgStatus(SLFHttpStatusCode.SUCCESS_CODE, requestTime);
 //        if (TextUtils.isEmpty(answer)) {
 //            SLFChatBotMsgData slfChatBotRobotNoAnswerData = new SLFChatBotMsgData();
 //            slfChatBotRobotNoAnswerData.setMsgTime(System.currentTimeMillis());
@@ -533,14 +557,16 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     /**
      * 更新发送消息的状态
      *
-     * @param isSendSuccess
+     * @param isSendStatus
      * @param requestTime
      */
-    private void showSendMsgStatus(boolean isSendSuccess, long requestTime) {
+    private void showSendMsgStatus(String isSendStatus, long requestTime) {
         for (SLFChatBotMsgData slfChatBotMsgData : faqMsgList) {
             if (slfChatBotMsgData.getMsgTime() == requestTime) {
-                if (isSendSuccess) {
+                if (isSendStatus.equals(SLFHttpStatusCode.SUCCESS_CODE)) {
                     slfChatBotMsgData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SENDED_MSG.getValue());
+                } else if(isSendStatus.equals(SLFHttpStatusCode.OPAI_FAIL_CODE)){
+                    slfChatBotMsgData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SEND_ILLEGAL_WORD.getValue());
                 } else {
                     slfChatBotMsgData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SEND_FAIL_MSG.getValue());
                 }
@@ -752,11 +778,19 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 ////            isFirstGetFromDataBase = false;
 //        }
         SLFChatBotMsgData slfChatBotClickNoSendData = faqMsgList.get(event.position);
-        slfChatBotClickNoSendData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SENDING_MSG.getValue());
+        if(event.sendFlag==1) {
+            slfChatBotClickNoSendData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SENDING_MSG.getValue());
+        }else if(event.sendFlag==2){
+            slfChatBotClickNoSendData.setSend_msg_status(SLFChatBotMsgData.MsgSendStatus.SEND_ILLEGAL_WORD.getValue());
+        }
         sLFChatBotRecyclerAdapter.notifyDataSetChanged();
         //重新发送数据
         //postSearch(event.question, true, slfChatBotClickNoSendData.getMsgTime());
-        postSearch(event.question, hotQuestion, slfChatBotClickNoSendData.getMsgTime(),slfChatBotClickNoSendData.getUuid());
+        if(event.sendFlag==1) {
+            postSearch(event.question, hotQuestion, slfChatBotClickNoSendData.getMsgTime(), slfChatBotClickNoSendData.getUuid());
+        }else if(event.sendFlag==2){
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_create_feedback_illegal_world_text));
+        }
         //刷新数据库
         slfdbEngine.update_msg(slfChatBotClickNoSendData);
     }
@@ -889,10 +923,11 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Override
     public void onRequestChatBotNetFail(Object type, long requestTime) {
         if (type == SLFFaqOpenAiResponseBean.class) {
-            showSendMsgStatus(false, requestTime);
-        } else if (type == SLFFaqMarkResponseBean.class) {
-            updateMsgMarkStatus(requestTime);
+            showSendMsgStatus(SLFHttpStatusCode.NO_NETWORK_FAILED, requestTime);
         }
+//        else if (type == SLFFaqMarkResponseBean.class) {
+//            updateMsgMarkStatus(requestTime);
+//        }
     }
 
     /**
@@ -908,10 +943,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 //            SLFFaqSearchResponseBean sLFFaqSearchResponseBean = (SLFFaqSearchResponseBean) type;
 //            showSearchReslutData(sLFFaqSearchResponseBean, requestTime);
 //        }
+
         if (type instanceof SLFFaqOpenAiResponseBean) {
+            SLFLogUtil.d("yj","result：：：chat_bot::"+result);
             SLFFaqOpenAiResponseBean slfFaqOpenAiResponseBean = (SLFFaqOpenAiResponseBean) type;
             SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showSearchReslutData(slfFaqOpenAiResponseBean, requestTime);
+
         }
         else if (type instanceof SLFFaqMarkResponseBean) {
             SLFFaqMarkResponseBean sLFFaqMarkResponseBean = (SLFFaqMarkResponseBean) type;
@@ -929,11 +967,21 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      */
     @Override
     public void onRequestChatBotFail(String value, String failCode, Object type, long requestTime) {
-        if (type == SLFFaqOpenAiResponseBean.class) {
-            showSendMsgStatus(false, requestTime);
-        } else if (type == SLFFaqMarkResponseBean.class) {
-            updateMsgMarkStatus(requestTime);
+        if(failCode.equals(SLFHttpStatusCode.TOKEN_FAILED)){
+            //TODO 重新获取token
+            return;
         }
+        if (type == SLFFaqOpenAiResponseBean.class) {
+            if(failCode.equals(SLFHttpStatusCode.OPAI_FAIL_CODE)){
+                showSendMsgStatus(SLFHttpStatusCode.OPAI_FAIL_CODE, requestTime);
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_create_feedback_illegal_world_text));
+            }else {
+                showSendMsgStatus(SLFHttpStatusCode.REQUEST_FAILED, requestTime);
+            }
+        }
+//        else if (type == SLFFaqMarkResponseBean.class) {
+//            updateMsgMarkStatus(requestTime);
+//        }
 
     }
 

@@ -6,9 +6,11 @@ package com.sandglass.sandglasslibrary.moudle.event;
 public class SLFChatBotClickNoSendWarnEvent {
     public String question;
     public int position;
+    public int sendFlag;
 
-    public SLFChatBotClickNoSendWarnEvent (String question,int position) {
+    public SLFChatBotClickNoSendWarnEvent (String question,int position,int sendFlag) {
         this.question = question;
         this.position = position;
+        this.sendFlag = sendFlag;
     }
 }

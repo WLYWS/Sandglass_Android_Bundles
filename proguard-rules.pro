@@ -258,6 +258,9 @@
 -keep public class com.sandglass.sandglasslibrary.moudle.event.**{*;}
 -keep public class com.sandglass.sandglasslibrary.moudle.net.**{*;}
 -keep public class com.sandglass.sandglasslibrary.moudle.**{*;}
+#smartrefresh
+-keep public class com.scwang.smart.refresh.layout.**{*;}
+-keep public class com.scwang.smart.refresh.**{*;}
 
 # androidx 混淆
 -keep class com.google.android.material.** {*;}

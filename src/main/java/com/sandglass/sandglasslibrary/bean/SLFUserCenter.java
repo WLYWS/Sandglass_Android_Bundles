@@ -1,9 +1,7 @@
 package com.sandglass.sandglasslibrary.bean;
 
-import static android.content.Context.ALARM_SERVICE;
 import static com.sandglass.sandglasslibrary.utils.SLFResourceUtils.getResources;
 
-import android.app.AlarmManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -13,9 +11,12 @@ import android.util.DisplayMetrics;
 
 import com.sandglass.sandglasslibrary.BuildConfig;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
+import com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSystemUtil;
 
+import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -56,6 +57,17 @@ public class SLFUserCenter {
     public static final boolean isShowLog = true;
     public static final boolean isOpenScene = false;
     public static final boolean isCaughtException = true;
+
+    public static SLFUserInfoResponseBean userInfoBean;
+
+    private static HashMap<Long, SLFUserDeviceSaved> mInstance;
+    /**保存用户信息的单例*/
+    public synchronized static HashMap<Long, SLFUserDeviceSaved> getInstance(){
+        if(mInstance==null){
+            mInstance = new HashMap<Long, SLFUserDeviceSaved>();
+        }
+        return mInstance;
+    }
 
     public static String getUserAgent(){
         DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -98,6 +110,8 @@ public class SLFUserCenter {
     public static String getPhoneFactoryModel(){
         return android.os.Build.MODEL;
     }
+
+
 
 //    public static String getuuId() {
 //        String uuid = SLFMD5Util.encode(getUniquePsuedoID() + System.currentTimeMillis() + (int) ((Math.random() * 9 + 1) * 10000));

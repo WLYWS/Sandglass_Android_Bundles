@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryCommonBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryDetailBean;
@@ -76,8 +77,9 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
                     changedChecked(list,holder.getAdapterPosition());
                     selectedStr = ((SLFCategoryBean) list.get(holder.getAdapterPosition())).name;
                     if(onSeletedTypeListener!=null){
-                        onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
+                        onSeletedTypeListener.getSeletedType(((SLFCategoryBean) list.get(holder.getAdapterPosition())).id,selectedStr,holder.getLayoutPosition(),getTtileText(),1);
                     }
+
                     mAdapter.notifyDataSetChanged();
                     dialogDismiss();
 
@@ -86,7 +88,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
                     changedChecked(list,holder.getAdapterPosition());
                     selectedStr = ((SLFCategoryDetailBean) list.get(holder.getAdapterPosition())).name;
                     if(onSeletedTypeListener!=null){
-                        onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
+                        onSeletedTypeListener.getSeletedType(((SLFCategoryDetailBean) list.get(holder.getAdapterPosition())).id,selectedStr,holder.getLayoutPosition(),getTtileText(),2);
                     }
                     mAdapter.notifyDataSetChanged();
                     dialogDismiss();
@@ -95,7 +97,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
                     changedChecked(list,holder.getAdapterPosition());
                     selectedStr = ((SLFCategoryCommonBean) list.get(holder.getAdapterPosition())).name;
                     if(onSeletedTypeListener!=null){
-                        onSeletedTypeListener.getSeletedType(selectedStr,holder.getLayoutPosition(),getTtileText());
+                        onSeletedTypeListener.getSeletedType(((SLFCategoryCommonBean) list.get(holder.getAdapterPosition())).id,selectedStr,holder.getLayoutPosition(),getTtileText(),3);
                     }
                     mAdapter.notifyDataSetChanged();
                     dialogDismiss();
@@ -218,7 +220,7 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
 
     public  interface OnSeletedTypeListener{
 
-        void getSeletedType(String type,int position,String title);
+        void getSeletedType(Long id,String type,int position,String title,int seletedType);
 
     }
 }

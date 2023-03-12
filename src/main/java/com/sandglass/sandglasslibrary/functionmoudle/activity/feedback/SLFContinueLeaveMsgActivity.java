@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
@@ -533,6 +534,10 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     public void onRequestFail(String value, String failCode, T type) {
         SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestFail:continueleave:" + value + ":failCode:" + failCode);
         hideLoading();
+        if(failCode.equals(SLFHttpStatusCode.TOKEN_FAILED)){
+            //TODO 重新请求token
+            return;
+        }
         if (type instanceof String) {
             String code = (String) type;
             for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
@@ -543,6 +548,10 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             slfaddAttachAdapter.notifyDataSetChanged();
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         } else {
+            if(failCode.equals(SLFHttpStatusCode.OPAI_FAIL_CODE)){
+                showCenterToast(SLFResourceUtils.getString(R.string.slf_create_feedback_illegal_world_text));
+                return;
+            }
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
     }

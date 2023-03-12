@@ -105,7 +105,8 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
     public enum MsgSendStatus{
         SENDED_MSG(1111),
         SEND_FAIL_MSG(2222),
-        SENDING_MSG(3333);
+        SENDING_MSG(3333),
+        SEND_ILLEGAL_WORD(4444);//敏感词汇
 
         private int value;
         MsgSendStatus (int value) {
