@@ -120,7 +120,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "com.sandglass.sandglasslibrary"
                 artifactId = "sandglassFeedback"
-                version = "0.1.0"
+                version = "0.1.9"
                 description "沙漏aar"
                 //aar 文件
                 def projectName = project.getName()
