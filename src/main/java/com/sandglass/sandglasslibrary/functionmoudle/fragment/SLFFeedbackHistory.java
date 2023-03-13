@@ -117,11 +117,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
                     initData();
             }
         });
-        if (SLFCommonUtils.isNetworkAvailable(getActivity())) {
-            chageView();
-        } else {
-            chageView();
-        }
+
     }
 
     private void initData(){

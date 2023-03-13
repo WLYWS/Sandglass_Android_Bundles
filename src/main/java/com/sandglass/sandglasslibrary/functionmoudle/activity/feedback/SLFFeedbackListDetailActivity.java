@@ -315,10 +315,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             finish();
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
-            if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
-                SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
-            }
+
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
@@ -328,6 +325,10 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                     sumbitLogFiles();
                 }
             });
+            if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
+                SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
+                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
+            }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
             gotoContinueLeaveActivity();
         }
