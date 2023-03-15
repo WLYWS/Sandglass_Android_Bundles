@@ -48,6 +48,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
             helper.getView().setVisibility(View.GONE);
         } else {
             helper.getView().setVisibility(View.VISIBLE);
+            helper.setVisible(R.id.slf_iv_photo_fail,false);
             helper.setVisible(R.id.slf_center_addimg,true);
             helper.setVisible(R.id.slf_photo_count,true);
             helper.setText(R.id.slf_photo_count, SLFStringFormatUtil.getFormatString(R.string.slf_feedback_photo_count, getCount() - 1));
@@ -79,16 +80,13 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
             helper.setVisible(R.id.slf_center_addimg,false);
             helper.setVisible(R.id.slf_photo_count,false);
             helper.setVisible(R.id.slf_iv_video, false);
-            SLFImageUtil.loadDefaultImage(mContext,R.drawable.slf_submit_photo_fail,helper.getView(R.id.slf_iv_photo));
-            ViewGroup.LayoutParams lp = helper.getView(R.id.slf_iv_photo).getLayoutParams();
-            lp.width = 70;
-            lp.height = 70;
-            helper.getView(R.id.slf_iv_photo).setLayoutParams(lp);
+            helper.setVisible(R.id.slf_iv_photo_fail,true);
         }else {
             helper.getView(R.id.slf_progress).clearAnimation();
             helper.setVisible(R.id.slf_progress, false);
             helper.setVisible(R.id.slf_center_addimg,true);
             helper.setVisible(R.id.slf_photo_count,true);
+            helper.setVisible(R.id.slf_iv_photo_fail,false);
                 if (object.getThumbnailSmallPath() != null) {
 //                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
 //                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon

@@ -214,7 +214,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:numColumns="5"
-                        android:stretchMode="columnWidth" />
+                        android:stretchMode="columnWidth"
+                        android:scrollbars="none"/>
                     <include layout="@layout/slf_add_img_layout"
                               android:visibility="gone"/>
 

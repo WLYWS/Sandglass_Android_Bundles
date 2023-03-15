@@ -26,6 +26,7 @@ public class SLFPermissionManager {
     /**权限请求码*/
     private final int mRequestCode = 100;
     public static boolean showSystemSetting = true;
+    List<String> mPermissionList;
 
     private SLFPermissionManager() {
     }
@@ -89,12 +90,16 @@ public class SLFPermissionManager {
             }
             /**如果有权限没有被允许*/
             if (hasPermissionDismiss) {
-                if (showSystemSetting) {
-                    /**跳转到系统设置权限页面，或者直接关闭页面，不让他继续访问*/
-                    showSystemPermissionsSettingDialog(context);
-                } else {
-                    mPermissionsResult.forbitPermissons();
-                }
+//                if (mPermissionList.size() > 0) {
+//                    ActivityCompat.requestPermissions(context, permissions, mRequestCode);
+//                }
+                showSystemPermissionsSettingDialog(context);
+//                if (showSystemSetting) {
+//                    /**跳转到系统设置权限页面，或者直接关闭页面，不让他继续访问*/
+//                    showSystemPermissionsSettingDialog(context);
+//                } else {
+//                    mPermissionsResult.forbitPermissons();
+//                }
             } else {
                 /**全部权限通过，可以进行下一步操作。。。*/
                 mPermissionsResult.passPermissons();
