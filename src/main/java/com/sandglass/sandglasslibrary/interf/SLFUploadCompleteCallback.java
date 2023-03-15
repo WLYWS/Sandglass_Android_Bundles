@@ -6,5 +6,5 @@ package com.sandglass.sandglasslibrary.interf;
  * time:2022/12/28
  */
 public interface SLFUploadCompleteCallback {
-    void  isUploadComplete(boolean isComplete,String appFileName,String firmwarFileName);
+    void  isUploadAppLogComplete(boolean isComplete);
 }

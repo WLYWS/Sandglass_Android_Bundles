@@ -3,6 +3,8 @@ package com.sandglass.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
+import com.sandglass.sandglasslibrary.interf.SLFSetNewTokentoFeed;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.json.JSONException;
@@ -17,7 +19,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 /**
  * Created by wangjian on 2022/12/5
  */
-public class SLFRxJavaObserver<T> implements Observer<String> {
+public class SLFRxJavaObserver<T> implements Observer<String>, SLFSetNewTokentoFeed {
 
     private SLFHttpRequestCallback mCallBack;
     private T mType;
@@ -53,6 +55,10 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
                     String response = SLFDecryptUtil.DecryAes(jsonObject.getString(DATA), mSecret);
                     SLFLogUtil.d("request","请求体返回解密 | Response:"+response);
                     if(response!=null){
+                        //TODO 临时放在这里，之后放在失败那里
+                        if(SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback()!=null){
+                            SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback().setToken();
+                        }
                         JSONObject jsonObjectData = new JSONObject(response);
                         if (jsonObjectData.has(MSG)) {
                             String msg = jsonObjectData.getString(MSG);
@@ -100,5 +106,10 @@ public class SLFRxJavaObserver<T> implements Observer<String> {
     @Override
     public void onComplete() {
 
+    }
+
+    @Override
+    public void getNewToken(String token) {
+        SLFLogUtil.d("yj","token===:::"+token);
     }
 }

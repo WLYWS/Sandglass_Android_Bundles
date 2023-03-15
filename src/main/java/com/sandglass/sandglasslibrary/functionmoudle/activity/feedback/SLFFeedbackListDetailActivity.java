@@ -137,8 +137,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private Runnable submitLogRunnable;
     private boolean isSubmit = false;
     private ExecutorService singleThreadExecutor;
-    private String appLogFileName;
-    private String firmwareLogFileName;
+    private String appLogFileName = "appLog.zip";
+    private String firmwareLogFileName = "firmwareLog.zip";
     private int currentPage = 1;
     private List<SLFLeaveMsgRecord> newDatas;
     private int REQUEST_CODE = 0;
@@ -315,19 +315,18 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             finish();
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
-
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
-                public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
-                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload log complete callback:");
-                    appLogFileName = appFileName;
-                    firmwareLogFileName = firmwarFileName;
+                public void isUploadAppLogComplete(boolean isComplete) {
+                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload app log complete callback:");
                     sumbitLogFiles();
                 }
             });
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
-                SLFApi.getInstance(getContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
+                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
+                       "application/zip");
+                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadFirmwareLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl,
+                        "application/zip");
             }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
             gotoContinueLeaveActivity();

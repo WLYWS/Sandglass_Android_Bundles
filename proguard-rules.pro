@@ -267,6 +267,7 @@
 -keep class androidx.** {*;}
 -keep public class * extends androidx.**
 -keep interface androidx.** {*;}
+-keep class com.sandglass.sandglasslibrary.commonui.**.*{*;}
 -dontwarn com.google.android.material.**
 -dontnote com.google.android.material.**
 -dontwarn androidx.**

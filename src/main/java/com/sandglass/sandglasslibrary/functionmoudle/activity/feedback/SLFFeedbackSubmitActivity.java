@@ -282,8 +282,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     private boolean imageSuccessed;
 
-    private String appLogFileName;
-    private String firmwareLogFileName;
+    private String appLogFileName="appLog.zip";
+    private String firmwareLogFileName="firmwareLog.zip";
     private Drawable mClearDrawable;
     private Drawable drawableRight;
     private LinearLayout slf_common_loading_linear_submit;
@@ -293,6 +293,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private Long seletedProbleType = -1L;
     private Long seletedProblemOverviewType = -1L;
     private String seleteddeviceMoudle;
+    private boolean isSendLogsuccess = false;
+    private boolean isCallbackAppLog = false;
+    private boolean isCallbackFirmwareLog = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -521,7 +524,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             // finish();
         } else if (view.getId() == R.id.slf_submit_feedback) {
             //TODO submit feedback
-
+            isSendLogsuccess = false;
             if (slfEditProblem.getText().toString().length() < 10) {
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
                 return;
@@ -574,19 +577,19 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         if (slfSendLogCheck.isChecked()) {
             //showLoading();
             //sumbitLogFiles();
-
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
-                public void isUploadComplete(boolean isComplete, String appFileName, String firmwarFileName) {
-                    SLFLogUtil.d("yj", "complete--callback--");
-                    appLogFileName = appFileName;
-                    firmwareLogFileName = firmwarFileName;
+                public void isUploadAppLogComplete(boolean isComplete) {
+                    SLFLogUtil.d("yj", "complete---app-callback--");
+                    isCallbackAppLog = true;
                     sumbitLogFiles();
                 }
             });
             if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl);
+                        "application/zip");
+                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadFirmwareLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl,
+                        "application/zip");
             }
         } else {
             //showLoading();
@@ -799,11 +802,20 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         slfProblemWordNum = charSequence;
+
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
         setFontCount();
+        if(slfProblemWordNum.length() >0) {
+            if(TextUtils.isEmpty(slfEditProblem.getText().toString().trim())){
+                slfEditProblem.setText("");
+                setSubmitBtnCanClick(false);
+                return;
+            }
+            setSubmitBtnCanClick(canSubmit());
+        }
         setSubmitBtnCanClick(canSubmit());
     }
 
@@ -1402,6 +1414,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             hideLoading();
         } else if (type instanceof SLFCreateFeedbackRepsonseBean) {
             SLFLogUtil.d("yj", "ActivityName:" + this.getClass().getSimpleName() + "::createFeedback-----success:" + ((SLFCreateFeedbackRepsonseBean) type).data);
+            isSendLogsuccess = true;
             gotoFeedbackSuccess(((SLFCreateFeedbackRepsonseBean) type).data);
             slf_common_loading_linear_submit.setVisibility(View.GONE);
             changeViewFoucs();
@@ -1409,6 +1422,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     }
 
+    private void canGotoSubmit(int logId){
+        if(slfSendLogCheck.isChecked()){
+            if(isSendLogsuccess&&isCallbackAppLog){
+                gotoFeedbackSuccess(logId);
+            }
+        }
+    }
 
     @Override
     public void onRequestFail(String value, String failCode, Object type) {

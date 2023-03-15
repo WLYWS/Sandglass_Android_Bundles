@@ -27,7 +27,8 @@ import java.util.TimeZone;
 
 public final class SLFLogUtil extends Xlog {
     private static final String TAG = "API SLFLogUtil";
-    private static final String XLOG_PUBKEY = "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b";
+    //private static final String XLOG_PUBKEY = "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b";
+    private static final String XLOG_PUBKEY = "c7b41a50681125813cb88c40653dcf4bb1ca1ab8a62626e9b6bb8a8b0bfa419ae3e142158c586864ec8aaf10a5ba9240be41e9f278ee7696f97f7ae7caa3c0e4";
     private static volatile SLFLogUtil log = null;
     private static final String PREFIX = "WYZE_";
     private static List<String> listValue = new ArrayList();
@@ -59,7 +60,7 @@ public final class SLFLogUtil extends Xlog {
     private SLFLogUtil() {
         com.tencent.mars.xlog.Log.appenderFlush(true);
         createFile(true);
-        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
+        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
     }
@@ -73,7 +74,7 @@ public final class SLFLogUtil extends Xlog {
         com.tencent.mars.xlog.Log.appenderFlush(true);
         this.createFile(pluginId);
         com.tencent.mars.xlog.Log.appenderClose();
-        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "SLF_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
+        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "SLF_API", 0, XLOG_PUBKEY);
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
         Log.i("API SLFLogUtil", "create new plugin instance");
@@ -82,7 +83,7 @@ public final class SLFLogUtil extends Xlog {
     public static void syncPermissonCreate() {
         createFile(true);
         com.tencent.mars.xlog.Log.appenderClose();
-        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b");
+        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
         Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
         com.tencent.mars.xlog.Log.setLogImp(new Xlog());
     }

@@ -204,6 +204,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfEditProblem.setOnTouchListener(new SLFEditTextScrollListener(slfEditProblem));
         slfEditProblem.addTextChangedListener(this);
         slf_send_btn.setOnClickListener(this);
+        setSendBtnCanClick(false);
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
         slfRecord = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         SLFFontSet.setSLF_RegularFont(getContext(),slfEditProblem);
@@ -415,6 +416,21 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 //                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
 //                return;
 //            }
+            if(slfEditProblem.getText().toString().length()>0){
+                slf_send_btn.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_page_child_submit_bg));
+                slf_send_btn.setTextColor(SLFResourceUtils.getColor(R.color.black));
+                slf_send_btn.setClickable(true);
+            }else{
+                slf_send_btn.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_page_child_bg));
+                slf_send_btn.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_question_type_title));
+                slf_send_btn.setClickable(false);
+            }
+
+            if(TextUtils.isEmpty(slfEditProblem.getText().toString().trim())){
+                showCenterToast("content is empty");
+                slfEditProblem.setText("");
+                return;
+            }
 
             for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
                 if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
@@ -475,6 +491,11 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             setSendBtnCanClick(false);
         } else {
             if(slfProblemWordNum.length() >0) {
+                if(TextUtils.isEmpty(slfEditProblem.getText().toString().trim())){
+                    slfEditProblem.setText("");
+                    setSendBtnCanClick(false);
+                    return;
+                }
                 setSendBtnCanClick(true);
             }else{
                 setSendBtnCanClick(false);

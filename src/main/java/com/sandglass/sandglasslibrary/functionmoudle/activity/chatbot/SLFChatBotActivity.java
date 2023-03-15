@@ -235,6 +235,28 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         gotoFeedback = findViewById(R.id.slf_feedback_linear);
         gotoFaq = findViewById(R.id.slf_faq_linear);
         slf_bottom_btn_linear = findViewById(R.id.slf_bottom_btn_linear);
+        et_faq_input.setHorizontallyScrolling(false);
+        et_faq_input.setMaxLines(4);
+        et_faq_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == 5) { //actionId 4 for actionDone And 6 for actionSend
+
+//perform action what you want
+
+                    return true;
+
+                } else {
+
+                    return false;
+                }
+
+            }
+
+        });
         imgRight.setVisibility(View.VISIBLE);
         imgRight.setImageResource(R.drawable.slf_help_feedback_format);
         setWH(imgRight,SLFResourceUtils.dp2px(getContext(),30),SLFResourceUtils.dp2px(getContext(),44));
@@ -393,11 +415,15 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {   // 按下完成按钮，这里和上面imeOptions对应
-                    String send_msg = et_faq_input.getText().toString();
+                    String send_msg = et_faq_input.getText().toString().trim();
                     if (!TextUtils.isEmpty(send_msg)) {
                         sendMsg(et_faq_input.getText().toString(), SLFChatBotMsgData.SEND_FROM_INPUT);
                         et_faq_input.setText("");
                         // return true;
+                    }else{
+                        //TODO 全是空格
+                        et_faq_input.setText("");
+                        return false;
                     }
                 }
                 return true;//返回true，保留软键盘。false，隐藏软键盘

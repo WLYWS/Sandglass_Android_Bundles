@@ -6,5 +6,6 @@ package com.sandglass.sandglasslibrary.interf;
  * time:2022/12/28
  */
 public interface SLFUploadAppLogCallback {
-    void getUploadAppLogUrl(String appLogUrl,String firmwareLogUrl);
+    void getUploadAppLogUrl(String appLogUrl,String contentType);
+    void getUploadFirmwareLogUrl(String firmwareLogUrl,String contentType);
 }

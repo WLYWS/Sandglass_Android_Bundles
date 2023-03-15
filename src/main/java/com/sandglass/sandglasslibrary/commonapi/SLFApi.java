@@ -11,6 +11,8 @@ import android.util.Log;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sandglass.sandglasslibrary.base.SLFBaseApplication;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.interf.SLFSetNewTokentoFeed;
+import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
@@ -32,7 +34,7 @@ import java.util.Map;
  * describe:对外统一接口
  * time:2022/12/19
  */
-public class SLFApi  {
+public class SLFApi  implements SLFSetNewTokentoFeed {
 
     private static SLFApi mInstance;
 
@@ -41,6 +43,8 @@ public class SLFApi  {
     private SLFUploadAppLogCallback slfUploadAppLogCallback;
 
     private SLFUploadCompleteCallback slfUploadCompleteCallback;
+
+    private SLFSetTokenCallback slfSetTokenCallback;
 
     private boolean isDebug;
 
@@ -64,7 +68,6 @@ public class SLFApi  {
         return mContext;
     }
     public void init(boolean isDebug){
-
         this.isDebug = isDebug;
         try {
             SLFConstants.isOpenConsoleLog = isDebug;
@@ -99,6 +102,10 @@ public class SLFApi  {
     public void setToken(String token){
         SLFConstants.token = token;
     }
+//
+//    public String getToken(){
+//        return SLFConstants.token;
+//    }
     /**跳转到插件反馈*/
     public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap, String token){
         Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
@@ -110,9 +117,18 @@ public class SLFApi  {
     public void setAppLogCallBack(SLFUploadAppLogCallback slfUploadAppLogCallback){
         this.slfUploadAppLogCallback = slfUploadAppLogCallback;
     }
+    /**设置监听获取token的接口*/
+    public void setTokenCallBack(SLFSetTokenCallback slfSetTokenCallback){
+        this.slfSetTokenCallback = slfSetTokenCallback;
+    }
+
     /**获取一个上传监听用于回调*/
     public SLFUploadAppLogCallback getAppLogCallBack(){
         return slfUploadAppLogCallback;
+    }
+    /**获取一个token回调*/
+    public SLFSetTokenCallback getSlfSetTokenCallback(){
+        return slfSetTokenCallback;
     }
     /**设置监听通知是否上传完成*/
     public void setUploadLogCompleteCallBack(SLFUploadCompleteCallback slfUploadCompleteCallback){
@@ -154,4 +170,9 @@ public class SLFApi  {
         mList.remove(activity);
     }
 
+    @Override
+    public void getNewToken(String token) {
+        SLFConstants.token = token;
+        SLFLogUtil.d("yj","get toekn====:::"+token);
+    }
 }
