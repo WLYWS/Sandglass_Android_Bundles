@@ -173,6 +173,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 }
             }
         });
+        initData();
     }
 
     /**
@@ -188,11 +189,17 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 刷新数据
      */
     private void initData() {
+        showLoading();
         currentPage = 1;
         isRefresh = true;
         getFeedBackDetailList(currentPage);
     }
 
+    private void refresh() {
+        currentPage = 1;
+        isRefresh = true;
+        getFeedBackDetailList(currentPage);
+    }
 
 
     private void getFeedBackDetailList (int currentPage) {
@@ -283,7 +290,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slf_feedback_list_detail_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                initData();
+                refresh();
             }
         });
         slf_feedback_list_detail_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -292,7 +299,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 getFeedBackDetailList(currentPage);
             }
         });
-        slf_feedback_list_detail_refreshLayout.autoRefresh();//自动刷新
+        //slf_feedback_list_detail_refreshLayout.autoRefresh();//自动刷新
     }
 
     /**

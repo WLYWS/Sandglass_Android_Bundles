@@ -793,7 +793,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         slfProblemWordNum = charSequence;
-        if (slfProblemWordNum.length() <= 1000) {
+        if (slfProblemWordNum.length() < 1000) {
             slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
             setFontCount();
         }
@@ -1561,7 +1561,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             logAttrPluginBean.setFileName("sdkLog.zip");
             logAttrPluginBean.setContentType("application/zip");
             logAttrBeans.add(logAttrAppBean);
-            logAttrBeans.add(logAttrFirmwareBean);
+            //logAttrBeans.add(logAttrFirmwareBean);
             logAttrBeans.add(logAttrPluginBean);
             map.put("logAttrList", logAttrBeans);
         } else {

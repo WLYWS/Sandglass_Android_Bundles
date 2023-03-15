@@ -128,6 +128,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         setContentView(R.layout.activity_slfchat_bot);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         setKeyboardListener();
+        fromHelpTime = System.currentTimeMillis();
         getUserInfo();
         slfdbEngine = new SLFDBEngine(this);
         initView();
@@ -137,7 +138,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Override
     protected void onResume() {
         super.onResume();
-        fromHelpTime = System.currentTimeMillis();
         requestNewFeed();
     }
     /**获取用户信息**/
@@ -176,8 +176,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                     slfdbEngine.quary_ten_msg(msg_id);
                 }
             }
-
-                fromHelpTime = 0;
         }
 
         SLFSpUtils.putCommit(LAST_ENTER_PAGE, System.currentTimeMillis());

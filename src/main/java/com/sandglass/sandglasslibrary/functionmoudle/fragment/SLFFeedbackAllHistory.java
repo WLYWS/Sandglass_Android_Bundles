@@ -97,6 +97,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
     protected void lazyLoad() {
         initRecyclerView();
         initView();
+        initData();
     }
 
     private void initView() {
@@ -120,6 +121,13 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
     }
 
     private void initData(){
+        SLFToastUtil.showLoading(getActivity(), SLFToastUtil.LOADING_TYPE_WHITE,false);
+        isRefresh = "refresh";
+        current_page = 1;
+        getFeedBackList(ALL,current_page);
+    }
+
+    private void refresh(){
         isRefresh = "refresh";
         current_page = 1;
         getFeedBackList(ALL,current_page);
@@ -167,7 +175,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
         slf_feedback_list_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                initData();
+                refresh();
             }
         });
         slf_feedback_list_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -177,8 +185,10 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
                 getFeedBackList(ALL,current_page);
             }
         });
-        slf_feedback_list_refreshLayout.autoRefresh();//自动刷新
+        //slf_feedback_list_refreshLayout.autoRefresh();//自动刷新
     }
+
+
 
 
     private void getFeedBackList (int type,int current) {

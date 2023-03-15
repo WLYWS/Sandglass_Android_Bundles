@@ -75,7 +75,6 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
         fragments.add(new SLFFeedbackHistory<>());
         fragments.add(new SLFFeedbackAllHistory<>());
         viewPager.setOffscreenPageLimit(0);
-        showLoading();
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
