@@ -283,7 +283,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private boolean imageSuccessed;
 
     private String appLogFileName="appLog.zip";
-    private String firmwareLogFileName="firmwareLog.zip";
     private Drawable mClearDrawable;
     private Drawable drawableRight;
     private LinearLayout slf_common_loading_linear_submit;
@@ -587,8 +586,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             });
             if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(7)).uploadUrl,
-                        "application/zip");
-                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadFirmwareLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(8)).uploadUrl,
                         "application/zip");
             }
         } else {
@@ -1085,10 +1082,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
-        map.put("num", 9);
+        map.put("num", 8);
         SLFHttpUtils.getInstance().executeGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
-        SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request upload url 9");
+        SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request upload url 8");
     }
 
     /**
@@ -1383,7 +1380,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             hideLoading();
         } else if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.e(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type, 9);
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type, 8);
             if (SLFCommonUpload.getInstance() != null && SLFCommonUpload.getInstance().size() > 0 && SLFCommonUpload.getListInstance() != null && SLFCommonUpload.getListInstance().size() > 0) {
                 /**分配前六个链接给图片和视频上传*/
                 for (int i = 0; i < 6; i++) {
@@ -1485,7 +1482,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
         for (int position = 0; position < slfMediaDataList.size() - 1; position++) {
             if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADIDLE)) {
-                if (SLFCommonUpload.getListInstance().size() == 9 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)) != null && SLFCommonUpload.getInstance().size() == 9) {
+                if (SLFCommonUpload.getListInstance().size() == 8 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)) != null && SLFCommonUpload.getInstance().size() == 8) {
                     if (SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle) {
                         slfMediaDataList.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(0));
                         slfMediaDataList.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(1));
@@ -1493,14 +1490,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         slfMediaDataList.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl);
                         SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).isIdle = false;
                         SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).isIdle = false;
-                    } else if (SLFCommonUpload.getListInstance().size() == 9 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle) {
+                    } else if (SLFCommonUpload.getListInstance().size() == 8 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle) {
                         slfMediaDataList.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(2));
                         slfMediaDataList.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(3));
                         slfMediaDataList.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl);
                         slfMediaDataList.get(position).setUploadThumurl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).uploadUrl);
                         SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).isIdle = false;
                         SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(3)).isIdle = false;
-                    } else if (SLFCommonUpload.getListInstance().size() == 9 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).isIdle && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).isIdle) {
+                    } else if (SLFCommonUpload.getListInstance().size() == 8 && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).isIdle && SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(5)).isIdle) {
                         slfMediaDataList.get(position).setUploadPath(SLFCommonUpload.getListInstance().get(4));
                         slfMediaDataList.get(position).setUploadThumPath(SLFCommonUpload.getListInstance().get(5));
                         slfMediaDataList.get(position).setUploadUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(4)).uploadUrl);
@@ -1548,13 +1545,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
             logAttrAppBean.setContentType("application/zip");
             /**firmwareLogBean*/
-            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
-
-            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(8));
-            if (!TextUtils.isEmpty(firmwareLogFileName)) {
-                logAttrFirmwareBean.setFileName(firmwareLogFileName);
-            }
-            logAttrFirmwareBean.setContentType("application/zip");
+//            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
+//
+//            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(8));
+//            if (!TextUtils.isEmpty(firmwareLogFileName)) {
+//                logAttrFirmwareBean.setFileName(firmwareLogFileName);
+//            }
+//            logAttrFirmwareBean.setContentType("application/zip");
             /*sdkLogBean*/
             SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
             logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(6));

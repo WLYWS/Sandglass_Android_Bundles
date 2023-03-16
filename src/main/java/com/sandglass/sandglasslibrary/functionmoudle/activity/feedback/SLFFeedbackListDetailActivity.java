@@ -138,7 +138,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private boolean isSubmit = false;
     private ExecutorService singleThreadExecutor;
     private String appLogFileName = "appLog.zip";
-    private String firmwareLogFileName = "firmwareLog.zip";
     private int currentPage = 1;
     private List<SLFLeaveMsgRecord> newDatas;
     private int REQUEST_CODE = 0;
@@ -332,8 +331,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
                        "application/zip");
-                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadFirmwareLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl,
-                        "application/zip");
             }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
             gotoContinueLeaveActivity();
@@ -398,7 +395,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      */
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
-        map.put("num", 3);
+        map.put("num", 2);
         //showLoading();
         SLFHttpUtils.getInstance().executeGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
@@ -512,20 +509,19 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             }
             logAttrAppBean.setContentType("application/zip");
             /**firmwareLogBean*/
-            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
-
-            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(2));
-            if (!TextUtils.isEmpty(firmwareLogFileName)) {
-                logAttrAppBean.setFileName(firmwareLogFileName);
-            }
-            logAttrFirmwareBean.setContentType("application/zip");
+//            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
+//
+//            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(2));
+//            if (!TextUtils.isEmpty(firmwareLogFileName)) {
+//                logAttrAppBean.setFileName(firmwareLogFileName);
+//            }
+//            logAttrFirmwareBean.setContentType("application/zip");
             /*sdkLogBean*/
             SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
             logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(0));
             logAttrPluginBean.setFileName("sdkLog.zip");
             logAttrPluginBean.setContentType("application/zip");
             logAttrBeans.add(logAttrAppBean);
-            logAttrBeans.add(logAttrFirmwareBean);
             logAttrBeans.add(logAttrPluginBean);
             map.put("logAttrList", logAttrBeans);
         SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());

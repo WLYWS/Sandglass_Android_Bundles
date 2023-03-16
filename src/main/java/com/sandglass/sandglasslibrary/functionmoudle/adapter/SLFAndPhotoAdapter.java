@@ -118,7 +118,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
 
         helper.setOnClickListener(R.id.slf_iv_delete, v -> {
 
-            if (SLFCommonUpload.getListInstance().size() == 9) {
+            if (SLFCommonUpload.getListInstance().size() == 8) {
                 for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
                     if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
                         SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
