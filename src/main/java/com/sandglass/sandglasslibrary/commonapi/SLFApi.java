@@ -4,12 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Process;
 import android.os.StrictMode;
 import android.util.Log;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.sandglass.sandglasslibrary.base.SLFBaseApplication;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.interf.SLFSetNewTokentoFeed;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
@@ -27,7 +24,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Greated by yangjie
@@ -49,6 +45,8 @@ public class SLFApi  implements SLFSetNewTokentoFeed {
     private boolean isDebug;
 
     private SLFNetworkChangeReceiver mNetworkChangedReceiver;
+
+    private static final String XLOG_PUBKEY = "c7b41a50681125813cb88c40653dcf4bb1ca1ab8a62626e9b6bb8a8b0bfa419ae3e142158c586864ec8aaf10a5ba9240be41e9f278ee7696f97f7ae7caa3c0e4";
 
     private static List<Activity> mList = new LinkedList<>();//记录当前应用的Activity,用于退出整个应用销毁所有Activity
 
@@ -80,7 +78,8 @@ public class SLFApi  implements SLFSetNewTokentoFeed {
         long endTime = System.currentTimeMillis();
         SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
         SLFLogAPI.init();
-        SLFLogUtil.syncPermissonCreate();
+        //SLFLogUtil.syncPermissonCreate();
+        //SLFLogUtil.initXLog(SLFConstants.xlogCachePath,SLFConstants.apiLogPath,XLOG_PUBKEY);
         SLFLogUtil.e("ArouterInitTime:", endTime - startTime + "");
         SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
         List<File> logList = SLFFileUtils.listFileSortByName(SLFConstants.apiLogPath);

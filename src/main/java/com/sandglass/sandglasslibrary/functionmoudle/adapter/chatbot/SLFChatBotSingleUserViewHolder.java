@@ -11,12 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotIconTextLeftView;
 import com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotIconTextRightView;
 import com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
+import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
+import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -44,8 +47,12 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
         iv_chat_bot_user_warn = itemView.findViewById(R.id.iv_chat_bot_user_warn);
         tv_chat_bot_user_text.setMaxWidth(SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116));
         SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_user_text);
-
-        iv_chat_bot_user_icon.setImageResource(R.mipmap.slf_chat_bot_user_icon);
+        if(SLFUserCenter.userInfoBean!=null&&SLFUserCenter.userInfoBean.getData()!=null&&SLFUserCenter.userInfoBean.getData().getIconUrl()!=null){
+            SLFImageUtil.loadImage(context, SLFUserCenter.userInfoBean.getData().getIconUrl(),iv_chat_bot_user_icon , R.mipmap.slf_chat_bot_user_icon, R.mipmap.slf_chat_bot_user_icon
+                    , SLFImageShapes.CIRCLE, SLFImageShapes.ROUND);
+        }else {
+            iv_chat_bot_user_icon.setImageResource(R.mipmap.slf_chat_bot_user_icon);
+        }
         iv_chat_bot_user_warn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {

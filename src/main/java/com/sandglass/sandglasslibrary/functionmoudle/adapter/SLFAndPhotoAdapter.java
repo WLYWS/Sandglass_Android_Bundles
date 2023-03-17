@@ -4,17 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
-import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFQuickAdapter;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFAdapterUtils;
@@ -23,9 +17,7 @@ import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * created by yangjie

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
@@ -20,9 +19,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

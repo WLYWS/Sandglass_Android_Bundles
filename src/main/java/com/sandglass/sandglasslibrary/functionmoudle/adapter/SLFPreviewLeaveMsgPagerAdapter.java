@@ -8,9 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
@@ -22,15 +20,10 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.sandglass.sandglasslibrary.R;
-import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.interf.SLFIPhotoView;
-import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.sandglass.sandglasslibrary.uiutils.SLFPhotoViewAttacher;
 import com.sandglass.sandglasslibrary.uiutils.SLFPhotoViewImpl;
-import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
-import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 

@@ -50,6 +50,7 @@ import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserDeviceListResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFillagelWordResponseBean;
 import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
@@ -73,7 +74,6 @@ import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -314,6 +314,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slfSumbmit.setVisibility(View.VISIBLE);
             slf_submit_page_no_network_linear.setVisibility(View.GONE);
             requestUploadUrls();
+            requestUserDeviceList();
             requestAllData();
         } else {
             slf_submit_page_no_network_linear.setVisibility(View.VISIBLE);
@@ -1066,6 +1067,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         });
     }
 
+    /**
+     * 请求用户列表
+     */
+    private void requestUserDeviceList(){
+        SLFHttpUtils.getInstance().executePathGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.USER_DEVICE_LIST, SLFUserDeviceListResponseBean.class, this);
+        }
 
     /**
      * 请求后台配置数据
@@ -1114,56 +1122,66 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     /**
      * 获取用户设备列表
      **/
-    private List<Object> getUserTypeData(SLFCategoriesResponseBean slfCategoriesResponseBean) {
-        if (SLFUserCenter.userInfoBean != null && SLFUserCenter.userInfoBean.getData() != null && SLFUserCenter.userInfoBean.getData().getDeviceList() != null && SLFUserCenter.userInfoBean.getData().getDeviceList().size() > 0) {
-            slfServiceTypes.clear();
-            slfServiceMap.clear();
-            slfServiceTitleMap.clear();
-            if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0) {
-                for (int i = 0; i < slfCategoriesResponseBean.data.size(); i++) {
-                    SLFProlemDataBean serviceTypeTitle = slfCategoriesResponseBean.data.get(i);
-                    List<SLFCategoryBean> listCategory = new ArrayList<>();
-                    if (serviceTypeTitle.name.contains("All device types")) {
-                        for (int j = 0; j < serviceTypeTitle.sub.size(); j++) {
-                            for (int k = 0; k < SLFUserCenter.userInfoBean.getData().getDeviceList().size(); k++) {
-                                if(!TextUtils.isEmpty(serviceTypeTitle.sub.get(j).deviceModel)) {
-                                    if (SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel)
-                                            || SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel.toLowerCase())
-                                            || SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel.toUpperCase())) {
-                                        SLFCategoryBean categoryBean = new SLFCategoryBean();
-                                        categoryBean.id = serviceTypeTitle.sub.get(j).id + 10000 + k;
-                                        categoryBean.name = SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceName();
-                                        categoryBean.deviceModel = SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceModel();
-                                        categoryBean.sub = serviceTypeTitle.sub.get(j).sub;
-                                        SLFUserDeviceSaved userDeviceSaved = new SLFUserDeviceSaved(SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceId(),
-                                                SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getDeviceModel(), serviceTypeTitle.sub.get(j).id,
-                                                SLFUserCenter.userInfoBean.getData().getDeviceList().get(k).getFirmwareVersion());
-                                        SLFUserCenter.getInstance().put(categoryBean.id, userDeviceSaved);
-                                        listCategory.add(categoryBean);
-                                        slfServiceTypes.add(categoryBean);
-                                        slfServiceMap.put(categoryBean.id, categoryBean.sub);
-                                    }
-                                }
-                                if(slfServiceTypes.size()<=1){
-                                    slfServiceTypes.clear();
-                                }
-                            }
-                            slfServiceTitleMap.put(serviceTypeTitle.sub.get(j).id + 100, listCategory);
-                        }
+//    private List<Object> getUserTypeData(SLFCategoriesResponseBean slfCategoriesResponseBean) {
+//        if (SLFUserCenter.userDeviceListBean != null && SLFUserCenter.userDeviceListBean.getData() != null && SLFUserCenter.userDeviceListBean.getData()!= null && SLFUserCenter.userDeviceListBean.getData().size() > 0) {
+//            slfServiceTypes.clear();
+//            slfServiceMap.clear();
+//            slfServiceTitleMap.clear();
+//            slfServiceTypes.add(SLFResourceUtils.getResources().getString(R.string.slf_user_device_service_type));
+//            slfServiceTypes.addAll(SLFUserCenter.userDeviceListBean.getData());
+//            List<SLFCategoryBean> categoryBeansList = new ArrayList<>();
+//            for(int i=0;i<SLFUserCenter.userDeviceListBean.getData().size();i++) {
+//
+//            }
+//        }
+//            if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0) {
+//                for (int i = 0; i < slfCategoriesResponseBean.data.size(); i++) {
+//                    SLFProlemDataBean serviceTypeTitle = slfCategoriesResponseBean.data.get(i);
+//                    List<SLFCategoryBean> listCategory = new ArrayList<>();
+//                    if (serviceTypeTitle.name.contains("All device types")) {
+//                        for (int j = 0; j < serviceTypeTitle.sub.size(); j++) {
+//                            for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
+//                                if(!TextUtils.isEmpty(serviceTypeTitle.sub.get(j).deviceModel)) {
+//                                    SLFCategoryBean categoryBean = new SLFCategoryBean();
+//                                    categoryBean.id = serviceTypeTitle.sub.get(j).id + 10000 + k;
+//                                    categoryBean.name = SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceName();
+//                                    categoryBean.deviceModel = SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel();
+//                                    categoryBean.sub = null;
+//                                    if (SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel)
+//                                            || SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel.toLowerCase())
+//                                            || SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel.toUpperCase())) {
+//                                        categoryBean.sub = serviceTypeTitle.sub.get(j).sub;
+//                                        SLFUserDeviceSaved userDeviceSaved = new SLFUserDeviceSaved(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId(),
+//                                                SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel(), serviceTypeTitle.sub.get(j).id,
+//                                                SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion());
+//                                        SLFUserCenter.getInstance().put(categoryBean.id, userDeviceSaved);
+//                                        listCategory.add(categoryBean);
+//                                        slfServiceMap.put(categoryBean.id, categoryBean.sub);
+//                                    }
+//                                    slfServiceTypes.add(categoryBean);
+//                                }
+//                                if(slfServiceTypes.size()<=1){
+//                                    slfServiceTypes.clear();
+//                                }
+//                            }
+//                            slfServiceTitleMap.put(serviceTypeTitle.sub.get(j).id + 100, listCategory);
+//                        }
+//
+//
+//                    }
+//                }
+//            }
+//        }
 
-
-                    }
-                }
-            }
-        }
-        return slfServiceTypes;
-    }
+//        return slfServiceTypes;
+ //   }
 
     /**
      * 获取servicetype列表
      */
     private List<Object> getServiceTypeData(SLFCategoriesResponseBean slfCategoriesResponseBean) {
-        slfServiceTypes = getUserTypeData(slfCategoriesResponseBean);
+        slfServiceTypes.clear();
+        //slfServiceTypes = getUserTypeData(slfCategoriesResponseBean);
         if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0) {
             for (int i = 0; i < slfCategoriesResponseBean.data.size(); i++) {
                 SLFProlemDataBean serviceTypeTitle = slfCategoriesResponseBean.data.get(i);
@@ -1228,15 +1246,17 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         while (it.hasNext()) {
             Map.Entry<Long, List<SLFCategoryBean>> entry = it.next();
             for (int i = 0; i < entry.getValue().size(); i++) {
-                if (entry.getValue().size() == 1) {
-                    entry.getValue().get(i).setRound_type(SLFConstants.ALL_ROUND);
-                } else {
-                    if (i == 0) {
-                        entry.getValue().get(i).setRound_type(SLFConstants.ROUND_FIRST);
-                    } else if (i == entry.getValue().size() - 1) {
-                        entry.getValue().get(i).setRound_type(SLFConstants.ROUND_END);
+                if(entry.getValue().get(i) instanceof SLFCategoryBean) {
+                    if (entry.getValue().size() == 1) {
+                        ((SLFCategoryBean) entry.getValue().get(i)).setRound_type(SLFConstants.ALL_ROUND);
                     } else {
-                        entry.getValue().get(i).setRound_type(SLFConstants.ROUND_MIDDLE);
+                        if (i == 0) {
+                            ((SLFCategoryBean) entry.getValue().get(i)).setRound_type(SLFConstants.ROUND_FIRST);
+                        } else if (i == entry.getValue().size() - 1) {
+                            ((SLFCategoryBean) entry.getValue().get(i)).setRound_type(SLFConstants.ROUND_END);
+                        } else {
+                            ((SLFCategoryBean) entry.getValue().get(i)).setRound_type(SLFConstants.ROUND_MIDDLE);
+                        }
                     }
                 }
             }
@@ -1388,7 +1408,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
-            hideLoading();
+          //  hideLoading();
         } else if (type instanceof SLFillagelWordResponseBean) {
             boolean isIllagelWorld = (boolean) ((SLFillagelWordResponseBean) type).isData();
 
@@ -1415,17 +1435,20 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             gotoFeedbackSuccess(((SLFCreateFeedbackRepsonseBean) type).data);
             slf_common_loading_linear_submit.setVisibility(View.GONE);
             changeViewFoucs();
+        } else if(type instanceof SLFUserDeviceListResponseBean){
+            SLFUserCenter.userDeviceListBean = (SLFUserDeviceListResponseBean) type;
+            SLFLogUtil.d("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.toString());
         }
 
     }
 
-    private void canGotoSubmit(int logId){
-        if(slfSendLogCheck.isChecked()){
-            if(isSendLogsuccess&&isCallbackAppLog){
-                gotoFeedbackSuccess(logId);
-            }
-        }
-    }
+//    private void canGotoSubmit(int logId){
+//        if(slfSendLogCheck.isChecked()){
+//            if(isSendLogsuccess&&isCallbackAppLog){
+//                gotoFeedbackSuccess(logId);
+//            }
+//        }
+//    }
 
     @Override
     public void onRequestFail(String value, String failCode, Object type) {
@@ -1534,7 +1557,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         map.put("content", slfEditProblem.getText().toString());
         map.put("email", slfEmailEdit.getText().toString().trim());
-        map.put("phone", "18611223366");
         if (slfSendLogCheck.isChecked()) {
             map.put("sendLog", 1);
             SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();

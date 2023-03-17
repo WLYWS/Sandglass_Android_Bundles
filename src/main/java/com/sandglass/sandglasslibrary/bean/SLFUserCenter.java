@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import com.sandglass.sandglasslibrary.BuildConfig;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserDeviceListResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSystemUtil;
@@ -59,6 +60,8 @@ public class SLFUserCenter {
     public static final boolean isCaughtException = true;
 
     public static SLFUserInfoResponseBean userInfoBean;
+
+    public static SLFUserDeviceListResponseBean userDeviceListBean;
 
     private static HashMap<Long, SLFUserDeviceSaved> mInstance;
     /**保存用户信息的单例*/
