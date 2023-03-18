@@ -74,12 +74,13 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean isInitData = false;
     private String isRefresh;
-    private boolean isViewShow;
+    private boolean isCreated;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        isCreated = true;
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }
@@ -95,6 +96,15 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
         initRecyclerView();
         initView();
         initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isCreated){
+            initData();
+        }
+        isCreated = false;
     }
 
     private void initView() {
