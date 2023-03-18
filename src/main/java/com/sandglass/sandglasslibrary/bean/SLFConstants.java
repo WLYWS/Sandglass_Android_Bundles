@@ -20,7 +20,7 @@ public class SLFConstants {
     public static String token;
 
     public static final boolean isShowLog = true;
-    public static final boolean isUseXlog = true;
+    public static boolean isUseXlog = true;
     public static boolean isOpenConsoleLog = true;
     public static boolean isLogFileEncrypt = false;
 
