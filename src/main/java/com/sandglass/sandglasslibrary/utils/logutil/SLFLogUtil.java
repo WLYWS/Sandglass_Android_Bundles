@@ -43,7 +43,6 @@ public final class SLFLogUtil extends Xlog {
     private static FileWriter fileWriter = null;
     private static BufferedWriter writer = null;
     private static long gitprt;//可写不同文件的参数
-    private static boolean isUseXlog = false;
     private static SLFLogPrinter printer = new SLFLogPrinter();
 
     public static SLFLogUtil getInstance() {
@@ -56,7 +55,7 @@ public final class SLFLogUtil extends Xlog {
                     log = new SLFLogUtil();
                     android.util.Log.i("API SLFLogUtil", "create new instance");
                 }
-                fileWriter();
+                initSLFLog();
             }
         } else {
             android.util.Log.i("API SLFLogUtil", "exist one instance");
@@ -66,7 +65,7 @@ public final class SLFLogUtil extends Xlog {
     }
 
     public static void initSLFLog(){
-        createFile(true);
+        createFile(SLFConstants.isUseXlog);
         Xlog.XLogConfig xLogConfig = new XLogConfig();
         xLogConfig.level = 0;
         xLogConfig.mode = 0;
@@ -76,8 +75,20 @@ public final class SLFLogUtil extends Xlog {
         xLogConfig.cachedays = 0;
         xLogConfig.pubkey = XLOG_PUBKEY;
         gitprt = log.newXlogInstance(xLogConfig);
+        Xlog.open(true,
+                xLogConfig.level,
+                xLogConfig.mode,
+                xLogConfig.cachedir,
+                xLogConfig.logdir,
+                xLogConfig.nameprefix,
+                xLogConfig.pubkey);
+        log.setConsoleLogOpen(gitprt,SLFConstants.isOpenConsoleLog);
         Log.setLogImp(log);
-        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
+        //log.appenderFlush(gitprt,false);
+//        log.setConsoleLogOpen(gitprt,SLFConstants.isOpenConsoleLog);
+//        Log.setLogImp(log);
+
+        //checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
         //log.appenderFlush(gitprt,false);
     }
 
@@ -97,7 +108,7 @@ public final class SLFLogUtil extends Xlog {
 //        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
 //        Xlog.setConsoleLogOpen();
         appenderClose();
-        createFile(true);
+        createFile(SLFConstants.isUseXlog);
         this.createFile(pluginId);
         Xlog.XLogConfig xLogConfig = new XLogConfig();
         xLogConfig.level = 0;
@@ -108,14 +119,23 @@ public final class SLFLogUtil extends Xlog {
         xLogConfig.cachedays = 0;
         xLogConfig.pubkey = XLOG_PUBKEY;
         gitprt = log.newXlogInstance(xLogConfig);
-//        appenderFlush(gitprt,false);
+        //appenderFlush(gitprt,false);
+        Xlog.open(true,
+                xLogConfig.level,
+                xLogConfig.mode,
+                xLogConfig.cachedir,
+                xLogConfig.logdir,
+                xLogConfig.nameprefix,
+                xLogConfig.pubkey);
+        log.setConsoleLogOpen(gitprt,true);
         Log.setLogImp(log);
-        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
+//        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
         Log.i("API SLFLogUtil", "create new plugin instance");
     }
 
     public static void syncPermissonCreate() {
-        createFile(true);
+        createFile(SLFConstants.isUseXlog);
+        log.appenderClose();
         Xlog.XLogConfig xLogConfig = new XLogConfig();
         xLogConfig.level = 0;
         xLogConfig.mode = 0;
@@ -125,9 +145,17 @@ public final class SLFLogUtil extends Xlog {
         xLogConfig.cachedays = 0;
         xLogConfig.pubkey = XLOG_PUBKEY;
         gitprt = log.newXlogInstance(xLogConfig);
+        Xlog.open(true,
+                xLogConfig.level,
+                xLogConfig.mode,
+                xLogConfig.cachedir,
+                xLogConfig.logdir,
+                xLogConfig.nameprefix,
+                xLogConfig.pubkey);
+        log.setConsoleLogOpen(gitprt,true);
         Log.setLogImp(log);
-        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
-//        log.appenderFlush(gitprt,false);
+//        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
+
 //        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
 //        Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
 //        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
@@ -153,49 +181,69 @@ public final class SLFLogUtil extends Xlog {
     }
 
     public static void i(String tag, String content) {
-        if(isUseXlog) {
-            log.logI(gitprt, tag, Thread.currentThread().getName(), "", 0, Process.myPid(), Thread.currentThread().getId(), Thread.currentThread().getId(), content);
-        }else{
-            android.util.Log.i(tag,content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.i(tag, content);
+            } else {
+                printer.i(tag, content);
+                log("info", tag, content);
+            }
         }
     }
 
     public static void s(String tag, String content) {
-        if (SLFConstants.isOpenConsoleLog) {
+        if (SLFConstants.isShowLog&&SLFConstants.isOpenConsoleLog) {
             android.util.Log.i(tag, content);
         }
 
     }
 
     public static void d(String tag, String content) {
-        if(isUseXlog) {
-            log.logD(gitprt, tag, Thread.currentThread().getName(), "", 0, Process.myPid(), Thread.currentThread().getId(), Thread.currentThread().getId(), content);
-        }else{
-            android.util.Log.d(tag, content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.d(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
         }
     }
 
     public static void e(String tag, String content) {
-        if(log.isUseXlog) {
-            log.logE(gitprt, tag, Thread.currentThread().getName(), "", 0, Process.myPid(), Thread.currentThread().getId(), Thread.currentThread().getId(), content);
-        }else{
-            android.util.Log.e(tag,content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.d(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
         }
     }
 
     public static void v(String tag, String content) {
-        if(log.isUseXlog) {
-            log.logV(gitprt, tag, Thread.currentThread().getName(), "", 0, Process.myPid(), Thread.currentThread().getId(), Thread.currentThread().getId(), content);
-        }else{
-            android.util.Log.v(tag,content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.d(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
         }
     }
 
     public static void w(String tag, String content) {
-        if(log.isUseXlog) {
-            log.logW(gitprt, tag, Thread.currentThread().getName(), "", 0, Process.myPid(), Thread.currentThread().getId(), Thread.currentThread().getId(), content);
-        }else{
-            android.util.Log.w(tag,content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.w(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
         }
     }
 
@@ -215,7 +263,7 @@ public final class SLFLogUtil extends Xlog {
                 e(tag, "FLOG---->" + msg);
             }
 
-            com.tencent.mars.xlog.Log.w(tag, msg);
+           Log.w(tag, msg);
         }
     }
 
@@ -247,9 +295,9 @@ public final class SLFLogUtil extends Xlog {
 
         if (!isAvaiableSpace(0, 1)) {
             canWirte = false;
-        } else {
-            createLogFile(isUseXlog, filePath);
+            return;
         }
+            createLogFile(isUseXlog, filePath);
     }
 
     private static void createLogFile(boolean isUseXlog, File filePath) {

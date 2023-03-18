@@ -78,7 +78,7 @@ public class SLFApi  implements SLFSetNewTokentoFeed {
         long endTime = System.currentTimeMillis();
         SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
         SLFLogAPI.init();
-        //SLFLogUtil.syncPermissonCreate();
+        SLFLogUtil.syncPermissonCreate();
         //SLFLogUtil.initXLog(SLFConstants.xlogCachePath,SLFConstants.apiLogPath,XLOG_PUBKEY);
         SLFLogUtil.e("ArouterInitTime:", endTime - startTime + "");
         SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
