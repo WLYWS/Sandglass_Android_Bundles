@@ -58,25 +58,24 @@
     <com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout
         android:id="@+id/slf_feedback_list_detail_refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/slf_feedback_list_bottom_relative"
         android:layout_below="@+id/slf_feedback_list_header_line"
         android:background="@color/black"
-        app:srlAccentColor="@color/transparent"
-        app:srlPrimaryColor="@color/transparent"
-        android:overScrollMode="never"
         android:fadingEdge="none"
-        >
+        android:overScrollMode="never"
+        app:srlAccentColor="@color/transparent"
+        app:srlPrimaryColor="@color/transparent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/slf_feedback_list_leave_message_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/slf_detail_leave_message_list_color"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:fadingEdge="none"
             android:overScrollMode="never"
-            android:fadingEdge="none"/>
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp" />
     </com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout>
 
     <RelativeLayout
