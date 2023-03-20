@@ -8,7 +8,6 @@ package com.sandglass.sandglasslibrary.utils.logutil;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Process;
 import android.os.StatFs;
 import android.os.Build.VERSION;
 
@@ -55,7 +54,9 @@ public final class SLFLogUtil extends Xlog {
                     log = new SLFLogUtil();
                     android.util.Log.i("API SLFLogUtil", "create new instance");
                 }
-                initSLFLog();
+                //initSLFLog();
+                SLFLogUtils.initSDKXlog(0,0,SLFConstants.xlogCachePath,SLFConstants.apiLogPath,PREFIX+"API",2,XLOG_PUBKEY);
+                SLFLogUtils.setSDKLogIsOpen(true);
             }
         } else {
             android.util.Log.i("API SLFLogUtil", "exist one instance");
@@ -184,7 +185,8 @@ public final class SLFLogUtil extends Xlog {
         if (SLFConstants.isShowLog) {
             if (SLFConstants.isUseXlog) {
 //                checkFileExists();
-                Log.i(tag, content);
+//                Log.i(tag, content);
+                SLFLogUtils.sdki(tag,content);
             } else {
                 printer.i(tag, content);
                 log("info", tag, content);
@@ -203,7 +205,8 @@ public final class SLFLogUtil extends Xlog {
         if (SLFConstants.isShowLog) {
             if (SLFConstants.isUseXlog) {
 //                checkFileExists();
-                Log.d(tag, content);
+//                Log.d(tag, content);
+                SLFLogUtils.sdkd(tag,content);
             } else {
                 printer.d(tag,content);
                 log("debug", tag, content);
@@ -215,7 +218,8 @@ public final class SLFLogUtil extends Xlog {
         if (SLFConstants.isShowLog) {
             if (SLFConstants.isUseXlog) {
 //                checkFileExists();
-                Log.d(tag, content);
+//                Log.d(tag, content);
+                SLFLogUtils.sdke(tag,content);
             } else {
                 printer.d(tag,content);
                 log("debug", tag, content);
@@ -227,7 +231,8 @@ public final class SLFLogUtil extends Xlog {
         if (SLFConstants.isShowLog) {
             if (SLFConstants.isUseXlog) {
 //                checkFileExists();
-                Log.d(tag, content);
+//                Log.d(tag, content);
+                SLFLogUtils.sdkv(tag,content);
             } else {
                 printer.d(tag,content);
                 log("debug", tag, content);
@@ -239,7 +244,8 @@ public final class SLFLogUtil extends Xlog {
         if (SLFConstants.isShowLog) {
             if (SLFConstants.isUseXlog) {
 //                checkFileExists();
-                Log.w(tag, content);
+//                Log.w(tag, content);
+                SLFLogUtils.sdkw(tag,content);
             } else {
                 printer.d(tag,content);
                 log("debug", tag, content);

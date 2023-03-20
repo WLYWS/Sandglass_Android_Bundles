@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -440,8 +441,10 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             }
             if (!hasUploadingFile) {
                 if(slfRecord!=null&&!TextUtils.isEmpty(slfRecord.getContent())) {
-                    showLoading();
-                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL.replace("{id}",String.valueOf(slfRecord.getId())),getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
+                    //------if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
+                        showLoading();
+                        SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
+                    //-}
                 }else{
                     showCenterToast("data is error");
                 }
@@ -514,9 +517,20 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 }
             }
             slfaddAttachAdapter.notifyDataSetChanged();
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+                }
+            },500);
         } else {
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+                }
+            },500);
+
         }
     }
 

@@ -250,7 +250,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         });
         imgRight.setVisibility(View.VISIBLE);
         imgRight.setImageResource(R.drawable.slf_help_feedback_format);
-        setWH(imgRight,SLFResourceUtils.dp2px(getContext(),30),SLFResourceUtils.dp2px(getContext(),44));
+        setWH(imgRight,SLFResourceUtils.dp2px(getContext(),17),SLFResourceUtils.dp2px(getContext(),17));
         imgRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

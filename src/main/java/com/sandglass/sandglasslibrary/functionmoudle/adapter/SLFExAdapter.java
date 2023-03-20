@@ -65,7 +65,7 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         SLFFontSet.setSLF_RegularFont(context, textView);
         imgView.setImageResource(R.drawable.slf_btn_icon_right);
         if(isLastChild){
-            devider.setVisibility(View.VISIBLE);
+            devider.setVisibility(View.GONE);
         }else{
             devider.setVisibility(View.GONE);
         }
