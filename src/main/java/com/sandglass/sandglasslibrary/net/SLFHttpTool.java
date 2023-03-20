@@ -19,8 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import android.util.Base64;
+import android.webkit.WebSettings;
 
 import com.google.gson.GsonBuilder;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.utils.SLFStringUtil;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -318,6 +321,7 @@ public class SLFHttpTool {
     public static TreeMap getTreeCrc(String method,String url,TreeMap maps) {
         TreeMap map = new TreeMap();
         try {
+            String user_agent = WebSettings.getDefaultUserAgent(SLFApi.getSLFContext())+" RviApp/"+ SLFUserCenter.getAppVersionName();
             nonce = SLFStringUtil.replaceBlank(generateNonce());
             secret = SLFStringUtil.replaceBlank(generateSecret());
             long ts = System.currentTimeMillis();
@@ -327,8 +331,10 @@ public class SLFHttpTool {
             map.put("ts",String.valueOf(ts));
             map.put("Authorization", "abc");
             map.put("secret",encryptMd532(secret.getBytes(CHARSET_UTF8)));
+            map.put("user-agent", user_agent);
             SLFLogUtil.d("request", "Get request 加密：| 签名: signature="+SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
             SLFLogUtil.d("request", "Get request 加密：| 密钥: secret="+encryptMd532(secret.getBytes(CHARSET_UTF8)));
+            SLFLogUtil.d("request", "user-agent="+user_agent);
         } catch (Exception e) {
             e.printStackTrace();
         }
