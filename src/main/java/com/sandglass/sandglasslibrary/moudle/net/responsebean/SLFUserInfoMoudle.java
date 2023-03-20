@@ -10,12 +10,13 @@ import java.util.ArrayList;
 public class SLFUserInfoMoudle {
     /**email*/
     private String email;
-    /**设备列表**/
-    private ArrayList<SLFUserinfoDeviceMoudle> deviceList;
+    /**iconUrl头像地址*/
+    private String iconUrl;
 
-    public SLFUserInfoMoudle(String email,ArrayList<SLFUserinfoDeviceMoudle> deviceList){
+
+    public SLFUserInfoMoudle(String email,String iconUrl){
         this.email = email;
-        this.deviceList = deviceList;
+        this.iconUrl = iconUrl;
     }
 
     public String getEmail() {
@@ -26,19 +27,19 @@ public class SLFUserInfoMoudle {
         this.email = email;
     }
 
-    public ArrayList<SLFUserinfoDeviceMoudle> getDeviceList() {
-        return deviceList;
+    public String getIconUrl() {
+        return iconUrl;
     }
 
-    public void setDeviceList(ArrayList<SLFUserinfoDeviceMoudle> deviceList) {
-        this.deviceList = deviceList;
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
     @Override
     public String toString ( ) {
         return "SLFUserInfoMoudle{" +
                 "email=" + email +
-                ", deviceList=" + deviceList + '\'' +
+                ", iconUrl=" + iconUrl + '\'' +
                 '}';
     }
 }

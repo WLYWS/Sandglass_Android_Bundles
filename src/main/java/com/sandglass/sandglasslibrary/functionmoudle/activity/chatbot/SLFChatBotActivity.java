@@ -20,7 +20,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -35,7 +34,6 @@ import com.sandglass.sandglasslibrary.commonui.SLFClickEditText;
 import com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.dao.SLFDBEngine;
-import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFContinueLeaveMsgActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback;
@@ -46,11 +44,8 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEven
 import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFChatBotUpdateQuesionEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData;
-import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoriesResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiResponseBean;
-import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchReslutBean;
-import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqSearchResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUnReadCount;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
@@ -65,7 +60,6 @@ import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
-import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -128,6 +122,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         setContentView(R.layout.activity_slfchat_bot);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         setKeyboardListener();
+        fromHelpTime = System.currentTimeMillis();
         getUserInfo();
         slfdbEngine = new SLFDBEngine(this);
         initView();
@@ -137,12 +132,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Override
     protected void onResume() {
         super.onResume();
-        fromHelpTime = System.currentTimeMillis();
         requestNewFeed();
     }
     /**获取用户信息**/
     private void getUserInfo(){
-        showLoading();
         SLFHttpUtils.getInstance().executePathGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.FIRST_PAGE_GET_USERINO, SLFUserInfoResponseBean.class, this);
     }
@@ -176,8 +169,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                     slfdbEngine.quary_ten_msg(msg_id);
                 }
             }
-
-                fromHelpTime = 0;
         }
 
         SLFSpUtils.putCommit(LAST_ENTER_PAGE, System.currentTimeMillis());
@@ -529,7 +520,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 imgRight.setImageResource(R.drawable.slf_help_feedback_format);
             }
         }else if(type instanceof SLFUserInfoResponseBean){
-            hideLoading();
             SLFUserCenter.userInfoBean = (SLFUserInfoResponseBean) type;
         }
     }

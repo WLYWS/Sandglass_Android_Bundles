@@ -17,7 +17,6 @@ import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 /**
  * Greated by yangjie

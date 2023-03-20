@@ -9,33 +9,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.sandglass.sandglasslibrary.R;
-import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackPicPreviewActivity;
-import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
-import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerAdatper;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
-import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMoudle;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
-import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;

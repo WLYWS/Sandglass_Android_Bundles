@@ -1,7 +1,5 @@
 package com.sandglass.sandglasslibrary.net;
 
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -15,6 +13,8 @@ import okhttp3.Response;
 import okio.Buffer;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 /**
  * Created by wangjian on 2022/12/5

@@ -8,20 +8,25 @@ package com.sandglass.sandglasslibrary.utils.logutil;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Process;
 import android.os.StatFs;
 import android.os.Build.VERSION;
-import android.util.Log;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
+import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
+import com.tencent.mars.BuildConfig;
+import com.tencent.mars.xlog.Log;
 import com.tencent.mars.xlog.Xlog;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -30,13 +35,14 @@ public final class SLFLogUtil extends Xlog {
     //private static final String XLOG_PUBKEY = "587aa95c61833d2aeddfb0ea1a1da9a6e023d337955730e8d0384bd23f9e0efbfb51410989bb3cd8db37680f9d72e6515f4d041ac495c63b2b0b6b45d6579f7b";
     private static final String XLOG_PUBKEY = "c7b41a50681125813cb88c40653dcf4bb1ca1ab8a62626e9b6bb8a8b0bfa419ae3e142158c586864ec8aaf10a5ba9240be41e9f278ee7696f97f7ae7caa3c0e4";
     private static volatile SLFLogUtil log = null;
-    private static final String PREFIX = "WYZE_";
+    private static final String PREFIX = "SLF_";
     private static List<String> listValue = new ArrayList();
     private static boolean canWirte = true;
     private static boolean toWrite = true;
     private static List<byte[]> listValueByte = new ArrayList();
     private static FileWriter fileWriter = null;
     private static BufferedWriter writer = null;
+    private static long gitprt;//可写不同文件的参数
     private static SLFLogPrinter printer = new SLFLogPrinter();
 
     public static SLFLogUtil getInstance() {
@@ -47,22 +53,43 @@ public final class SLFLogUtil extends Xlog {
                     fileWriter = null;
                     writer = null;
                     log = new SLFLogUtil();
-                    Log.i("API SLFLogUtil", "create new instance");
+                    android.util.Log.i("API SLFLogUtil", "create new instance");
                 }
+                initSLFLog();
             }
         } else {
-            Log.i("API SLFLogUtil", "exist one instance");
+            android.util.Log.i("API SLFLogUtil", "exist one instance");
         }
 
         return log;
     }
 
-    private SLFLogUtil() {
-        com.tencent.mars.xlog.Log.appenderFlush(true);
-        createFile(true);
-        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
-        Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
-        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
+    public static void initSLFLog(){
+        createFile(SLFConstants.isUseXlog);
+        Xlog.XLogConfig xLogConfig = new XLogConfig();
+        xLogConfig.level = 0;
+        xLogConfig.mode = 0;
+        xLogConfig.cachedir = SLFConstants.xlogCachePath;
+        xLogConfig.logdir = SLFConstants.apiLogPath;
+        xLogConfig.nameprefix = "SLF_API";
+        xLogConfig.cachedays = 0;
+        xLogConfig.pubkey = XLOG_PUBKEY;
+        gitprt = log.newXlogInstance(xLogConfig);
+        Xlog.open(true,
+                xLogConfig.level,
+                xLogConfig.mode,
+                xLogConfig.cachedir,
+                xLogConfig.logdir,
+                xLogConfig.nameprefix,
+                xLogConfig.pubkey);
+        log.setConsoleLogOpen(gitprt,SLFConstants.isOpenConsoleLog);
+        Log.setLogImp(log);
+        //log.appenderFlush(gitprt,false);
+//        log.setConsoleLogOpen(gitprt,SLFConstants.isOpenConsoleLog);
+//        Log.setLogImp(log);
+
+        //checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
+        //log.appenderFlush(gitprt,false);
     }
 
     public static void initAPILog() {
@@ -71,48 +98,153 @@ public final class SLFLogUtil extends Xlog {
     }
 
     public void initPluginXlog(String pluginId) {
-        com.tencent.mars.xlog.Log.appenderFlush(true);
+//        com.tencent.mars.xlog.Log.appenderFlush(true);
+
+        //com.tencent.mars.xlog.Log.appenderClose();
+//        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "SLF_API", 0, XLOG_PUBKEY);
+//        Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
+//        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
+
+//        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
+//        Xlog.setConsoleLogOpen();
+        appenderClose();
+        createFile(SLFConstants.isUseXlog);
         this.createFile(pluginId);
-        com.tencent.mars.xlog.Log.appenderClose();
-        Xlog.appenderOpen(0, 0, SLFFileUtils.getPluginDataPath(pluginId) + "/xlog/", SLFFileUtils.getPluginDataPath(pluginId) + "/log/", "SLF_API", 0, XLOG_PUBKEY);
-        Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
-        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
+        Xlog.XLogConfig xLogConfig = new XLogConfig();
+        xLogConfig.level = 0;
+        xLogConfig.mode = 0;
+        xLogConfig.cachedir = SLFConstants.xlogCachePath;
+        xLogConfig.logdir = SLFConstants.apiLogPath;
+        xLogConfig.nameprefix = "SLF_API";
+        xLogConfig.cachedays = 0;
+        xLogConfig.pubkey = XLOG_PUBKEY;
+        gitprt = log.newXlogInstance(xLogConfig);
+        //appenderFlush(gitprt,false);
+        Xlog.open(true,
+                xLogConfig.level,
+                xLogConfig.mode,
+                xLogConfig.cachedir,
+                xLogConfig.logdir,
+                xLogConfig.nameprefix,
+                xLogConfig.pubkey);
+        log.setConsoleLogOpen(gitprt,true);
+        Log.setLogImp(log);
+//        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
         Log.i("API SLFLogUtil", "create new plugin instance");
     }
 
     public static void syncPermissonCreate() {
-        createFile(true);
-        com.tencent.mars.xlog.Log.appenderClose();
-        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
-        Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
-        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
+        createFile(SLFConstants.isUseXlog);
+        log.appenderClose();
+        Xlog.XLogConfig xLogConfig = new XLogConfig();
+        xLogConfig.level = 0;
+        xLogConfig.mode = 0;
+        xLogConfig.cachedir = SLFConstants.xlogCachePath;
+        xLogConfig.logdir = SLFConstants.apiLogPath;
+        xLogConfig.nameprefix = "SLF_API";
+        xLogConfig.cachedays = 0;
+        xLogConfig.pubkey = XLOG_PUBKEY;
+        gitprt = log.newXlogInstance(xLogConfig);
+        Xlog.open(true,
+                xLogConfig.level,
+                xLogConfig.mode,
+                xLogConfig.cachedir,
+                xLogConfig.logdir,
+                xLogConfig.nameprefix,
+                xLogConfig.pubkey);
+        log.setConsoleLogOpen(gitprt,true);
+        Log.setLogImp(log);
+//        checkFileExists(log,SLFConstants.cachePath,SLFConstants.apiLogPath);
+
+//        Xlog.appenderOpen(0, 0, SLFConstants.xlogCachePath, SLFConstants.apiLogPath, "SLF_API", 0, XLOG_PUBKEY);
+//        Xlog.setConsoleLogOpen(SLFConstants.isOpenConsoleLog);
+//        com.tencent.mars.xlog.Log.setLogImp(new Xlog());
+
+    }
+
+    private static void checkFileExists(Xlog xlog, String cachePath, String apiXlogPath) {
+        String path = "SLF_API_" +SLFDateFormatUtils.dateToString(new Date(),SLFDateFormatUtils.YYYYMMDD)+".xlog";
+        File log = new File(apiXlogPath + path);
+        if (!log.exists()) {
+            xlog.appenderClose();
+            xlog.appenderOpen(0, Xlog.AppednerModeSync, cachePath, apiXlogPath, PREFIX + "API", 0);
+            setUserInfo();
+            xlog.setMaxAliveTime(0, 3 * 24 * 60 * 60);
+            if (BuildConfig.DEBUG) {
+                Log.setConsoleLogOpen(true);
+            } else {
+                Log.setConsoleLogOpen(false);
+            }
+
+        }
+
     }
 
     public static void i(String tag, String content) {
-        com.tencent.mars.xlog.Log.i(tag, content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.i(tag, content);
+            } else {
+                printer.i(tag, content);
+                log("info", tag, content);
+            }
+        }
     }
 
     public static void s(String tag, String content) {
-        if (SLFConstants.isOpenConsoleLog) {
-            Log.i(tag, content);
+        if (SLFConstants.isShowLog&&SLFConstants.isOpenConsoleLog) {
+            android.util.Log.i(tag, content);
         }
 
     }
 
     public static void d(String tag, String content) {
-        com.tencent.mars.xlog.Log.d(tag, content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.d(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
+        }
     }
 
     public static void e(String tag, String content) {
-        com.tencent.mars.xlog.Log.e(tag, content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.d(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
+        }
     }
 
     public static void v(String tag, String content) {
-        com.tencent.mars.xlog.Log.v(tag, content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.d(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
+        }
     }
 
     public static void w(String tag, String content) {
-        com.tencent.mars.xlog.Log.w(tag, content);
+        if (SLFConstants.isShowLog) {
+            if (SLFConstants.isUseXlog) {
+//                checkFileExists();
+                Log.w(tag, content);
+            } else {
+                printer.d(tag,content);
+                log("debug", tag, content);
+            }
+        }
     }
 
     public static void f(String tag, String msg) {
@@ -131,7 +263,7 @@ public final class SLFLogUtil extends Xlog {
                 e(tag, "FLOG---->" + msg);
             }
 
-            com.tencent.mars.xlog.Log.w(tag, msg);
+           Log.w(tag, msg);
         }
     }
 
@@ -163,9 +295,9 @@ public final class SLFLogUtil extends Xlog {
 
         if (!isAvaiableSpace(0, 1)) {
             canWirte = false;
-        } else {
-            createLogFile(isUseXlog, filePath);
+            return;
         }
+            createLogFile(isUseXlog, filePath);
     }
 
     private static void createLogFile(boolean isUseXlog, File filePath) {
@@ -180,8 +312,8 @@ public final class SLFLogUtil extends Xlog {
                 String n1 = name1.substring(0, name1.length() - 4);
 
                 try {
-                    n0 = n0.replace("WYZE_", "");
-                    n1 = n1.replace("WYZE_", "");
+                    n0 = n0.replace("SLF_", "");
+                    n1 = n1.replace("SLF_", "");
                     boolean isDelete;
                     if (Long.parseLong(n0) < Long.parseLong(n1)) {
                         isDelete = fileList[0].delete();
@@ -194,7 +326,7 @@ public final class SLFLogUtil extends Xlog {
                 }
             }
 
-            fileName = "WYZE_" + getTime(false).append(".txt").toString();
+            fileName = "SLF_" + getTime(false).append(".txt").toString();
             File file1 = new File(filePath, fileName);
 
             try {

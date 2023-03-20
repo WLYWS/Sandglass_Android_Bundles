@@ -21,12 +21,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;

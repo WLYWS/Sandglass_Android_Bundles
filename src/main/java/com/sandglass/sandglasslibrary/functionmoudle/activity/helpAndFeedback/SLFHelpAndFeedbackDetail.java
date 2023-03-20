@@ -1,7 +1,6 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailResponseBean;
-import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUnReadCount;
 import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;

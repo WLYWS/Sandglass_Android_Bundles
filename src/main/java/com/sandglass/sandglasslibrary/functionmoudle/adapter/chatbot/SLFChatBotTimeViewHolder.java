@@ -3,7 +3,6 @@ package com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.R;
@@ -20,8 +19,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-
-import static com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.getSystemTimeFormat;
 
 /**
  * Created by wangjian on 2023/1/5

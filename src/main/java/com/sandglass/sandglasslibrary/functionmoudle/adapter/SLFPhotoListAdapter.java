@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
-import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 import com.sandglass.sandglasslibrary.utils.SLFViewHolder;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;

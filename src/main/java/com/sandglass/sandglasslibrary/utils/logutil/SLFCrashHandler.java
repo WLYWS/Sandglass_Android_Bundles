@@ -95,7 +95,7 @@ public class SLFCrashHandler implements Thread.UncaughtExceptionHandler {
             for (int i = 0; i < ex.getStackTrace().length; i++) {
                 crashMessage.append(ex.getStackTrace()[i].toString()).append("\n");
             }
-            SLFDebugLogUtils.getInstance().writeLog(SLFConstants.SLF_APP_ID, "SLF", SLFDebugConfig.CRASH, crashMessage.toString());
+           // SLFDebugSLFLogUtil.getInstance().writeLog(SLFConstants.SLF_APP_ID, "SLF", SLFDebugConfig.CRASH, crashMessage.toString());
         }).start();
         for (OnCrashListener listener : crashListeners) {
             listener.onCrash(ex,appId);
@@ -141,7 +141,7 @@ public class SLFCrashHandler implements Thread.UncaughtExceptionHandler {
         String result = writer.toString();
         sb.append(result);
         SLFLogUtil.e(appId,sb.toString());
-        Log.appenderFlush(true); //同步日志到文件
+        Log.appenderFlush(); //同步日志到文件
     }
 
 

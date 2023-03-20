@@ -2,7 +2,6 @@ package com.sandglass.sandglasslibrary.functionmoudle.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +40,6 @@ import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
@@ -78,12 +75,13 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean isInitData = false;
     private String isRefresh;
-    private boolean isViewShow;
+    private boolean isCreated;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        isCreated = true;
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }
@@ -98,6 +96,16 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
     protected void lazyLoad() {
         initRecyclerView();
         initView();
+        initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isCreated){
+            initData();
+        }
+        isCreated = false;
     }
 
     private void initView() {
@@ -121,6 +129,13 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
     }
 
     private void initData(){
+        SLFToastUtil.showLoading(getActivity(), SLFToastUtil.LOADING_TYPE_WHITE,false);
+        isRefresh = "refresh";
+        current_page = 1;
+        getFeedBackList(IN_PROGRESS,current_page);
+    }
+
+    private void refresh(){
         isRefresh = "refresh";
         current_page = 1;
         getFeedBackList(IN_PROGRESS,current_page);
@@ -168,7 +183,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
         slf_feedback_list_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-               initData();
+               refresh();
             }
         });
         slf_feedback_list_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -177,7 +192,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
                 getFeedBackList(IN_PROGRESS,current_page);
             }
         });
-        slf_feedback_list_refreshLayout.autoRefresh();//自动刷新
+        //slf_feedback_list_refreshLayout.autoRefresh();//自动刷新
     }
 
 

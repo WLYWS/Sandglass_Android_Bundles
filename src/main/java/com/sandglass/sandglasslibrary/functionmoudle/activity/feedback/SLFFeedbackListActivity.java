@@ -1,5 +1,6 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistory
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +43,14 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
     private SLFFragmentAdapter adapter;
     private LinearLayout slf_linear_history_layout;
     private ImageView iv_back_img;
-
+    private boolean isCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_history_feedback_main);
-
+        isCreate = true;
         slf_linear_history_layout = findViewById(R.id.slf_linear_top);
         tabLayout = findViewById(R.id.slf_tabs);
         viewPager = findViewById(R.id.slf_vp);
@@ -70,12 +72,12 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
         SLFFontSet.setSLF_RegularFont(getContext(),tabLayout.getTitleView(1));
     }
 
+
     private void initData() {
         final List<Fragment> fragments = new ArrayList<>();
         fragments.add(new SLFFeedbackHistory<>());
         fragments.add(new SLFFeedbackAllHistory<>());
         viewPager.setOffscreenPageLimit(0);
-        showLoading();
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

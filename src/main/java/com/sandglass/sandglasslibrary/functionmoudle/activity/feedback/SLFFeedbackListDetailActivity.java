@@ -20,21 +20,18 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
-import com.sandglass.sandglasslibrary.commonui.SLFSwipeRefreshLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFRefreshFooter;
 import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFRereshHeader;
 import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackDetailAdapter;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
-import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFSendLogSuceessEvent;
 import com.sandglass.sandglasslibrary.moudle.net.requestbean.SLFLogAttrBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemBean;
@@ -138,7 +135,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private boolean isSubmit = false;
     private ExecutorService singleThreadExecutor;
     private String appLogFileName = "appLog.zip";
-    private String firmwareLogFileName = "firmwareLog.zip";
     private int currentPage = 1;
     private List<SLFLeaveMsgRecord> newDatas;
     private int REQUEST_CODE = 0;
@@ -173,6 +169,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 }
             }
         });
+        initData();
     }
 
     /**
@@ -188,11 +185,17 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      * 刷新数据
      */
     private void initData() {
+        showLoading();
         currentPage = 1;
         isRefresh = true;
         getFeedBackDetailList(currentPage);
     }
 
+    private void refresh() {
+        currentPage = 1;
+        isRefresh = true;
+        getFeedBackDetailList(currentPage);
+    }
 
 
     private void getFeedBackDetailList (int currentPage) {
@@ -283,7 +286,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slf_feedback_list_detail_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                initData();
+                refresh();
             }
         });
         slf_feedback_list_detail_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -292,7 +295,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 getFeedBackDetailList(currentPage);
             }
         });
-        slf_feedback_list_detail_refreshLayout.autoRefresh();//自动刷新
+        //slf_feedback_list_detail_refreshLayout.autoRefresh();//自动刷新
     }
 
     /**
@@ -325,8 +328,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
                        "application/zip");
-                SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadFirmwareLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(2)).uploadUrl,
-                        "application/zip");
             }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
             gotoContinueLeaveActivity();
@@ -391,7 +392,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      */
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
-        map.put("num", 3);
+        map.put("num", 2);
         //showLoading();
         SLFHttpUtils.getInstance().executeGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
@@ -505,20 +506,19 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             }
             logAttrAppBean.setContentType("application/zip");
             /**firmwareLogBean*/
-            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
-
-            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(2));
-            if (!TextUtils.isEmpty(firmwareLogFileName)) {
-                logAttrAppBean.setFileName(firmwareLogFileName);
-            }
-            logAttrFirmwareBean.setContentType("application/zip");
+//            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
+//
+//            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(2));
+//            if (!TextUtils.isEmpty(firmwareLogFileName)) {
+//                logAttrAppBean.setFileName(firmwareLogFileName);
+//            }
+//            logAttrFirmwareBean.setContentType("application/zip");
             /*sdkLogBean*/
             SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
             logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(0));
             logAttrPluginBean.setFileName("sdkLog.zip");
             logAttrPluginBean.setContentType("application/zip");
             logAttrBeans.add(logAttrAppBean);
-            logAttrBeans.add(logAttrFirmwareBean);
             logAttrBeans.add(logAttrPluginBean);
             map.put("logAttrList", logAttrBeans);
         SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());
