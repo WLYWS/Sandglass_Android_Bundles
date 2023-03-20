@@ -3,6 +3,7 @@ package com.sandglass.sandglasslibrary.dao;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -34,7 +35,7 @@ public class SLFDBEngine {
         new UpdateAsynTask(slfMsgDao).execute(slfChatBotMsgData);
     }
     //全部删除
-    public void delete_all_msg() {
+    public void delete_all_msgByUserId() {
         new DeleteAllAsynTask(slfMsgDao).execute();
     }
     //全部查询
@@ -56,7 +57,7 @@ public class SLFDBEngine {
 
         @Override
         protected List <SLFChatBotMsgData> doInBackground(Integer... integers) {
-            List <SLFChatBotMsgData> all_msg = this.slfMsgDao.selectLimitTen(integers[0]);
+            List <SLFChatBotMsgData> all_msg = this.slfMsgDao.selectLimitTen(integers[0],SLFConstants.userId);
             //遍历全部查询的结果
             for (SLFChatBotMsgData SLFChatBotMsgData:all_msg)
             {
@@ -81,7 +82,9 @@ public class SLFDBEngine {
 
         @Override
         protected Void doInBackground (SLFChatBotMsgData... slfChatBotMsgData) {
-            long id = slfMsgDao.insertMsgData(slfChatBotMsgData[0]);
+            SLFChatBotMsgData slfChatBotMsg = slfChatBotMsgData[0];
+            slfChatBotMsg.setUser_id(SLFConstants.userId);
+            long id = slfMsgDao.insertMsgData(slfChatBotMsg);
             SLFChatBotMsgData data = slfChatBotMsgData[0];
             data.setId((int) id);
             return null;
@@ -114,7 +117,7 @@ public class SLFDBEngine {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            this.slfMsgDao.deleteAll();
+            this.slfMsgDao.deleteAllByUserId(SLFConstants.userId);
             return null;
         }
     }
@@ -127,7 +130,7 @@ public class SLFDBEngine {
 
         @Override
         protected List <SLFChatBotMsgData> doInBackground(Void... voids) {
-            List <SLFChatBotMsgData> all_msg = this.slfMsgDao.selectAll();
+            List <SLFChatBotMsgData> all_msg = this.slfMsgDao.selectAll(SLFConstants.userId);
             //遍历全部查询的结果
             for (SLFChatBotMsgData SLFChatBotMsgData:all_msg)
             {

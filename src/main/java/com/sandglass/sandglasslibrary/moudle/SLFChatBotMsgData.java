@@ -11,6 +11,7 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
     @PrimaryKey(autoGenerate = true)
     private int id ;//数据库id
     //private int faqId;//获得解答answer的id
+    private String user_id;//用户id
     private String uuid;//问题唯一标识
     private long msgTime;//消息时间戳
     private int type;//消息类型
@@ -122,6 +123,13 @@ public class SLFChatBotMsgData implements Comparable<SLFChatBotMsgData> {
         }
     }
 
+    public String getUser_id ( ) {
+        return user_id;
+    }
+
+    public void setUser_id (String user_id) {
+        this.user_id = user_id;
+    }
     public void setId (int id) {
         this.id = id;
     }

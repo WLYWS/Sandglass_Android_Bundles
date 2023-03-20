@@ -141,8 +141,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     }
 
     private void initData() {
-        if ((System.currentTimeMillis() - SLFSpUtils.getLong(LAST_ENTER_PAGE, 0)) / (1000 * 60 * 60 * 24) > 7) {
-            slfdbEngine.delete_all_msg();
+        if ((System.currentTimeMillis() - SLFSpUtils.getLong(SLFConstants.USER_ID+"_"+LAST_ENTER_PAGE, 0)) / (1000 * 60 * 60 * 24)>7) {
+            slfdbEngine.delete_all_msgByUserId();
             uuid = getUUid();
             SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
             getWelcomeHotQuestion();
@@ -171,7 +171,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             }
         }
 
-        SLFSpUtils.putCommit(LAST_ENTER_PAGE, System.currentTimeMillis());
+        SLFSpUtils.putCommit(SLFConstants.USER_ID+"_"+LAST_ENTER_PAGE, System.currentTimeMillis());
     }
 
     /**
