@@ -21,8 +21,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class SLFLogUtils {
-    private final static String TAG = "App Log";
-    private final static String SDKTAG = "HLSDK_";
+    private final static String TAG = "SLF Log";
+    private final static String SDKTAG = "SLF_";
     private static Xlog sdkXlog;
     private static long sdkXloginstance = -1;
     /**
@@ -254,7 +254,7 @@ public class SLFLogUtils {
         if (!isInitXLog) {
             Xlog xlog = new Xlog();
             Log.setLogImp(xlog);
-            checkFileExists(xlog, cachePath, xlogCachePath,"SLF_APP_API");
+            checkFileExists(xlog, cachePath, xlogCachePath,"SLF_API");
         }
     }
 
