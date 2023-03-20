@@ -14,7 +14,7 @@ public class SLFLogAPI {
 
     public static void init() {
         android.util.Log.d(TAG, "onCreate: init log");
-        loadXlogLib();
+        //loadXlogLib();
         SLFLogUtil.getInstance();
         SLFLogUtil.setUserInfo();
     }
