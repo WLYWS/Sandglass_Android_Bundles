@@ -72,7 +72,8 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
         slf_finish_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SLFBaseApplication.exitAllActivity();
+                //SLFBaseApplication.exitAllActivity();
+                finish();
             }
         });
         SLFFontSet.setSLF_MediumFontt(getContext(),slf_feed_back_succeeded);
@@ -85,7 +86,8 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            SLFBaseApplication.exitAllActivity();
+//            SLFBaseApplication.exitAllActivity();
+            finish();
             return false;
         }
         return super.onKeyDown(keyCode, event);

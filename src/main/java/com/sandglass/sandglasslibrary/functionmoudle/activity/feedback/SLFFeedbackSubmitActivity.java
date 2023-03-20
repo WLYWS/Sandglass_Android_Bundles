@@ -1365,6 +1365,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         in.putExtra(SLFConstants.LOGID, logId);
         SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::go to feedback success page ::logid::" + logId);
         startActivity(in);
+        finish();
     }
 
     @Override
@@ -1616,7 +1617,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         map.put("appVersion", SLFUserCenter.getAppVersionName());
         map.put("pluginVersion", SLFUserCenter.getPluginversion());
         map.put("phoneType", 2);
-        SLFLogUtil.d("yj", "手机型号：" + SLFUserCenter.getPhoneModel());
+        //SLFLogUtil.d("yj", "手机型号：" + SLFUserCenter.getPhoneModel());
         map.put("phoneModel", SLFUserCenter.getPhoneModel());
         map.put("phoneOsVersion", SLFUserCenter.getOSVersion());
         map.put("phoneId", SLFUserCenter.getPhone_id());
