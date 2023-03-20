@@ -1138,8 +1138,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     if (serviceTypeTitle.name.contains("All device types")) {
                         SLFLogUtil.d("yj","serviceTypeTitle.size::::"+serviceTypeTitle.sub.size());
                         for (int j = 0; j < serviceTypeTitle.sub.size(); j++) {
-                            SLFLogUtil.d("yj","serviceTypeTitle.sub::::"+serviceTypeTitle.sub.get(j).toString());
-                            serviceTypeTitle.sub.get(j).deviceModel = "RVI";
                             for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
                                 SLFCategoryBean categoryBean = new SLFCategoryBean();
                                 categoryBean.id = serviceTypeTitle.sub.get(j).id + 10000 + k;
