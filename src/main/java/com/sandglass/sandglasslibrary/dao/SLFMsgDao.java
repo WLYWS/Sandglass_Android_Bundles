@@ -15,14 +15,14 @@ import androidx.room.Update;
 @Dao
 public interface SLFMsgDao {
     //查找所有
-    @Query("select * from chatbotmessage")
-    List <SLFChatBotMsgData> selectAll();
+    @Query("select * from chatbotmessage where  user_id=(:user_id)")
+    List <SLFChatBotMsgData> selectAll(String user_id);
 
     //查找10条数据
-    @Query("Select * From chatbotmessage where id < (:id) order by id desc Limit 10")
-    List <SLFChatBotMsgData> selectLimitTen(int id);
+    @Query("Select * From chatbotmessage where id < (:id) and user_id=(:user_id) order by id desc Limit 10")
+    List <SLFChatBotMsgData> selectLimitTen(int id,String user_id);
 
-    // 根据id查找
+    // 根据时间查找
     @Query("select * from chatbotmessage where msgTime = (:msgTime)")
      SLFChatBotMsgData selectByTime(long msgTime);
 
@@ -36,6 +36,6 @@ public interface SLFMsgDao {
 
     //删除所有数据
 
-    @Query("DELETE FROM chatbotmessage")
-    void deleteAll();
+    @Query("DELETE FROM chatbotmessage where user_id=(:user_id)")
+    void deleteAllByUserId(String user_id);
 }

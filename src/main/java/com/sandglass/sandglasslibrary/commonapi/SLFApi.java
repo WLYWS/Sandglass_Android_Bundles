@@ -101,6 +101,11 @@ public class SLFApi  implements SLFSetNewTokentoFeed {
     public void setToken(String token){
         SLFConstants.token = token;
     }
+
+    /**设置USER_ID*/
+    public void setUserId(String userId){
+        SLFConstants.userId = userId;
+    }
 //
 //    public String getToken(){
 //        return SLFConstants.token;
@@ -109,6 +114,8 @@ public class SLFApi  implements SLFSetNewTokentoFeed {
     public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap, String token){
         Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
         setToken(token);
+
+        setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
         context.startActivity(in);
     }
