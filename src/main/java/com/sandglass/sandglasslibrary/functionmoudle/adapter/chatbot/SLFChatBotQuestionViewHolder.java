@@ -27,12 +27,14 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.room.util.StringUtil;
 
 /**
  * Created by wangjian on 2023/1/5
  */
 public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
 
+    private final ArrayAdapter<String> adapter;
     private LinearLayout ll_faq_list;
     private TextView tv_top_question;
     private ImageView iv_update;
@@ -61,13 +63,30 @@ public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
         layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParams.setMargins( SLFCommonUtils.dip2px(context,58), 0,0,0);
         ll_faq_list.setLayoutParams(layoutParams);
-
+        adapter = new ArrayAdapter <String>(context, R.layout.slf_chat_bot_question_item,R.id.tv_question_item, questionList){};
         iv_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
                 //更新question list
-                if (questions!=null&&questions.size()>5&&mIndex==0){
-                    EventBus.getDefault().post(new SLFChatBotUpdateQuesionEvent(mIndex,position));
+                if (questions!=null&&questions.size()>5){
+                    questionList.clear();
+                    if (mIndex==0){
+
+                        for (int i = 5; i<questions.size();i++){
+
+                            questionList.add(questions.get(i).replaceAll("\n",""));
+                        }
+                       //mIndex = 5;
+                        adapter.notifyDataSetChanged();
+                        EventBus.getDefault().post(new SLFChatBotUpdateQuesionEvent(5,position));
+                    }else{
+                        for (int i = 0; i<5;i++){
+                            questionList.add(questions.get(i).replaceAll("\n",""));
+                        }
+                       // mIndex = 0;
+                        adapter.notifyDataSetChanged();
+                        EventBus.getDefault().post(new SLFChatBotUpdateQuesionEvent(0,position));
+                    }
                 }
             }
         });
@@ -138,7 +157,7 @@ public class SLFChatBotQuestionViewHolder extends SLFChatBotBaseViewHodler {
             return;
         }
 
-        lv_faq_list.setAdapter(new ArrayAdapter <String>(context, R.layout.slf_chat_bot_question_item,R.id.tv_question_item, questionList){});
+        lv_faq_list.setAdapter(adapter);
     }
 
     public void setPostion (int position) {

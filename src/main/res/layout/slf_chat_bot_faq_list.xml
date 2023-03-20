@@ -40,8 +40,9 @@
             <ImageView
                 android:id="@+id/iv_update"
                 android:layout_alignParentRight="true"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:padding="3dp"
                 android:layout_marginRight="17dp"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/slf_chat_bot_update"

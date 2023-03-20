@@ -700,8 +700,9 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFChatBotUpdateQuesionEvent event) {
         SLFChatBotMsgData slfChatBotUpdateQuesionData = faqMsgList.get(event.position);
-        slfChatBotUpdateQuesionData.setQuestion_index(slfChatBotUpdateQuesionData.getQuestion_index() + 5);
-        notiftyAdapter();
+        slfChatBotUpdateQuesionData.setQuestion_index(event.index);
+        //notiftyAdapter();
+        sLFChatBotRecyclerAdapter.notifyDataSetChanged();
         //刷新数据库
         slfdbEngine.update_msg(slfChatBotUpdateQuesionData);
     }
