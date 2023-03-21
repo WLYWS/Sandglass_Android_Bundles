@@ -22,6 +22,7 @@ import android.util.Base64;
 import android.webkit.WebSettings;
 
 import com.google.gson.GsonBuilder;
+import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.utils.SLFStringUtil;
@@ -329,7 +330,7 @@ public class SLFHttpTool {
             map.put("signature", SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
             map.put("nonce", nonce);
             map.put("ts",String.valueOf(ts));
-            map.put("Authorization", "abc");
+            map.put("Authorization", SLFConstants.token);
             map.put("secret",encryptMd532(secret.getBytes(CHARSET_UTF8)));
             map.put("user-agent", user_agent);
             SLFLogUtil.d("request", "Get request 加密：| 签名: signature="+SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));

@@ -20,13 +20,12 @@
         android:layout_toLeftOf="@+id/slf_problem_sub"
         android:layout_alignParentLeft="true"
         android:ellipsize="end"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
+        android:paddingTop="14dp"
         />
 
         <ImageView
-            android:layout_width="13dp"
-            android:layout_height="13dp"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
             android:id="@+id/slf_problem_sub"
             android:layout_alignParentRight="true"
             android:src="@drawable/slf_btn_icon_right"

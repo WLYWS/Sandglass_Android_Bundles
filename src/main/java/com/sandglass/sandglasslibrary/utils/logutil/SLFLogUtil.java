@@ -55,6 +55,7 @@ public final class SLFLogUtil extends Xlog {
                     android.util.Log.i("API SLFLogUtil", "create new instance");
                 }
                 //initSLFLog();
+                createFile(SLFConstants.isUseXlog);
                 SLFLogUtils.initSDKXlog(0,0,SLFConstants.xlogCachePath,SLFConstants.apiLogPath,PREFIX+"API",2,XLOG_PUBKEY);
                 SLFLogUtils.setSDKLogIsOpen(true);
             }

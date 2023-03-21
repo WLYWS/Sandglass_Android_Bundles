@@ -254,11 +254,11 @@ public class SLFLogUtils {
         if (!isInitXLog) {
             Xlog xlog = new Xlog();
             Log.setLogImp(xlog);
-            checkFileExists(xlog, cachePath, xlogCachePath,"SLF_API");
+            checkFileExists(xlog, cachePath, xlogCachePath);
         }
     }
 
-    public static void initXLog(String cachePath, String xlogCachePath,String PREFIX, String key) {
+    public static void initXLog(String cachePath, String xlogCachePath, String key) {
         //init xlog
         if (!isInitXLog) {
             Xlog xlog = new Xlog();
@@ -266,12 +266,12 @@ public class SLFLogUtils {
             xLogConfig.pubkey = key;
             xlog.newXlogInstance(xLogConfig);
             Log.setLogImp(xlog);
-            checkFileExists(xlog, cachePath, xlogCachePath,PREFIX);
+            checkFileExists(xlog, cachePath, xlogCachePath);
         }
     }
 
-    private static void checkFileExists(Xlog xlog, String cachePath, String xlogCachePath,String prefix) {
-        String path = prefix + "_" + SLFDateFormatUtils.dateToString(System.currentTimeMillis(),SLFDateFormatUtils.YMDHM_CN) + ".xlog";
+    private static void checkFileExists(Xlog xlog, String cachePath, String xlogCachePath) {
+        String path = PREFIX + "_" + SLFDateFormatUtils.dateToString(System.currentTimeMillis(),SLFDateFormatUtils.YMDHM_CN) + ".xlog";
         File log = new File(xlogCachePath + path);
         if (!log.exists()) {
             xlog.appenderClose();
@@ -296,7 +296,7 @@ public class SLFLogUtils {
         } else {
             return;
         }
-        String path = nameprefix + SLFDateFormatUtils.dateToString(System.currentTimeMillis(),SLFDateFormatUtils.YMDHM_CN) + ".xlog";
+        String path = nameprefix+"API_" + SLFDateFormatUtils.dateToString(System.currentTimeMillis(),SLFDateFormatUtils.YMDHM_CN) + ".xlog";
         File log = new File(logDir + path);
 
         Xlog.XLogConfig logConfig = new Xlog.XLogConfig();

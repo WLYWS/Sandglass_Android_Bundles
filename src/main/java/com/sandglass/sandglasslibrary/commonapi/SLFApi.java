@@ -30,7 +30,7 @@ import java.util.List;
  * describe:对外统一接口
  * time:2022/12/19
  */
-public class SLFApi  implements SLFSetNewTokentoFeed {
+public class SLFApi{  //implements SLFSetNewTokentoFeed {
 
     private static SLFApi mInstance;
 
@@ -176,9 +176,9 @@ public class SLFApi  implements SLFSetNewTokentoFeed {
         mList.remove(activity);
     }
 
-    @Override
-    public void getNewToken(String token) {
-        SLFConstants.token = token;
-        SLFLogUtil.d("yj","get toekn====:::"+token);
-    }
+//    @Override
+//    public void getNewToken(String token) {
+//        SLFConstants.token = token;
+//        SLFLogUtil.d("yj","get toekn====:::"+token);
+//    }
 }
