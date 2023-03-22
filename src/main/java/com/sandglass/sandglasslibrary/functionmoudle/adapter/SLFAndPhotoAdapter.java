@@ -118,7 +118,7 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
                     }
                 }
             }
-            SLFLogUtil.d("yj","delete-----object---:"+object.getUploadStatus());
+            SLFLogUtil.sdkd("yj","delete-----object---:"+object.getUploadStatus());
             getList().remove(object);
             notifyDataSetChanged();
         });

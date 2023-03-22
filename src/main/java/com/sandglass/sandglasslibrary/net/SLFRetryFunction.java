@@ -30,7 +30,7 @@ public class SLFRetryFunction implements Function<Observable<Throwable>, Observa
         return throwableObservable.flatMap(new Function <Throwable, ObservableSource<?>>() {
             @Override
             public ObservableSource<?> apply(@NonNull Throwable throwable) throws Exception {
-                SLFLogUtil.e("SLFRetryFunction","throwable:::"+throwable.getMessage());
+                SLFLogUtil.sdke("SLFRetryFunction","throwable:::"+throwable.getMessage());
                 // 输出异常信息
                // LogUtil.d(SLFHttpRequestConstants.TAG, "发生异常 = " + throwable.toString());
 
@@ -39,7 +39,7 @@ public class SLFRetryFunction implements Function<Observable<Throwable>, Observa
                  * 即，当发生的异常 = 网络异常 = IO异常 才选择重试
                  */
                 if (throwable instanceof IOException) {
-                    SLFLogUtil.d(SLFHttpRequestConstants.TAG, "throwable message="+throwable.getMessage());
+                    SLFLogUtil.sdkd(SLFHttpRequestConstants.TAG, "throwable message="+throwable.getMessage());
 
                     /**
                      * 需求2：限制重试次数

@@ -24,7 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.sandglass.sandglasslibrary.R;
+
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -412,7 +412,7 @@ public class SLFViewUtil {
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             options = options - 10;// 每次都减少10
         }
-        SLFLogUtil.e("compressImage",options + " " + baos.size()/1024);
+        SLFLogUtil.sdke("compressImage",options + " " + baos.size()/1024);
         File file = null;
         try {
             File dirFile = new File(folderName);
@@ -429,7 +429,7 @@ public class SLFViewUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SLFLogUtil.e("compressImage"," options123-->" + file.length()/1024);
+        SLFLogUtil.sdke("compressImage"," options123-->" + file.length()/1024);
         return file;
     }
 

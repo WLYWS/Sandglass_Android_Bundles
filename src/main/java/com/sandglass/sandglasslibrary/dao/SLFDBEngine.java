@@ -61,7 +61,7 @@ public class SLFDBEngine {
             //遍历全部查询的结果
             for (SLFChatBotMsgData SLFChatBotMsgData:all_msg)
             {
-                SLFLogUtil.i(TAG, "doInBackground: "+SLFChatBotMsgData.toString());
+                SLFLogUtil.sdki(TAG, "doInBackground: "+SLFChatBotMsgData.toString());
             }
             return all_msg;
         }
@@ -134,7 +134,7 @@ public class SLFDBEngine {
             //遍历全部查询的结果
             for (SLFChatBotMsgData SLFChatBotMsgData:all_msg)
             {
-                SLFLogUtil.i(TAG, "doInBackground: "+SLFChatBotMsgData.toString());
+                SLFLogUtil.sdki(TAG, "doInBackground: "+SLFChatBotMsgData.toString());
             }
             return all_msg;
         }

@@ -216,7 +216,7 @@ public class SLFExpandableViewHoldersUtil {
                 if (needExplanedOnlyOne && preOpen != position) {
                     final VH oldHolder = (VH) ((RecyclerView) holder.itemView.getParent()).findViewHolderForPosition(preOpen);
                     if (oldHolder != null) {
-                        SLFLogUtil.e("KeepOneHolder", "oldHolder != null");
+                        SLFLogUtil.sdke("KeepOneHolder", "oldHolder != null");
                         SLFExpandableViewHoldersUtil.getInstance().closeHolder(oldHolder, oldHolder.getExpandView(), true);
                         deletePositionInExpaned(preOpen);
                     }

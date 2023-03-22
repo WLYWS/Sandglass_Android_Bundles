@@ -2,8 +2,8 @@
 # compiler_version: 3.2.74
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.0"}
-# pg_map_id: 728e4fe
-# pg_map_hash: SHA-256 728e4fe8994804bd0ab0dbdad09971bd0b9dd9239f478eba8f8b770360facdb3
+# pg_map_id: 851a260
+# pg_map_hash: SHA-256 851a260514773e0a7015daf7c912ffe528e9a17a0a176a9a4a054485607d6d3c
 a.SLFBaseActivity$$ExternalSyntheticOutline0 -> a.a:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
@@ -19,15 +19,15 @@ com.sandglass.sandglasslibrary.base.SLFBaseActivity -> com.sandglass.sandglassli
     1:16:void <init>():33:48 -> <init>
     1:1:void lambda$onContentChanged$0(android.view.View):88:88 -> a
     2:3:void hideLoading():223:224 -> a
-    4:5:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.removeLoadingDismissListener():464:465 -> a
+    4:5:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.removeLoadingDismissListener():463:464 -> a
     4:5:void hideLoading():227 -> a
     6:8:void hideLoading():228:230 -> a
-    9:14:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.hideCommonLoading():432:437 -> a
+    9:14:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.hideCommonLoading():431:436 -> a
     9:14:void hideLoading():231 -> a
     15:15:void hideLoading():233:233 -> a
     16:16:void showToast(java.lang.String):273:273 -> a
-    17:34:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showText(java.lang.CharSequence,int):66:83 -> a
-    17:34:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showText(java.lang.CharSequence):62 -> a
+    17:34:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showText(java.lang.CharSequence,int):65:82 -> a
+    17:34:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showText(java.lang.CharSequence):61 -> a
     17:34:void showToast(java.lang.String):274 -> a
     1:2:void lambda$showLoading$1():214:215 -> b
     1:1:void showLoading():181:181 -> c
@@ -134,7 +134,7 @@ com.sandglass.sandglasslibrary.bean.SLFConstants -> b.a:
     boolean isOpenConsoleLog -> c
     java.lang.String cachePath -> e
     java.lang.String documentPath -> d
-    1:40:void <clinit>():29:68 -> <clinit>
+    1:42:void <clinit>():29:70 -> <clinit>
 com.sandglass.sandglasslibrary.bean.SLFUserCenter -> b.b:
     com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean userInfoBean -> b
     java.lang.String phone_id -> a
@@ -143,24 +143,24 @@ com.sandglass.sandglasslibrary.bean.SLFUserCenter -> b.b:
     1:18:void <clinit>():39:56 -> <clinit>
     1:1:java.lang.String getPhoneModel():98:98 -> a
 com.sandglass.sandglasslibrary.commonapi.SLFApi -> com.sandglass.sandglasslibrary.commonapi.SLFApi:
-    1:1:void <clinit>():51:51 -> <clinit>
-    1:3:void <init>(android.content.Context):60:62 -> <init>
+    1:1:void <clinit>():50:50 -> <clinit>
+    1:3:void <init>(android.content.Context):59:61 -> <init>
     1:1:void addActivity(android.app.Activity):159:159 -> addActivity
     1:1:void exitActivity(android.app.Activity):176:176 -> exitActivity
     1:8:void exitAllActivity():164:171 -> exitAllActivity
     1:1:com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback getAppLogCallBack():133:133 -> getAppLogCallBack
-    1:4:com.sandglass.sandglasslibrary.commonapi.SLFApi getInstance(android.content.Context):54:57 -> getInstance
-    1:1:android.content.Context getSLFContext():66:66 -> getSLFContext
+    1:4:com.sandglass.sandglasslibrary.commonapi.SLFApi getInstance(android.content.Context):53:56 -> getInstance
+    1:1:android.content.Context getSLFContext():65:65 -> getSLFContext
     1:1:com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback getSlfSetTokenCallback():137:137 -> getSlfSetTokenCallback
     1:1:com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback getUploadLogCompleteCallBack():145:145 -> getUploadLogCompleteCallBack
     1:6:void gotoHelpAndFeedback(android.content.Context,java.util.HashMap,java.lang.String):115:120 -> gotoHelpAndFeedback
-    1:11:void init(boolean):69:79 -> init
-    12:13:void com.sandglass.sandglasslibrary.utils.SLFSpUtils.getInstance(android.content.Context,java.lang.String):35:36 -> init
-    12:13:void init(boolean):79 -> init
-    14:18:void init(boolean):80:84 -> init
-    19:21:void com.sandglass.sandglasslibrary.utils.SLFFileUtils.delete(java.lang.String):50:52 -> init
-    19:21:void init(boolean):84 -> init
-    22:34:void init(boolean):85:97 -> init
+    1:12:void init(boolean):68:79 -> init
+    13:14:void com.sandglass.sandglasslibrary.utils.SLFSpUtils.getInstance(android.content.Context,java.lang.String):35:36 -> init
+    13:14:void init(boolean):79 -> init
+    15:19:void init(boolean):80:84 -> init
+    20:22:void com.sandglass.sandglasslibrary.utils.SLFFileUtils.delete(java.lang.String):50:52 -> init
+    20:22:void init(boolean):84 -> init
+    23:35:void init(boolean):85:97 -> init
     1:6:void initReceiver():150:155 -> initReceiver
     1:1:void lambda$init$0(java.lang.Throwable,java.lang.String):93:93 -> lambda$init$0
     1:1:void setAppLogCallBack(com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback):124:124 -> setAppLogCallBack
@@ -603,25 +603,25 @@ com.sandglass.sandglasslibrary.commonui.SLFToastUtil -> com.sandglass.sandglassl
     android.os.Handler handler -> d
     android.widget.TextView tvContent -> e
     android.widget.PopupWindow mLoadingView -> b
-    1:1:void <clinit>():219:219 -> <clinit>
-    1:19:void showCenterText(java.lang.CharSequence):140:158 -> a
-    20:99:void showCommonLoading(android.app.Activity,boolean,int,long):259:338 -> a
-    100:101:void cancelToast():481:482 -> a
-    1:77:void showLoading(android.app.Activity,boolean,int,long):346:422 -> b
-    78:79:void hideLoading():445:446 -> b
-    1:4:void lambda$hideLoading$1():447:450 -> c
-    1:19:void showCenterSubmitFailText():166:184 -> d
-    1:2:void setOnLoadingDismissListener(android.widget.PopupWindow$OnDismissListener):458:459 -> setOnLoadingDismissListener
+    1:1:void <clinit>():218:218 -> <clinit>
+    1:19:void showCenterText(java.lang.CharSequence):139:157 -> a
+    20:99:void showCommonLoading(android.app.Activity,boolean,int,long):258:337 -> a
+    100:101:void cancelToast():480:481 -> a
+    1:77:void showLoading(android.app.Activity,boolean,int,long):345:421 -> b
+    78:79:void hideLoading():444:445 -> b
+    1:4:void lambda$hideLoading$1():446:449 -> c
+    1:19:void showCenterSubmitFailText():165:183 -> d
+    1:2:void setOnLoadingDismissListener(android.widget.PopupWindow$OnDismissListener):457:458 -> setOnLoadingDismissListener
 com.sandglass.sandglasslibrary.commonui.SLFToastUtil$2 -> com.sandglass.sandglasslibrary.commonui.i:
-    1:1:void <init>(long,long):313:313 -> <init>
-    1:1:void onFinish():333:333 -> onFinish
+    1:1:void <init>(long,long):312:312 -> <init>
+    1:1:void onFinish():332:332 -> onFinish
 com.sandglass.sandglasslibrary.commonui.SLFToastUtil$3 -> com.sandglass.sandglasslibrary.commonui.j:
     android.app.Activity val$act -> a
-    1:1:void <init>(android.app.Activity):389:389 -> <init>
-    1:2:void onGlobalLayout():392:393 -> onGlobalLayout
+    1:1:void <init>(android.app.Activity):388:388 -> <init>
+    1:2:void onGlobalLayout():391:392 -> onGlobalLayout
 com.sandglass.sandglasslibrary.commonui.SLFToastUtil$4 -> com.sandglass.sandglasslibrary.commonui.k:
-    1:1:void <init>(long,long):402:402 -> <init>
-    1:1:void onFinish():420:420 -> onFinish
+    1:1:void <init>(long,long):401:401 -> <init>
+    1:1:void onFinish():419:419 -> onFinish
 com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotDateView -> com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotDateView:
     1:3:void <init>(android.content.Context,android.view.ViewGroup):42:44 -> <init>
     4:4:void <init>(android.content.Context):48:48 -> <init>
@@ -893,233 +893,233 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivit
     long lastSendTime -> p
     android.widget.LinearLayout slf_chat_bot_all_linear -> t
     int msg_id -> q
-    1:987:void <init>():83:1069 -> <init>
-    1:8:void postSearch(java.lang.String,int,long,java.lang.String):192:199 -> a
+    1:990:void <init>():83:1072 -> <init>
+    1:8:void postSearch(java.lang.String,int,long,java.lang.String):195:202 -> a
     9:9:void com.sandglass.sandglasslibrary.net.SLFHttpUtils.executePost(android.content.Context,java.lang.String,java.util.TreeMap,java.lang.Object,long,com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback):120:120 -> a
-    9:9:void postSearch(java.lang.String,int,long,java.lang.String):199 -> a
+    9:9:void postSearch(java.lang.String,int,long,java.lang.String):202 -> a
     10:23:void com.sandglass.sandglasslibrary.net.SLFHttpRetrofitRequest.mHttpPost(android.content.Context,java.lang.String,java.util.TreeMap,java.lang.Object,long,com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback):123:136 -> a
     10:23:void com.sandglass.sandglasslibrary.net.SLFHttpUtils.executePost(android.content.Context,java.lang.String,java.util.TreeMap,java.lang.Object,long,com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback):120 -> a
-    10:23:void postSearch(java.lang.String,int,long,java.lang.String):199 -> a
-    24:25:boolean exceedFiveMi():479:480 -> a
-    24:25:boolean isAddTimeItem():470 -> a
-    24:25:void sendMsg(java.lang.String,int):727 -> a
-    26:56:void sendMsg(java.lang.String,int):728:758 -> a
-    57:57:void onRequestNetFail(java.lang.Object):501:501 -> a
+    10:23:void postSearch(java.lang.String,int,long,java.lang.String):202 -> a
+    24:25:boolean exceedFiveMi():482:483 -> a
+    24:25:boolean isAddTimeItem():473 -> a
+    24:25:void sendMsg(java.lang.String,int):730 -> a
+    26:56:void sendMsg(java.lang.String,int):731:761 -> a
+    57:57:void onRequestNetFail(java.lang.Object):504:504 -> a
     58:59:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showNetworkError():289:290 -> a
-    58:59:void onRequestNetFail(java.lang.Object):502 -> a
-    60:61:void onRequestNetFail(java.lang.Object):503:504 -> a
+    58:59:void onRequestNetFail(java.lang.Object):505 -> a
+    60:61:void onRequestNetFail(java.lang.Object):506:507 -> a
     62:62:void onRequestNetFail(java.lang.Object):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":567,"2":568,"3":569}}
-    567:567:void onRequestNetFail(java.lang.Object):504:504 -> a
-    568:568:void onRequestNetFail(java.lang.Object):504:504 -> a
-    569:569:void onRequestNetFail(java.lang.Object):504:504 -> a
-    566:566:void onRequestNetFail(java.lang.Object):504:504 -> a
-    570:575:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):529:534 -> a
-    576:577:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    576:577:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):534 -> a
-    578:578:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):535:535 -> a
-    579:579:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1115,"2":1116,"3":1117}}
-    1115:1115:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):535:535 -> a
-    1116:1116:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):535:535 -> a
-    1117:1117:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):535:535 -> a
-    1114:1114:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):535:535 -> a
-    1118:1129:void showSendMsgStatus(java.lang.String,long):580:591 -> a
-    1130:1132:void hideSoftInput(android.content.Context,android.view.View):910:912 -> a
-    1133:1140:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):987:994 -> a
-    1141:1142:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    1141:1142:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):994 -> a
-    1143:1143:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):996:996 -> a
-    1:2:void onRequestSuccess(java.lang.String,java.lang.Object):509:510 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":570,"2":571,"3":572}}
+    570:570:void onRequestNetFail(java.lang.Object):507:507 -> a
+    571:571:void onRequestNetFail(java.lang.Object):507:507 -> a
+    572:572:void onRequestNetFail(java.lang.Object):507:507 -> a
+    569:569:void onRequestNetFail(java.lang.Object):507:507 -> a
+    573:578:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):532:537 -> a
+    579:580:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    579:580:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):537 -> a
+    581:581:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):538:538 -> a
+    582:582:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):0:0 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1121,"2":1122,"3":1123}}
+    1121:1121:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):538:538 -> a
+    1122:1122:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):538:538 -> a
+    1123:1123:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):538:538 -> a
+    1120:1120:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):538:538 -> a
+    1124:1135:void showSendMsgStatus(java.lang.String,long):583:594 -> a
+    1136:1138:void hideSoftInput(android.content.Context,android.view.View):913:915 -> a
+    1139:1146:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):990:997 -> a
+    1147:1148:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    1147:1148:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):997 -> a
+    1149:1149:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):999:999 -> a
+    1:2:void onRequestSuccess(java.lang.String,java.lang.Object):512:513 -> b
     3:3:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1080,"2":1081,"3":1082}}
-    1080:1080:void onRequestSuccess(java.lang.String,java.lang.Object):510:510 -> b
-    1081:1081:void onRequestSuccess(java.lang.String,java.lang.Object):510:510 -> b
-    1082:1082:void onRequestSuccess(java.lang.String,java.lang.Object):510:510 -> b
-    513:515:void onRequestSuccess(java.lang.String,java.lang.Object):510:512 -> b
-    516:522:void addTimeItem():641:647 -> b
-    516:522:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):603 -> b
-    516:522:void onRequestSuccess(java.lang.String,java.lang.Object):513 -> b
-    523:554:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):605:636 -> b
-    523:554:void onRequestSuccess(java.lang.String,java.lang.Object):513 -> b
-    555:555:void onRequestSuccess(java.lang.String,java.lang.Object):514:514 -> b
-    556:556:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1087,"2":1088,"3":1089}}
-    1087:1087:void onRequestSuccess(java.lang.String,java.lang.Object):515:515 -> b
-    1088:1088:void onRequestSuccess(java.lang.String,java.lang.Object):515:515 -> b
-    1089:1089:void onRequestSuccess(java.lang.String,java.lang.Object):515:515 -> b
-    1071:1079:void onRequestSuccess(java.lang.String,java.lang.Object):515:523 -> b
-    1090:1093:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):964:967 -> b
-    1094:1117:void showSearchReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiResponseBean,long):546:569 -> b
-    1094:1117:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):968 -> b
-    1118:1119:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):971:972 -> b
-    1120:1128:void showMarkReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean):684:692 -> b
-    1120:1128:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):973 -> b
-    1:2:java.lang.String getUUid():337:338 -> e
-    1:1:void getWelcomeHotQuestion():181:181 -> f
-    1:3:void minIdfaqMsgList():891:893 -> g
-    1:2:void notiftyAdapter():929:930 -> h
-    1:3:void setRcycleApdater():672:674 -> i
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1086,"2":1087,"3":1088}}
+    1086:1086:void onRequestSuccess(java.lang.String,java.lang.Object):513:513 -> b
+    1087:1087:void onRequestSuccess(java.lang.String,java.lang.Object):513:513 -> b
+    1088:1088:void onRequestSuccess(java.lang.String,java.lang.Object):513:513 -> b
+    516:518:void onRequestSuccess(java.lang.String,java.lang.Object):513:515 -> b
+    519:525:void addTimeItem():644:650 -> b
+    519:525:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):606 -> b
+    519:525:void onRequestSuccess(java.lang.String,java.lang.Object):516 -> b
+    526:557:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):608:639 -> b
+    526:557:void onRequestSuccess(java.lang.String,java.lang.Object):516 -> b
+    558:558:void onRequestSuccess(java.lang.String,java.lang.Object):517:517 -> b
+    559:559:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1093,"2":1094,"3":1095}}
+    1093:1093:void onRequestSuccess(java.lang.String,java.lang.Object):518:518 -> b
+    1094:1094:void onRequestSuccess(java.lang.String,java.lang.Object):518:518 -> b
+    1095:1095:void onRequestSuccess(java.lang.String,java.lang.Object):518:518 -> b
+    1077:1085:void onRequestSuccess(java.lang.String,java.lang.Object):518:526 -> b
+    1096:1099:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):967:970 -> b
+    1100:1123:void showSearchReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiResponseBean,long):549:572 -> b
+    1100:1123:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):971 -> b
+    1124:1125:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):974:975 -> b
+    1126:1134:void showMarkReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean):687:695 -> b
+    1126:1134:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):976 -> b
+    1:2:java.lang.String getUUid():340:341 -> e
+    1:1:void getWelcomeHotQuestion():184:184 -> f
+    1:3:void minIdfaqMsgList():894:896 -> g
+    1:2:void notiftyAdapter():932:933 -> h
+    1:3:void setRcycleApdater():675:677 -> i
     4:4:void com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot.SLFChatBotRecyclerAdapter.setItemList(java.util.List):34:34 -> i
-    4:4:void setRcycleApdater():674 -> i
+    4:4:void setRcycleApdater():677 -> i
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    5:5:void setRcycleApdater():675:675 -> i
+    5:5:void setRcycleApdater():678:678 -> i
     1:4:void onCreate(android.os.Bundle):120:123 -> onCreate
-    5:5:void setKeyboardListener():653:653 -> onCreate
+    5:5:void setKeyboardListener():656:656 -> onCreate
     5:5:void onCreate(android.os.Bundle):124 -> onCreate
     6:6:void onCreate(android.os.Bundle):125:125 -> onCreate
-    7:7:void getUserInfo():139:139 -> onCreate
+    7:7:void getUserInfo():142:142 -> onCreate
     7:7:void onCreate(android.os.Bundle):126 -> onCreate
     8:8:void onCreate(android.os.Bundle):127:127 -> onCreate
-    9:45:void initView():217:253 -> onCreate
+    9:45:void initView():220:256 -> onCreate
     9:45:void onCreate(android.os.Bundle):128 -> onCreate
-    46:49:void setWH(android.view.View,int,int):297:300 -> onCreate
-    46:49:void initView():253 -> onCreate
+    46:49:void setWH(android.view.View,int,int):300:303 -> onCreate
+    46:49:void initView():256 -> onCreate
     46:49:void onCreate(android.os.Bundle):128 -> onCreate
-    50:56:void initView():254:260 -> onCreate
+    50:56:void initView():257:263 -> onCreate
     50:56:void onCreate(android.os.Bundle):128 -> onCreate
-    57:57:void setListenerFotEditTexts():1024:1024 -> onCreate
-    57:57:void initView():261 -> onCreate
+    57:57:void setListenerFotEditTexts():1027:1027 -> onCreate
+    57:57:void initView():264 -> onCreate
     57:57:void onCreate(android.os.Bundle):128 -> onCreate
-    58:61:void initView():262:265 -> onCreate
+    58:61:void initView():265:268 -> onCreate
     58:61:void onCreate(android.os.Bundle):128 -> onCreate
-    62:124:void view_click():362:424 -> onCreate
-    62:124:void initView():267 -> onCreate
+    62:124:void view_click():365:427 -> onCreate
+    62:124:void initView():270 -> onCreate
     62:124:void onCreate(android.os.Bundle):128 -> onCreate
-    125:125:void refresh():457:457 -> onCreate
-    125:125:void view_click():450 -> onCreate
-    125:125:void initView():267 -> onCreate
+    125:125:void refresh():460:460 -> onCreate
+    125:125:void view_click():453 -> onCreate
+    125:125:void initView():270 -> onCreate
     125:125:void onCreate(android.os.Bundle):128 -> onCreate
-    126:139:void initView():268:281 -> onCreate
+    126:139:void initView():271:284 -> onCreate
     126:139:void onCreate(android.os.Bundle):128 -> onCreate
-    140:141:void initData():144:145 -> onCreate
+    140:141:void initData():147:148 -> onCreate
     140:141:void onCreate(android.os.Bundle):129 -> onCreate
     142:142:void com.sandglass.sandglasslibrary.dao.SLFDBEngine.delete_all_msgByUserId():39:39 -> onCreate
-    142:142:void initData():145 -> onCreate
+    142:142:void initData():148 -> onCreate
     142:142:void onCreate(android.os.Bundle):129 -> onCreate
-    143:171:void initData():146:174 -> onCreate
+    143:171:void initData():149:177 -> onCreate
     143:171:void onCreate(android.os.Bundle):129 -> onCreate
-    1:7:void onDestroy():1090:1096 -> onDestroy
-    1:6:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotUpdateQuesionEvent):702:707 -> onEvent
-    7:7:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent):717:717 -> onEvent
-    8:18:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotAnswerEffectEvent):768:778 -> onEvent
-    19:40:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent):788:809 -> onEvent
+    1:7:void onDestroy():1093:1099 -> onDestroy
+    1:6:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotUpdateQuesionEvent):705:710 -> onEvent
+    7:7:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickQuesionEvent):720:720 -> onEvent
+    8:18:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotAnswerEffectEvent):771:781 -> onEvent
+    19:40:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent):791:812 -> onEvent
     41:42:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> onEvent
-    41:42:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent):809 -> onEvent
-    43:43:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent):812:812 -> onEvent
-    44:49:void onEvent(java.util.List):822:827 -> onEvent
-    50:50:void onEvent(java.util.List):823:823 -> onEvent
-    51:51:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):840:840 -> onEvent
-    52:61:java.util.List changeSendingMsgStuatus(java.util.List):875:884 -> onEvent
-    52:61:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):840 -> onEvent
-    62:76:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):842:856 -> onEvent
+    41:42:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent):812 -> onEvent
+    43:43:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFChatBotClickNoSendWarnEvent):815:815 -> onEvent
+    44:49:void onEvent(java.util.List):825:830 -> onEvent
+    50:50:void onEvent(java.util.List):826:826 -> onEvent
+    51:51:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):843:843 -> onEvent
+    52:61:java.util.List changeSendingMsgStuatus(java.util.List):878:887 -> onEvent
+    52:61:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):843 -> onEvent
+    62:76:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):845:859 -> onEvent
     77:77:void com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot.SLFChatBotRecyclerAdapter.setItemList(java.util.List):34:34 -> onEvent
-    77:77:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):856 -> onEvent
+    77:77:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):859 -> onEvent
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    78:91:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):857:870 -> onEvent
-    1:4:void onPause():918:921 -> onPause
-    5:7:void hideSoftInput(android.content.Context,android.view.View):910:912 -> onPause
-    5:7:void onPause():921 -> onPause
-    1:1:void onResume():134:134 -> onResume
-    2:2:void requestNewFeed():291:291 -> onResume
-    2:2:void onResume():135 -> onResume
+    78:91:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData):860:873 -> onEvent
+    1:4:void onPause():921:924 -> onPause
+    5:7:void hideSoftInput(android.content.Context,android.view.View):913:915 -> onPause
+    5:7:void onPause():924 -> onPause
+    1:1:void onResume():137:137 -> onResume
+    2:2:void requestNewFeed():294:294 -> onResume
+    2:2:void onResume():138 -> onResume
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$1 -> d.f:
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):231:231 -> <init>
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):234:234 -> <init>
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$10 -> com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.a:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):424:424 -> <init>
-    1:10:void afterTextChanged(android.text.Editable):437:446 -> afterTextChanged
-    11:32:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showToastWithMarginBottom(java.lang.String,int):193:214 -> afterTextChanged
-    11:32:void afterTextChanged(android.text.Editable):446 -> afterTextChanged
-    1:1:void beforeTextChanged(java.lang.CharSequence,int,int,int):427:427 -> beforeTextChanged
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):427:427 -> <init>
+    1:10:void afterTextChanged(android.text.Editable):440:449 -> afterTextChanged
+    11:32:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showToastWithMarginBottom(java.lang.String,int):192:213 -> afterTextChanged
+    11:32:void afterTextChanged(android.text.Editable):449 -> afterTextChanged
+    1:1:void beforeTextChanged(java.lang.CharSequence,int,int,int):430:430 -> beforeTextChanged
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$10$1 -> com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.a$a:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$10 this$1 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$10):438:438 -> <init>
-    1:1:void run():441:441 -> run
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$10):441:441 -> <init>
+    1:1:void run():444:444 -> run
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$11 -> d.a:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):457:457 -> <init>
-    1:2:void onRefresh():460:461 -> onRefresh
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):460:460 -> <init>
+    1:2:void onRefresh():463:464 -> onRefresh
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$12 -> d.b:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):654:654 -> <init>
-    1:1:void keyBoardHide(int):663:663 -> a
-    1:1:void keyBoardShow(int):658:658 -> b
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):657:657 -> <init>
+    1:1:void keyBoardHide(int):666:666 -> a
+    1:1:void keyBoardShow(int):661:661 -> b
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$13 -> d.e:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):1025:1025 -> <init>
-    1:7:void keyBoardHide(int):1054:1060 -> a
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):1028:1028 -> <init>
+    1:7:void keyBoardHide(int):1057:1063 -> a
     8:8:java.lang.String com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.access$100(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):83:83 -> a
-    8:8:void keyBoardHide(int):1060 -> a
+    8:8:void keyBoardHide(int):1063 -> a
     9:9:void keyBoardHide(int):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1070,"2":1071,"3":1072}}
-    1070:1070:void keyBoardHide(int):1060:1060 -> a
-    1071:1071:void keyBoardHide(int):1060:1060 -> a
-    1072:1072:void keyBoardHide(int):1060:1060 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1073,"2":1074,"3":1075}}
+    1073:1073:void keyBoardHide(int):1063:1063 -> a
+    1074:1074:void keyBoardHide(int):1063:1063 -> a
+    1075:1075:void keyBoardHide(int):1063:1063 -> a
     10:10:void keyBoardHide(int):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1073,"2":1074,"3":1075,"4":1076,"5":1077}}
-    1073:1073:void keyBoardHide(int):1060:1060 -> a
-    1074:1074:void keyBoardHide(int):1060:1060 -> a
-    1075:1075:void keyBoardHide(int):1060:1060 -> a
-    1076:1076:void keyBoardHide(int):1060:1060 -> a
-    1077:1077:void keyBoardHide(int):1060:1060 -> a
-    1:19:void keyBoardShow(int):1029:1047 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1076,"2":1077,"3":1078,"4":1079,"5":1080}}
+    1076:1076:void keyBoardHide(int):1063:1063 -> a
+    1077:1077:void keyBoardHide(int):1063:1063 -> a
+    1078:1078:void keyBoardHide(int):1063:1063 -> a
+    1079:1079:void keyBoardHide(int):1063:1063 -> a
+    1080:1080:void keyBoardHide(int):1063:1063 -> a
+    1:19:void keyBoardShow(int):1032:1050 -> b
     20:20:java.lang.String com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.access$000(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):83:83 -> b
-    20:20:void keyBoardShow(int):1047 -> b
+    20:20:void keyBoardShow(int):1050 -> b
     21:21:void keyBoardShow(int):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1069,"2":1070,"3":1071}}
-    1069:1069:void keyBoardShow(int):1047:1047 -> b
-    1070:1070:void keyBoardShow(int):1047:1047 -> b
-    1071:1071:void keyBoardShow(int):1047:1047 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1072,"2":1073,"3":1074}}
+    1072:1072:void keyBoardShow(int):1050:1050 -> b
+    1073:1073:void keyBoardShow(int):1050:1050 -> b
+    1074:1074:void keyBoardShow(int):1050:1050 -> b
     22:22:void keyBoardShow(int):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1072,"2":1073,"3":1074,"4":1075,"5":1076}}
-    1072:1072:void keyBoardShow(int):1047:1047 -> b
-    1073:1073:void keyBoardShow(int):1047:1047 -> b
-    1074:1074:void keyBoardShow(int):1047:1047 -> b
-    1075:1075:void keyBoardShow(int):1047:1047 -> b
-    1076:1076:void keyBoardShow(int):1047:1047 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1075,"2":1076,"3":1077,"4":1078,"5":1079}}
+    1075:1075:void keyBoardShow(int):1050:1050 -> b
+    1076:1076:void keyBoardShow(int):1050:1050 -> b
+    1077:1077:void keyBoardShow(int):1050:1050 -> b
+    1078:1078:void keyBoardShow(int):1050:1050 -> b
+    1079:1079:void keyBoardShow(int):1050:1050 -> b
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$13$1 -> d.d:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$13 this$1 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$13):1039:1039 -> <init>
-    1:1:void run():1042:1042 -> run
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$13):1042:1042 -> <init>
+    1:1:void run():1045:1045 -> run
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$14 -> com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$a:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):1069:1069 -> <init>
-    1:11:void onGlobalLayout():1072:1082 -> onGlobalLayout
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):1072:1072 -> <init>
+    1:11:void onGlobalLayout():1075:1085 -> onGlobalLayout
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$2 -> d.g:
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):254:254 -> <init>
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):257:257 -> <init>
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$3 -> d.h:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):269:269 -> <init>
-    1:1:void onClick(android.view.View):272:272 -> onClick
-    2:3:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.gotoFeedback():309:310 -> onClick
-    2:3:void onClick(android.view.View):272 -> onClick
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):272:272 -> <init>
+    1:1:void onClick(android.view.View):275:275 -> onClick
+    2:3:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.gotoFeedback():312:313 -> onClick
+    2:3:void onClick(android.view.View):275 -> onClick
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$4 -> d.i:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):275:275 -> <init>
-    1:1:void onClick(android.view.View):278:278 -> onClick
-    2:3:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.gotoFaq():304:305 -> onClick
-    2:3:void onClick(android.view.View):278 -> onClick
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):278:278 -> <init>
+    1:1:void onClick(android.view.View):281:281 -> onClick
+    2:3:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.gotoFaq():307:308 -> onClick
+    2:3:void onClick(android.view.View):281 -> onClick
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$5 -> d.j:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):281:281 -> <init>
-    1:1:void onClick(android.view.View):284:284 -> onClick
-    2:3:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.gotoFeedbackHistoryList():313:314 -> onClick
-    2:3:void onClick(android.view.View):284 -> onClick
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):284:284 -> <init>
+    1:1:void onClick(android.view.View):287:287 -> onClick
+    2:3:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.gotoFeedbackHistoryList():316:317 -> onClick
+    2:3:void onClick(android.view.View):287 -> onClick
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$6 -> d.k:
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):362:362 -> <init>
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):365:365 -> <init>
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$7 -> d.l:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):382:382 -> <init>
-    1:2:void getItemOffsets(android.graphics.Rect,android.view.View,androidx.recyclerview.widget.RecyclerView,androidx.recyclerview.widget.RecyclerView$State):385:386 -> getItemOffsets
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):385:385 -> <init>
+    1:2:void getItemOffsets(android.graphics.Rect,android.view.View,androidx.recyclerview.widget.RecyclerView,androidx.recyclerview.widget.RecyclerView$State):388:389 -> getItemOffsets
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$8 -> d.m:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):393:393 -> <init>
-    1:2:boolean onTouch(android.view.View,android.view.MotionEvent):396:397 -> onTouch
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):396:396 -> <init>
+    1:2:boolean onTouch(android.view.View,android.view.MotionEvent):399:400 -> onTouch
 com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity$9 -> d.n:
     com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):405:405 -> <init>
-    1:8:boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent):409:416 -> onEditorAction
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity):408:408 -> <init>
+    1:8:boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent):412:419 -> onEditorAction
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFBottomDialog -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.a:
     androidx.recyclerview.widget.RecyclerView slf_recycler -> g
     android.widget.ImageView slf_cancel_img -> f
@@ -1708,16 +1708,16 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListA
     androidx.viewpager.widget.ViewPager viewPager -> h
     com.flyco.tablayout.SlidingTabLayout tabLayout -> f
     java.lang.String[] nameList -> g
-    1:10:void <init>():31:40 -> <init>
-    1:8:void onCreate(android.os.Bundle):50:57 -> onCreate
-    9:13:void initData():77:81 -> onCreate
-    9:13:void onCreate(android.os.Bundle):58 -> onCreate
-    14:20:void onCreate(android.os.Bundle):66:72 -> onCreate
+    1:10:void <init>():29:38 -> <init>
+    1:8:void onCreate(android.os.Bundle):48:55 -> onCreate
+    9:13:void initData():75:79 -> onCreate
+    9:13:void onCreate(android.os.Bundle):56 -> onCreate
+    14:20:void onCreate(android.os.Bundle):64:70 -> onCreate
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity$1 -> e.b:
     java.util.List val$fragments -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity,androidx.fragment.app.FragmentManager,java.util.List):81:81 -> <init>
-    1:1:int getCount():89:89 -> getCount
-    1:1:androidx.fragment.app.Fragment getItem(int):84:84 -> getItem
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity,androidx.fragment.app.FragmentManager,java.util.List):79:79 -> <init>
+    1:1:int getCount():87:87 -> getCount
+    1:1:androidx.fragment.app.Fragment getItem(int):82:82 -> getItem
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity:
     android.widget.TextView slfTitle -> o
     java.util.List slfLeaveMsgRecordList -> r
@@ -2170,152 +2170,152 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmi
     1934:1934:void showServiceTypeDialog(java.lang.String,java.util.List,int):992:992 -> a
     1935:1948:void setServiceTitleMapConner(java.util.Map):1247:1260 -> a
     1949:1982:void setListRoundConner(java.util.List):1272:1305 -> a
-    1983:1983:void onRequestNetFail(java.lang.Object):1373:1373 -> a
+    1983:1983:void onRequestNetFail(java.lang.Object):1374:1374 -> a
     1984:1984:void onRequestNetFail(java.lang.Object):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":3382,"2":3383,"3":3384}}
-    3382:3382:void onRequestNetFail(java.lang.Object):1373:1373 -> a
-    3383:3383:void onRequestNetFail(java.lang.Object):1373:1373 -> a
-    3384:3384:void onRequestNetFail(java.lang.Object):1373:1373 -> a
-    3357:3372:void onRequestNetFail(java.lang.Object):1373:1388 -> a
-    3373:3374:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    3373:3374:void onRequestNetFail(java.lang.Object):1388 -> a
-    3375:3376:void onRequestNetFail(java.lang.Object):1390:1391 -> a
-    3377:3378:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    3377:3378:void onRequestNetFail(java.lang.Object):1391 -> a
-    3379:3379:void onRequestNetFail(java.lang.Object):1393:1393 -> a
-    3380:3381:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    3380:3381:void onRequestNetFail(java.lang.Object):1393 -> a
-    3385:3385:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1458:1458 -> a
-    3386:3386:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":4869,"2":4870,"3":4871}}
-    4869:4869:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1458:1458 -> a
-    4870:4870:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1458:1458 -> a
-    4871:4871:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1458:1458 -> a
-    4844:4859:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1458:1473 -> a
-    4860:4861:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    4860:4861:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1473 -> a
-    4862:4863:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1475:1476 -> a
-    4864:4865:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    4864:4865:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1476 -> a
-    4866:4866:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1478:1478 -> a
-    4867:4868:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
-    4867:4868:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1478 -> a
-    4872:4872:void uploadvideo(java.lang.String,java.lang.String,long):1630:1630 -> a
-    4873:4873:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13101,"2":13102,"3":13103}}
-    13101:13101:void uploadvideo(java.lang.String,java.lang.String,long):1630:1630 -> a
-    13102:13102:void uploadvideo(java.lang.String,java.lang.String,long):1630:1630 -> a
-    13103:13103:void uploadvideo(java.lang.String,java.lang.String,long):1630:1630 -> a
-    6503:6509:void uploadvideo(java.lang.String,java.lang.String,long):1630:1636 -> a
-    6510:6510:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13109,"2":13110,"3":13111}}
-    13109:13109:void uploadvideo(java.lang.String,java.lang.String,long):1636:1636 -> a
-    13110:13110:void uploadvideo(java.lang.String,java.lang.String,long):1636:1636 -> a
-    13111:13111:void uploadvideo(java.lang.String,java.lang.String,long):1636:1636 -> a
-    8146:8151:void uploadvideo(java.lang.String,java.lang.String,long):1636:1641 -> a
-    8152:8152:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":3383,"2":3384,"3":3385}}
+    3383:3383:void onRequestNetFail(java.lang.Object):1374:1374 -> a
+    3384:3384:void onRequestNetFail(java.lang.Object):1374:1374 -> a
+    3385:3385:void onRequestNetFail(java.lang.Object):1374:1374 -> a
+    3358:3373:void onRequestNetFail(java.lang.Object):1374:1389 -> a
+    3374:3375:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    3374:3375:void onRequestNetFail(java.lang.Object):1389 -> a
+    3376:3377:void onRequestNetFail(java.lang.Object):1391:1392 -> a
+    3378:3379:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    3378:3379:void onRequestNetFail(java.lang.Object):1392 -> a
+    3380:3380:void onRequestNetFail(java.lang.Object):1394:1394 -> a
+    3381:3382:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    3381:3382:void onRequestNetFail(java.lang.Object):1394 -> a
+    3386:3386:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1459:1459 -> a
+    3387:3387:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):0:0 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":4871,"2":4872,"3":4873}}
+    4871:4871:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1459:1459 -> a
+    4872:4872:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1459:1459 -> a
+    4873:4873:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1459:1459 -> a
+    4846:4861:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1459:1474 -> a
+    4862:4863:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    4862:4863:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1474 -> a
+    4864:4865:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1476:1477 -> a
+    4866:4867:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    4866:4867:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1477 -> a
+    4868:4868:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1479:1479 -> a
+    4869:4870:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> a
+    4869:4870:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):1479 -> a
+    4874:4874:void uploadvideo(java.lang.String,java.lang.String,long):1631:1631 -> a
+    4875:4875:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13108,"2":13109,"3":13110}}
+    13108:13108:void uploadvideo(java.lang.String,java.lang.String,long):1631:1631 -> a
+    13109:13109:void uploadvideo(java.lang.String,java.lang.String,long):1631:1631 -> a
+    13110:13110:void uploadvideo(java.lang.String,java.lang.String,long):1631:1631 -> a
+    6506:6512:void uploadvideo(java.lang.String,java.lang.String,long):1631:1637 -> a
+    6513:6513:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13116,"2":13117,"3":13118}}
-    13116:13116:void uploadvideo(java.lang.String,java.lang.String,long):1641:1641 -> a
-    13117:13117:void uploadvideo(java.lang.String,java.lang.String,long):1641:1641 -> a
-    13118:13118:void uploadvideo(java.lang.String,java.lang.String,long):1641:1641 -> a
-    9793:9798:void uploadvideo(java.lang.String,java.lang.String,long):1641:1646 -> a
-    9799:9799:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
+    13116:13116:void uploadvideo(java.lang.String,java.lang.String,long):1637:1637 -> a
+    13117:13117:void uploadvideo(java.lang.String,java.lang.String,long):1637:1637 -> a
+    13118:13118:void uploadvideo(java.lang.String,java.lang.String,long):1637:1637 -> a
+    8150:8155:void uploadvideo(java.lang.String,java.lang.String,long):1637:1642 -> a
+    8156:8156:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13123,"2":13124,"3":13125}}
-    13123:13123:void uploadvideo(java.lang.String,java.lang.String,long):1646:1646 -> a
-    13124:13124:void uploadvideo(java.lang.String,java.lang.String,long):1646:1646 -> a
-    13125:13125:void uploadvideo(java.lang.String,java.lang.String,long):1646:1646 -> a
-    11445:11449:void uploadvideo(java.lang.String,java.lang.String,long):1646:1650 -> a
-    11450:11450:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13129,"2":13130,"3":13131}}
-    13129:13129:void uploadvideo(java.lang.String,java.lang.String,long):1650:1650 -> a
-    13130:13130:void uploadvideo(java.lang.String,java.lang.String,long):1650:1650 -> a
-    13131:13131:void uploadvideo(java.lang.String,java.lang.String,long):1650:1650 -> a
-    13100:13100:void uploadvideo(java.lang.String,java.lang.String,long):1650:1650 -> a
-    13132:13145:void getSeletedType(java.lang.Long,java.lang.String,int,java.lang.String,int,java.lang.String):1700:1713 -> a
+    13123:13123:void uploadvideo(java.lang.String,java.lang.String,long):1642:1642 -> a
+    13124:13124:void uploadvideo(java.lang.String,java.lang.String,long):1642:1642 -> a
+    13125:13125:void uploadvideo(java.lang.String,java.lang.String,long):1642:1642 -> a
+    9798:9803:void uploadvideo(java.lang.String,java.lang.String,long):1642:1647 -> a
+    9804:9804:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13130,"2":13131,"3":13132}}
+    13130:13130:void uploadvideo(java.lang.String,java.lang.String,long):1647:1647 -> a
+    13131:13131:void uploadvideo(java.lang.String,java.lang.String,long):1647:1647 -> a
+    13132:13132:void uploadvideo(java.lang.String,java.lang.String,long):1647:1647 -> a
+    11451:11455:void uploadvideo(java.lang.String,java.lang.String,long):1647:1651 -> a
+    11456:11456:void uploadvideo(java.lang.String,java.lang.String,long):0:0 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":13136,"2":13137,"3":13138}}
+    13136:13136:void uploadvideo(java.lang.String,java.lang.String,long):1651:1651 -> a
+    13137:13137:void uploadvideo(java.lang.String,java.lang.String,long):1651:1651 -> a
+    13138:13138:void uploadvideo(java.lang.String,java.lang.String,long):1651:1651 -> a
+    13107:13107:void uploadvideo(java.lang.String,java.lang.String,long):1651:1651 -> a
+    13139:13152:void getSeletedType(java.lang.Long,java.lang.String,int,java.lang.String,int,java.lang.String):1701:1714 -> a
     1:10:void afterTextChanged(android.text.Editable):808:817 -> afterTextChanged
-    1:2:void onRequestSuccess(java.lang.String,java.lang.Object):1400:1401 -> b
+    1:2:void onRequestSuccess(java.lang.String,java.lang.Object):1401:1402 -> b
     3:3:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11446,"2":11447,"3":11448}}
-    11446:11446:void onRequestSuccess(java.lang.String,java.lang.Object):1401:1401 -> b
-    11447:11447:void onRequestSuccess(java.lang.String,java.lang.Object):1401:1401 -> b
-    11448:11448:void onRequestSuccess(java.lang.String,java.lang.Object):1401:1401 -> b
-    1404:1408:void onRequestSuccess(java.lang.String,java.lang.Object):1401:1405 -> b
-    1409:1409:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11452,"2":11453,"3":11454}}
-    11452:11452:void onRequestSuccess(java.lang.String,java.lang.Object):1405:1405 -> b
-    11453:11453:void onRequestSuccess(java.lang.String,java.lang.Object):1405:1405 -> b
-    11454:11454:void onRequestSuccess(java.lang.String,java.lang.Object):1405:1405 -> b
-    2814:2819:void onRequestSuccess(java.lang.String,java.lang.Object):1405:1410 -> b
-    2820:2820:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11459,"2":11460,"3":11461}}
-    11459:11459:void onRequestSuccess(java.lang.String,java.lang.Object):1410:1410 -> b
-    11460:11460:void onRequestSuccess(java.lang.String,java.lang.Object):1410:1410 -> b
-    11461:11461:void onRequestSuccess(java.lang.String,java.lang.Object):1410:1410 -> b
-    4230:4231:void onRequestSuccess(java.lang.String,java.lang.Object):1410:1411 -> b
-    4232:4232:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11462,"2":11463,"3":11464}}
-    11462:11462:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1411 -> b
-    11463:11463:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1411 -> b
-    11464:11464:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1411 -> b
-    5643:5653:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1421 -> b
-    5654:5655:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> b
-    5654:5655:void onRequestSuccess(java.lang.String,java.lang.Object):1421 -> b
-    5656:5668:void checkedSendLog():577:589 -> b
-    5656:5668:void onRequestSuccess(java.lang.String,java.lang.Object):1423 -> b
-    5669:5669:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11465,"2":11466,"3":11467}}
-    11465:11465:void checkedSendLog():589:589 -> b
-    11465:11465:void onRequestSuccess(java.lang.String,java.lang.Object):1423 -> b
-    11466:11466:void checkedSendLog():589:589 -> b
-    11466:11466:void onRequestSuccess(java.lang.String,java.lang.Object):1423 -> b
-    11467:11467:void checkedSendLog():589:589 -> b
-    11467:11467:void onRequestSuccess(java.lang.String,java.lang.Object):1423 -> b
-    5670:5676:void checkedSendLog():589:595 -> b
-    5670:5676:void onRequestSuccess(java.lang.String,java.lang.Object):1423 -> b
-    5677:5679:void onRequestSuccess(java.lang.String,java.lang.Object):1425:1427 -> b
-    5680:5680:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11468,"2":11469,"3":11470}}
-    11468:11468:void onRequestSuccess(java.lang.String,java.lang.Object):1427:1427 -> b
-    11469:11469:void onRequestSuccess(java.lang.String,java.lang.Object):1427:1427 -> b
-    11470:11470:void onRequestSuccess(java.lang.String,java.lang.Object):1427:1427 -> b
-    7107:7109:void onRequestSuccess(java.lang.String,java.lang.Object):1427:1429 -> b
-    7110:7110:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11472,"2":11473,"3":11474}}
-    11472:11472:void onRequestSuccess(java.lang.String,java.lang.Object):1429:1429 -> b
-    11473:11473:void onRequestSuccess(java.lang.String,java.lang.Object):1429:1429 -> b
-    11474:11474:void onRequestSuccess(java.lang.String,java.lang.Object):1429:1429 -> b
-    8539:8542:void onRequestSuccess(java.lang.String,java.lang.Object):1429:1432 -> b
-    8543:8544:void resultUploadImageOrVideo(java.lang.String):1484:1485 -> b
-    8543:8544:void onRequestSuccess(java.lang.String,java.lang.Object):1432 -> b
-    8545:8549:void resultCodeMethod(java.lang.String,boolean):1493:1497 -> b
-    8545:8549:void resultUploadImageOrVideo(java.lang.String):1487 -> b
-    8545:8549:void onRequestSuccess(java.lang.String,java.lang.Object):1432 -> b
-    8550:8551:void onRequestSuccess(java.lang.String,java.lang.Object):1434:1435 -> b
-    8552:8552:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11481,"2":11482,"3":11483}}
-    11481:11481:void onRequestSuccess(java.lang.String,java.lang.Object):1436:1436 -> b
-    11482:11482:void onRequestSuccess(java.lang.String,java.lang.Object):1436:1436 -> b
-    11483:11483:void onRequestSuccess(java.lang.String,java.lang.Object):1436:1436 -> b
-    9988:9990:void onRequestSuccess(java.lang.String,java.lang.Object):1436:1438 -> b
-    9991:9993:void gotoFeedbackSuccess(int):1364:1366 -> b
-    9991:9993:void onRequestSuccess(java.lang.String,java.lang.Object):1438 -> b
-    9994:9994:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11484,"2":11485,"3":11486}}
-    11484:11484:void gotoFeedbackSuccess(int):1366:1366 -> b
-    11484:11484:void onRequestSuccess(java.lang.String,java.lang.Object):1438 -> b
-    11485:11485:void gotoFeedbackSuccess(int):1366:1366 -> b
-    11485:11485:void onRequestSuccess(java.lang.String,java.lang.Object):1438 -> b
-    11486:11486:void gotoFeedbackSuccess(int):1366:1366 -> b
-    11486:11486:void onRequestSuccess(java.lang.String,java.lang.Object):1438 -> b
-    9995:9997:void gotoFeedbackSuccess(int):1366:1368 -> b
-    9995:9997:void onRequestSuccess(java.lang.String,java.lang.Object):1438 -> b
-    9998:10001:void onRequestSuccess(java.lang.String,java.lang.Object):1439:1442 -> b
-    10002:10002:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11487,"2":11488,"3":11489}}
-    11487:11487:void onRequestSuccess(java.lang.String,java.lang.Object):1443:1443 -> b
-    11488:11488:void onRequestSuccess(java.lang.String,java.lang.Object):1443:1443 -> b
-    11489:11489:void onRequestSuccess(java.lang.String,java.lang.Object):1443:1443 -> b
-    11445:11445:void onRequestSuccess(java.lang.String,java.lang.Object):1443:1443 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11454,"2":11455,"3":11456}}
+    11454:11454:void onRequestSuccess(java.lang.String,java.lang.Object):1402:1402 -> b
+    11455:11455:void onRequestSuccess(java.lang.String,java.lang.Object):1402:1402 -> b
+    11456:11456:void onRequestSuccess(java.lang.String,java.lang.Object):1402:1402 -> b
+    1405:1409:void onRequestSuccess(java.lang.String,java.lang.Object):1402:1406 -> b
+    1410:1410:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11460,"2":11461,"3":11462}}
+    11460:11460:void onRequestSuccess(java.lang.String,java.lang.Object):1406:1406 -> b
+    11461:11461:void onRequestSuccess(java.lang.String,java.lang.Object):1406:1406 -> b
+    11462:11462:void onRequestSuccess(java.lang.String,java.lang.Object):1406:1406 -> b
+    2816:2821:void onRequestSuccess(java.lang.String,java.lang.Object):1406:1411 -> b
+    2822:2822:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11467,"2":11468,"3":11469}}
+    11467:11467:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1411 -> b
+    11468:11468:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1411 -> b
+    11469:11469:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1411 -> b
+    4233:4234:void onRequestSuccess(java.lang.String,java.lang.Object):1411:1412 -> b
+    4235:4235:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11470,"2":11471,"3":11472}}
+    11470:11470:void onRequestSuccess(java.lang.String,java.lang.Object):1412:1412 -> b
+    11471:11471:void onRequestSuccess(java.lang.String,java.lang.Object):1412:1412 -> b
+    11472:11472:void onRequestSuccess(java.lang.String,java.lang.Object):1412:1412 -> b
+    5647:5657:void onRequestSuccess(java.lang.String,java.lang.Object):1412:1422 -> b
+    5658:5659:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):284:285 -> b
+    5658:5659:void onRequestSuccess(java.lang.String,java.lang.Object):1422 -> b
+    5660:5672:void checkedSendLog():577:589 -> b
+    5660:5672:void onRequestSuccess(java.lang.String,java.lang.Object):1424 -> b
+    5673:5673:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11473,"2":11474,"3":11475}}
+    11473:11473:void checkedSendLog():589:589 -> b
+    11473:11473:void onRequestSuccess(java.lang.String,java.lang.Object):1424 -> b
+    11474:11474:void checkedSendLog():589:589 -> b
+    11474:11474:void onRequestSuccess(java.lang.String,java.lang.Object):1424 -> b
+    11475:11475:void checkedSendLog():589:589 -> b
+    11475:11475:void onRequestSuccess(java.lang.String,java.lang.Object):1424 -> b
+    5674:5680:void checkedSendLog():589:595 -> b
+    5674:5680:void onRequestSuccess(java.lang.String,java.lang.Object):1424 -> b
+    5681:5683:void onRequestSuccess(java.lang.String,java.lang.Object):1426:1428 -> b
+    5684:5684:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11476,"2":11477,"3":11478}}
+    11476:11476:void onRequestSuccess(java.lang.String,java.lang.Object):1428:1428 -> b
+    11477:11477:void onRequestSuccess(java.lang.String,java.lang.Object):1428:1428 -> b
+    11478:11478:void onRequestSuccess(java.lang.String,java.lang.Object):1428:1428 -> b
+    7112:7114:void onRequestSuccess(java.lang.String,java.lang.Object):1428:1430 -> b
+    7115:7115:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11480,"2":11481,"3":11482}}
+    11480:11480:void onRequestSuccess(java.lang.String,java.lang.Object):1430:1430 -> b
+    11481:11481:void onRequestSuccess(java.lang.String,java.lang.Object):1430:1430 -> b
+    11482:11482:void onRequestSuccess(java.lang.String,java.lang.Object):1430:1430 -> b
+    8545:8548:void onRequestSuccess(java.lang.String,java.lang.Object):1430:1433 -> b
+    8549:8550:void resultUploadImageOrVideo(java.lang.String):1485:1486 -> b
+    8549:8550:void onRequestSuccess(java.lang.String,java.lang.Object):1433 -> b
+    8551:8555:void resultCodeMethod(java.lang.String,boolean):1494:1498 -> b
+    8551:8555:void resultUploadImageOrVideo(java.lang.String):1488 -> b
+    8551:8555:void onRequestSuccess(java.lang.String,java.lang.Object):1433 -> b
+    8556:8557:void onRequestSuccess(java.lang.String,java.lang.Object):1435:1436 -> b
+    8558:8558:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11489,"2":11490,"3":11491}}
+    11489:11489:void onRequestSuccess(java.lang.String,java.lang.Object):1437:1437 -> b
+    11490:11490:void onRequestSuccess(java.lang.String,java.lang.Object):1437:1437 -> b
+    11491:11491:void onRequestSuccess(java.lang.String,java.lang.Object):1437:1437 -> b
+    9995:9997:void onRequestSuccess(java.lang.String,java.lang.Object):1437:1439 -> b
+    9998:10000:void gotoFeedbackSuccess(int):1365:1367 -> b
+    9998:10000:void onRequestSuccess(java.lang.String,java.lang.Object):1439 -> b
+    10001:10001:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11492,"2":11493,"3":11494}}
+    11492:11492:void gotoFeedbackSuccess(int):1367:1367 -> b
+    11492:11492:void onRequestSuccess(java.lang.String,java.lang.Object):1439 -> b
+    11493:11493:void gotoFeedbackSuccess(int):1367:1367 -> b
+    11493:11493:void onRequestSuccess(java.lang.String,java.lang.Object):1439 -> b
+    11494:11494:void gotoFeedbackSuccess(int):1367:1367 -> b
+    11494:11494:void onRequestSuccess(java.lang.String,java.lang.Object):1439 -> b
+    10002:10004:void gotoFeedbackSuccess(int):1367:1369 -> b
+    10002:10004:void onRequestSuccess(java.lang.String,java.lang.Object):1439 -> b
+    10005:10008:void onRequestSuccess(java.lang.String,java.lang.Object):1440:1443 -> b
+    10009:10009:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":11495,"2":11496,"3":11497}}
+    11495:11495:void onRequestSuccess(java.lang.String,java.lang.Object):1444:1444 -> b
+    11496:11496:void onRequestSuccess(java.lang.String,java.lang.Object):1444:1444 -> b
+    11497:11497:void onRequestSuccess(java.lang.String,java.lang.Object):1444:1444 -> b
+    11453:11453:void onRequestSuccess(java.lang.String,java.lang.Object):1444:1444 -> b
     1:4:void beforeTextChanged(java.lang.CharSequence,int,int,int):793:796 -> beforeTextChanged
     1:44:boolean canSubmit():861:904 -> e
     1:20:void changeViewFoucs():671:690 -> f
@@ -2347,27 +2347,27 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmi
     18:18:void requestAllData():1088:1088 -> g
     18:18:void checkNetWork():318 -> g
     19:21:void checkNetWork():320:322 -> g
-    1:11:java.util.TreeMap getCreateFeedBackTreemap():1543:1553 -> h
+    1:11:java.util.TreeMap getCreateFeedBackTreemap():1544:1554 -> h
     12:12:java.lang.String com.sandglass.sandglasslibrary.bean.SLFUserCenter.getDeviceTimeZone():125:125 -> h
-    12:12:java.util.TreeMap getCreateFeedBackTreemap():1553 -> h
-    13:77:java.util.TreeMap getCreateFeedBackTreemap():1553:1617 -> h
+    12:12:java.util.TreeMap getCreateFeedBackTreemap():1554 -> h
+    13:77:java.util.TreeMap getCreateFeedBackTreemap():1554:1618 -> h
     78:85:java.lang.String com.sandglass.sandglasslibrary.utils.SLFSystemUtil.getVersionName():192:199 -> h
     78:85:java.lang.String com.sandglass.sandglasslibrary.bean.SLFUserCenter.getAppVersionName():89 -> h
-    78:85:java.util.TreeMap getCreateFeedBackTreemap():1617 -> h
-    86:90:java.util.TreeMap getCreateFeedBackTreemap():1617:1621 -> h
+    78:85:java.util.TreeMap getCreateFeedBackTreemap():1618 -> h
+    86:90:java.util.TreeMap getCreateFeedBackTreemap():1618:1622 -> h
     91:91:java.lang.String com.sandglass.sandglasslibrary.bean.SLFUserCenter.getOSVersion():102:102 -> h
-    91:91:java.util.TreeMap getCreateFeedBackTreemap():1622 -> h
-    92:93:java.util.TreeMap getCreateFeedBackTreemap():1622:1623 -> h
+    91:91:java.util.TreeMap getCreateFeedBackTreemap():1623 -> h
+    92:93:java.util.TreeMap getCreateFeedBackTreemap():1623:1624 -> h
     94:98:java.lang.String com.sandglass.sandglasslibrary.bean.SLFUserCenter.getPhone_id():106:110 -> h
-    94:98:java.util.TreeMap getCreateFeedBackTreemap():1623 -> h
-    99:99:java.util.TreeMap getCreateFeedBackTreemap():1623:1623 -> h
+    94:98:java.util.TreeMap getCreateFeedBackTreemap():1624 -> h
+    99:99:java.util.TreeMap getCreateFeedBackTreemap():1624:1624 -> h
     100:100:java.lang.String com.sandglass.sandglasslibrary.bean.SLFUserCenter.getPhoneFactoryModel():114:114 -> h
-    100:100:java.util.TreeMap getCreateFeedBackTreemap():1624 -> h
-    101:101:java.util.TreeMap getCreateFeedBackTreemap():1624:1624 -> h
-    1:2:com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved getUserInfo():1720:1721 -> i
+    100:100:java.util.TreeMap getCreateFeedBackTreemap():1625 -> h
+    101:101:java.util.TreeMap getCreateFeedBackTreemap():1625:1625 -> h
+    1:2:com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved getUserInfo():1721:1722 -> i
     3:6:java.util.HashMap com.sandglass.sandglasslibrary.bean.SLFUserCenter.getInstance():69:72 -> i
-    3:6:com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved getUserInfo():1721 -> i
-    7:9:com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved getUserInfo():1721:1723 -> i
+    3:6:com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved getUserInfo():1722 -> i
+    7:9:com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved getUserInfo():1722:1724 -> i
     1:10:void initPhontoSelector():431:440 -> j
     1:6:void setFontCount():825:830 -> k
     1:2:void showReSureDialog():600:601 -> l
@@ -2520,21 +2520,21 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmi
     94:95:void initView():398:399 -> onCreate
     94:95:void onCreate(android.os.Bundle):306 -> onCreate
     96:97:void onCreate(android.os.Bundle):307:308 -> onCreate
-    1:7:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange):1657:1663 -> onEvent
-    8:8:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1672:1672 -> onEvent
+    1:7:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange):1658:1664 -> onEvent
+    8:8:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1673:1673 -> onEvent
     9:9:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):0:0 -> onEvent
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1684,"2":1685,"3":1686}}
-    1684:1684:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1672:1672 -> onEvent
-    1685:1685:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1672:1672 -> onEvent
-    1686:1686:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1672:1672 -> onEvent
-    1681:1683:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1672:1674 -> onEvent
-    1687:1687:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1686:1686 -> onEvent
-    1688:1688:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):0:0 -> onEvent
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":3377,"2":3378,"3":3379}}
-    3377:3377:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1686:1686 -> onEvent
-    3378:3378:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1686:1686 -> onEvent
-    3379:3379:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1686:1686 -> onEvent
-    3374:3376:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1686:1688 -> onEvent
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1685,"2":1686,"3":1687}}
+    1685:1685:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1673:1673 -> onEvent
+    1686:1686:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1673:1673 -> onEvent
+    1687:1687:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1673:1673 -> onEvent
+    1682:1684:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1673:1675 -> onEvent
+    1688:1688:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1687:1687 -> onEvent
+    1689:1689:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):0:0 -> onEvent
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":3379,"2":3380,"3":3381}}
+    3379:3379:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1687:1687 -> onEvent
+    3380:3380:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1687:1687 -> onEvent
+    3381:3381:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1687:1687 -> onEvent
+    3376:3378:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1687:1689 -> onEvent
     1:4:boolean onKeyDown(int,android.view.KeyEvent):637:640 -> onKeyDown
     5:13:boolean onKeyDown(int,android.view.KeyEvent):638:646 -> onKeyDown
     1:3:void onRequestPermissionsResult(int,java.lang.String[],int[]):698:700 -> onRequestPermissionsResult
@@ -2565,54 +2565,54 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmi
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11 -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.d:
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity this$0 -> a
     1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity):1327:1327 -> <init>
-    1:1:void run():1331:1331 -> run
+    1:3:void run():1330:1332 -> run
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11$1 -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.d$a:
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11 this$1 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11):1331:1331 -> <init>
-    1:1:void onFailure():1352:1352 -> a
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11):1332:1332 -> <init>
+    1:1:void onFailure():1353:1353 -> a
     2:2:java.lang.String com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.access$1000(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity):95:95 -> a
-    2:2:void onFailure():1353 -> a
+    2:2:void onFailure():1354 -> a
     3:3:void onFailure():0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1357,"2":1358,"3":1359}}
-    1357:1357:void onFailure():1353:1353 -> a
-    1358:1358:void onFailure():1353:1353 -> a
-    1359:1359:void onFailure():1353:1353 -> a
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1358,"2":1359,"3":1360}}
+    1358:1358:void onFailure():1354:1354 -> a
+    1359:1359:void onFailure():1354:1354 -> a
+    1360:1360:void onFailure():1354:1354 -> a
     4:4:void onFailure():0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1360,"2":1361,"3":1362,"4":1363,"5":1364}}
-    1360:1360:void onFailure():1353:1353 -> a
-    1361:1361:void onFailure():1353:1353 -> a
-    1362:1362:void onFailure():1353:1353 -> a
-    1363:1363:void onFailure():1353:1353 -> a
-    1364:1364:void onFailure():1353:1353 -> a
-    1:3:void onSuccess():1334:1336 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1361,"2":1362,"3":1363,"4":1364,"5":1365}}
+    1361:1361:void onFailure():1354:1354 -> a
+    1362:1362:void onFailure():1354:1354 -> a
+    1363:1363:void onFailure():1354:1354 -> a
+    1364:1364:void onFailure():1354:1354 -> a
+    1365:1365:void onFailure():1354:1354 -> a
+    1:3:void onSuccess():1335:1337 -> b
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11$1$1 -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.d$a$a:
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11$1 this$2 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11$1):1336:1336 -> <init>
-    1:2:void run():1339:1340 -> run
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$11$1):1337:1337 -> <init>
+    1:2:void run():1340:1341 -> run
     3:3:java.lang.String com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.access$900(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity):95:95 -> run
-    3:3:void run():1340 -> run
+    3:3:void run():1341 -> run
     4:4:void run():0:0 -> run
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":2689,"2":2690,"3":2691}}
-    2689:2689:void run():1340:1340 -> run
-    2690:2690:void run():1340:1340 -> run
-    2691:2691:void run():1340:1340 -> run
-    1344:1345:void run():1340:1341 -> run
-    1346:1346:void run():0:0 -> run
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":2692,"2":2693,"3":2694}}
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":2691,"2":2692,"3":2693}}
+    2691:2691:void run():1341:1341 -> run
     2692:2692:void run():1341:1341 -> run
     2693:2693:void run():1341:1341 -> run
-    2694:2694:void run():1341:1341 -> run
-    2687:2688:void run():1341:1342 -> run
+    1345:1346:void run():1341:1342 -> run
+    1347:1347:void run():0:0 -> run
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":2694,"2":2695,"3":2696}}
+    2694:2694:void run():1342:1342 -> run
+    2695:2695:void run():1342:1342 -> run
+    2696:2696:void run():1342:1342 -> run
+    2689:2690:void run():1342:1343 -> run
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$12 -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$b:
     com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo val$event -> a
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity this$0 -> b
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity,com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1674:1674 -> <init>
-    1:1:void run():1677:1677 -> run
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity,com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo):1675:1675 -> <init>
+    1:1:void run():1678:1678 -> run
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$13 -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$c:
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity this$0 -> b
     com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo val$event -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity,com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1688:1688 -> <init>
-    1:1:void run():1691:1691 -> run
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity,com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo):1689:1689 -> <init>
+    1:1:void run():1692:1692 -> run
 com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity$2 -> com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.e:
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity this$0 -> a
     1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity):399:399 -> <init>
@@ -2674,273 +2674,273 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmi
     com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity this$0 -> a
     1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity):703:703 -> <init>
     1:4:void lambda$passPermissons$0(java.util.List):711:714 -> a
-    5:7:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1509:1511 -> a
+    5:7:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1510:1512 -> a
     5:7:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     8:8:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":100,"2":101,"3":102}}
-    100:100:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1511:1511 -> a
+    100:100:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
     100:100:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    101:101:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1511:1511 -> a
+    101:101:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
     101:101:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    102:102:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1511:1511 -> a
+    102:102:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
     102:102:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    9:10:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1511:1512 -> a
+    9:10:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1513 -> a
     9:10:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     11:11:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":103,"2":104,"3":105}}
-    103:103:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    103:103:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     103:103:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    104:104:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    104:104:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     104:104:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    105:105:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    105:105:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     105:105:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    12:12:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    12:12:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     12:12:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     13:13:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":106,"2":107,"3":108}}
-    106:106:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    106:106:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     106:106:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    107:107:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    107:107:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     107:107:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    108:108:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1512 -> a
+    108:108:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1513 -> a
     108:108:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    14:17:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1512:1515 -> a
+    14:17:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1513:1516 -> a
     14:17:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     18:18:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":111,"2":112,"3":113}}
-    111:111:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1515:1515 -> a
+    111:111:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1516 -> a
     111:111:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    112:112:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1515:1515 -> a
+    112:112:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1516 -> a
     112:112:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    113:113:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1515:1515 -> a
+    113:113:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1516 -> a
     113:113:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    19:20:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1515:1516 -> a
+    19:20:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1517 -> a
     19:20:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     21:21:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":114,"2":115,"3":116}}
-    114:114:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1516 -> a
+    114:114:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1517 -> a
     114:114:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    115:115:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1516 -> a
+    115:115:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1517 -> a
     115:115:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    116:116:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1516 -> a
+    116:116:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1517 -> a
     116:116:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    22:23:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1516:1517 -> a
+    22:23:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1518 -> a
     22:23:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     24:24:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":117,"2":118,"3":119}}
-    117:117:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1517 -> a
+    117:117:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1518 -> a
     117:117:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    118:118:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1517 -> a
+    118:118:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1518 -> a
     118:118:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    119:119:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1517 -> a
+    119:119:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1518 -> a
     119:119:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    25:26:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1517:1518 -> a
+    25:26:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1519 -> a
     25:26:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     27:27:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":120,"2":121,"3":122}}
-    120:120:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1518 -> a
+    120:120:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
     120:120:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    121:121:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1518 -> a
+    121:121:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
     121:121:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    122:122:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1518 -> a
+    122:122:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
     122:122:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    28:29:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1518:1519 -> a
+    28:29:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1520 -> a
     28:29:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     30:30:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":123,"2":124,"3":125}}
-    123:123:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    123:123:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     123:123:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    124:124:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    124:124:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     124:124:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    125:125:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    125:125:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     125:125:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    31:31:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    31:31:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     31:31:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     32:32:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":126,"2":127,"3":128}}
-    126:126:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    126:126:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     126:126:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    127:127:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    127:127:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     127:127:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    128:128:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1519 -> a
+    128:128:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1520 -> a
     128:128:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    33:36:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1519:1522 -> a
+    33:36:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1520:1523 -> a
     33:36:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     37:37:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":131,"2":132,"3":133}}
-    131:131:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1522:1522 -> a
+    131:131:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1523 -> a
     131:131:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    132:132:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1522:1522 -> a
+    132:132:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1523 -> a
     132:132:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    133:133:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1522:1522 -> a
+    133:133:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1523 -> a
     133:133:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    38:39:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1522:1523 -> a
+    38:39:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1524 -> a
     38:39:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     40:40:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":134,"2":135,"3":136}}
-    134:134:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1523 -> a
+    134:134:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1524 -> a
     134:134:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    135:135:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1523 -> a
+    135:135:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1524 -> a
     135:135:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    136:136:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1523 -> a
+    136:136:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1524 -> a
     136:136:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    41:42:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1523:1524 -> a
+    41:42:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1525 -> a
     41:42:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     43:43:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":137,"2":138,"3":139}}
-    137:137:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1524 -> a
+    137:137:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1525 -> a
     137:137:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    138:138:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1524 -> a
+    138:138:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1525 -> a
     138:138:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    139:139:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1524 -> a
+    139:139:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1525 -> a
     139:139:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    44:45:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1524:1525 -> a
+    44:45:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1526 -> a
     44:45:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     46:46:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":140,"2":141,"3":142}}
-    140:140:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1525 -> a
+    140:140:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
     140:140:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    141:141:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1525 -> a
+    141:141:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
     141:141:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    142:142:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1525 -> a
+    142:142:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
     142:142:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    47:48:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1525:1526 -> a
+    47:48:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1527 -> a
     47:48:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     49:49:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":143,"2":144,"3":145}}
-    143:143:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    143:143:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     143:143:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    144:144:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    144:144:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     144:144:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    145:145:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    145:145:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     145:145:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    50:50:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    50:50:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     50:50:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     51:51:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":146,"2":147,"3":148}}
-    146:146:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    146:146:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     146:146:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    147:147:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    147:147:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     147:147:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    148:148:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1526 -> a
+    148:148:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1527 -> a
     148:148:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    52:55:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1526:1529 -> a
+    52:55:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1527:1530 -> a
     52:55:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     56:56:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":151,"2":152,"3":153}}
-    151:151:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1529:1529 -> a
+    151:151:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1530 -> a
     151:151:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    152:152:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1529:1529 -> a
+    152:152:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1530 -> a
     152:152:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    153:153:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1529:1529 -> a
+    153:153:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1530 -> a
     153:153:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    57:58:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1529:1530 -> a
+    57:58:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1531 -> a
     57:58:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     59:59:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":154,"2":155,"3":156}}
-    154:154:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1530 -> a
+    154:154:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1531 -> a
     154:154:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    155:155:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1530 -> a
+    155:155:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1531 -> a
     155:155:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    156:156:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1530 -> a
+    156:156:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1531 -> a
     156:156:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    60:61:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1530:1531 -> a
+    60:61:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1532 -> a
     60:61:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     62:62:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":157,"2":158,"3":159}}
-    157:157:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1531 -> a
+    157:157:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1532 -> a
     157:157:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    158:158:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1531 -> a
+    158:158:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1532 -> a
     158:158:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    159:159:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1531 -> a
+    159:159:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1532 -> a
     159:159:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    63:64:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1531:1532 -> a
+    63:64:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1533 -> a
     63:64:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     65:65:void lambda$passPermissons$0(java.util.List):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":160,"2":161,"3":162}}
-    160:160:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1532 -> a
+    160:160:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1533:1533 -> a
     160:160:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    161:161:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1532 -> a
+    161:161:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1533:1533 -> a
     161:161:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    162:162:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1532 -> a
+    162:162:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1533:1533 -> a
     162:162:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    66:68:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1532:1534 -> a
+    66:68:void com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity.setUploadUrl():1533:1535 -> a
     66:68:void lambda$passPermissons$0(java.util.List):714 -> a
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     69:70:void lambda$passPermissons$0(java.util.List):715:716 -> a
@@ -4434,64 +4434,64 @@ com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot.SLFChatBotSingleUs
 com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot.SLFChatBotTimeViewHolder -> com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot.SLFChatBotTimeViewHolder:
     android.content.Context context -> a
     android.widget.TextView tv_chat_bot_date -> b
-    1:4:void <init>(android.view.View,android.content.Context):45:48 -> <init>
-    1:1:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53:53 -> a
-    2:14:int getDateType(java.lang.String):96:108 -> a
-    2:14:void setDateText(java.lang.String):57 -> a
-    2:14:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    15:18:void setDateText(java.lang.String):81:84 -> a
-    15:18:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    19:22:void setDateText(java.lang.String):74:77 -> a
-    19:22:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    23:24:void setDateText(java.lang.String):67:68 -> a
-    23:24:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
+    1:4:void <init>(android.view.View,android.content.Context):46:49 -> <init>
+    1:1:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54:54 -> a
+    2:14:int getDateType(java.lang.String):97:109 -> a
+    2:14:void setDateText(java.lang.String):58 -> a
+    2:14:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    15:18:void setDateText(java.lang.String):82:85 -> a
+    15:18:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    19:22:void setDateText(java.lang.String):75:78 -> a
+    19:22:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    23:24:void setDateText(java.lang.String):68:69 -> a
+    23:24:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
     25:25:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":39,"2":40,"3":41}}
-    39:39:void setDateText(java.lang.String):68:68 -> a
-    39:39:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    40:40:void setDateText(java.lang.String):68:68 -> a
-    40:40:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    41:41:void setDateText(java.lang.String):68:68 -> a
-    41:41:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    26:28:void setDateText(java.lang.String):68:70 -> a
-    26:28:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
+    39:39:void setDateText(java.lang.String):69:69 -> a
+    39:39:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    40:40:void setDateText(java.lang.String):69:69 -> a
+    40:40:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    41:41:void setDateText(java.lang.String):69:69 -> a
+    41:41:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    26:28:void setDateText(java.lang.String):69:71 -> a
+    26:28:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
     29:29:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):0:0 -> a
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":43,"2":44,"3":45}}
-    43:43:void setDateText(java.lang.String):70:70 -> a
-    43:43:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    44:44:void setDateText(java.lang.String):70:70 -> a
-    44:44:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    45:45:void setDateText(java.lang.String):70:70 -> a
-    45:45:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    30:30:void setDateText(java.lang.String):70:70 -> a
-    30:30:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    31:34:void setDateText(java.lang.String):60:63 -> a
-    31:34:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):53 -> a
-    46:53:boolean isYesterday(long):128:135 -> a
-    54:59:int getDay(java.lang.String):143:148 -> a
+    43:43:void setDateText(java.lang.String):71:71 -> a
+    43:43:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    44:44:void setDateText(java.lang.String):71:71 -> a
+    44:44:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    45:45:void setDateText(java.lang.String):71:71 -> a
+    45:45:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    30:30:void setDateText(java.lang.String):71:71 -> a
+    30:30:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    31:34:void setDateText(java.lang.String):61:64 -> a
+    31:34:void bindView(com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData,int):54 -> a
+    46:53:boolean isYesterday(long):129:136 -> a
+    54:59:int getDay(java.lang.String):144:149 -> a
     60:60:int getDay(java.lang.String):0:0 -> a
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":212,"2":213,"3":214}}
-    212:212:int getDay(java.lang.String):151:151 -> a
-    213:213:int getDay(java.lang.String):151:151 -> a
-    214:214:int getDay(java.lang.String):151:151 -> a
-    211:211:int getDay(java.lang.String):151:151 -> a
-    215:216:java.lang.String formatDate(long,java.lang.String):194:195 -> a
-    217:218:boolean is12Hour():201:202 -> a
-    1:6:int getMonth(java.lang.String):159:164 -> b
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":213,"2":214,"3":215}}
+    213:213:int getDay(java.lang.String):152:152 -> a
+    214:214:int getDay(java.lang.String):152:152 -> a
+    215:215:int getDay(java.lang.String):152:152 -> a
+    212:212:int getDay(java.lang.String):152:152 -> a
+    216:217:java.lang.String formatDate(long,java.lang.String):195:196 -> a
+    218:219:boolean is12Hour():202:203 -> a
+    1:6:int getMonth(java.lang.String):160:165 -> b
     7:7:int getMonth(java.lang.String):0:0 -> b
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":175,"2":176,"3":177}}
-    175:175:int getMonth(java.lang.String):167:167 -> b
-    176:176:int getMonth(java.lang.String):167:167 -> b
-    177:177:int getMonth(java.lang.String):167:167 -> b
-    174:174:int getMonth(java.lang.String):167:167 -> b
-    1:6:int getYear(java.lang.String):175:180 -> c
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":176,"2":177,"3":178}}
+    176:176:int getMonth(java.lang.String):168:168 -> b
+    177:177:int getMonth(java.lang.String):168:168 -> b
+    178:178:int getMonth(java.lang.String):168:168 -> b
+    175:175:int getMonth(java.lang.String):168:168 -> b
+    1:6:int getYear(java.lang.String):176:181 -> c
     7:7:int getYear(java.lang.String):0:0 -> c
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":191,"2":192,"3":193}}
-    191:191:int getYear(java.lang.String):183:183 -> c
-    192:192:int getYear(java.lang.String):183:183 -> c
-    193:193:int getYear(java.lang.String):183:183 -> c
-    190:190:int getYear(java.lang.String):183:183 -> c
-    1:5:java.lang.String replaceAMPM(java.lang.String):210:214 -> d
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":192,"2":193,"3":194}}
+    192:192:int getYear(java.lang.String):184:184 -> c
+    193:193:int getYear(java.lang.String):184:184 -> c
+    194:194:int getYear(java.lang.String):184:184 -> c
+    191:191:int getYear(java.lang.String):184:184 -> c
+    1:5:java.lang.String replaceAMPM(java.lang.String):211:215 -> d
 com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFExpandableViewHoldersUtil -> i.a:
     com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFExpandableViewHoldersUtil holdersUtil -> a
     1:1:void <init>():22:22 -> <init>
@@ -4585,7 +4585,7 @@ com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackAllHistory -> 
     253:253:void onRequestSuccess(java.lang.String,java.lang.Object):251 -> b
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     257:257:void initData():131:131 -> b
-    258:258:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showLoading(android.app.Activity,int,boolean):242:242 -> b
+    258:258:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showLoading(android.app.Activity,int,boolean):241:241 -> b
     258:258:void initData():131 -> b
     259:261:void initData():132:134 -> b
     1:21:void initRecyclerView():168:188 -> lazyLoad
@@ -4660,7 +4660,7 @@ com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistory -> com
     259:259:void onRequestSuccess(java.lang.String,java.lang.Object):257 -> b
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     263:263:void initData():132:132 -> b
-    264:264:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showLoading(android.app.Activity,int,boolean):242:242 -> b
+    264:264:void com.sandglass.sandglasslibrary.commonui.SLFToastUtil.showLoading(android.app.Activity,int,boolean):241:241 -> b
     264:264:void initData():132 -> b
     265:267:void initData():133:135 -> b
     1:21:void initRecyclerView():169:189 -> lazyLoad
@@ -5732,7 +5732,7 @@ com.sandglass.sandglasslibrary.net.SLFChatBotRxJavaObserver -> k.b:
     java.lang.String mSecret -> d
     1:6:void <init>(android.content.Context,java.lang.Object,long,com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback,java.lang.String):33:38 -> <init>
     1:4:void onError(java.lang.Throwable):87:90 -> onError
-    5:6:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.onRequestChatBotNetFail(java.lang.Object,long):942:943 -> onError
+    5:6:void com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity.onRequestChatBotNetFail(java.lang.Object,long):945:946 -> onError
     5:6:void onError(java.lang.Throwable):90 -> onError
     7:7:void onError(java.lang.Throwable):0:0 -> onError
       # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":104,"2":105,"3":106}}
@@ -5924,12 +5924,12 @@ com.sandglass.sandglasslibrary.net.SLFRxJavaObserver -> k.p:
     java.lang.Object mType -> b
     com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback mCallBack -> a
     java.lang.String mSecret -> d
-    1:5:void <init>(android.content.Context,java.lang.Object,com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback,java.lang.String):34:38 -> <init>
-    1:1:void getNewToken(java.lang.String):113:113 -> getNewToken
-    1:10:void onError(java.lang.Throwable):91:100 -> onError
-    1:1:void onNext(java.lang.Object):22:22 -> onNext
-    2:31:void com.sandglass.sandglasslibrary.net.SLFRxJavaObserver.onNext(java.lang.String):52:81 -> onNext
-    2:31:void onNext(java.lang.Object):22 -> onNext
+    1:5:void <init>(android.content.Context,java.lang.Object,com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback,java.lang.String):33:37 -> <init>
+    1:1:void getNewToken(java.lang.String):112:112 -> getNewToken
+    1:10:void onError(java.lang.Throwable):90:99 -> onError
+    1:1:void onNext(java.lang.Object):21:21 -> onNext
+    2:31:void com.sandglass.sandglasslibrary.net.SLFRxJavaObserver.onNext(java.lang.String):51:80 -> onNext
+    2:31:void onNext(java.lang.Object):21 -> onNext
 com.sandglass.sandglasslibrary.receiver.SLFCamraReceiver -> com.sandglass.sandglasslibrary.receiver.SLFCamraReceiver:
     1:1:void <init>():9:9 -> <init>
     1:5:void onReceive(android.content.Context,android.content.Intent):12:16 -> onReceive
@@ -6754,10 +6754,10 @@ com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener -> n.a:
     android.view.View rootView -> a
     com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener$OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener -> c
     int rootViewVisibleHeight -> b
-    1:5:void <init>(android.app.Activity):22:26 -> <init>
-    1:25:void lambda$new$0():28:52 -> a
-    26:27:void setListener(android.app.Activity,com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener$OnSoftKeyBoardChangeListener):65:66 -> a
-    1:1:void setOnSoftKeyBoardChangeListener(com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener$OnSoftKeyBoardChangeListener):58:58 -> setOnSoftKeyBoardChangeListener
+    1:5:void <init>(android.app.Activity):20:24 -> <init>
+    1:25:void lambda$new$0():26:50 -> a
+    26:27:void setListener(android.app.Activity,com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener$OnSoftKeyBoardChangeListener):63:64 -> a
+    1:1:void setOnSoftKeyBoardChangeListener(com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener$OnSoftKeyBoardChangeListener):56:56 -> setOnSoftKeyBoardChangeListener
 com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener$OnSoftKeyBoardChangeListener -> n.a$a:
     void keyBoardHide(int) -> a
     void keyBoardShow(int) -> b
@@ -6917,8 +6917,8 @@ com.sandglass.sandglasslibrary.utils.logutil.SLFDebugLogUtils$SaveTask -> com.sa
     35:42:void run():299:306 -> run
     43:48:void run():303:308 -> run
 com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI -> com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI:
-    1:4:void init():16:19 -> init
-    1:8:void loadXlogLib():24:31 -> loadXlogLib
+    1:6:void init():20:25 -> init
+    1:8:void loadXlogLib():30:37 -> loadXlogLib
 com.sandglass.sandglasslibrary.utils.logutil.SLFLogAdapter -> o.a:
     1:1:void <init>():11:11 -> <init>
 com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter -> o.b:
@@ -7012,173 +7012,127 @@ com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings -> com.sandglass.san
     1:1:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings showTable():23:23 -> showTable
     1:1:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings showThreadInfo():18:18 -> showThreadInfo
 com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil -> com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil:
-    1:8:void <clinit>():38:45 -> <clinit>
-    1:1:void <init>():32:32 -> <init>
+    1:8:void <clinit>():42:49 -> <clinit>
+    1:1:void <init>():36:36 -> <init>
     1:1:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):0:0 -> checkFileExists
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":183,"2":184,"3":185}}
-    183:183:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):168:168 -> checkFileExists
-    184:184:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):168:168 -> checkFileExists
-    185:185:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):168:168 -> checkFileExists
-    169:169:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):168:168 -> checkFileExists
-    170:171:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.dateToString(java.util.Date,java.lang.String):109:110 -> checkFileExists
-    170:171:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):168 -> checkFileExists
-    172:182:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):168:178 -> checkFileExists
-    1:13:void closeFile():520:532 -> closeFile
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":186,"2":187,"3":188}}
+    186:186:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):171:171 -> checkFileExists
+    187:187:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):171:171 -> checkFileExists
+    188:188:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):171:171 -> checkFileExists
+    172:172:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):171:171 -> checkFileExists
+    173:174:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.dateToString(java.util.Date,java.lang.String):109:110 -> checkFileExists
+    173:174:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):171 -> checkFileExists
+    175:185:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):171:181 -> checkFileExists
+    1:13:void closeFile():528:540 -> closeFile
     14:14:void closeFile():0:0 -> closeFile
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":547,"2":548,"3":549}}
-    547:547:void closeFile():532:532 -> closeFile
-    548:548:void closeFile():532:532 -> closeFile
-    549:549:void closeFile():532:532 -> closeFile
-    546:546:void closeFile():532:532 -> closeFile
-    1:3:void closeLog():540:542 -> closeLog
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":555,"2":556,"3":557}}
+    555:555:void closeFile():540:540 -> closeFile
+    556:556:void closeFile():540:540 -> closeFile
+    557:557:void closeFile():540:540 -> closeFile
+    554:554:void closeFile():540:540 -> closeFile
+    1:3:void closeLog():548:550 -> closeLog
     4:4:void closeLog():0:0 -> closeLog
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":550,"2":551,"3":552}}
-    550:550:void closeLog():542:542 -> closeLog
-    551:551:void closeLog():542:542 -> closeLog
-    552:552:void closeLog():542:542 -> closeLog
-    546:549:void closeLog():542:545 -> closeLog
-    1:30:void createFile(boolean):278:307 -> createFile
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":558,"2":559,"3":560}}
+    558:558:void closeLog():550:550 -> closeLog
+    559:559:void closeLog():550:550 -> closeLog
+    560:560:void closeLog():550:550 -> closeLog
+    554:557:void closeLog():550:553 -> closeLog
+    1:30:void createFile(boolean):286:315 -> createFile
     31:35:java.lang.String com.sandglass.sandglasslibrary.utils.SLFFileUtils.getPluginDataPath(java.lang.String):412:416 -> createFile
-    31:35:void createFile(java.lang.String):353 -> createFile
-    36:46:void createFile(java.lang.String):354:364 -> createFile
-    1:20:void createLogFile(boolean,java.io.File):311:330 -> createLogFile
+    31:35:void createFile(java.lang.String):361 -> createFile
+    36:46:void createFile(java.lang.String):362:372 -> createFile
+    1:20:void createLogFile(boolean,java.io.File):319:338 -> createLogFile
     21:21:void createLogFile(boolean,java.io.File):0:0 -> createLogFile
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":713,"2":714,"3":715}}
-    713:713:void createLogFile(boolean,java.io.File):336:336 -> createLogFile
-    714:714:void createLogFile(boolean,java.io.File):336:336 -> createLogFile
-    715:715:void createLogFile(boolean,java.io.File):336:336 -> createLogFile
-    357:365:void createLogFile(boolean,java.io.File):336:344 -> createLogFile
-    366:366:void createLogFile(boolean,java.io.File):0:0 -> createLogFile
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":725,"2":726,"3":727}}
-    725:725:void createLogFile(boolean,java.io.File):346:346 -> createLogFile
-    726:726:void createLogFile(boolean,java.io.File):346:346 -> createLogFile
-    727:727:void createLogFile(boolean,java.io.File):346:346 -> createLogFile
-    712:712:void createLogFile(boolean,java.io.File):346:346 -> createLogFile
-    1:4:void d(java.lang.String,java.lang.String):207:210 -> d
-    1:4:void e(java.lang.String,java.lang.String):220:223 -> e
-    1:16:void f(java.lang.String,java.lang.String):258:273 -> f
-    1:19:com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil getInstance():48:66 -> getInstance
-    1:1:com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter getPrinter():585:585 -> getPrinter
-    1:1:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings getSet():570:570 -> getSet
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":729,"2":730,"3":731}}
+    729:729:void createLogFile(boolean,java.io.File):344:344 -> createLogFile
+    730:730:void createLogFile(boolean,java.io.File):344:344 -> createLogFile
+    731:731:void createLogFile(boolean,java.io.File):344:344 -> createLogFile
+    365:373:void createLogFile(boolean,java.io.File):344:352 -> createLogFile
+    374:374:void createLogFile(boolean,java.io.File):0:0 -> createLogFile
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":741,"2":742,"3":743}}
+    741:741:void createLogFile(boolean,java.io.File):354:354 -> createLogFile
+    742:742:void createLogFile(boolean,java.io.File):354:354 -> createLogFile
+    743:743:void createLogFile(boolean,java.io.File):354:354 -> createLogFile
+    728:728:void createLogFile(boolean,java.io.File):354:354 -> createLogFile
+    1:16:void f(java.lang.String,java.lang.String):266:281 -> f
+    1:18:com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil getInstance():52:69 -> getInstance
+    1:1:com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter getPrinter():593:593 -> getPrinter
+    1:1:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings getSet():578:578 -> getSet
     2:2:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.getSet():48:48 -> getSet
-    2:2:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings getSet():570 -> getSet
+    2:2:com.sandglass.sandglasslibrary.utils.logutil.SLFLogSettings getSet():578 -> getSet
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    1:75:java.lang.StringBuilder getTime(boolean):390:464 -> getTime
-    1:4:void i(java.lang.String,java.lang.String):187:190 -> i
-    1:2:void initAPILog():98:99 -> initAPILog
-    1:24:void initPluginXlog(java.lang.String):112:135 -> initPluginXlog
-    1:19:void initSLFLog():70:88 -> initSLFLog
-    1:10:boolean isAvaiableSpace(int,int):552:561 -> isAvaiableSpace
+    1:75:java.lang.StringBuilder getTime(boolean):398:472 -> getTime
+    1:2:void initAPILog():101:102 -> initAPILog
+    1:24:void initPluginXlog(java.lang.String):115:138 -> initPluginXlog
+    1:19:void initSLFLog():73:91 -> initSLFLog
+    1:10:boolean isAvaiableSpace(int,int):560:569 -> isAvaiableSpace
     11:11:boolean isAvaiableSpace(int,int):0:0 -> isAvaiableSpace
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":576,"2":577,"3":578}}
-    576:576:boolean isAvaiableSpace(int,int):564:564 -> isAvaiableSpace
-    577:577:boolean isAvaiableSpace(int,int):564:564 -> isAvaiableSpace
-    578:578:boolean isAvaiableSpace(int,int):564:564 -> isAvaiableSpace
-    575:575:boolean isAvaiableSpace(int,int):564:564 -> isAvaiableSpace
-    1:2:void json(java.lang.String,java.lang.String):574:575 -> json
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":584,"2":585,"3":586}}
+    584:584:boolean isAvaiableSpace(int,int):572:572 -> isAvaiableSpace
+    585:585:boolean isAvaiableSpace(int,int):572:572 -> isAvaiableSpace
+    586:586:boolean isAvaiableSpace(int,int):572:572 -> isAvaiableSpace
+    583:583:boolean isAvaiableSpace(int,int):572:572 -> isAvaiableSpace
+    1:2:void json(java.lang.String,java.lang.String):582:583 -> json
     3:5:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):81:83 -> json
-    3:5:void json(java.lang.String,java.lang.String):575 -> json
+    3:5:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     6:6:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.i(java.lang.String,java.lang.String,java.lang.Object[]):73:73 -> json
     6:6:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):83 -> json
-    6:6:void json(java.lang.String,java.lang.String):575 -> json
+    6:6:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(2)"]}
     7:12:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):86:91 -> json
-    7:12:void json(java.lang.String,java.lang.String):575 -> json
+    7:12:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     13:13:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.i(java.lang.String,java.lang.String,java.lang.Object[]):73:73 -> json
     13:13:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):91 -> json
-    13:13:void json(java.lang.String,java.lang.String):575 -> json
+    13:13:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(2)"]}
     14:17:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):95:98 -> json
-    14:17:void json(java.lang.String,java.lang.String):575 -> json
+    14:17:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     18:18:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.i(java.lang.String,java.lang.String,java.lang.Object[]):73:73 -> json
     18:18:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):98 -> json
-    18:18:void json(java.lang.String,java.lang.String):575 -> json
+    18:18:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(2)"]}
     19:19:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):102:102 -> json
-    19:19:void json(java.lang.String,java.lang.String):575 -> json
+    19:19:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     20:20:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.i(java.lang.String,java.lang.String,java.lang.Object[]):73:73 -> json
     20:20:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):102 -> json
-    20:20:void json(java.lang.String,java.lang.String):575 -> json
+    20:20:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(2)"]}
     21:26:java.lang.String com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.throw2String(java.lang.Throwable):275:280 -> json
     21:26:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.e(java.lang.String,java.lang.Throwable):57 -> json
     21:26:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):104 -> json
-    21:26:void json(java.lang.String,java.lang.String):575 -> json
+    21:26:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(3)"]}
     27:32:java.lang.String com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.throw2String(java.lang.Throwable):279:284 -> json
     27:32:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.e(java.lang.String,java.lang.Throwable):57 -> json
     27:32:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):104 -> json
-    27:32:void json(java.lang.String,java.lang.String):575 -> json
+    27:32:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(3)"]}
     33:33:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.e(java.lang.String,java.lang.Throwable):57:57 -> json
     33:33:void com.sandglass.sandglasslibrary.utils.logutil.SLFLogPrinter.json(java.lang.String,java.lang.String):104 -> json
-    33:33:void json(java.lang.String,java.lang.String):575 -> json
+    33:33:void json(java.lang.String,java.lang.String):583 -> json
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(2)"]}
-    1:27:void log(java.lang.String,java.lang.String,java.lang.String):471:497 -> log
+    1:27:void log(java.lang.String,java.lang.String,java.lang.String):479:505 -> log
     28:28:void log(java.lang.String,java.lang.String,java.lang.String):0:0 -> log
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":532,"2":533,"3":534}}
-    532:532:void log(java.lang.String,java.lang.String,java.lang.String):497:497 -> log
-    533:533:void log(java.lang.String,java.lang.String,java.lang.String):497:497 -> log
-    534:534:void log(java.lang.String,java.lang.String,java.lang.String):497:497 -> log
-    525:531:void log(java.lang.String,java.lang.String,java.lang.String):497:503 -> log
-    1:6:void move():508:513 -> move
-    1:2:void s(java.lang.String,java.lang.String):199:200 -> s
-    1:15:void setUserInfo():370:384 -> setUserInfo
-    1:20:void syncPermissonCreate():139:158 -> syncPermissonCreate
-    1:4:void v(java.lang.String,java.lang.String):233:236 -> v
-    1:4:void w(java.lang.String,java.lang.String):246:249 -> w
-    1:1:void xml(java.lang.String,java.lang.String):581:581 -> xml
-com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtils -> com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtils:
-    1:206:void <clinit>():45:250 -> <clinit>
-    1:2:void appenderFlush(boolean):322:323 -> appenderFlush
-    1:1:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):274:274 -> checkFileExists
-    2:3:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.dateToString(long,java.lang.String):114:115 -> checkFileExists
-    2:3:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):274 -> checkFileExists
-    4:14:void checkFileExists(com.tencent.mars.xlog.Xlog,java.lang.String,java.lang.String):274:284 -> checkFileExists
-    1:6:android.os.Bundle combineData(java.lang.String,java.lang.String):170:175 -> combineData
-    1:16:android.os.Bundle combineSDKData(java.lang.String,java.lang.String):205:220 -> combineSDKData
-    1:1:void d(java.lang.String,java.lang.String):191:191 -> d
-    1:1:void e(java.lang.String,java.lang.String):195:195 -> e
-    1:50:java.lang.StringBuffer getTime(boolean):371:420 -> getTime
-    1:1:void i(java.lang.String,java.lang.String):183:183 -> i
-    1:6:void initSDKXlog(int,int,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String):294:299 -> initSDKXlog
-    7:8:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.dateToString(long,java.lang.String):114:115 -> initSDKXlog
-    7:8:void initSDKXlog(int,int,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String):299 -> initSDKXlog
-    9:23:void initSDKXlog(int,int,java.lang.String,java.lang.String,java.lang.String,int,java.lang.String):299:313 -> initSDKXlog
-    1:3:void initThreads():49:51 -> initThreads
-    1:4:void initXLog(java.lang.String,java.lang.String):254:257 -> initXLog
-    5:11:void initXLog(java.lang.String,java.lang.String,java.lang.String):263:269 -> initXLog
-    1:13:boolean isAvailableSpace(int,int):435:447 -> isAvailableSpace
-    1:1:void sdkAppenderFlush(boolean):318:318 -> sdkAppenderFlush
-    1:1:void sdkd(java.lang.String,java.lang.String):233:233 -> sdkd
-    1:1:void sdke(java.lang.String,java.lang.String):237:237 -> sdke
-    1:1:void sdki(java.lang.String,java.lang.String):225:225 -> sdki
-    1:1:void sdkv(java.lang.String,java.lang.String):229:229 -> sdkv
-    1:1:void sdkw(java.lang.String,java.lang.String):242:242 -> sdkw
-    1:4:void setSDKLogIsOpen(boolean):328:331 -> setSDKLogIsOpen
-    1:23:void setUserInfo():339:361 -> setUserInfo
-    1:1:void v(java.lang.String,java.lang.String):187:187 -> v
-    1:1:void w(java.lang.String,java.lang.String):200:200 -> w
-com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtils$1 -> com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtils$a:
-    1:1:void <init>(android.os.Looper):51:51 -> <init>
-    1:73:void handleMessage(android.os.Message):54:126 -> handleMessage
-    74:77:void handleMessage(android.os.Message):118:121 -> handleMessage
-    78:81:void handleMessage(android.os.Message):110:113 -> handleMessage
-    82:85:void handleMessage(android.os.Message):102:105 -> handleMessage
-    86:89:void handleMessage(android.os.Message):94:97 -> handleMessage
-    90:93:void handleMessage(android.os.Message):86:89 -> handleMessage
-    94:94:void handleMessage(android.os.Message):82:82 -> handleMessage
-    95:95:void handleMessage(android.os.Message):78:78 -> handleMessage
-    96:96:void handleMessage(android.os.Message):74:74 -> handleMessage
-    97:179:void handleMessage(android.os.Message):70:152 -> handleMessage
-    180:180:void handleMessage(android.os.Message):148:148 -> handleMessage
-    181:181:void handleMessage(android.os.Message):143:143 -> handleMessage
-    182:182:void handleMessage(android.os.Message):138:138 -> handleMessage
-    183:183:void handleMessage(android.os.Message):133:133 -> handleMessage
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":540,"2":541,"3":542}}
+    540:540:void log(java.lang.String,java.lang.String,java.lang.String):505:505 -> log
+    541:541:void log(java.lang.String,java.lang.String,java.lang.String):505:505 -> log
+    542:542:void log(java.lang.String,java.lang.String,java.lang.String):505:505 -> log
+    533:539:void log(java.lang.String,java.lang.String,java.lang.String):505:511 -> log
+    1:6:void move():516:521 -> move
+    1:2:void s(java.lang.String,java.lang.String):203:204 -> s
+    1:1:void sdkAppenderFlush(boolean):597:597 -> sdkAppenderFlush
+    1:5:void sdkd(java.lang.String,java.lang.String):211:215 -> sdkd
+    1:5:void sdke(java.lang.String,java.lang.String):225:229 -> sdke
+    1:5:void sdki(java.lang.String,java.lang.String):190:194 -> sdki
+    1:5:void sdkv(java.lang.String,java.lang.String):239:243 -> sdkv
+    1:5:void sdkw(java.lang.String,java.lang.String):253:257 -> sdkw
+    1:15:void setUserInfo():378:392 -> setUserInfo
+    1:20:void syncPermissonCreate():142:161 -> syncPermissonCreate
+    1:1:void xml(java.lang.String,java.lang.String):589:589 -> xml
 com.sandglass.sandglasslibrary.utils.videocompress.SLFVideoSlimEncoder -> p.a:
     float mBitRate -> j
     float mHeight -> i

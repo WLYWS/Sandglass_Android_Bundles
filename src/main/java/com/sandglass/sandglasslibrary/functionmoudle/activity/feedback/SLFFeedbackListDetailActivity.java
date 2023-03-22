@@ -159,7 +159,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             public void onActivityResult(ActivityResult result) {
                 //此处是跳转的result回调方法
                 if (result.getData() != null && result.getResultCode() == Activity.RESULT_OK) {
-                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":onActivityReuslt:");
+                    SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":onActivityReuslt:");
                     SLFLeaveMsgRecord slfLeaveMsgRecord = (SLFLeaveMsgRecord) result.getData().getSerializableExtra(SLFConstants.LEAVE_MSG_DATA);
                     slfLeaveMsgRecordList.add(slfLeaveMsgRecord);
                     adapter.notifyDataSetChanged();
@@ -249,7 +249,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText() + "/" + slfRecode.getSubCategoryText());
             }
         }else{
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":slfRecode is null:");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":slfRecode is null:");
         }
         SLFFontSet.setSLF_RegularFont(getContext(),slf_title_status);
         SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_id);
@@ -321,7 +321,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadAppLogComplete(boolean isComplete) {
-                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload app log complete callback:");
+                    SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload app log complete callback:");
                     sumbitLogFiles();
                 }
             });
@@ -368,7 +368,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                                 @Override
                                 public void run() {
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
-                                    SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
+                                    SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
                                     SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
                                 }
@@ -380,7 +380,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                     @Override
                     public void onFailure() {
                         isSubmit = false;
-                        SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::application log compress  error::");
+                        SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::application log compress  error::");
                     }
                 });
             }
@@ -400,7 +400,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     @Override
     public void onRequestNetFail(T type) {
-        SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":FeedbackList Detail onRequestNetFail::");
+        SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":FeedbackList Detail onRequestNetFail::");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
@@ -422,31 +422,31 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     public void onRequestSuccess(String result, T type) {
         hideLoading();
         if (type instanceof SLFUploadFileReponseBean) {
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail::SLFUploadFileReponseBean" + ":type:" + type.toString());
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail::SLFUploadFileReponseBean" + ":type:" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,3);
             if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
                 /**分配3个链接给log上传*/
                 for (int i = 0; i < 3; i++) {
                     SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                    SLFLogUtil.d(TAG, "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(i));
+                    SLFLogUtil.sdkd(TAG, "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
         }else if(type instanceof String){
             String code = (String) type;
-            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
+            SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
             if ("0".equals(code)) {
-                SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::logfile--feedbackDetail---upload---complete");
+                SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::logfile--feedbackDetail---upload---complete");
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL.replace("{id}",String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
             }
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
             slfRightTitle.setVisibility(View.GONE);
             EventBus.getDefault().post(new SLFSendLogSuceessEvent(true,position));
-            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFSendLeaveMsgRepsonseBean");
+            SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFSendLeaveMsgRepsonseBean");
         }else if (type instanceof SLFFeedbackDetailItemResponseBean){
             pages = ((SLFFeedbackDetailItemResponseBean) type).data.getPages();
             showFeedBackAdapter((SLFFeedbackDetailItemResponseBean)type);
-            SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFFeedbackDetailItemResponseBean");
+            SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFFeedbackDetailItemResponseBean");
         }
 
     }
@@ -477,7 +477,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackDetail requestOptionFail");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackDetail requestOptionFail");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
@@ -521,7 +521,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             logAttrBeans.add(logAttrAppBean);
             logAttrBeans.add(logAttrPluginBean);
             map.put("logAttrList", logAttrBeans);
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());
         return map;
     }
 }

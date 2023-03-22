@@ -131,7 +131,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     }
 
     private void getFaqDetaiData(){
-        SLFLogUtil.d("yj","url::"+SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
+        SLFLogUtil.sdkd("yj","url::"+SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
         SLFHttpUtils.getInstance().executePathGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id, SLFFaqDetailResponseBean.class, this);
     }
@@ -199,6 +199,6 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
-        SLFLogUtil.e("yj","error____");
+        SLFLogUtil.sdke("yj","error____");
     }
 }

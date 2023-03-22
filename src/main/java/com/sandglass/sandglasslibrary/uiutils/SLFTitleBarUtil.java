@@ -96,7 +96,7 @@ public class SLFTitleBarUtil {
                 }
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 String brand = Build.BRAND;
-                SLFLogUtil.i("StatusBar", "Build.BRAND = " + brand);
+                SLFLogUtil.sdki("StatusBar", "Build.BRAND = " + brand);
                 if (isDarkText && (Build.BRAND.equalsIgnoreCase("oppo") || Build.BRAND.equalsIgnoreCase("vivo") || Build.BRAND.equalsIgnoreCase("nubia"))) {
                     window.setStatusBarColor(0x01ffffff);
                 } else {
@@ -106,7 +106,7 @@ public class SLFTitleBarUtil {
                 return false;
             }
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, Log.getStackTraceString(e));
+            SLFLogUtil.sdke(TAG, Log.getStackTraceString(e));
             return false;
         }
         return true;
@@ -190,7 +190,7 @@ public class SLFTitleBarUtil {
                     .get(object).toString());
             statusHeight = getResources().getDimensionPixelSize(height);
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, Log.getStackTraceString(e));
+            SLFLogUtil.sdke(TAG, Log.getStackTraceString(e));
         }
         if (statusHeight == -1) {
             statusHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());

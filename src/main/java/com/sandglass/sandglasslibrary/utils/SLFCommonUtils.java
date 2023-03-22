@@ -109,10 +109,10 @@ public class SLFCommonUtils {
                 }
             }
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, "compareVersion error:" + e.getMessage());
+            SLFLogUtil.sdke(TAG, "compareVersion error:" + e.getMessage());
             result = 0;
         }
-        SLFLogUtil.d(TAG, "compareVersion + versionA=" + versionA + ",  versionB=" + versionB + ",  result=" + result);
+        SLFLogUtil.sdkd(TAG, "compareVersion + versionA=" + versionA + ",  versionB=" + versionB + ",  result=" + result);
         return result;
     }
 
@@ -189,7 +189,7 @@ public class SLFCommonUtils {
      */
     @SuppressWarnings("java:S3776")
     public static String getTimeZone(String timeZone) {
-        SLFLogUtil.i(TAG, "getTimeZone in put timeZone=" + timeZone);
+        SLFLogUtil.sdki(TAG, "getTimeZone in put timeZone=" + timeZone);
         String newTimeZone;
         try {
             int index = timeZone.indexOf(':');
@@ -238,7 +238,7 @@ public class SLFCommonUtils {
             }
         } catch (Exception e) {
             newTimeZone = DEFAULT_TIMEZONE;
-            SLFLogUtil.e(TAG, "getTimeZone error: " + e.getMessage());
+            SLFLogUtil.sdke(TAG, "getTimeZone error: " + e.getMessage());
         }
         return newTimeZone;
     }
@@ -297,10 +297,10 @@ public class SLFCommonUtils {
                 mediaScannerIntent.setData(fileContentUri);
                 context.sendBroadcast(mediaScannerIntent);
             } else {
-                SLFLogUtil.e(TAG, "file not exist:path=" + path);
+                SLFLogUtil.sdke(TAG, "file not exist:path=" + path);
             }
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, "error:" + e.getMessage());
+            SLFLogUtil.sdke(TAG, "error:" + e.getMessage());
         }
     }
 
@@ -317,7 +317,7 @@ public class SLFCommonUtils {
 
     @SuppressWarnings("java:S4042")
     public static void saveBitmapToPath(final Handler handler, final Bitmap bitmap, final String path, final String fileName) {
-        SLFLogUtil.d(TAG, "saveBitmapToPath path=" + path + ", filaName=" + fileName);
+        SLFLogUtil.sdkd(TAG, "saveBitmapToPath path=" + path + ", filaName=" + fileName);
         if (bitmap == null || TextUtils.isEmpty(path) || TextUtils.isEmpty(fileName)) {
             return;
         }
@@ -350,7 +350,7 @@ public class SLFCommonUtils {
                 if (handler != null) {
                     handler.sendEmptyMessage(FILE_SAVE_ERROR);
                 }
-                SLFLogUtil.e(TAG, "saveBitmapToPath exception:" + e.getMessage());
+                SLFLogUtil.sdke(TAG, "saveBitmapToPath exception:" + e.getMessage());
             }
 
         };
@@ -372,7 +372,7 @@ public class SLFCommonUtils {
             return paths;
         } else {
             boolean isMkdir = baseFile.mkdir();
-            SLFLogUtil.e(TAG, isMkdir + "");
+            SLFLogUtil.sdke(TAG, isMkdir + "");
         }
         return paths;
     }
@@ -417,8 +417,8 @@ public class SLFCommonUtils {
         WifiManager wifiManager = (WifiManager) applicationContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wifiManager != null) {
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            SLFLogUtil.d(TAG + "getSSID", "wifiInfo" + wifiInfo.toString());
-            SLFLogUtil.d(TAG + "getSSID", "SSID" + wifiInfo.getSSID());
+            SLFLogUtil.sdkd(TAG + "getSSID", "wifiInfo" + wifiInfo.toString());
+            SLFLogUtil.sdkd(TAG + "getSSID", "SSID" + wifiInfo.getSSID());
             return whetherToRemoveTheDoubleQuotationMarks(wifiInfo.getSSID());
         } else {
             return "";
@@ -570,7 +570,7 @@ public class SLFCommonUtils {
         }
         double duration = (double) (endTimeInSec - startTimeInSec);
         double passed = duration * progress / progressMaxValue;
-        SLFLogUtil.d("aa", "startTimeInSec = " + startTimeInSec + "   endTimeInSec = " + endTimeInSec + "  progress = " + progress + "  progressMaxValue = " + progressMaxValue + " passed =" + passed);
+        SLFLogUtil.sdkd("aa", "startTimeInSec = " + startTimeInSec + "   endTimeInSec = " + endTimeInSec + "  progress = " + progress + "  progressMaxValue = " + progressMaxValue + " passed =" + passed);
         return (int) (startTimeInSec + passed);
     }
 
@@ -703,7 +703,7 @@ public class SLFCommonUtils {
 
         String dayDif;
 
-        SLFLogUtil.d(TAG, "dayDifWithNow = " + timestamp + "  " + (new Date(timestamp * 1000)));
+        SLFLogUtil.sdkd(TAG, "dayDifWithNow = " + timestamp + "  " + (new Date(timestamp * 1000)));
         long difference = System.currentTimeMillis() / 1000 - timestamp;
         if (difference < 0) {
             difference = 0;
@@ -816,7 +816,7 @@ public class SLFCommonUtils {
             String minutes = m >= 10 ? m + "" : "0" + m;
             String seconds = s >= 10 ? s + "" : "0" + s;
             counterTimeString = minutes + ":" + seconds;
-            SLFLogUtil.i(TAG, "==============counterTimeString==============" + counterTimeString);
+            SLFLogUtil.sdki(TAG, "==============counterTimeString==============" + counterTimeString);
         }
         return counterTimeString;
     }
@@ -1072,7 +1072,7 @@ public class SLFCommonUtils {
         try {
             height = resources.getDimensionPixelSize(resourceId);
         } catch (Resources.NotFoundException e) {
-            SLFLogUtil.e(TAG, Log.getStackTraceString(e));
+            SLFLogUtil.sdke(TAG, Log.getStackTraceString(e));
         }
         return height;
     }
@@ -1091,7 +1091,7 @@ public class SLFCommonUtils {
         try {
             timezone = (TimeZone.getDefault().getRawOffset() + daylightSaving) / 1000;
         } catch (Exception e) {
-            SLFLogUtil.i(TAG, "getLocalTimeZoneInSec exception=" + e.getMessage());
+            SLFLogUtil.sdki(TAG, "getLocalTimeZoneInSec exception=" + e.getMessage());
         }
         return timezone;
     }
@@ -1250,7 +1250,7 @@ public class SLFCommonUtils {
                     .getApplicationContext().getSystemService(
                             Context.CONNECTIVITY_SERVICE);
         } catch (Exception e) {
-            SLFLogUtil.i(TAG, "isNetworkAvailable  error" + e.getMessage());
+            SLFLogUtil.sdki(TAG, "isNetworkAvailable  error" + e.getMessage());
         }
         if (manager == null) {
             return false;

@@ -154,7 +154,7 @@ public final class SLFSystemUtil {
                 }
             }
         } catch (SocketException e) {
-            SLFLogUtil.e(TAG, e.getMessage());
+            SLFLogUtil.sdke(TAG, e.getMessage());
         }
         return "";
     }

@@ -8,7 +8,6 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
-import com.sandglass.sandglasslibrary.interf.SLFSetNewTokentoFeed;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
@@ -69,9 +68,10 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
         this.isDebug = isDebug;
         try {
             SLFConstants.isOpenConsoleLog = isDebug;
+
         } catch (NullPointerException var10) {
-            SLFLogUtil.e("SLF", "BJA-115 *** AppConfig NullPointerException ***");
-            SLFLogUtil.e("SLF", Log.getStackTraceString(var10));
+            Log.e("SLF", "BJA-115 *** AppConfig NullPointerException ***");
+            Log.e("SLF", Log.getStackTraceString(var10));
         }
         long startTime = System.currentTimeMillis();
 
@@ -79,8 +79,8 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
         SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
         SLFLogAPI.init();
         //SLFLogUtil.syncPermissonCreate();
-        //SLFLogUtil.initXLog(SLFConstants.xlogCachePath,SLFConstants.apiLogPath,XLOG_PUBKEY);
-        SLFLogUtil.e("ArouterInitTime:", endTime - startTime + "");
+        //SLFLogUtil.sdkinitXLog(SLFConstants.xlogCachePath,SLFConstants.apiLogPath,XLOG_PUBKEY);
+        SLFLogUtil.sdke("ArouterInitTime:", endTime - startTime + "");
         SLFFileUtils.delete(SLFConstants.CROP_IMAGE_PATH);
         List<File> logList = SLFFileUtils.listFileSortByName(SLFConstants.apiLogPath);
         if (logList.size() > 3) {
@@ -90,7 +90,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
         }
         SLFCrashHandler.getInstance().init(mContext);
         SLFDebugConfig.setOpenLogEnable(true);
-        SLFCrashHandler.getInstance().addCrashListener((ex, appId) -> SLFLogUtil.e("slf_crash", appId));
+        SLFCrashHandler.getInstance().addCrashListener((ex, appId) -> SLFLogUtil.sdke("slf_crash", appId));
         // android 7.0系统解决拍照的问题
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -179,6 +179,6 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 //    @Override
 //    public void getNewToken(String token) {
 //        SLFConstants.token = token;
-//        SLFLogUtil.d("yj","get toekn====:::"+token);
+//        SLFLogUtil.sdkd("yj","get toekn====:::"+token);
 //    }
 }

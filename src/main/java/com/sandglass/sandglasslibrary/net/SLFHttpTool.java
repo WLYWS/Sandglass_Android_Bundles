@@ -100,7 +100,7 @@ public class SLFHttpTool {
                 sb.append("&");
             }
         }
-        SLFLogUtil.d("request","Get 带参加密前请求url：| Request:"+sb.toString());
+        SLFLogUtil.sdkd("request","Get 带参加密前请求url：| Request:"+sb.toString());
         return sb.toString();
     }
 
@@ -333,9 +333,9 @@ public class SLFHttpTool {
             map.put("Authorization", SLFConstants.token);
             map.put("secret",encryptMd532(secret.getBytes(CHARSET_UTF8)));
             map.put("user-agent", user_agent);
-            SLFLogUtil.d("request", "Get request 加密：| 签名: signature="+SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
-            SLFLogUtil.d("request", "Get request 加密：| 密钥: secret="+encryptMd532(secret.getBytes(CHARSET_UTF8)));
-            SLFLogUtil.d("request", "user-agent="+user_agent);
+            SLFLogUtil.sdkd("request", "Get request 加密：| 签名: signature="+SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
+            SLFLogUtil.sdkd("request", "Get request 加密：| 密钥: secret="+encryptMd532(secret.getBytes(CHARSET_UTF8)));
+            SLFLogUtil.sdkd("request", "user-agent="+user_agent);
         } catch (Exception e) {
             e.printStackTrace();
         }

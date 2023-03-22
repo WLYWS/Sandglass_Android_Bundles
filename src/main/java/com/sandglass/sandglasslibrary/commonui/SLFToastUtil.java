@@ -24,7 +24,6 @@ import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFConvertUtil;
-import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSystemUtil;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
@@ -335,7 +334,7 @@ public class SLFToastUtil {
             }.start();
 
         }catch (Exception e){
-            SLFLogUtil.e(TAG, Log.getStackTraceString(e));
+            SLFLogUtil.sdke(TAG, Log.getStackTraceString(e));
         }
 
 

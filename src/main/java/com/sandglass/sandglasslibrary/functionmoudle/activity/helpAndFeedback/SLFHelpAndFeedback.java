@@ -210,7 +210,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     public void onRequestSuccess(String result, T type) {
         if(type instanceof SLFFirstPageFAQResponseBean){
-            SLFLogUtil.d("yj","data===SLFFirstPageFAQResponseBean===="+((SLFFirstPageFAQResponseBean)type).data.toString());
+            SLFLogUtil.sdkd("yj","data===SLFFirstPageFAQResponseBean===="+((SLFFirstPageFAQResponseBean)type).data.toString());
             List<SLFFirstPageFAQBean> newDatas =((SLFFirstPageFAQResponseBean)type).data;
             List<SLFFirstPageFAQBean> checkDatas = FaitleData(newDatas);
             deviceTypesList.clear();
@@ -280,7 +280,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         problemRecycler.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPostion, long id) {
-                SLFLogUtil.d("yj","groupPosition::::"+groupPosition+":::childPostion:::"+childPostion);
+                SLFLogUtil.sdkd("yj","groupPosition::::"+groupPosition+":::childPostion:::"+childPostion);
                 slfExAdapter.setChildSelection(groupPosition,childPostion);
                 slfExAdapter.notifyDataSetChanged();
                 gotoFAQDetail(groupPosition,childPostion);

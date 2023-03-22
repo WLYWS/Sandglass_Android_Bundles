@@ -141,7 +141,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                                 ((UserNormalHolder) holder).slf_first_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        SLFLogUtil.d("yj", "frist image");
+                                        SLFLogUtil.sdkd("yj", "frist image");
                                         gotoPicPriewActivity(position, 0);
                                     }
                                 });
@@ -156,7 +156,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                                 ((UserNormalHolder) holder).slf_second_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        SLFLogUtil.d("yj", "second image");
+                                        SLFLogUtil.sdkd("yj", "second image");
                                         gotoPicPriewActivity(position, 1);
                                     }
                                 });
@@ -171,7 +171,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
                                 ((UserNormalHolder) holder).slf_third_iv_photo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        SLFLogUtil.d("yj", "third image");
+                                        SLFLogUtil.sdkd("yj", "third image");
                                         gotoPicPriewActivity(position, 2);
                                     }
                                 });

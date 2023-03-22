@@ -36,7 +36,7 @@ public class SLFCompressUtil {
         }
         File baseDir = new File(baseDirName);
         if (!baseDir.exists() || (!baseDir.isDirectory())) {
-            SLFLogUtil.e(TAG, "file is not have：" + baseDirName);
+            SLFLogUtil.sdke(TAG, "file is not have：" + baseDirName);
             return false;
         }
         String baseDirPath = baseDir.getAbsolutePath();
@@ -53,14 +53,14 @@ public class SLFCompressUtil {
                     File file = new File(baseDir, fileName);
                     if (file.isFile()) {
                         SLFCompressUtil.fileToZip(baseDirPath, file, out);
-                        SLFLogUtil.i(TAG, "fileToZip=" + targetFileName);
+                        SLFLogUtil.sdki(TAG, "fileToZip=" + targetFileName);
                     } else {
                         SLFCompressUtil.dirToZip(baseDirPath, file, out);
                     }
                 }
             }
         } catch (IOException e) {
-            SLFLogUtil.i(TAG, "zipFile e = " + e.getMessage());
+            SLFLogUtil.sdki(TAG, "zipFile e = " + e.getMessage());
             return false;
         }
         return true;
@@ -75,13 +75,13 @@ public class SLFCompressUtil {
 
         //检测根目录是否存在
         if (baseDirName == null) {
-            SLFLogUtil.e(TAG, "baseDirName is null：");
+            SLFLogUtil.sdke(TAG, "baseDirName is null：");
             listener.onFailure();
             return;
         }
         File baseDir = new File(baseDirName);
         if (!baseDir.exists() || (!baseDir.isDirectory())) {
-            SLFLogUtil.e(TAG, "file is not have：" + baseDirName);
+            SLFLogUtil.sdke(TAG, "file is not have：" + baseDirName);
             listener.onFailure();
             return;
         }
@@ -99,14 +99,14 @@ public class SLFCompressUtil {
                     File file = new File(baseDir, fileName);
                     if (file.isFile()) {
                         SLFCompressUtil.fileToZip(baseDirPath, file, out);
-                        SLFLogUtil.i(TAG, "fileToZip=" + targetFileName);
+                        SLFLogUtil.sdki(TAG, "fileToZip=" + targetFileName);
                     } else {
                         SLFCompressUtil.dirToZip(baseDirPath, file, out);
                     }
                 }
             }
         } catch (IOException e) {
-            SLFLogUtil.i(TAG, "zipFile e = " + e.getMessage());
+            SLFLogUtil.sdki(TAG, "zipFile e = " + e.getMessage());
             listener.onFailure();
             return;
         }
@@ -142,21 +142,21 @@ public class SLFCompressUtil {
                     if (entry.isDirectory()) {
                         //  如果entry是一个目录，则创建目录
                         boolean isMkdirs = new File(targetFileName).mkdirs();
-                        SLFLogUtil.e("isMkdirs",isMkdirs+"");
+                        SLFLogUtil.sdke("isMkdirs",isMkdirs+"");
                         continue;
                     } else {
                         // 如果entry是一个文件，则创建父目录
                         File parentFile = new File(targetFileName).getParentFile();
                         if(parentFile!=null){
                             boolean isMkdirsParent = parentFile.mkdirs();
-                            SLFLogUtil.e("isMkdirsParent",isMkdirsParent+"");
+                            SLFLogUtil.sdke("isMkdirsParent",isMkdirsParent+"");
                         }
 
                     }
 
                     //否则创建文件
                     File targetFile = new File(targetFileName);
-                    SLFLogUtil.d(TAG, "创建文件：" + targetFile.getAbsolutePath());
+                    SLFLogUtil.sdkd(TAG, "创建文件：" + targetFile.getAbsolutePath());
                     //打开文件输出流
                     InputStream is;
                     try (FileOutputStream os = new FileOutputStream(targetFile)) {
@@ -169,9 +169,9 @@ public class SLFCompressUtil {
                     is.close();
                 }
             }
-            SLFLogUtil.d(TAG, "upzipFile 解压缩文件成功！");
+            SLFLogUtil.sdkd(TAG, "upzipFile 解压缩文件成功！");
         } catch (IOException err) {
-            SLFLogUtil.e(TAG, "upzipFile failed,error:" + err.getMessage());
+            SLFLogUtil.sdke(TAG, "upzipFile failed,error:" + err.getMessage());
         }
     }
 
@@ -191,18 +191,18 @@ public class SLFCompressUtil {
                     out.putNextEntry(entry);
                     out.closeEntry();
                 } catch (IOException e) {
-                    SLFLogUtil.i(TAG, "dirToZip e = " + e.getMessage());
+                    SLFLogUtil.sdki(TAG, "dirToZip e = " + e.getMessage());
                 }
                 return;
             }
             for (File file : files) {
                 if (file.isFile()) {
                     //如果是文件，调用fileToZip方法
-                    SLFLogUtil.i(TAG, "dirToZip: is file");
+                    SLFLogUtil.sdki(TAG, "dirToZip: is file");
                     SLFCompressUtil.fileToZip(baseDirPath, file, out);
                 } else {
                     //如果是目录，递归调用
-                    SLFLogUtil.i(TAG, "dirToZip: is file path");
+                    SLFLogUtil.sdki(TAG, "dirToZip: is file path");
                     SLFCompressUtil.dirToZip(baseDirPath, file, out);
                 }
             }
@@ -230,9 +230,9 @@ public class SLFCompressUtil {
                     }
                     out.closeEntry();
                 }catch (IOException e){
-                    SLFLogUtil.e(TAG, "fileToZip e = " + e.getMessage());
+                    SLFLogUtil.sdke(TAG, "fileToZip e = " + e.getMessage());
                 }
-            SLFLogUtil.d(TAG, "fileToZip: 添加文件"
+            SLFLogUtil.sdkd(TAG, "fileToZip: 添加文件"
                         + file.getAbsolutePath() + "被到ZIP文件中！");
         }
     }
@@ -267,13 +267,13 @@ public class SLFCompressUtil {
     @SuppressWarnings("UnusedReturnValue")
     public static boolean copyFolder(String oldPath, String newPath) {
         boolean isok = true;
-        SLFLogUtil.i(TAG, "copyFolder: oldPath=" + oldPath);
-        SLFLogUtil.i(TAG, "copyFolder: newPath=" + newPath);
+        SLFLogUtil.sdki(TAG, "copyFolder: oldPath=" + oldPath);
+        SLFLogUtil.sdki(TAG, "copyFolder: newPath=" + newPath);
         try {
             File newFile = new File(newPath);
             if (!newFile.exists()) {
                 boolean isMkdirs = newFile.mkdirs();
-                SLFLogUtil.e(TAG,isMkdirs+"");
+                SLFLogUtil.sdke(TAG,isMkdirs+"");
             }
             File oldFile = new File(oldPath);
             if (!oldFile.exists()) {
@@ -309,7 +309,7 @@ public class SLFCompressUtil {
                 }
             }
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, "copyFolder: Exception e = " + e.getMessage());
+            SLFLogUtil.sdke(TAG, "copyFolder: Exception e = " + e.getMessage());
             isok = false;
         }
         return isok;

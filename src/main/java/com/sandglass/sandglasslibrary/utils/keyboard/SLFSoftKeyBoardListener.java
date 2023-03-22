@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.view.View;
 
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
-
 /**
  * Greated by yangjie
  * describe:软键盘监听

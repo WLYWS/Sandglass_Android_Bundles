@@ -1,6 +1,5 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +17,6 @@ import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistory
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

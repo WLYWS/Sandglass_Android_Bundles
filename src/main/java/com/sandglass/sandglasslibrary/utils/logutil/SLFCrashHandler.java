@@ -101,7 +101,7 @@ public class SLFCrashHandler implements Thread.UncaughtExceptionHandler {
             listener.onCrash(ex,appId);
         }
 
-        SLFLogUtil.e("exception:"+appId,ex.getMessage());
+        SLFLogUtil.sdke("exception:"+appId,ex.getMessage());
         //收集设备参数信息
 //        collectDeviceInfo(mContext)
         //添加自定义信息
@@ -140,7 +140,7 @@ public class SLFCrashHandler implements Thread.UncaughtExceptionHandler {
         pw.close();
         String result = writer.toString();
         sb.append(result);
-        SLFLogUtil.e(appId,sb.toString());
+        SLFLogUtil.sdke(appId,sb.toString());
         Log.appenderFlush(); //同步日志到文件
     }
 

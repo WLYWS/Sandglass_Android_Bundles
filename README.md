@@ -160,10 +160,10 @@ SDK提供了写入Log的方法
 ```
 //param1：TAG
 //param2：Log内容
-SLFLogUtil.d(TAG,"slf_oncreate");
-SLFLogUtil.e(TAG,"slf_oncreate");
-SLFLogUtil.i(TAG,"slf_oncreate");
-SLFLogUtil.w(TAG,"slf_oncreate");
+SLFLogUtil.sdkd(TAG,"slf_oncreate");
+SLFLogUtil.sdke(TAG,"slf_oncreate");
+SLFLogUtil.sdki(TAG,"slf_oncreate");
+SLFLogUtil.sdkw(TAG,"slf_oncreate");
 SLFLogUtil.json(String TAG,String json);//打印json
 SLFLogUtil.xml(String TAG,String xml);//打印xml
 ```

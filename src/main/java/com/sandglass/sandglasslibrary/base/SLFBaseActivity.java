@@ -54,7 +54,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" Created");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" Created");
         SLFTitleBarUtil.enableTranslucentStatus(this);
         SLFBaseApplication.addActivity(this);//记录当前应用的Activity,用于退出整个应用
         isDrawPageFinish = false;
@@ -80,7 +80,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     public void onContentChanged() {
         super.onContentChanged();
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onContentChanged");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onContentChanged");
         SLFTitleBarUtil.setTitleBar(this);
         tvTitle = findViewById(R.id.slf_tv_title_name);
         View viewBack = findViewById(R.id.slf_iv_back);
@@ -105,7 +105,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onResume");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onResume");
         isOnPause = false;
         isOnStop = false;
     }
@@ -113,7 +113,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onPause");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onPause");
         isOnPause = true;
         if(isFinishing()){
             mDestroyed = true;
@@ -126,7 +126,7 @@ public class SLFBaseActivity extends FragmentActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onStop");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onStop");
         if(isFinishing()) {
             hideLoading();
         }
@@ -135,7 +135,7 @@ public class SLFBaseActivity extends FragmentActivity {
 
     @Override
     protected void onDestroy() {
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onDestroy");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onDestroy");
         try{
             super.onDestroy();
             /**activity摧毁时根据hashcode从集合移除*/
@@ -152,7 +152,7 @@ public class SLFBaseActivity extends FragmentActivity {
 
     @Override
     public void finish() {
-        SLFLogUtil.e(TAG,"ActivityName:"+this.getClass().getSimpleName()+" finish");
+        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" finish");
         super.finish();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);

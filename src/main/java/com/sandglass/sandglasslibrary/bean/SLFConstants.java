@@ -29,6 +29,8 @@ public class SLFConstants {
     public static final String rootPath = SLFApi.getSLFContext().getFilesDir() + "/SLF"; // App
     public static final String cacheRootPath = SLFApi.getSLFContext().getCacheDir() + "/SLF"; // App
 
+    public static final String Rootpath = "";
+
     public static final String documentPath = rootPath + "/document/";
 
     public static final String devRootPath = documentPath + "platformkit/";

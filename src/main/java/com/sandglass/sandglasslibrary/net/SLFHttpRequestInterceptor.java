@@ -33,9 +33,9 @@ public class SLFHttpRequestInterceptor implements Interceptor {
 //        if (request.body() != null) {
 //            printParams(request.body());
 //        }
-        SLFLogUtil.d("request", "请求体返回：| Response:" + content);
-        SLFLogUtil.d("request", "----------请求耗时:" + duration + "毫秒----------");
-        SLFLogUtil.d("request", "请求体返回：| Response 时间戳:" +System.currentTimeMillis());
+        SLFLogUtil.sdkd("request", "请求体返回：| Response:" + content);
+        SLFLogUtil.sdkd("request", "----------请求耗时:" + duration + "毫秒----------");
+        SLFLogUtil.sdkd("request", "请求体返回：| Response 时间戳:" +System.currentTimeMillis());
         return response.newBuilder().body(okhttp3.ResponseBody.create(mediaType, content)).build();
     }
 

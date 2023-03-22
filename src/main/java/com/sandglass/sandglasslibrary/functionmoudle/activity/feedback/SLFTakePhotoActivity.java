@@ -176,7 +176,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                 //showTapView((int) event.getX(), (int) event.getY());
                 mCamera.getCameraControl().startFocusAndMetering(action);
             } catch (Exception e) {
-                SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":Error focus camera");
+                SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":Error focus camera");
             }
             return false;
         });
@@ -187,7 +187,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                 if(mode.equals(SLFConstants.CAMERA_PHOTO)) {
                     if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Video) {
                         //showCenterToast("You can only shoot videos !");
-                        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":You can only shoot videos ");
+                        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":You can only shoot videos ");
                         return;
                     }
                     takenPictureInternal(true);
@@ -354,7 +354,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                             if(isInsertAlbum){
-                                SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":camera image saved");
+                                SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":camera image saved");
                                 SLFFileUtils.insertImageToGalley(saveFile,"slf");
                             }
 
@@ -385,7 +385,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
 
                         @Override
                         public void onError(@NonNull ImageCaptureException exception) {
-                            SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":camera image saved onError:" + exception.getMessage());
+                            SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":camera image saved onError:" + exception.getMessage());
                         }
                     });
         }
@@ -424,7 +424,7 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                             long duration = System.currentTimeMillis() - startTime;
                             if(duration<=1000){
                                 //showCenterToast("Video time is too short !");
-                                SLFLogUtil.d(TAG, "ActivityName:"+this.getClass().getSimpleName()+":Video time is too short !");
+                                SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":Video time is too short !");
                                 return;
                             }
                             if(isInsertAlbum){
@@ -459,12 +459,12 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
                         @Override
                         public void onError(int videoCaptureError, @NonNull String message,
                                             @Nullable Throwable cause) {
-                            SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":camera video saved onError:"+message);
+                            SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":camera video saved onError:"+message);
                         }
                     }
             );
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":Record video error:"+e.getMessage());
+            SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":Record video error:"+e.getMessage());
         }
 
     }

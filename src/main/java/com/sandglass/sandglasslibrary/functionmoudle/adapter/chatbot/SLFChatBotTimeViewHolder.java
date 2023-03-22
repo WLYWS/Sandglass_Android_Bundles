@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotDateView;
 import com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
@@ -148,7 +149,7 @@ public class SLFChatBotTimeViewHolder extends SLFChatBotBaseViewHodler{
             int day = ca.get(Calendar.DAY_OF_MONTH);//一月中的第几天
             return day;
         }catch (Exception e){
-            SLFLogUtil.e(TAG,"时间格式有问题"+e.getMessage());
+            SLFLogUtil.sdke(TAG,"时间格式有问题"+e.getMessage());
         }
         return 0;
     }
@@ -164,7 +165,7 @@ public class SLFChatBotTimeViewHolder extends SLFChatBotBaseViewHodler{
             int month = ca.get(Calendar.MONTH);//第几个月
             return month;
         }catch (Exception e){
-            SLFLogUtil.e(TAG,"时间格式有问题"+e.getMessage());
+            SLFLogUtil.sdke(TAG,"时间格式有问题"+e.getMessage());
         }
         return 0;
     }
@@ -180,7 +181,7 @@ public class SLFChatBotTimeViewHolder extends SLFChatBotBaseViewHodler{
             int year = ca.get(Calendar.YEAR);//年份数值
             return year;
         }catch (Exception e){
-            SLFLogUtil.e(TAG,"时间格式有问题"+e.getMessage());
+            SLFLogUtil.sdke(TAG,"时间格式有问题"+e.getMessage());
         }
         return 0;
     }

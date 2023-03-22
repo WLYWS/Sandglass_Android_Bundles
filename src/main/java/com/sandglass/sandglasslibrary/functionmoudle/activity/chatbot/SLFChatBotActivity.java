@@ -127,7 +127,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         slfdbEngine = new SLFDBEngine(this);
         initView();
         initData();
+
     }
+
+
 
     @Override
     protected void onResume() {
@@ -500,19 +503,19 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     public void onRequestNetFail(Object type) {
         hideLoading();
         showNetworkError();
-        SLFLogUtil.d("yj","open ai request fail 含有敏感词：：network no");
-        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestNetFail:chatbot");
+        SLFLogUtil.sdkd("yj","open ai request fail 含有敏感词：：network no");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestNetFail:chatbot");
     }
 
     @Override
     public void onRequestSuccess(String result, Object type) {
         if (type instanceof SLFFaqWelcomeHotQResponseBean) {
-            SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestSuccess:chatbot");
+            SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestSuccess:chatbot");
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
             SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
         }else if(type instanceof SLFUnReadCount){
-            SLFLogUtil.d("yj","data===weidu===="+((SLFUnReadCount)type).data);
+            SLFLogUtil.sdkd("yj","data===weidu===="+((SLFUnReadCount)type).data);
             if(((SLFUnReadCount)type).data >0){
                 /**有未读反馈*/
                 imgRight.setImageResource(R.drawable.slf_first_page_new_feedback);
@@ -532,7 +535,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             return;
         }
         showCenterToast(getResources().getString(R.string.slf_common_request_error));
-        SLFLogUtil.e(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestFail:chatbot");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestFail:chatbot");
     }
 
     /**
@@ -962,7 +965,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 //        }
 
         if (type instanceof SLFFaqOpenAiResponseBean) {
-            SLFLogUtil.d("yj","result：：：chat_bot::"+result);
+            SLFLogUtil.sdkd("yj","result：：：chat_bot::"+result);
             SLFFaqOpenAiResponseBean slfFaqOpenAiResponseBean = (SLFFaqOpenAiResponseBean) type;
             SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showSearchReslutData(slfFaqOpenAiResponseBean, requestTime);
@@ -1044,7 +1047,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                             }, 700);
 
 
-                            SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord show");
+                            SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord show");
                         }
 
                     }
@@ -1057,7 +1060,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                                 (RelativeLayout.LayoutParams) slf_chat_bot_all_linear.getLayoutParams();
                         params.setMargins(0, 0, 0, 0);//left,top,right,bottom
                         slf_chat_bot_all_linear.setLayoutParams(params);
-                        SLFLogUtil.d(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord hide");
+                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord hide");
                     }
                 });
     }

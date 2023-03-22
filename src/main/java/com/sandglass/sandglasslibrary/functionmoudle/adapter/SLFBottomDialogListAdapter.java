@@ -112,7 +112,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                     break;
             }
                 if(object instanceof SLFCategoryBean) {
-                    SLFLogUtil.d("yj","checked:::"+((SLFCategoryBean) object).isChecked());
+                    SLFLogUtil.sdkd("yj","checked:::"+((SLFCategoryBean) object).isChecked());
                     serviceTypeTitle.setText(((SLFCategoryBean) object).name);
                     checkBox.setChecked(((SLFCategoryBean) object).isChecked());
                 }else if(object instanceof SLFCategoryDetailBean) {

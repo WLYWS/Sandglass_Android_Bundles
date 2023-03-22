@@ -29,10 +29,10 @@ public class SLFDecryptUtil {
             cipher.init(Cipher.DECRYPT_MODE, skeySpec);
             //执行解密操作
             byte[] result = cipher.doFinal(data);
-            SLFLogUtil.e("SLFDecryptUtil","解密 成功 ="+new String(result, CHARSET_UTF8));
+            SLFLogUtil.sdke("SLFDecryptUtil","解密 成功 ="+new String(result, CHARSET_UTF8));
             return new String(result, CHARSET_UTF8);
         } catch (Exception e) {
-            SLFLogUtil.e("SLFDecryptUtil","解密 e ="+e.getMessage());
+            SLFLogUtil.sdke("SLFDecryptUtil","解密 e ="+e.getMessage());
         }
         return null;
     }

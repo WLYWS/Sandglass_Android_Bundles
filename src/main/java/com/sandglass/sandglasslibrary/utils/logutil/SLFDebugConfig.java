@@ -25,7 +25,7 @@ public class SLFDebugConfig {
     }
 
     public static void setOpenLogEnable(boolean openLogEnable) {
-        SLFLogUtil.i("SLFDebugConfig", "LogEnable: " + openLogEnable);
+        SLFLogUtil.sdki("SLFDebugConfig", "LogEnable: " + openLogEnable);
         SLFDebugConfig.openLogEnable = openLogEnable;
     }
 

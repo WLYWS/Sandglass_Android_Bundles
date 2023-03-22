@@ -146,7 +146,7 @@ public class SLFChatBotDateView extends ConstraintLayout {
             int day = ca.get(Calendar.DAY_OF_MONTH);//一月中的第几天
             return day;
         }catch (Exception e){
-            SLFLogUtil.e(TAG,"时间格式有问题"+e.getMessage());
+            SLFLogUtil.sdke(TAG,"时间格式有问题"+e.getMessage());
         }
         return 0;
     }
@@ -162,7 +162,7 @@ public class SLFChatBotDateView extends ConstraintLayout {
             int month = ca.get(Calendar.MONTH);//第几个月
             return month;
         }catch (Exception e){
-            SLFLogUtil.e(TAG,"时间格式有问题"+e.getMessage());
+            SLFLogUtil.sdke(TAG,"时间格式有问题"+e.getMessage());
         }
         return 0;
     }
@@ -178,7 +178,7 @@ public class SLFChatBotDateView extends ConstraintLayout {
             int year = ca.get(Calendar.YEAR);//年份数值
             return year;
         }catch (Exception e){
-            SLFLogUtil.e(TAG,"时间格式有问题"+e.getMessage());
+            SLFLogUtil.sdke(TAG,"时间格式有问题"+e.getMessage());
         }
         return 0;
     }

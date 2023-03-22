@@ -80,7 +80,7 @@ public class SLFPhotoListAdapter extends BaseAdapter {
                     helper.setImageResource(R.id.slf_iv_photo,R.drawable.slf_camra_icon);
                     notifyDataSetChanged();
                 }
-                SLFLogUtil.d("yj","selectedNum::"+selectedNum);
+                SLFLogUtil.sdkd("yj","selectedNum::"+selectedNum);
                 if(picPathLists.size()>=selectedNum){
                     if(picPathLists.contains(mDatas.get(position))||position==mDatas.size()-1){
                         helper.setVisibility(R.id.slf_iv_photo_mask,false);

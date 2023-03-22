@@ -67,7 +67,7 @@ public class SLFDebugLogUtils {
         File crashFile = new File(ROOT_PATH);
         if (!crashFile.exists()) {
             boolean mkdirs = crashFile.mkdirs();
-            SLFLogUtil.i(TAG, "mkdirs: " + mkdirs);
+            SLFLogUtil.sdki(TAG, "mkdirs: " + mkdirs);
         }
     }
 
@@ -253,16 +253,16 @@ public class SLFDebugLogUtils {
      */
     public void readLog(String logFilePath, SLFDebugLogReadCallback callback) {
         if (callback == null) {
-            SLFLogUtil.i(TAG, "callback == null");
+            SLFLogUtil.sdki(TAG, "callback == null");
             return;
         }
         if (!SLFDebugConfig.isOpenLogEnable()) {
-            SLFLogUtil.i(TAG, "debug log disable");
+            SLFLogUtil.sdki(TAG, "debug log disable");
             callback.onReadFailed(logFilePath);
             return;
         }
         if (logFilePath == null) {
-            SLFLogUtil.i(TAG, "logFilePath == null");
+            SLFLogUtil.sdki(TAG, "logFilePath == null");
             callback.onReadFailed(null);
             return;
         }
@@ -296,14 +296,14 @@ public class SLFDebugLogUtils {
                 writer.write(content);
                 writer.write("\r\n");
             } catch (IOException e) {
-                SLFLogUtil.e(TAG, e.toString());
+                SLFLogUtil.sdke(TAG, e.toString());
             } finally {
                 try {
                     if (writer != null) {
                         writer.close();
                     }
                 } catch (IOException e) {
-                    SLFLogUtil.e(TAG, e.toString());
+                    SLFLogUtil.sdke(TAG, e.toString());
                 }
             }
         }
@@ -324,7 +324,7 @@ public class SLFDebugLogUtils {
         public void run() {
             File file = new File(logFilePath);
             if (!file.exists() || file.isDirectory()) {
-                SLFLogUtil.i(TAG, "logFile not exist");
+                SLFLogUtil.sdki(TAG, "logFile not exist");
                 handler.post(() -> callback.onReadFailed(logFilePath));
                 return;
             }
@@ -342,7 +342,7 @@ public class SLFDebugLogUtils {
                     content.append(line).append("\n");
                 }
             } catch (Exception e) {
-                SLFLogUtil.e(TAG, e.toString());
+                SLFLogUtil.sdke(TAG, e.toString());
             } finally {
                 try {
                     if (bufferReader != null) {
@@ -355,10 +355,10 @@ public class SLFDebugLogUtils {
                         is.close();
                     }
                 } catch (IOException e) {
-                    SLFLogUtil.e(TAG, e.toString());
+                    SLFLogUtil.sdke(TAG, e.toString());
                 }
             }
-            SLFLogUtil.i(TAG, "logFile read success");
+            SLFLogUtil.sdki(TAG, "logFile read success");
             handler.post(() -> callback.onReadSuccess(logFilePath, content.toString()));
         }
     }
@@ -383,7 +383,7 @@ public class SLFDebugLogUtils {
             return element.getClassName().substring(element.getClassName().lastIndexOf('.') + 1).split("\\$")[0] +
                     "." + element.getMethodName() + "(" + element.getLineNumber() + ")";
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, e.toString());
+            SLFLogUtil.sdke(TAG, e.toString());
         }
         return "";
     }
@@ -408,7 +408,7 @@ public class SLFDebugLogUtils {
                 nameNoEx = nameNoEx.split("_")[1];
             }
         } catch (Exception e) {
-            SLFLogUtil.e(TAG, e.toString());
+            SLFLogUtil.sdke(TAG, e.toString());
         }
         return nameNoEx;
     }

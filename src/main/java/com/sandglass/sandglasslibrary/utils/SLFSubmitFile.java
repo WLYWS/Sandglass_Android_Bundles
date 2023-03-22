@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sandglass.sandglasslibrary.base.SLFFileData;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
@@ -151,7 +152,7 @@ public class SLFSubmitFile {
                 list.add(jsonObject);
             }
         } catch (JSONException e) {
-            SLFLogUtil.e(TAG, e.getMessage());
+            SLFLogUtil.sdke(TAG, e.getMessage());
         }
 
         //TODO REQUST URL
@@ -178,7 +179,7 @@ public class SLFSubmitFile {
                 //hideLoading();
                 //TODO EventBus.getDefault().post(new SLFUploadSuccess())
                 Toast.makeText(mActivity.getApplicationContext(), "upload file error", Toast.LENGTH_SHORT).show();
-                SLFLogUtil.e(TAG, "upload faid");
+                SLFLogUtil.sdke(TAG, "upload faid");
             }
         };
 

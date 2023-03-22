@@ -87,7 +87,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     // Post请求(无参)
     @Override
     public void mHttpPost(Context context, String api, T type, SLFHttpRequestCallback callBack) {
-        SLFLogUtil.d("request","post 无参加密前请求url：| Request:"+SLFHttpRequestConstants.BASE_URL+api);
+        SLFLogUtil.sdkd("request","post 无参加密前请求url：| Request:"+SLFHttpRequestConstants.BASE_URL+api);
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,null);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -99,13 +99,13 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     // 以RequestBody方式提交
     @Override
     public void mHttpPost(Context context, String url, TreeMap map, T type, SLFHttpRequestCallback callBack) {
-        SLFLogUtil.d("request","post 带参加密前请求url：| Request:"+url);
+        SLFLogUtil.sdkd("request","post 带参加密前请求url：| Request:"+url);
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,url,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
         Gson gson = new Gson();
         String paramStr = gson.toJson(map);
-        SLFLogUtil.d("request","post 带参加密前请求参数：| Request:"+paramStr);
+        SLFLogUtil.sdkd("request","post 带参加密前请求参数：| Request:"+paramStr);
         String paramsString  = SLFStringUtil.replaceBlank(SLFHttpTool.encryptAES(paramStr,secret));
         TreeMap<String,String> paramMap = new TreeMap <>();
         paramMap.put("data",paramsString);
@@ -120,13 +120,13 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     //携带时间戳上传数据
     @Override
     public void mHttpPost(Context context, String url, TreeMap map, T type,long requestTime,SLFHttpChatBotRequestCallback callBack) {
-        SLFLogUtil.d("request time","post 带参加密前请求url：| Request:"+url);
+        SLFLogUtil.sdkd("request time","post 带参加密前请求url：| Request:"+url);
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,url,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
         Gson gson = new Gson();
         String paramStr = gson.toJson(map);
-        SLFLogUtil.d("request time","post 带参加密前请求参数：| Request:"+paramStr);
+        SLFLogUtil.sdkd("request time","post 带参加密前请求参数：| Request:"+paramStr);
         String paramsString  = SLFStringUtil.replaceBlank(SLFHttpTool.encryptAES(paramStr,secret));
         TreeMap<String,String> paramMap = new TreeMap <>();
         paramMap.put("data",paramsString);
@@ -140,7 +140,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     // Post请求(包含数组)
     @Override
     public void mHttpPost(Context context, String api, TreeMap map, String[] data, T type, SLFHttpRequestCallback callBack) {
-        SLFLogUtil.d("request","post包函数组 带参加密前请求url：| Request:"+SLFHttpRequestConstants.BASE_URL+api);
+        SLFLogUtil.sdkd("request","post包函数组 带参加密前请求url：| Request:"+SLFHttpRequestConstants.BASE_URL+api);
         TreeMap headMap = SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
         String secret = (String) headMap.get(SLFHttpRequestConstants.SECRET);
         headMap.remove(SLFHttpRequestConstants.SECRET);
@@ -151,7 +151,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
     // 单文件上传
     @Override
     public void mHttpFile(Context context, String url, File file, int type, SLFHttpRequestCallback callBack) {
-        SLFLogUtil.d("request","单文件上传 加密前请求url：| Request:"+url);
+        SLFLogUtil.sdkd("request","单文件上传 加密前请求url：| Request:"+url);
         // 生成单个文件
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
@@ -171,7 +171,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
             params.add(body);
         }
         if (mIsAddCommonParams) {
-            SLFLogUtil.d("request","多文件上传 加密前请求url：| Request:"+SLFHttpRequestConstants.BASE_URL+api);
+            SLFLogUtil.sdkd("request","多文件上传 加密前请求url：| Request:"+SLFHttpRequestConstants.BASE_URL+api);
             SLFHttpTool.getTreeCrc(SLFHttpRequestConstants.REQUEST_METHOD_POST,SLFHttpRequestConstants.BASE_URL+api,map);
         }
         Map<String, RequestBody> mapValue = new HashMap <>();
@@ -180,7 +180,7 @@ public class SLFHttpRetrofitRequest<T> extends SLFHttpRetrofit implements SLFIHt
 
     @Override
     public void putHttpFile (Context context, String url, File file,String mediaType,String type, SLFHttpRequestCallback callBack) {
-        SLFLogUtil.d("request","putHttpFile 加密前请求url：| Request:"+url);
+        SLFLogUtil.sdkd("request","putHttpFile 加密前请求url：| Request:"+url);
         // 生成单个文件
         RequestBody requestFile = RequestBody.create(MediaType.parse(mediaType), file);
         Observable<String> observable = apiService.putBodyFile(url,requestFile);

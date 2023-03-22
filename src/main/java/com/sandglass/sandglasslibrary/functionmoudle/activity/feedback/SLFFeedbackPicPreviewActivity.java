@@ -42,12 +42,12 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feed_back_pic_preview);
         initView();
-        //SLFLogUtil.d(TAG,"feedbackpreview onCreate");
+        //SLFLogUtil.sdkd(TAG,"feedbackpreview onCreate");
     }
 
     @SuppressLint("SetTextI18n")
     private void initView(){
-        //SLFLogUtil.d(TAG,"feedbackpreview initView");
+        //SLFLogUtil.sdkd(TAG,"feedbackpreview initView");
 
         final View titleBar = findViewById(R.id.slf_title_bar);
         final TextView tvTitle = findViewById(R.id.slf_tv_title_name);
@@ -65,16 +65,16 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
         String from = getIntent().getStringExtra("from");
         mediaData = getIntent().getParcelableExtra("take_photo");
         if(picPathLists!=null) {
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::"+picPathLists.size());
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::"+picPathLists.size());
             mPreviewVpAdapter = new SLFPreviewPagerAdapter(getActivity(), picPathLists);
             mViewPager.setAdapter(mPreviewVpAdapter);
         }else if(leavePathLists!=null){
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::"+leavePathLists.size());
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::"+leavePathLists.size());
             mPreViewLeaveMsgAdapter = new SLFPreviewLeaveMsgPagerAdapter(getActivity(),leavePathLists);
             mViewPager.setAdapter(mPreViewLeaveMsgAdapter);
         }else{
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::null");
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::null");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::null");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::null");
         }
         mViewPager.setCurrentItem(position);
 
@@ -83,21 +83,21 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
         }else if(leavePathLists!=null){
             tvTitle.setText(position+1+"/"+leavePathLists.size());
         }else{
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::null");
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::null");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get picPathLists::null");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": get leavePathLists::null");
         }
         SLFFontSet.setSLF_RegularFont(getContext(),tvTitle);
         final View viewParent = findViewById(R.id.slf_pic_preview_parent);
 
         if(from.equals("takephoto")){
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": from takephoto");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": from takephoto");
             tvTitle.setVisibility(View.GONE);
             img_back.setVisibility(View.GONE);
             bottomlayout.setVisibility(View.VISIBLE);
             re_take.setOnClickListener(v -> finish());
             use_btn.setOnClickListener(v -> gotoPhotoGridActivity());
         }else{
-            SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+": not from takephoto");
+            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+": not from takephoto");
             tvTitle.setVisibility(View.VISIBLE);
             img_back.setVisibility(View.VISIBLE);
             bottomlayout.setVisibility(View.GONE);
@@ -119,7 +119,7 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
             }
             @Override
             public void onPageSelected(int i) {
-                //SLFLogUtil.d(TAG,"feedbackpreview onPageSelected");
+                //SLFLogUtil.sdkd(TAG,"feedbackpreview onPageSelected");
                 if(picPathLists!=null) {
                     if (tvTitle.getVisibility() == View.VISIBLE)
                         tvTitle.setText(i + 1 + "/" + picPathLists.size());
@@ -136,13 +136,13 @@ public class SLFFeedbackPicPreviewActivity extends SLFBaseActivity {
     }
 
     private void gotoPhotoGridActivity(){
-        SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":pthotoPicPreview goto PhotoGridActivity");
+        SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":pthotoPicPreview goto PhotoGridActivity");
         picPathLists.add(mediaData);
         Intent in = new Intent(SLFFeedbackPicPreviewActivity.this,SLFPhotoGridActivity.class);
         in.putExtra("mediaData",mediaData);
         in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(in);
-        SLFLogUtil.d(TAG,"ActivityName:"+this.getClass().getSimpleName()+":mediaData  preview----"+mediaData);
+        SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":mediaData  preview----"+mediaData);
         finish();
     }
 }

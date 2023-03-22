@@ -53,7 +53,7 @@ public class SLFChatBotRxJavaObserver<T> implements Observer<String> {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.has(DATA)) {
                     String response = SLFDecryptUtil.DecryAes(jsonObject.getString(DATA), mSecret);
-                    SLFLogUtil.d("request","请求体返回解密 | Response:"+response);
+                    SLFLogUtil.sdkd("request","请求体返回解密 | Response:"+response);
                     if(response!=null){
                         JSONObject jsonObjectData = new JSONObject(response);
                         if (jsonObjectData.has(MSG)) {
@@ -88,12 +88,12 @@ public class SLFChatBotRxJavaObserver<T> implements Observer<String> {
             //MyToast.showCenterSortToast(mContext, mContext.getResources().getString(R.string.connect_error));
             onComplete();
             mCallBack.onRequestChatBotNetFail(mType,requestTime);
-            SLFLogUtil.d("request","网络原因请求失败 | Response:"+requestTime);
+            SLFLogUtil.sdkd("request","网络原因请求失败 | Response:"+requestTime);
             return;
         }
         // 2.非网络错误，接口请求错误
         mCallBack.onRequestChatBotFail(e.getMessage(), "1000",mType,requestTime);
-        SLFLogUtil.d("request","请求失败 | Response:"+requestTime);
+        SLFLogUtil.sdkd("request","请求失败 | Response:"+requestTime);
     }
 
     /**

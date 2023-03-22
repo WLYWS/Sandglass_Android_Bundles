@@ -449,7 +449,7 @@ public class SLFFileUtils {
         File file = new File(path);
         if (!file.exists()) {
             boolean isMkdirs = file.mkdirs();
-            //SLFLogUtil.e("getExternalPluginDataPath",isMkdirs+"");
+            //SLFLogUtil.sdke("getExternalPluginDataPath",isMkdirs+"");
         }
         return path;
     }
@@ -459,7 +459,7 @@ public class SLFFileUtils {
         File file = new File(path);
         if (!file.exists()) {
             boolean isMkdirs = file.mkdirs();
-            //SLFLogUtil.e("getExternalPluginDataPath",isMkdirs+"");
+            //SLFLogUtil.sdke("getExternalPluginDataPath",isMkdirs+"");
         }
         return path;
     }

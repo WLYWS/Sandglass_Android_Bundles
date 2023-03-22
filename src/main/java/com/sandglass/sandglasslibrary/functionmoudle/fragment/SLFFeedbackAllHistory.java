@@ -188,7 +188,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
         slf_feedback_list_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                SLFLogUtil.d("smartrefresh","loadmore+:"+current_page);
+                SLFLogUtil.sdkd("smartrefresh","loadmore+:"+current_page);
                 getFeedBackList(ALL,current_page);
             }
         });
@@ -224,12 +224,12 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
         chageView();
         SLFToastUtil.hideLoading();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
-        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestNetFail type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestNetFail type:" + type);
     }
 
     @Override
     public void onRequestSuccess(String result, T type) {
-        SLFLogUtil.d("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
         if (type instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) type).data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
@@ -259,7 +259,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
         chageView();
         SLFToastUtil.hideLoading();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));
-        SLFLogUtil.d("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestFail type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestFail type:" + type);
     }
 
 

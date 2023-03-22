@@ -229,13 +229,13 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
             } else {
                 slf_feedback_list_refreshLayout.finishLoadMore();
             }
-            SLFLogUtil.d("SLFFeedbackAllHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestNetFail type:" + type);
+            SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestNetFail type:" + type);
         }
     }
 
     @Override
     public void onRequestSuccess(String result, T type) {
-        SLFLogUtil.d("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
         if (type instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) type).data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
@@ -272,7 +272,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
             } else {
                 slf_feedback_list_refreshLayout.finishLoadMore();
             }
-            SLFLogUtil.d("SLFFeedbackAllHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestFail type:" + type);
+            SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestFail type:" + type);
         }
     }
 
@@ -283,7 +283,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
                 current_page = 1;
                 isRefresh = "auto";
                 getFeedBackList(IN_PROGRESS,current_page);
-                SLFLogUtil.d("swiperefreshlayout","auto refresh::"+current_page);
+                SLFLogUtil.sdkd("swiperefreshlayout","auto refresh::"+current_page);
             }
         });
     }
