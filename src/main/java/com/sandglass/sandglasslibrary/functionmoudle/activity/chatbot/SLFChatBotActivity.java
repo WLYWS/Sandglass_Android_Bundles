@@ -157,6 +157,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 uuid = getUUid();
                 SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                 getWelcomeHotQuestion();
+                SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, 1);
             }else {
                 if (((fromHelpTime - lastSendTime) / 1000 / 60) > 5) {
                     slfdbEngine.quary_ten_msg(msg_id);

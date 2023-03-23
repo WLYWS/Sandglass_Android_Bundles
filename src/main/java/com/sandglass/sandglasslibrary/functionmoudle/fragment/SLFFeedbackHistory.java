@@ -103,6 +103,8 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
     public void onResume() {
         super.onResume();
         if(!isCreated){
+            initRecyclerView();
+            initView();
             initData();
         }
         isCreated = false;

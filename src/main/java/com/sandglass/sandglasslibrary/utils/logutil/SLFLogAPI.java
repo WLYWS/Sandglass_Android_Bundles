@@ -20,7 +20,7 @@ public class SLFLogAPI {
         android.util.Log.d(TAG, "onCreate: init log");
         //loadXlogLib();
        // SLFLogUtil.getInstance();
-        //SLFLogUtil.createFile(SLFConstants.isUseXlog);
+        SLFLogUtil.createFile(SLFConstants.isUseXlog);
         //SLFLogUtil.initSDKXlog(0,0, SLFConstants.xlogCachePath,SLFConstants.apiLogPath,"slf_",0,XLOG_PUBKEY);
        // SLFLogUtil.initXLog(SLFConstants.xlogCachePath,SLFConstants.apiLogPath,XLOG_PUBKEY);
         //SLFLogUtil.setUserInfo();
