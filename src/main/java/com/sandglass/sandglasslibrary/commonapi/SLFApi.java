@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
@@ -112,7 +113,8 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 //    }
     /**跳转到插件反馈*/
     public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap, String token){
-        Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
+        //Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
+        Intent in = new Intent(getSLFContext(), SLFChatBotActivity.class);
         setToken(token);
 
         setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
