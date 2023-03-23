@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
-        minSdk 21
-        targetSdk 26
+        minSdk 26
+        targetSdk 33
         versionName "0.1.29"
         buildConfigField("String","versionName","\"${versionName}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

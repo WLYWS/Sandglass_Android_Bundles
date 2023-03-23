@@ -42,6 +42,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -831,7 +832,11 @@ public class SLFCommonUtils {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(url);
         String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        retriever.release();
+        try {
+            retriever.release();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         long res = defaultValue;
         try {
             res = Long.parseLong(duration);

@@ -151,13 +151,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             getWelcomeHotQuestion();
         } else {
             //请求数据库查找记录
-            lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0);
-            if(lastSendTime==0) {
+            lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0L);
+            if(lastSendTime==0L) {
                 slfdbEngine.quary_ten_msg(msg_id);
                 uuid = getUUid();
                 SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                 getWelcomeHotQuestion();
-                SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, 1);
+                SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, 1L);
             }else {
                 if (((fromHelpTime - lastSendTime) / 1000 / 60) > 5) {
                     slfdbEngine.quary_ten_msg(msg_id);
