@@ -927,6 +927,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     protected void onPause() {
         super.onPause();
         //页面退出时隐藏软键盘
+        SLFToastUtil.cancel();
         et_faq_input.clearFocus();
         hideSoftInput(SLFChatBotActivity.this, et_faq_input);
     }
@@ -1106,4 +1107,5 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             handler.removeCallbacksAndMessages(null);
         }
     }
+
 }

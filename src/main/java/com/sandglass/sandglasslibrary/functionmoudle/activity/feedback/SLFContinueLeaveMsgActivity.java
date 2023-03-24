@@ -26,6 +26,7 @@ import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
+import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
@@ -704,5 +705,4 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":getSendHistory:map:"+map.toString());
         return map;
     }
-
 }

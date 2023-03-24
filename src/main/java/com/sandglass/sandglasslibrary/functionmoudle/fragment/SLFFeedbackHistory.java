@@ -131,6 +131,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
     }
 
     private void initData(){
+        SLFToastUtil.cancel();
         SLFToastUtil.showLoading(getActivity(), SLFToastUtil.LOADING_TYPE_WHITE,false);
         isRefresh = "refresh";
         current_page = 1;
@@ -304,5 +305,11 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
                 recodeList.get(event.position).setSendLog(1);
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SLFToastUtil.cancel();
     }
 }

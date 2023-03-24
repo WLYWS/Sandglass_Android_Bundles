@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -1419,8 +1420,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
             if (isIllagelWorld) {
                 slf_common_loading_linear_submit.setVisibility(View.GONE);
-                changeViewFoucs();
+                //changeViewFoucs();
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_create_feedback_illegal_world_text));
+                new Handler().postDelayed(new Runnable() {  // 开启的runnable也会在这个handler所依附线程中运行，即主线程
+                    @Override
+                    public void run() {
+                        changeViewFoucs();
+                    }
+                }, 2500); //
             } else {
                 checkedSendLog();
             }
@@ -1460,7 +1467,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
         slf_common_loading_linear_submit.setVisibility(View.GONE);
-        changeViewFoucs();
+
+        //changeViewFoucs();
         if (type instanceof String) {
             String code = (String) type;
             if (SLFConstants.photoCode.equals(code)) {
@@ -1479,7 +1487,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
-
+        new Handler().postDelayed(new Runnable() {  // 开启的runnable也会在这个handler所依附线程中运行，即主线程
+            @Override
+            public void run() {
+                changeViewFoucs();
+            }
+        }, 3000); //
     }
 
     private synchronized void resultUploadImageOrVideo(String code) {
