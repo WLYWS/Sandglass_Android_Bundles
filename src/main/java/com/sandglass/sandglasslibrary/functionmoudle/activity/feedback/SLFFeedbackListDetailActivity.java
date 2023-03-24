@@ -443,7 +443,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL.replace("{id}",String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
             }
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
+            //showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_detail_send_log_success));
             slfRightTitle.setVisibility(View.GONE);
             EventBus.getDefault().post(new SLFSendLogSuceessEvent(true,position));
             SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFSendLeaveMsgRepsonseBean");
