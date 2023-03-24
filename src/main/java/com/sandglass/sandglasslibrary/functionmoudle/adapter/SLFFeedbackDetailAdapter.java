@@ -237,12 +237,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void updateList(List<SLFLeaveMsgRecord> newDatas, boolean hasMore,boolean isRefresh) {
         if (newDatas != null) {
-            if(isRefresh){
-                datas.clear();
-                datas.addAll(newDatas);
-            }else {
-                datas.addAll(newDatas);
-            }
+           datas.addAll(0,newDatas);
         }
         this.hasMore = hasMore;
         this.isRefresh = isRefresh;
