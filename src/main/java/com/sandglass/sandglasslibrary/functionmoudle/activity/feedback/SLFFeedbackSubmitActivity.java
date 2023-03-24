@@ -578,12 +578,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         if (slfSendLogCheck.isChecked()) {
             //showLoading();
             //sumbitLogFiles();
+            sumbitLogFiles();
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadAppLogComplete(boolean isComplete) {
                     SLFLogUtil.sdkd("yj", "complete---app-callback--");
                     isCallbackAppLog = true;
-                    sumbitLogFiles();
+
                 }
             });
             if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {
