@@ -175,6 +175,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
         mLayoutManager = new LinearLayoutManager(getActivity());
         slf_histroy_feedback_list.setLayoutManager(mLayoutManager);
         slf_histroy_feedback_list.setAdapter(adapter);
+        slf_feedback_list_refreshLayout.setEnableRefresh(false);
         slf_feedback_list_refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
         slf_feedback_list_refreshLayout.setEnableFooterTranslationContent(true);//是否上拉Footer的时候向上平移列表或者内容
         slf_feedback_list_refreshLayout.setEnableLoadMoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能

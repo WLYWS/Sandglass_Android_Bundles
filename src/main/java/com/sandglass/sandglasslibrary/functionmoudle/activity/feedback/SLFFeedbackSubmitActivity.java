@@ -1391,7 +1391,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (type instanceof SLFillagelWordResponseBean) {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
         } else {
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
+           // showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+            SLFToastUtil.showCenterSubmitFailText();
         }
     }
 

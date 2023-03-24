@@ -28,6 +28,7 @@ import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedba
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFeedbackListAdapter;
 import com.sandglass.sandglasslibrary.moudle.event.SLFSendLogSuceessEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUnReadtoReadAllEvent;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailItemResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
@@ -174,6 +175,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
         mLayoutManager = new LinearLayoutManager(getActivity());
         slf_histroy_feedback_list.setLayoutManager(mLayoutManager);
         slf_histroy_feedback_list.setAdapter(adapter);
+        slf_feedback_list_refreshLayout.setEnableRefresh(false);
         slf_feedback_list_refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
         slf_feedback_list_refreshLayout.setEnableFooterTranslationContent(true);//是否上拉Footer的时候向上平移列表或者内容
         slf_feedback_list_refreshLayout.setEnableLoadMoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
@@ -225,8 +227,16 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements  SL
     public void onRequestNetFail(T type) {
         chageView();
         SLFToastUtil.hideLoading();
-        SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
-        SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestNetFail type:" + type);
+        //SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_network_error));
+        if(type instanceof SLFFeedbackDetailItemResponseBean) {
+            if (isRefresh.equals("refresh")) {
+                slf_feedback_list_refreshLayout.finishRefresh();
+                isRefresh = "isCanHasmore";
+            } else {
+                slf_feedback_list_refreshLayout.finishLoadMore();
+            }
+            SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestNetFail type:" + type);
+        }
     }
 
     @Override

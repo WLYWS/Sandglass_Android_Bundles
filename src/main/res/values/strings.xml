@@ -72,7 +72,7 @@
     <string name="slf_first_page_request_fail">Request Failed</string>
     <string name="slf_first_page_request_fail_sub">The network is weak or the server is down, request for data failed</string>
     <string name="slf_first_page_no_network_try_again">Try Again</string>
-    <string name="slf_faq_detail_btton_text">Unsolved？ Submit feedback ~</string>
+    <string name="slf_faq_detail_btton_text">Unsolved? Submit feedback ~</string>
 
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>
@@ -83,7 +83,7 @@
     <string name="slf_help_and_feedback_feed_back">Feedback</string>
     <string name="slf_help_and_feedback_faq_list">FAQ</string>
     <string name="slf_create_feedback_illegal_world_text">The content you entered contains sensitive words, please re-enter</string>
-    <string name="slf_user_device_service_type">MyDevice</string>
+    <string name="slf_user_device_service_type">My devices</string>
     <string name="loading1">loading   </string>
     <string name="loading2">loading.  </string>
     <string name="loading3">loading.. </string>

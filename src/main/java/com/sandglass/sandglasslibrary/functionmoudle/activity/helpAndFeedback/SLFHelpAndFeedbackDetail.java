@@ -11,11 +11,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailResponseBean;
@@ -25,6 +27,8 @@ import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
+import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
+import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
@@ -53,6 +57,13 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     private SLFFaqDetailBean slfFaqDetailBean;
 
+    private LinearLayout slf_faq_detail_no_item_linear;
+    private TextView slf_faq_detail_no_feedback;
+    private TextView slf_faq_detail_no_network;
+    private Button slf_faq_detail_try_again;
+    private  String content;
+    private SLFScrollView slf_feed_back_scroll_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +76,13 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     }
 
     private void initView(){
+        slf_feed_back_scroll_view = findViewById(R.id.slf_feed_back_scroll_view);
         mWebView = findViewById(R.id.slf_faq_detail_web);
         mFeedbackBtn = findViewById(R.id.slf_faq_to_feedback);
+        slf_faq_detail_no_item_linear = findViewById(R.id.slf_faq_detail_no_item_linear);
+        slf_faq_detail_no_feedback = findViewById(R.id.slf_faq_detail_no_feedback);
+        slf_faq_detail_no_network = findViewById(R.id.slf_faq_detail_no_network);
+        slf_faq_detail_try_again = findViewById(R.id.slf_faq_detail_try_again);
         mFeedbackBtn.setOnClickListener(this);
         SLFFontSet.setSLF_MediumFontt(getContext(),mFeedbackBtn);
         WebSettings settings = mWebView.getSettings();
@@ -107,6 +123,35 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         CookieManager mCookieManager = CookieManager.getInstance();
         mCookieManager.setAcceptCookie(true);
         mCookieManager.setAcceptThirdPartyCookies(mWebView, true);
+        slf_faq_detail_try_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initData();
+            }
+        });
+    }
+
+    private void chageView(){
+        if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
+            if (content == null) {
+                slf_feed_back_scroll_view.setVisibility(View.GONE);
+                slf_faq_detail_no_item_linear.setVisibility(View.VISIBLE);
+                slf_faq_detail_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_no_item));
+                slf_faq_detail_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_top_text_normal));
+                slf_faq_detail_no_network.setVisibility(View.GONE);
+                slf_faq_detail_try_again.setVisibility(View.GONE);
+            } else {
+                slf_feed_back_scroll_view.setVisibility(View.VISIBLE);
+                slf_faq_detail_no_item_linear.setVisibility(View.GONE);
+            }
+        }else{
+            slf_feed_back_scroll_view.setVisibility(View.GONE);
+            slf_faq_detail_no_item_linear.setVisibility(View.VISIBLE);
+            slf_faq_detail_no_feedback.setText(SLFResourceUtils.getString(R.string.slf_first_page_no_network));
+            slf_faq_detail_no_feedback.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_no_network_warning));
+            slf_faq_detail_no_network.setVisibility(View.VISIBLE);
+            slf_faq_detail_try_again.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initData(){
@@ -152,7 +197,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     @Override
     public void onRequestNetFail(T type) {
-
+        chageView();
     }
 
     @Override
@@ -160,10 +205,11 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         if(type instanceof SLFFaqDetailResponseBean){
             String replaceAll;
             slfFaqDetailBean = ((SLFFaqDetailResponseBean) type).data;
-            String content = slfFaqDetailBean.getContent();
+            content = slfFaqDetailBean.getContent();
             replaceAll = content.replaceAll("<img ","<img style=\"max-width:100%;height:auto\" ");
 
             mWebView.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
+            chageView();
         }
     }
 
@@ -199,6 +245,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
+        chageView();
         SLFLogUtil.sdke("yj","error____");
     }
 }
