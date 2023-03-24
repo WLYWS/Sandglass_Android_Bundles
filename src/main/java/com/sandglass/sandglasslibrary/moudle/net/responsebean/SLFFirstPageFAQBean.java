@@ -1,13 +1,18 @@
 package com.sandglass.sandglasslibrary.moudle.net.responsebean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Greated by yangjie
  * describe:首页FAQ分类bean
  * time:2023/2/20
  */
-public class SLFFirstPageFAQBean {
+public class SLFFirstPageFAQBean implements Parcelable {
     /**id*/
     private long id;
     /**设备名称*/
@@ -26,6 +31,25 @@ public class SLFFirstPageFAQBean {
         this.sub = sub;
         this.isChecked = isChecked;
     }
+
+    protected SLFFirstPageFAQBean (Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        iconUrl = in.readString();
+        isChecked = in.readByte() != 0;
+    }
+
+    public static final Creator <SLFFirstPageFAQBean> CREATOR = new Creator <SLFFirstPageFAQBean>() {
+        @Override
+        public SLFFirstPageFAQBean createFromParcel (Parcel in) {
+            return new SLFFirstPageFAQBean(in);
+        }
+
+        @Override
+        public SLFFirstPageFAQBean[] newArray (int size) {
+            return new SLFFirstPageFAQBean[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -77,5 +101,18 @@ public class SLFFirstPageFAQBean {
                 ", sub='" + sub + '\'' +
                 ", isChecked='" + isChecked + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents ( ) {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel (@NonNull Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(iconUrl);
+        parcel.writeByte((byte) (isChecked ? 1 : 0));
     }
 }

@@ -2,12 +2,15 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -54,6 +57,7 @@ import com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+import com.sandglass.sandglasslibrary.service.SLFUpdateCacheService;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.theme.SLFSetTheme;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
@@ -114,11 +118,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private  String uuid;
     /**标题栏右边图标*/
     private ImageView imgRight;
+    private Intent intentService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
+        bindSlfUpdateService();
         setContentView(R.layout.activity_slfchat_bot);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         setKeyboardListener();
@@ -127,9 +133,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         slfdbEngine = new SLFDBEngine(this);
         initView();
         initData();
-
     }
 
+    //绑定更新缓存服务
+    private void bindSlfUpdateService ( ) {
+        intentService = new Intent(this, SLFUpdateCacheService.class);
+        startService(intentService);
+    }
 
 
     @Override
@@ -1088,7 +1098,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             }
         }
     };
-
+    
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -1099,5 +1109,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
+
+        stopService(intentService);//停止服务
+
     }
 }

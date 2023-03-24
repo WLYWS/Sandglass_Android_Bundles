@@ -20,13 +20,25 @@ public class SLFUserDeviceSaved {
     /**固件版本信息*/
     private String firmewareVersion;
 
+    /**device name*/
+    private String deviceName;
+
     public SLFUserDeviceSaved(){}
 
-    public SLFUserDeviceSaved(String deviceid,String deviceMoudle,Long serviceTypeid,String firmewareVersion){
+    public SLFUserDeviceSaved(String deviceid,String deviceMoudle,Long serviceTypeid,String firmewareVersion,String deviceName){
         this.deviceid = deviceid;
         this.deviceMoudle = deviceMoudle;
         this.serviceTypeid = serviceTypeid;
         this.firmewareVersion = firmewareVersion;
+        this.deviceName = deviceName;
+    }
+
+    public String getDeviceName ( ) {
+        return deviceName;
+    }
+
+    public void setDeviceName (String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public String getDeviceid() {

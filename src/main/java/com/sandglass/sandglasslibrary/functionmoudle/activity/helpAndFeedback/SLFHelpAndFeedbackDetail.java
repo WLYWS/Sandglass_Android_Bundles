@@ -16,16 +16,25 @@ import android.widget.TextView;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
+import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqCategoryEvent;
+import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqDetailEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailResponseBean;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQResponseBean;
 import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
 import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
+import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.sandglass.sandglasslibrary.utils.manager.SLFCacheToFileManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +61,9 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     private ImageView slfBack;
 
     private SLFFaqDetailBean slfFaqDetailBean;
+
+    private static final String CACHE_FILE_PATH = SLFConstants.rootPath+"/updatefaqdetail/";
+    private SLFCacheToFileManager <SLFFaqDetailResponseBean> cacheManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +122,23 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     }
 
     private void initData(){
+        cacheManager = new SLFCacheToFileManager(SLFFaqDetailResponseBean.class);
         titleName =getIntent().getStringExtra(SLFConstants.FAQ_TITLE_NAME);
         faq_id = getIntent().getLongExtra(SLFConstants.FAQ_ID,-1);
         if(null==titleName){
             titleName = "";
         }
         if(faq_id!=-1){
-            getFaqDetaiData();
+            SLFFaqDetailResponseBean sLFFaqDetailResponseBean = cacheManager.readObj(CACHE_FILE_PATH+"slf_faq_detail_"+faq_id);
+            if (sLFFaqDetailResponseBean!=null){
+                if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL,-1)){
+                    getFaqDetaiData();
+                }else {
+                    showContent(sLFFaqDetailResponseBean);
+                }
+            }else {
+                getFaqDetaiData();
+            }
         }else{
             showToast("faq id is error");
         }
@@ -158,13 +180,21 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     @Override
     public void onRequestSuccess(String result, T type) {
         if(type instanceof SLFFaqDetailResponseBean){
-            String replaceAll;
-            slfFaqDetailBean = ((SLFFaqDetailResponseBean) type).data;
-            String content = slfFaqDetailBean.getContent();
-            replaceAll = content.replaceAll("<img ","<img style=\"max-width:100%;height:auto\" ");
-
-            mWebView.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
+            cacheManager.delete(CACHE_FILE_PATH);
+            SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0));
+            cacheManager.saveObj(CACHE_FILE_PATH+"slf_faq_detail_"+faq_id,(SLFFaqDetailResponseBean)type);
+            showContent((SLFFaqDetailResponseBean) type);
         }
+    }
+
+
+    private void showContent (SLFFaqDetailResponseBean type) {
+        String replaceAll;
+        slfFaqDetailBean = type.data;
+        String content = slfFaqDetailBean.getContent();
+        replaceAll = content.replaceAll("<img ","<img style=\"max-width:100%;height:auto\" ");
+
+        mWebView.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
     }
 
     public List<String> getImgSrc(String htmlStr) {
@@ -200,5 +230,15 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     @Override
     public void onRequestFail(String value, String failCode, T type) {
         SLFLogUtil.sdke("yj","error____");
+    }
+
+    /**
+     * 接受缓存更新事件，要更新缓存
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFUpdateFaqDetailEvent event) {
+        SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,event.updateTime);
+        getFaqDetaiData();;
     }
 }

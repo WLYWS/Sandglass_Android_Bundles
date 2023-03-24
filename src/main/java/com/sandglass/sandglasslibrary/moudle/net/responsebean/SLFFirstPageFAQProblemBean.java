@@ -1,13 +1,18 @@
 package com.sandglass.sandglasslibrary.moudle.net.responsebean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Greated by yangjie
  * describe:首页FAQ分类二级菜单数据bean
  * time:2023/2/20
  */
-public class SLFFirstPageFAQProblemBean {
+public class SLFFirstPageFAQProblemBean implements Parcelable {
     /**id*/
     private long id;
     /**设备名称*/
@@ -23,6 +28,24 @@ public class SLFFirstPageFAQProblemBean {
         this.faqList = faqList;
         this.isExtend = isExtend;
     }
+
+    protected SLFFirstPageFAQProblemBean (Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        isExtend = in.readByte() != 0;
+    }
+
+    public static final Creator <SLFFirstPageFAQProblemBean> CREATOR = new Creator <SLFFirstPageFAQProblemBean>() {
+        @Override
+        public SLFFirstPageFAQProblemBean createFromParcel (Parcel in) {
+            return new SLFFirstPageFAQProblemBean(in);
+        }
+
+        @Override
+        public SLFFirstPageFAQProblemBean[] newArray (int size) {
+            return new SLFFirstPageFAQProblemBean[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -64,5 +87,17 @@ public class SLFFirstPageFAQProblemBean {
                 ", name='" + name + '\'' +
                 ", faqList='" + faqList + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents ( ) {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel (@NonNull Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeByte((byte) (isExtend ? 1 : 0));
     }
 }

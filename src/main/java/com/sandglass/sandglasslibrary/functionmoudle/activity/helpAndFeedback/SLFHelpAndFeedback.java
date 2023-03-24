@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFExAdapter;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
+import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqCategoryEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQFapListBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQProblemBean;
@@ -30,7 +32,9 @@ import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
+import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.sandglass.sandglasslibrary.utils.manager.SLFCacheToFileManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -80,6 +84,9 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     private LinearLayoutManager mProblemLayoutManager;
     private List<SLFFirstPageFAQProblemBean> problemList;
     private int fristPostion = -1;
+    private static final String CACHE_FILE_PATH = SLFConstants.rootPath+"/updatetxt/faq_category.txt";
+    private SLFCacheToFileManager<SLFFirstPageFAQResponseBean> cacheManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +95,19 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         initTitle();
         initView();
         initRecyclerView();
+        cacheManager = new SLFCacheToFileManager(SLFFirstPageFAQResponseBean.class);
         if(SLFCommonUtils.isNetworkAvailable(this)){
             hasDataPage();
-            getDeviceTypesList();
+            SLFFirstPageFAQResponseBean slfFirstPageFAQResponseBean = cacheManager.readObj(CACHE_FILE_PATH);
+            if (slfFirstPageFAQResponseBean!=null){
+                if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQCATEGORY,-1)){
+                    getDeviceTypesList();
+                }else {
+                    showContent(slfFirstPageFAQResponseBean);
+                }
+            }else {
+                getDeviceTypesList();
+            }
         }else{
             noDataPage(true);
         }
@@ -210,20 +227,27 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     public void onRequestSuccess(String result, T type) {
         if(type instanceof SLFFirstPageFAQResponseBean){
-            SLFLogUtil.sdkd("yj","data===SLFFirstPageFAQResponseBean===="+((SLFFirstPageFAQResponseBean)type).data.toString());
-            List<SLFFirstPageFAQBean> newDatas =((SLFFirstPageFAQResponseBean)type).data;
-            List<SLFFirstPageFAQBean> checkDatas = FaitleData(newDatas);
-            deviceTypesList.clear();
-            deviceTypesList.addAll(checkDatas);
-            if(deviceTypesList.size()>0) {
-                hasDataPage();
-                deviceTypesList.get(0).setChecked(true);
-                setSecondData(0);
-            }else{
-                noDataPage(false);
-            }
-            hideLoading();
+            cacheManager.delete(CACHE_FILE_PATH);
+            SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQCATEGORY,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE,0));
+            cacheManager.saveObj(CACHE_FILE_PATH,(SLFFirstPageFAQResponseBean)type);
+            showContent((SLFFirstPageFAQResponseBean) type);
         }
+    }
+
+    private void showContent (SLFFirstPageFAQResponseBean type) {
+        SLFLogUtil.sdkd("yj","data===SLFFirstPageFAQResponseBean===="+ type.data.toString());
+        List<SLFFirstPageFAQBean> newDatas = type.data;
+        List<SLFFirstPageFAQBean> checkDatas = FaitleData(newDatas);
+        deviceTypesList.clear();
+        deviceTypesList.addAll(checkDatas);
+        if(deviceTypesList.size()>0) {
+            hasDataPage();
+            deviceTypesList.get(0).setChecked(true);
+            setSecondData(0);
+        }else{
+            noDataPage(false);
+        }
+        hideLoading();
     }
 
     @Override
@@ -262,9 +286,6 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
                }
            }
         }
-
-
-
         return newDatas;
     }
 
@@ -272,8 +293,12 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     private void setSecondData(int position){
         fristPostion = position;
-        slfExAdapter = new SLFExAdapter(getContext(),deviceTypesList.get(position).getSub());
-        problemRecycler.setAdapter(slfExAdapter);
+        if (slfExAdapter==null){
+            slfExAdapter = new SLFExAdapter(getContext(),deviceTypesList.get(position).getSub());
+            problemRecycler.setAdapter(slfExAdapter);
+        }else {
+            slfExAdapter.notifyDataSetChanged();
+        }
         problemRecycler.setGroupIndicator(null);//除去自带的箭头，自带的箭头在父列表的最左边，不展开向下，展开向上
         problemRecycler.setDivider(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_first_page_line));//这个是设定每个Group之间的分割线。,默认有分割线，设置null没有分割线
         slfExAdapter.notifyDataSetChanged();
@@ -305,5 +330,15 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 //            requestNewFeed();
 //            getDeviceTypesList();
         }
+    }
+
+    /**
+     * 接受缓存更新事件，要更新缓存
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFUpdateFaqCategoryEvent event) {
+        SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE,event.updateTime);
+        getDeviceTypesList();
     }
 }

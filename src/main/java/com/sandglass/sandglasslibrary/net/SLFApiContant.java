@@ -21,4 +21,5 @@ public class SLFApiContant {
     public static final String FEEDBACK_ILLEGLA_WORD ="/feedback/openai/moderation";//敏感词汇校验(提交反馈)
     public static final String FIRST_PAGE_GET_USERINO = "/feedback/user/info";//deviceinfo email iconUrl
     public static final String USER_DEVICE_LIST = "/feedback/user/device/list";//用户的devicelist
+    public static final String FEEDBACK_UPDATE_CACHE = "/feedback/cache";//获取数据更新时间
 }

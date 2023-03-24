@@ -80,6 +80,15 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <service
+            android:name=".service.SLFUpdateCacheService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.sandglass.sandglasslibrary.service.SLFUpdateCacheService" />
+            </intent-filter>
+        </service>
+
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

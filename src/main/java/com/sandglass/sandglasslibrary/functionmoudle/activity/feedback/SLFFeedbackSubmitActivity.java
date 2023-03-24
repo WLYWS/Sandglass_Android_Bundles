@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved;
@@ -37,6 +38,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryCommonBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoryDetailBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCreateFeedbackRepsonseBean;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFProlemDataBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
@@ -67,10 +69,12 @@ import com.sandglass.sandglasslibrary.utils.SLFPermissionManager;
 import com.sandglass.sandglasslibrary.utils.SLFPhotoSelectorUtils;
 import com.sandglass.sandglasslibrary.utils.SLFRegular;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
+import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.sandglass.sandglasslibrary.utils.manager.SLFCacheToFileManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -295,6 +299,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private boolean isSendLogsuccess = false;
     private boolean isCallbackAppLog = false;
     private boolean isCallbackFirmwareLog = false;
+    private static final String CACHE_FILE_PATH = SLFConstants.rootPath+"/updatetxt/feedback_category.txt";
+    private SLFCacheToFileManager <SLFCategoriesResponseBean> cacheManager;
+    private String categoryText;
+    private String subCategoryText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,6 +310,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_photo_selector);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+        cacheManager = new SLFCacheToFileManager(SLFCategoriesResponseBean.class);
         initTitle();
         initView();
         checkNetWork();
@@ -315,7 +324,17 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slf_submit_page_no_network_linear.setVisibility(View.GONE);
             requestUploadUrls();
             requestUserDeviceList();
-            requestAllData();
+            SLFCategoriesResponseBean sLFCategoriesResponseBean = cacheManager.readObj(CACHE_FILE_PATH);
+            if (sLFCategoriesResponseBean!=null){
+                if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,-1)){
+                    requestAllData();
+                }else {
+                    showContent(sLFCategoriesResponseBean);
+                }
+            }else {
+                requestAllData();
+            }
+
         } else {
             slf_submit_page_no_network_linear.setVisibility(View.VISIBLE);
             slfScrollView.setVisibility(View.GONE);
@@ -1151,7 +1170,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                         categoryBean.sub.addAll(serviceTypeTitle.sub.get(j).sub);
                                         SLFUserDeviceSaved userDeviceSaved = new SLFUserDeviceSaved(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId(),
                                                 SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel(), serviceTypeTitle.sub.get(j).id,
-                                                SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion());
+                                                SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion(),SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceName());
                                         SLFUserCenter.getInstance().put(categoryBean.id, userDeviceSaved);
                                     }
 
@@ -1399,9 +1418,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestSuccess(String result, Object type) {
 
         if (type instanceof SLFCategoriesResponseBean) {
-            SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFCategoriesResponseBean::" + ":::type:::" + type.toString());
-            this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
-            hideLoading();
+            cacheManager.delete(CACHE_FILE_PATH);
+            SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0));
+            cacheManager.saveObj(CACHE_FILE_PATH,(SLFCategoriesResponseBean)type);
+            showContent(type);
         } else if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type, 8);
@@ -1444,6 +1464,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.toString());
         }
 
+    }
+
+    private void showContent (Object type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFCategoriesResponseBean::" + ":::type:::" + type.toString());
+        this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
+        hideLoading();
     }
 
 //    private void canGotoSubmit(int logId){
@@ -1553,11 +1579,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         map.put("deviceTimezone", SLFUserCenter.getDeviceTimeZone());
         map.put("serviceType", userInfo.getServiceTypeid());
+        map.put("serviceTypeText", userInfo.getDeviceName());
         if (slfProblemLinear.getVisibility() == View.VISIBLE) {
             map.put("category", seletedProbleType);
+            map.put("categoryText", categoryText);
         }
         if (slfProblemOverviewLinear.getVisibility() == View.VISIBLE) {
             map.put("subCategory", seletedProblemOverviewType);
+            map.put("subCategoryText", subCategoryText);
         }
         map.put("content", slfEditProblem.getText().toString());
         map.put("email", slfEmailEdit.getText().toString().trim());
@@ -1710,8 +1739,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             seleteddeviceMoudle = deviceMoudle;
         } else if (seletedType == 2) {
             seletedProbleType = id;
+            categoryText = name;
         } else {
             seletedProblemOverviewType = id;
+            subCategoryText = name;
         }
     }
 
@@ -1722,7 +1753,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             userDeviceSaved = SLFUserCenter.getInstance().get(seletedServiceType);
         } else {
             userDeviceSaved = new SLFUserDeviceSaved("", seleteddeviceMoudle, seletedServiceType,
-                    "");
+                    "","");
         }
             return userDeviceSaved;
         }
