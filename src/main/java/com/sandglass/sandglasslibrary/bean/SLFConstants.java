@@ -22,7 +22,7 @@ public class SLFConstants {
     public static String userId = "1";
 
     public static final boolean isShowLog = true;
-    public static boolean isUseXlog = true;
+    public static boolean isUseXlog = false;
     public static boolean isOpenConsoleLog = true;
     public static boolean isLogFileEncrypt = false;
 

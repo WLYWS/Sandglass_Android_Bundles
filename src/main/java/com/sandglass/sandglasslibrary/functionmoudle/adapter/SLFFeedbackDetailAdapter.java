@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackPicPreviewActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
@@ -190,6 +191,13 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
             } else {
                 ((UserNormalHolder) holder).slf_feedback_detail_show_photo_linear.setVisibility(View.GONE);
             }
+            if(SLFUserCenter.userInfoBean!=null&&SLFUserCenter.userInfoBean.getData()!=null&&SLFUserCenter.userInfoBean.getData().getIconUrl()!=null){
+                SLFImageUtil.loadImage(context, SLFUserCenter.userInfoBean.getData().getIconUrl(),((UserNormalHolder) holder).slf_feedback_list_detail_user_header_img , R.mipmap.slf_chat_bot_user_icon, R.mipmap.slf_chat_bot_user_icon
+                        , SLFImageShapes.CIRCLE, SLFImageShapes.ROUND);
+            }else {
+                ((UserNormalHolder) holder).slf_feedback_list_detail_user_header_img.setImageResource(R.mipmap.slf_chat_bot_user_icon);
+            }
+
             ((UserNormalHolder) holder).slf_feedback_detail_question_content.setText(datas.get(position).getContent());
             ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(context, datas.get(position).getReplyTs()));
             SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_question_content);
@@ -237,12 +245,7 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void updateList(List<SLFLeaveMsgRecord> newDatas, boolean hasMore,boolean isRefresh) {
         if (newDatas != null) {
-            if(isRefresh){
-                datas.clear();
-                datas.addAll(newDatas);
-            }else {
-                datas.addAll(newDatas);
-            }
+           datas.addAll(0,newDatas);
         }
         this.hasMore = hasMore;
         this.isRefresh = isRefresh;

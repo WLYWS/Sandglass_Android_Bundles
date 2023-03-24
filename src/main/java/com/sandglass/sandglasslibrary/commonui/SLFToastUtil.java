@@ -82,6 +82,12 @@ public class SLFToastUtil {
         mToast.show();
     }
 
+    public static synchronized void cancel(){
+        if(mToast!=null){
+            mToast.cancel();
+        }
+    }
+
     @SuppressWarnings("deprecation")
     public static synchronized void showText(Activity act, CharSequence text) {
 

@@ -333,9 +333,7 @@ public class SLFHttpTool {
             map.put("Authorization", SLFConstants.token);
             map.put("secret",encryptMd532(secret.getBytes(CHARSET_UTF8)));
             map.put("user-agent", user_agent);
-            SLFLogUtil.sdkd("request", "Get request 加密：| 签名: signature="+SLFStringUtil.replaceBlank(generateSign(method, url, maps,String.valueOf(ts))));
-            SLFLogUtil.sdkd("request", "Get request 加密：| 密钥: secret="+encryptMd532(secret.getBytes(CHARSET_UTF8)));
-            SLFLogUtil.sdkd("request", "user-agent="+user_agent);
+            SLFLogUtil.sdkd("request", "header::"+map.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

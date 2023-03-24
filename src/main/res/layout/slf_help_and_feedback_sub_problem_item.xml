@@ -24,8 +24,8 @@
         />
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
             android:id="@+id/slf_problem_sub"
             android:layout_alignParentRight="true"
             android:src="@drawable/slf_btn_icon_right"

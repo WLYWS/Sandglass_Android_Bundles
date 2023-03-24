@@ -143,6 +143,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private int position;
     private boolean isRefresh;
     private boolean isCreate;
+    private boolean isInit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,13 +188,15 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void initData() {
         showLoading();
         currentPage = 1;
-        isRefresh = true;
+        isInit = true;
+        isRefresh = false;
         getFeedBackDetailList(currentPage);
     }
 
     private void refresh() {
-        currentPage = 1;
+        isInit = false;
         isRefresh = true;
+        SLFLogUtil.sdkd("yj","currentPage--fresh--:"+currentPage);
         getFeedBackDetailList(currentPage);
     }
 
@@ -276,6 +279,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         mLayoutManager = new LinearLayoutManager(getContext());
         slf_feedback_leave_list.setLayoutManager(mLayoutManager);
         slf_feedback_leave_list.setAdapter(adapter);
+        slf_feedback_list_detail_refreshLayout.setEnableLoadMore(false);
         slf_feedback_list_detail_refreshLayout.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
         slf_feedback_list_detail_refreshLayout.setEnableFooterTranslationContent(true);//是否上拉Footer的时候向上平移列表或者内容
         slf_feedback_list_detail_refreshLayout.setEnableLoadMoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
@@ -289,12 +293,14 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                 refresh();
             }
         });
-        slf_feedback_list_detail_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                getFeedBackDetailList(currentPage);
-            }
-        });
+//        slf_feedback_list_detail_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(RefreshLayout refreshlayout) {
+//                isLoadMore = true;
+//                SLFLogUtil.sdkd("yj","currentPage----:"+currentPage);
+//                getFeedBackDetailList(currentPage);
+//            }
+//        });
         //slf_feedback_list_detail_refreshLayout.autoRefresh();//自动刷新
     }
 
@@ -318,11 +324,11 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             finish();
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
+            sumbitLogFiles();
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadAppLogComplete(boolean isComplete) {
                     SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload app log complete callback:");
-                    sumbitLogFiles();
                 }
             });
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
@@ -411,8 +417,6 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if(isRefresh){
                 slf_feedback_list_detail_refreshLayout.finishRefresh();
                 isRefresh = false;
-            } else{
-                slf_feedback_list_detail_refreshLayout.finishLoadMore();
             }
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
         }
@@ -454,25 +458,26 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void showFeedBackAdapter (SLFFeedbackDetailItemResponseBean bean) {
         newDatas = bean.data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
-                if(isRefresh){
+                if(isRefresh||isInit){
                     adapter.updateList(newDatas,false,true);
                     slf_feedback_list_detail_refreshLayout.finishRefresh();
-                    isRefresh = false;
-                }else {
-                    adapter.updateList(newDatas, true,false);
-                    slf_feedback_list_detail_refreshLayout.finishLoadMore();
+                    currentPage++;
                 }
-                currentPage++;
+//                else if(isLoadMore){
+//                    adapter.updateList(newDatas, true,false);
+//                    slf_feedback_list_detail_refreshLayout.finishLoadMore();
+//                    currentPage++;
+//                }
             } else {
                 adapter.updateList(null, false,false);
-                slf_feedback_list_detail_refreshLayout.finishLoadMore();
+                slf_feedback_list_detail_refreshLayout.finishRefresh();
             }
-                currentPage++;
             adapter.notifyDataSetChanged();
-         if(!isRefresh) {
-             slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
-         }
-
+            if(isInit){
+                slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
+            }
+            isRefresh = false;
+            isInit = false;
     }
 
     @Override
@@ -488,9 +493,11 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             if(isRefresh){
                 slf_feedback_list_detail_refreshLayout.finishRefresh();
                 isRefresh = false;
-            } else{
-                slf_feedback_list_detail_refreshLayout.finishLoadMore();
             }
+//            if(isLoadMore){
+//                slf_feedback_list_detail_refreshLayout.finishLoadMore();
+//                isLoadMore = false;
+//            }
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
         }
     }

@@ -55,11 +55,11 @@
 
         <ImageView
             android:id="@+id/slf_feedback_list_item_right_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/slf_feedback_list_item_back"/>
+            android:src="@drawable/slf_feedback_list_item_back" />
 
         <ImageView
             android:layout_width="8dp"

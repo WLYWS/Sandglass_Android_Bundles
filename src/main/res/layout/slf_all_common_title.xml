@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/slf_iv_back"
-        android:layout_width="26dp"
-        android:layout_height="match_parent"
+        android:layout_width="20dp"
+        android:layout_height="15dp"
         android:layout_gravity="center|left"
         android:layout_marginStart="20dp"
         android:src="@drawable/slf_title_icon_white_back"

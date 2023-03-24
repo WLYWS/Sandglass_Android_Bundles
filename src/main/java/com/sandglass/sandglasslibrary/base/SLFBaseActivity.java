@@ -115,6 +115,7 @@ public class SLFBaseActivity extends FragmentActivity {
         super.onPause();
         SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+" onPause");
         isOnPause = true;
+        SLFToastUtil.cancel();
         if(isFinishing()){
             mDestroyed = true;
             EventBus.getDefault().unregister(this);
