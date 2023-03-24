@@ -1,6 +1,7 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,9 @@ import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.SLFClickEditText;
 import com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
+import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFRefreshFooter;
+import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFRereshHeader;
+import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout;
 import com.sandglass.sandglasslibrary.dao.SLFDBEngine;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
@@ -62,6 +66,8 @@ import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -84,7 +90,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     //记录上次进入此页面的时间
     private static final int MAX_ID = 100000000;
     private static final String LAST_ENTER_PAGE = "LAST_ENTER_PAGE";
-    private SwipeRefreshLayout sw_faq_recycle;
+    //private SwipeRefreshLayout sw_faq_recycle;
+    private SLFSmartRefreshLayout sw_faq_recycle;
     private RecyclerView rv_faq_chat_bot;
     private SLFClickEditText et_faq_input;
     private List<SLFChatBotMsgData> faqMsgList = new ArrayList<>();
@@ -109,7 +116,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      */
     private int slfKeyBoardHeight;
 
-    private LinearLayout slf_chat_bot_all_linear;
+    //private LinearLayout slf_chat_bot_all_linear;
     private long fromHelpTime = 0;
     private  String uuid;
     /**标题栏右边图标*/
@@ -227,7 +234,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         rv_faq_chat_bot = findViewById(R.id.rv_faq_chat_bot);
         et_faq_input = findViewById(R.id.et_faq_input);
         ll_et_input = findViewById(R.id.ll_et_input);
-        slf_chat_bot_all_linear = findViewById(R.id.slf_chat_bot_all_linear);
+        //slf_chat_bot_all_linear = findViewById(R.id.slf_chat_bot_all_linear);
         gotoFeedback = findViewById(R.id.slf_feedback_linear);
         gotoFaq = findViewById(R.id.slf_faq_linear);
         slf_bottom_btn_linear = findViewById(R.id.slf_bottom_btn_linear);
@@ -289,6 +296,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 gotoFeedbackHistoryList();
             }
         });
+
+
     }
 
     /**是否有未读消息**/
@@ -464,13 +473,15 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * 下拉刷新
      */
     private void refresh() {
-        sw_faq_recycle.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                minIdfaqMsgList();
-                slfdbEngine.quary_ten_msg(msg_id);
-            }
-        });
+        minIdfaqMsgList();
+        slfdbEngine.quary_ten_msg(msg_id);
+//        sw_faq_recycle.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                minIdfaqMsgList();
+//                slfdbEngine.quary_ten_msg(msg_id);
+//            }
+//        });
     }
 
     /**
@@ -678,11 +689,26 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     /**
      * 初次展示recycle
      */
+    @SuppressLint("ResourceAsColor")
     private void setRcycleApdater() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv_faq_chat_bot.setLayoutManager(layoutManager);
         sLFChatBotRecyclerAdapter.setItemList(faqMsgList);
         rv_faq_chat_bot.setAdapter(sLFChatBotRecyclerAdapter);
+        sw_faq_recycle.setEnableLoadMore(false);
+        sw_faq_recycle.setEnableHeaderTranslationContent(true);//是否下拉Header的时候向下平移列表或者内容
+        sw_faq_recycle.setEnableFooterTranslationContent(true);//是否上拉Footer的时候向上平移列表或者内容
+        sw_faq_recycle.setEnableLoadMoreWhenContentNotFull(true);//是否在列表不满一页时候开启上拉加载功能
+        sw_faq_recycle.setEnableFooterFollowWhenNoMoreData(true);
+        sw_faq_recycle.setPrimaryColors(R.color.transparent, android.R.color.transparent);
+        sw_faq_recycle.setRefreshHeader(new SLFRereshHeader(getContext()));
+        sw_faq_recycle.setRefreshFooter(new SLFRefreshFooter(getContext()));
+        sw_faq_recycle.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refresh();
+            }
+        });
     }
 
     /**
@@ -850,9 +876,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         List<SLFChatBotMsgData> tenMsgDataList = changeSendingMsgStuatus(sLFTenMsgData.slfChatBotMsgData);
 
         if (sw_faq_recycle.isRefreshing()) {
-            sw_faq_recycle.setRefreshing(false);
+            //sw_faq_recycle.setRefreshing(false);
             if (tenMsgDataList == null || tenMsgDataList.size() == 0 || msg_id == MAX_ID) {
                 ////msg_id==MAX_ID:第一次获取minId时，faqMsgList中的对象id都为0，不能刷新mag_id, 防止刷新重复添加数据
+                sw_faq_recycle.finishRefresh();
                 return;
             }
             int position = tenMsgDataList.size();
@@ -878,6 +905,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             }
         }
         minIdfaqMsgList();
+        sw_faq_recycle.finishRefresh();
     }
 
     //修改因界面推出保存的消息发送状态正在发送为发送失败
@@ -1040,19 +1068,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                         if (et_faq_input.hasFocus()) {
 
 
-                            RelativeLayout.LayoutParams params =
-                                    new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            params =
-                                    (RelativeLayout.LayoutParams) slf_chat_bot_all_linear.getLayoutParams();
-                            params.setMargins(0, 0, 0, SLFResourceUtils.dp2px(getContext(), 330));//left,top,right,bottom
-                            slf_chat_bot_all_linear.setLayoutParams(params);
 
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     rv_faq_chat_bot.smoothScrollToPosition(faqMsgList.size() - 1);
                                 }
-                            }, 700);
+                            }, 0);
 
 
                             SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord show");
@@ -1062,13 +1084,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
                     @Override
                     public void keyBoardHide(int height) {
-                        RelativeLayout.LayoutParams params =
-                                new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        params =
-                                (RelativeLayout.LayoutParams) slf_chat_bot_all_linear.getLayoutParams();
-                        params.setMargins(0, 0, 0, 0);//left,top,right,bottom
-                        slf_chat_bot_all_linear.setLayoutParams(params);
-                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord hide");
+
                     }
                 });
     }
