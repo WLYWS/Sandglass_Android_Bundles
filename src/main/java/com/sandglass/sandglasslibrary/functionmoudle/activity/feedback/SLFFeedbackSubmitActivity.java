@@ -583,8 +583,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 @Override
                 public void isUploadAppLogComplete(boolean isComplete) {
                     SLFLogUtil.sdkd("yj", "complete---app-callback--");
-                    isCallbackAppLog = true;
-
+                    //isCallbackAppLog = true;
                 }
             });
             if (SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack() != null) {

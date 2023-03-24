@@ -324,11 +324,11 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             finish();
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
+            sumbitLogFiles();
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadAppLogComplete(boolean isComplete) {
                     SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload app log complete callback:");
-                    sumbitLogFiles();
                 }
             });
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
