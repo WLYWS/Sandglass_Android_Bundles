@@ -12,6 +12,7 @@ import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecycle
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
+import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
 import java.util.List;
 
@@ -51,6 +52,11 @@ public class SLFDeviceGridAdapter extends SLFRecyclerAdatper<SLFFirstPageFAQBean
         slf_device_item_name.setText(object.getName());
         SLFFontSet.setSLF_RegularFont(mContext, slf_device_item_name);
         slf_device_item_checked.setChecked(object.isChecked());
+        if(object.isChecked()){
+            slf_device_item_name.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_top_text_selected));
+        }else{
+            slf_device_item_name.setTextColor(SLFResourceUtils.getColor(R.color.slf_first_page_top_text_normal));
+        }
     }
 
     @Override

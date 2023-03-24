@@ -832,11 +832,7 @@ public class SLFCommonUtils {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(url);
         String duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        try {
-            retriever.release();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        retriever.release();
         long res = defaultValue;
         try {
             res = Long.parseLong(duration);
