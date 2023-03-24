@@ -2,6 +2,7 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.strictmode.CleartextNetworkViolation;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -125,6 +127,21 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
         }
     }
 
+    private  void cleanProblemAllSeleted(List<SLFCategoryDetailBean> list){
+        for(int i=0;i<list.size();i++){
+          //if(list.get(i) instanceof SLFCategoryDetailBean){
+                    ((SLFCategoryDetailBean) list.get(i)).setChecked(false);
+         //   }
+        }
+    }
+
+    private  void cleanProblemOverviewAllSeleted(List<SLFCategoryCommonBean> list){
+        for(int i=0;i<list.size();i++){
+            //if(list.get(i) instanceof SLFCategoryDetailBean){
+            ((SLFCategoryCommonBean) list.get(i)).setChecked(false);
+            //   }
+        }
+    }
 
 //    private void getAllList(){
 //        for(int i = 0;i<15;i++){
@@ -222,5 +239,15 @@ public class SLFBottomDialog extends SLFBaseBottomDialog {
 
         void getSeletedType(Long id,String type,int position,String title,int seletedType,String deviceMoudle);
 
+    }
+
+    public void flushProblem(List<SLFCategoryDetailBean> list){
+        cleanProblemAllSeleted(list);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void flushProblemOverview(List<SLFCategoryCommonBean> list){
+        cleanProblemOverviewAllSeleted(list);
+        mAdapter.notifyDataSetChanged();
     }
 }

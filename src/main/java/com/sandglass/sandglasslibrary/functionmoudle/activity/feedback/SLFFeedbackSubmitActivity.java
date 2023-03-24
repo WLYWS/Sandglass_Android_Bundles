@@ -1006,6 +1006,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     slfProblemOverviewSpinner.setText("");
                                     problem_checkedPosition = -1;
                                     problem_overview_checkedPosition = -1;
+                                    bottomDialog.flushProblem(slfServiceMap.get(slfServiceType.id));
                                 }
                                 slfProblemLinear.setVisibility(View.VISIBLE);
                             } else {
@@ -1037,6 +1038,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     slfProblemOverviewLinear.setVisibility(View.GONE);
                                     slfProblemOverviewSpinner.setText("");
                                     problem_overview_checkedPosition = -1;
+                                    bottomDialog.flushProblemOverview(slfProblemMap.get(slfProblemType.id));
                                 }
                                 slfProblemOverviewLinear.setVisibility(View.VISIBLE);
                                 oldProblemType = slfProblemType.name;
