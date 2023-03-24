@@ -114,6 +114,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     private  String uuid;
     /**标题栏右边图标*/
     private ImageView imgRight;
+    private CharSequence slfInputNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -428,12 +429,14 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         et_faq_input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                slfInputNum = s;
                 tempLineCount = et_faq_input.getLineCount();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                slfInputNum = s;
+                SLFLogUtil.sdkd("yj","slfInputNum.length:::"+slfInputNum.length());
             }
 
             @Override
@@ -446,7 +449,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                         }
                     }, 50);
                 }
-                if (et_faq_input.getText().length() == 500) {
+//                if (et_faq_input.getText().length() == 500) {
+//                    SLFToastUtil.showToastWithMarginBottom(getResources().getString(R.string.slf_input_500_toast_text), SLFCommonUtils.getScreenHeight() / 2);
+//                }
+                if(slfInputNum.length()>=500){
                     SLFToastUtil.showToastWithMarginBottom(getResources().getString(R.string.slf_input_500_toast_text), SLFCommonUtils.getScreenHeight() / 2);
                 }
             }
