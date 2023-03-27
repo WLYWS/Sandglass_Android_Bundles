@@ -3,6 +3,11 @@ package com.sandglass.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
+import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
+import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.json.JSONException;
@@ -65,7 +70,16 @@ public class SLFChatBotRxJavaObserver<T> implements Observer<String> {
                             } else {
                                 String errMsg = jsonObjectData.getString(MSG);
                                 String code = jsonObjectData.getString(CODE);
-                                mCallBack.onRequestChatBotFail(errMsg, code,mType,requestTime);
+                                SLFLogUtil.sdkd("yj","CODE::chatbot:::"+code);
+                                if(code.equals(SLFHttpStatusCode.TOKEN_FAILED)){
+                                    //TODO 临时放在这里，之后放在失败那里
+                                    SLFLogUtil.sdkd("yj","CODE::chatbot:::xx:401");
+                                    if(SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback()!=null){
+                                        SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback().setToken();
+                                    }
+                                }else {
+                                    mCallBack.onRequestChatBotFail(errMsg, code, mType, requestTime);
+                                }
                             }
                         }
                     }

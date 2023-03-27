@@ -328,10 +328,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slfScrollView.setVisibility(View.VISIBLE);
             slfSumbmit.setVisibility(View.VISIBLE);
             slf_submit_page_no_network_linear.setVisibility(View.GONE);
-            showLoading();
             requestUploadUrls();
             requestUserDeviceList();
             SLFCategoriesResponseBean sLFCategoriesResponseBean = cacheManager.readObj(CACHE_FILE_PATH);
+            showLoading();
             if (sLFCategoriesResponseBean!=null){
                 if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,-1)){
                     requestAllData();
@@ -1113,7 +1113,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * 请求后台配置数据
      */
     private void requestAllData() {
-        showLoading();
+        //showLoading();
         SLFHttpUtils.getInstance().executePathGet(getContext(),
                 SLFHttpRequestConstants.BASE_URL + SLFApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class, this);
         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request servicetype/problemtype/subtype data");
@@ -1421,14 +1421,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         } else if (type instanceof SLFillagelWordResponseBean) {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
-        } else if(type == SLFUploadFileReponseBean.class){
-           // showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
-            isHideLoading("isResolveUpload");
-        }else if(type == SLFUserDeviceListResponseBean.class){
-            isHideLoading("isResolveDevicelist");
-        }else if(type == SLFCategoriesResponseBean.class){
-            isHideLoading("isResolveAllData");
         }
+//        else if(type instanceof SLFUploadFileReponseBean){
+//           // showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+//            isHideLoading("isResolveUpload");
+//        }else if(type instanceof SLFUserDeviceListResponseBean){
+//            isHideLoading("isResolveDevicelist");
+//        }else if(type instanceof SLFCategoriesResponseBean){
+//            isHideLoading("isResolveAllData");
+//        }
         else{
             SLFToastUtil.showCenterSubmitFailText();
         }
@@ -1438,12 +1439,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     public void onRequestSuccess(String result, Object type) {
 
         if (type instanceof SLFCategoriesResponseBean) {
+            //isHideLoading("isResolveAllData");
+            hideLoading();
             cacheManager.delete(CACHE_FILE_PATH);
             SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0));
             cacheManager.saveObj(CACHE_FILE_PATH,(SLFCategoriesResponseBean)type);
-            isHideLoading("isResolveAllData");
             showContent(type);
+
         } else if (type instanceof SLFUploadFileReponseBean) {
+            //isHideLoading("isResolveUpload");
             SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type, 8);
             if (SLFCommonUpload.getInstance() != null && SLFCommonUpload.getInstance().size() > 0 && SLFCommonUpload.getListInstance() != null && SLFCommonUpload.getListInstance().size() > 0) {
@@ -1453,7 +1457,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
-            isHideLoading("isResolveUpload");
+            //isHideLoading("isResolveUpload");
         } else if (type instanceof SLFillagelWordResponseBean) {
             boolean isIllagelWorld = (boolean) ((SLFillagelWordResponseBean) type).isData();
 
@@ -1488,7 +1492,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             changeViewFoucs();
         } else if(type instanceof SLFUserDeviceListResponseBean){
             SLFUserCenter.userDeviceListBean = (SLFUserDeviceListResponseBean) type;
-            isHideLoading("isResolveDevicelist");
+            //isHideLoading("isResolveDevicelist");
             SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.getData().size());
         }
     }
@@ -1497,7 +1501,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 isResolveDevicelist = true;
             }else if(isTrueString.equals("isResolveAllData")){
                 isResolveAllData = true;
-            }else{
+            }else if(isTrueString.equals("isResolveUpload")){
                 isResolveUpload = true;
             }
             if(isAllDataCache){
@@ -1507,13 +1511,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     isResolveUpload = false;
                     isResolveAllData = false;
                     isAllDataCache = false;
-                }
-            }else {
-                if (isResolveDevicelist && isResolveAllData && isResolveUpload) {
-                    hideLoading();
-                    isResolveDevicelist = false;
-                    isResolveAllData = false;
-                    isResolveUpload = false;
+                }else{
+                    return;
                 }
             }
     }
@@ -1521,9 +1520,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void showContent (Object type) {
         SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFCategoriesResponseBean::" + ":::type:::" + type.toString());
         this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
-        if (!isAllDataCache){
-            isHideLoading("isResolveAllData");
-        }
+        //isHideLoading("isResolveAllData");
+        hideLoading();
     }
 
 //    private void canGotoSubmit(int logId){
@@ -1539,8 +1537,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestFail::" + value + ":::failCode:::" + failCode);
         hideLoading();
         slf_common_loading_linear_submit.setVisibility(View.GONE);
-
-        //changeViewFoucs();
+        changeViewFoucs();
         if (type instanceof String) {
             String code = (String) type;
             if (SLFConstants.photoCode.equals(code)) {
@@ -1556,13 +1553,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         } else if (type instanceof SLFillagelWordResponseBean) {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
-        } else if(type == SLFUploadFileReponseBean.class){
-            isHideLoading("isResolveUpload");
-        } else if(type == SLFUserDeviceListResponseBean.class) {
-            isHideLoading("isResolveDevicelist");
-        } else if(type == SLFCategoriesResponseBean.class){
-            isHideLoading("isResolveAllData");
-        }else{
+        }
+//        else if(type instanceof SLFUploadFileReponseBean){
+//            isHideLoading("isResolveUpload");
+//        } else if(type instanceof SLFUserDeviceListResponseBean) {
+//            isHideLoading("isResolveDevicelist");
+//        } else if(type instanceof SLFCategoriesResponseBean){
+//            isHideLoading("isResolveAllData");
+//        }
+        else{
             hideLoading();
         }
         new Handler().postDelayed(new Runnable() {  // 开启的runnable也会在这个handler所依附线程中运行，即主线程

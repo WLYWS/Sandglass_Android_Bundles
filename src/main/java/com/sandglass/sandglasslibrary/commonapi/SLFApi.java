@@ -129,6 +129,9 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     public SLFUploadAppLogCallback getAppLogCallBack(){
         return slfUploadAppLogCallback;
     }
+    public SLFSetTokenCallback getTokenCallBack(){
+        return slfSetTokenCallback;
+    }
     /**获取一个token回调*/
     public SLFSetTokenCallback getSlfSetTokenCallback(){
         return slfSetTokenCallback;
