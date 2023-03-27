@@ -304,6 +304,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private SLFCacheToFileManager <SLFCategoriesResponseBean> cacheManager;
     private String categoryText;
     private String subCategoryText;
+    private String serviceTypeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1173,7 +1174,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                         categoryBean.sub.addAll(serviceTypeTitle.sub.get(j).sub);
                                         SLFUserDeviceSaved userDeviceSaved = new SLFUserDeviceSaved(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId(),
                                                 SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel(), serviceTypeTitle.sub.get(j).id,
-                                                SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion(),SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceName());
+                                                SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion());
                                         SLFUserCenter.getInstance().put(categoryBean.id, userDeviceSaved);
                                     }
 
@@ -1471,7 +1472,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             changeViewFoucs();
         } else if(type instanceof SLFUserDeviceListResponseBean){
             SLFUserCenter.userDeviceListBean = (SLFUserDeviceListResponseBean) type;
-            SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.toString());
+            SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.getData().size());
         }
 
     }
@@ -1595,7 +1596,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         map.put("deviceTimezone", SLFUserCenter.getDeviceTimeZone());
         map.put("serviceType", userInfo.getServiceTypeid());
-        map.put("serviceTypeText", userInfo.getDeviceName());
+        map.put("serviceTypeText", serviceTypeText);
         if (slfProblemLinear.getVisibility() == View.VISIBLE) {
             map.put("category", seletedProbleType);
             map.put("categoryText", categoryText);
@@ -1668,7 +1669,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         map.put("phoneOsVersion", SLFUserCenter.getOSVersion());
         map.put("phoneId", SLFUserCenter.getPhone_id());
         map.put("phoneFactoryModel", SLFUserCenter.getPhoneFactoryModel());
-
+        SLFLogUtil.sdkd(TAG, "提交内容" + map);
         return map;
     }
 
@@ -1752,6 +1753,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         if (seletedType == 1) {
             seletedServiceType = id;
+            serviceTypeText = name;
             seleteddeviceMoudle = deviceMoudle;
         } else if (seletedType == 2) {
             seletedProbleType = id;
@@ -1769,7 +1771,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             userDeviceSaved = SLFUserCenter.getInstance().get(seletedServiceType);
         } else {
             userDeviceSaved = new SLFUserDeviceSaved("", seleteddeviceMoudle, seletedServiceType,
-                    "","");
+                    "");
         }
             return userDeviceSaved;
         }
