@@ -36,7 +36,7 @@ public abstract class SLFPhotoBaseActivity extends SLFBaseActivity{
         Button slf_photo_selectedBtn = findViewById(R.id.slf_photo_selector_iv_confirm);
         //Button slf_photo_btnCrop = findViewById(R.id.slf_photo_base_iv_crop);
         TextView slf_photo_tvFileName = findViewById(R.id.slf_photo_title_filename);
-        ImageView slf_photo_ivArrowDown = findViewById(R.id.slf_iv_arrow_down);
+        //ImageView slf_photo_ivArrowDown = findViewById(R.id.slf_iv_arrow_down);
 
 
         if(colorRes !=0){
@@ -57,7 +57,7 @@ public abstract class SLFPhotoBaseActivity extends SLFBaseActivity{
             if(y>200){  //背景接近白色则切换为黑色图标
                 textColor = getResources().getColor(R.color.black);
                 slf_photo_ivBack.setImageResource(R.drawable.slf_title_icon_dark_back);
-                slf_photo_ivArrowDown.setImageResource(R.drawable.slf_title_icon_white_back);
+                //slf_photo_ivArrowDown.setImageResource(R.drawable.slf_title_icon_white_back);
                 if(slf_photo_selectedBtn!=null){
                     slf_photo_selectedBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.slf_title_icon_dark_back,0,0,0);
                 }

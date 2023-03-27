@@ -78,6 +78,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
 
     private TextView tvFileName;
     private LinearLayout photo_title_center;
+    private TextView tvCancel;
 
     private GridView gvPhotoList;
     private ListView lvFileList;
@@ -173,8 +174,9 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         photo_title_center = findViewById(R.id.slf_photo_title_center_linear);
         gvPhotoList = findViewById(R.id.slf_gv_photolist);
         lvFileList = findViewById(R.id.slf_lv_filelist);
+        tvCancel = findViewById(R.id.photo_id_cancel);
 
-        findViewById(R.id.slf_iv_arrow_down).setVisibility(View.VISIBLE);
+        //findViewById(R.id.slf_iv_arrow_down).setVisibility(View.VISIBLE);
 
         if (SLFPhotoSelectorUtils.selectType == SLFMediaType.Video) {
             tvFileName.setText("All videos");
@@ -477,11 +479,18 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 comeBack();
             }
         });
-        photo_title_center.setOnClickListener(new View.OnClickListener() {
+//        photo_title_center.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                gvPhotoList.smoothScrollToPosition(0);
+//                selectFile();
+//            }
+//        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
-                gvPhotoList.smoothScrollToPosition(0);
-                selectFile();
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -641,12 +650,12 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
 
 
     private void comeBack() {
+
         if (lvFileList.getVisibility() == View.VISIBLE) {
-            lvFileList.setVisibility(View.GONE);
-            selected_btn.setVisibility(View.VISIBLE);
-            gvPhotoList.setVisibility(View.VISIBLE);
-        } else {
             finish();
+        } else {
+            gvPhotoList.smoothScrollToPosition(0);
+            selectFile();
         }
     }
 
