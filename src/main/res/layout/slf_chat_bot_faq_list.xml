@@ -16,7 +16,6 @@
 
     <LinearLayout
         android:id="@+id/ll_faq_list"
-        android:layout_marginLeft="58dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
@@ -43,7 +42,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:padding="3dp"
-                android:layout_marginRight="17dp"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/slf_chat_bot_update"
                 />

@@ -20,7 +20,7 @@
             android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="slf.sdk.action.SLFHelpAndFeedback" />

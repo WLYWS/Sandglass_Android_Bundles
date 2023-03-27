@@ -3,7 +3,8 @@
     android:id="@+id/ll_question_item"
     android:layout_width="wrap_content"
     android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/tv_question_item"

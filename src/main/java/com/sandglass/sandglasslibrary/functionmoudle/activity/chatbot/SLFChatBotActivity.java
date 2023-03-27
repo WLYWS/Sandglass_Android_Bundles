@@ -130,6 +130,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     private CharSequence slfInputNum;
 
+    private boolean isFristIn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,24 +172,32 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             uuid = getUUid();
             SLFSpUtils.putCommit(SLFConstants.UUID,uuid);
             getWelcomeHotQuestion();
+            SLFLogUtil.sdkd("yj","超过7天");
         } else {
             //请求数据库查找记录
             lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0L);
-            if(lastSendTime==0L) {
-                slfdbEngine.quary_ten_msg(msg_id);
+            SLFLogUtil.sdkd("yj","lastSendTime:::"+lastSendTime);
+            if(lastSendTime==0L){
+                SLFLogUtil.sdkd("yj","难道是这里");
+                isFristIn = true;
                 uuid = getUUid();
                 SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
-                getWelcomeHotQuestion();
-                SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, 1L);
-            }else {
+                slfdbEngine.quary_ten_msg(msg_id);
+
+            }else{
+                isFristIn = false;
                 if (((fromHelpTime - lastSendTime) / 1000 / 60) > 5) {
-                    slfdbEngine.quary_ten_msg(msg_id);
+                    SLFLogUtil.sdkd("yj","还是这里");
                     uuid = getUUid();
                     SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
+                    slfdbEngine.quary_ten_msg(msg_id);
                     getWelcomeHotQuestion();
-                } else {
+                }else {
+                    SLFLogUtil.sdkd("yj","或者是这里");
                     uuid = SLFSpUtils.getString(SLFConstants.UUID, "");
+                    SLFLogUtil.sdkd("yj","uuid:::"+uuid);
                     if (TextUtils.isEmpty(uuid)) {
+                        SLFLogUtil.sdkd("yj","uuid:::新会话");
                         uuid = getUUid();
                         SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                     }
@@ -479,7 +489,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                 }
             }
         });
-        refresh();
     }
 
     /**
@@ -630,7 +639,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     /**
      * 展示欢迎词和热门问题
-     *
+     *ime
      * @param sLFFaqWelcomeHotQResponseBean
      */
     private void showWelcomeData(SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean) {
@@ -673,7 +682,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     private void addTimeItem() {
         SLFChatBotMsgData slfChatBotTimeItemData = new SLFChatBotMsgData();
-        slfChatBotTimeItemData.setMsgTime(System.currentTimeMillis() - 2);
+        slfChatBotTimeItemData.setMsgTime(System.currentTimeMillis());
         slfChatBotTimeItemData.setType(SLFChatBotMsgData.MsgType.SINGLE_TIME_MSG.getValue());
         slfChatBotTimeItemData.setUuid(uuid);
         faqMsgList.add(slfChatBotTimeItemData);
@@ -870,6 +879,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     public void onEvent(List<SLFChatBotMsgData> slfChatBotMsgData) {
         if (slfChatBotMsgData == null || slfChatBotMsgData.size() == 0) {
             getWelcomeHotQuestion();
+            SLFLogUtil.sdkd("yj","这里也走了");
         } else {
             faqMsgList.addAll(slfChatBotMsgData);
             setRcycleApdater();
@@ -908,8 +918,13 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             rv_faq_chat_bot.scrollToPosition(mLastVisibleItemPosition + position - 1);
         } else {
             if (tenMsgDataList == null || tenMsgDataList.size() == 0) {
-                getWelcomeHotQuestion();
+                //getWelcomeHotQuestion();
+                if(isFristIn){
+                    isFristIn = false;
+                    getWelcomeHotQuestion();
+                }
             } else {
+                SLFLogUtil.sdkd("yj","两个我");
                 faqMsgList.addAll(tenMsgDataList);
                 Collections.sort(faqMsgList);
                 setRcycleApdater();
@@ -920,6 +935,14 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         minIdfaqMsgList();
         sw_faq_recycle.finishRefresh();
     }
+
+//    private void showWelcome(){
+//        if(lastSendTime==0L) {
+//            getWelcomeHotQuestion();
+//            SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
+//            SLFLogUtil.sdkd("yj", "第一次进入");
+//        }
+//    }
 
     //修改因界面推出保存的消息发送状态正在发送为发送失败
     private List<SLFChatBotMsgData> changeSendingMsgStuatus(List<SLFChatBotMsgData> slfChatBotMsgData) {
