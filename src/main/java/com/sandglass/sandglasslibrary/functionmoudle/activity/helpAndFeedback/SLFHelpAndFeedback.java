@@ -293,12 +293,8 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     private void setSecondData(int position){
         fristPostion = position;
-        if (slfExAdapter==null){
-            slfExAdapter = new SLFExAdapter(getContext(),deviceTypesList.get(position).getSub());
-            problemRecycler.setAdapter(slfExAdapter);
-        }else {
-            slfExAdapter.notifyDataSetChanged();
-        }
+        slfExAdapter = new SLFExAdapter(getContext(),deviceTypesList.get(position).getSub());
+        problemRecycler.setAdapter(slfExAdapter);
         problemRecycler.setGroupIndicator(null);//除去自带的箭头，自带的箭头在父列表的最左边，不展开向下，展开向上
         problemRecycler.setDivider(SLFResourceUtils.getDrawable(R.drawable.slf_feedback_first_page_line));//这个是设定每个Group之间的分割线。,默认有分割线，设置null没有分割线
         slfExAdapter.notifyDataSetChanged();

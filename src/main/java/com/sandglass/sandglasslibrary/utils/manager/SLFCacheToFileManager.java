@@ -10,9 +10,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 
 /**
@@ -47,7 +49,8 @@ public class SLFCacheToFileManager<T> {
      * 保存序列化对象数据到本地
      */
     public void saveObj(String path,T obj){
-        OutputStream fos=null;
+        FileOutputStream fos=null;
+        OutputStreamWriter osw = null;
         try {
             //如果文件不存在就创建文件
             File file=new File(path);
@@ -56,14 +59,19 @@ public class SLFCacheToFileManager<T> {
             }
             String json = new Gson().toJson(obj);
             fos = new FileOutputStream(file);
+            osw = new OutputStreamWriter(fos, "utf-8");
             fos.write(json.getBytes());
             fos.close();
+            osw.close();
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
             try {
                 if (fos!=null) {
                     fos.close();
+                }
+                if (osw!=null) {
+                    osw.close();
                 }
             } catch (IOException e) {
             }
@@ -75,20 +83,26 @@ public class SLFCacheToFileManager<T> {
     //读取数据
     public T readObj(String path) {
         StringBuilder sb = new StringBuilder();
-        InputStream ois = null;
+        InputStreamReader  ois = null;
+        FileInputStream fis = null;
         try {
-            ois = new FileInputStream(new File(path));
+            fis = new FileInputStream(new File(path));
+            ois = new InputStreamReader(fis, "utf-8");
             int tempbyte;
             while ((tempbyte = ois.read()) != -1) {
                 sb.append((char) tempbyte);
             }
             ois.close();
+            fis.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 if (ois != null) {
                     ois.close();
+                }
+                if (fis != null) {
+                    fis.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

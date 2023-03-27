@@ -305,6 +305,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private String categoryText;
     private String subCategoryText;
     private String serviceTypeText;
+    private boolean isAllDataCache = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -330,10 +331,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if (sLFCategoriesResponseBean!=null){
                 if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,-1)){
                     requestAllData();
+                    isAllDataCache = false;
                 }else {
+                    showLoading();
+                    isAllDataCache = true;
                     showContent(sLFCategoriesResponseBean);
                 }
             }else {
+                isAllDataCache = false;
                 requestAllData();
             }
 
@@ -1480,7 +1485,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void showContent (Object type) {
         SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFCategoriesResponseBean::" + ":::type:::" + type.toString());
         this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
-        hideLoading();
+        if (!isAllDataCache){
+            hideLoading();
+        }else {
+            isAllDataCache = false;
+        }
     }
 
 //    private void canGotoSubmit(int logId){
