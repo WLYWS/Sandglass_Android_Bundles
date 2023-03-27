@@ -67,13 +67,8 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     }
     public void init(boolean isDebug){
         this.isDebug = isDebug;
-        try {
-            SLFConstants.isOpenConsoleLog = isDebug;
-
-        } catch (NullPointerException var10) {
-            Log.e("SLF", "BJA-115 *** AppConfig NullPointerException ***");
-            Log.e("SLF", Log.getStackTraceString(var10));
-        }
+        SLFConstants.isOpenConsoleLog = isDebug;
+        SLFConstants.isUseXlog = !isDebug;
         long startTime = System.currentTimeMillis();
 
         long endTime = System.currentTimeMillis();

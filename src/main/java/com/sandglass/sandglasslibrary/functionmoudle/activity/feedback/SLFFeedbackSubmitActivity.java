@@ -306,6 +306,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private String subCategoryText;
     private String serviceTypeText;
     private boolean isAllDataCache = false;
+    private boolean isResolveUpload;
+    private boolean isResolveDevicelist;
+    private boolean isResolveAllData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -325,6 +328,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slfScrollView.setVisibility(View.VISIBLE);
             slfSumbmit.setVisibility(View.VISIBLE);
             slf_submit_page_no_network_linear.setVisibility(View.GONE);
+            showLoading();
             requestUploadUrls();
             requestUserDeviceList();
             SLFCategoriesResponseBean sLFCategoriesResponseBean = cacheManager.readObj(CACHE_FILE_PATH);
@@ -333,7 +337,6 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     requestAllData();
                     isAllDataCache = false;
                 }else {
-                    showLoading();
                     isAllDataCache = true;
                     showContent(sLFCategoriesResponseBean);
                 }
@@ -1418,8 +1421,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         } else if (type instanceof SLFillagelWordResponseBean) {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
-        } else {
+        } else if(type == SLFUploadFileReponseBean.class){
            // showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+            isHideLoading("isResolveUpload");
+        }else if(type == SLFUserDeviceListResponseBean.class){
+            isHideLoading("isResolveDevicelist");
+        }else if(type == SLFCategoriesResponseBean.class){
+            isHideLoading("isResolveAllData");
+        }
+        else{
             SLFToastUtil.showCenterSubmitFailText();
         }
     }
@@ -1431,6 +1441,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             cacheManager.delete(CACHE_FILE_PATH);
             SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0));
             cacheManager.saveObj(CACHE_FILE_PATH,(SLFCategoriesResponseBean)type);
+            isHideLoading("isResolveAllData");
             showContent(type);
         } else if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFUploadFileReponseBean::" + ":::type:::" + type.toString());
@@ -1442,7 +1453,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadPath--all----:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
-          //  hideLoading();
+            isHideLoading("isResolveUpload");
         } else if (type instanceof SLFillagelWordResponseBean) {
             boolean isIllagelWorld = (boolean) ((SLFillagelWordResponseBean) type).isData();
 
@@ -1477,18 +1488,41 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             changeViewFoucs();
         } else if(type instanceof SLFUserDeviceListResponseBean){
             SLFUserCenter.userDeviceListBean = (SLFUserDeviceListResponseBean) type;
+            isHideLoading("isResolveDevicelist");
             SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.getData().size());
         }
-
+    }
+        private void isHideLoading(String isTrueString){
+            if(isTrueString.equals("isResolveDevicelist")){
+                isResolveDevicelist = true;
+            }else if(isTrueString.equals("isResolveAllData")){
+                isResolveAllData = true;
+            }else{
+                isResolveUpload = true;
+            }
+            if(isAllDataCache){
+                if(isResolveDevicelist && isResolveUpload){
+                    hideLoading();
+                    isResolveDevicelist = false;
+                    isResolveUpload = false;
+                    isResolveAllData = false;
+                    isAllDataCache = false;
+                }
+            }else {
+                if (isResolveDevicelist && isResolveAllData && isResolveUpload) {
+                    hideLoading();
+                    isResolveDevicelist = false;
+                    isResolveAllData = false;
+                    isResolveUpload = false;
+                }
+            }
     }
 
     private void showContent (Object type) {
         SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::SLFCategoriesResponseBean::" + ":::type:::" + type.toString());
         this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
         if (!isAllDataCache){
-            hideLoading();
-        }else {
-            isAllDataCache = false;
+            isHideLoading("isResolveAllData");
         }
     }
 
@@ -1522,8 +1556,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         } else if (type instanceof SLFillagelWordResponseBean) {
             showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
-        } else {
-            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_request_error));
+        } else if(type == SLFUploadFileReponseBean.class){
+            isHideLoading("isResolveUpload");
+        } else if(type == SLFUserDeviceListResponseBean.class) {
+            isHideLoading("isResolveDevicelist");
+        } else if(type == SLFCategoriesResponseBean.class){
+            isHideLoading("isResolveAllData");
+        }else{
+            hideLoading();
         }
         new Handler().postDelayed(new Runnable() {  // 开启的runnable也会在这个handler所依附线程中运行，即主线程
             @Override

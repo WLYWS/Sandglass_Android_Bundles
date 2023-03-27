@@ -109,7 +109,7 @@ public class SLFLogUtil {
                                 if (sdkXlog != null&&SLFConstants.isUseXlog) {
                                     sdkXlog.logV(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 } else {
-                                    android.util.Log.i(tag, content);
+                                    android.util.Log.v(tag, content);
                                 }
                             }
                             break;
@@ -125,7 +125,7 @@ public class SLFLogUtil {
                                 if (sdkXlog != null&&SLFConstants.isUseXlog) {
                                     sdkXlog.logE(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 } else {
-                                    android.util.Log.i(tag, content);
+                                    android.util.Log.e(tag, content);
                                 }
                             }
                             break;
@@ -133,7 +133,7 @@ public class SLFLogUtil {
                                 if (sdkXlog != null&&SLFConstants.isUseXlog) {
                                     sdkXlog.logW(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 } else {
-                                    android.util.Log.i(tag, content);
+                                    android.util.Log.w(tag, content);
                                 }
                             }
                             break;
