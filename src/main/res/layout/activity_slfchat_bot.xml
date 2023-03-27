@@ -116,31 +116,6 @@
                         android:textColor="@color/slf_first_page_btn_text"
                         android:textSize="12sp" />
                 </LinearLayout>
-                <!--                <Button-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:id="@+id/slf_goto_feedback"-->
-                <!--                    android:background="@drawable/slf_first_page_btn_bg"-->
-                <!--                    android:drawableLeft="@drawable/slf_first_page_feedback_left_icon"-->
-                <!--                    android:padding="12dp"-->
-                <!--                    android:text="@string/slf_help_and_feedback_feed_back"-->
-                <!--                    android:textColor="@color/slf_first_page_btn_text"-->
-                <!--                    android:textAllCaps="false"-->
-                <!--                    android:drawablePadding="10dp"-->
-                <!--                    android:textSize="12sp"/>-->
-                <!--                <Button-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:id="@+id/slf_goto_faq"-->
-                <!--                    android:background="@drawable/slf_first_page_btn_bg"-->
-                <!--                    android:drawableLeft="@drawable/slf_first_page_faq_left_icon"-->
-                <!--                    android:padding="12dp"-->
-                <!--                    android:text="@string/slf_help_and_feedback_faq_list"-->
-                <!--                    android:textColor="@color/slf_first_page_btn_text"-->
-                <!--                    android:textAllCaps="false"-->
-                <!--                    android:drawablePadding="10dp"-->
-                <!--                    android:textSize="12sp"-->
-                <!--                    android:layout_marginLeft="12dp"/>-->
             </LinearLayout>
 
             <com.sandglass.sandglasslibrary.commonui.SLFClickEditText
@@ -150,7 +125,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/slf_chat_bot_bg"

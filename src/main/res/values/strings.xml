@@ -73,7 +73,7 @@
     <string name="slf_first_page_request_fail_sub">The network is weak or the server is down, request for data failed</string>
     <string name="slf_first_page_no_network_try_again">Try Again</string>
     <string name="slf_faq_detail_btton_text">Unsolved? Submit feedback ~</string>
-
+    <string name="slf_feedback_detail_send_log_success">Log has been sent</string>
     <!--help and feedback-->
     <string name="slf_common_request_error">Operation failed.</string>
     <string name="slf_help_and_feedback_grid_title">All device types</string>

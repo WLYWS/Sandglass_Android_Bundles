@@ -84,11 +84,26 @@ public class SLFDateFormatUtils {
         Date date = new Date(second);
         String typeTime = getSystemTimeFormat(context);
         SimpleDateFormat format;
-            if (typeTime.equals("12"))
-                format = new SimpleDateFormat(MDYT12,Locale.getDefault());
-            else
+        String time;
+            if (typeTime.equals("12")) {
+                format = new SimpleDateFormat(MDYT12, Locale.getDefault());
+                time = replaceAMPM(format.format(date));
+                return time;
+            }else {
                 format = new SimpleDateFormat(MDYT, Locale.getDefault());
-        return format.format(date);
+                return format.format(date);
+            }
+
+    }
+
+    public static String replaceAMPM(String time){
+        if (time.contains("上午")){
+            return time.replace("上午", "AM");
+        }
+        if (time.contains("下午")){
+            return time.replace("下午", "PM");
+        }
+        return time;
     }
 
     /**
