@@ -3,6 +3,8 @@ package com.sandglass.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.interf.SLFSetNewTokentoFeed;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -54,10 +56,6 @@ public class SLFRxJavaObserver<T> implements Observer<String>, SLFSetNewTokentoF
                     String response = SLFDecryptUtil.DecryAes(jsonObject.getString(DATA), mSecret);
                     SLFLogUtil.sdkd("request","请求体返回解密 | Response:"+response);
                     if(response!=null){
-                        //TODO 临时放在这里，之后放在失败那里
-//                        if(SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback()!=null){
-//                            SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback().setToken();
-//                        }
                         JSONObject jsonObjectData = new JSONObject(response);
                         if (jsonObjectData.has(MSG)) {
                             String msg = jsonObjectData.getString(MSG);
@@ -68,7 +66,16 @@ public class SLFRxJavaObserver<T> implements Observer<String>, SLFSetNewTokentoF
                             } else {
                                 String errMsg = jsonObjectData.getString(MSG);
                                 String code = jsonObjectData.getString(CODE);
-                                mCallBack.onRequestFail(errMsg, code,mType);
+                                SLFLogUtil.sdkd("yj","CODE::::"+code);
+                                if(code.equals(SLFHttpStatusCode.TOKEN_FAILED)){
+                                    SLFLogUtil.sdkd("yj","CODE::xxx::401");
+                                    //TODO 临时放在这里，之后放在失败那里
+                                    if(SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback()!=null){
+                                        SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback().setToken();
+                                    }
+                                }else {
+                                    mCallBack.onRequestFail(errMsg, code, mType);
+                                }
                             }
                         }
                     }

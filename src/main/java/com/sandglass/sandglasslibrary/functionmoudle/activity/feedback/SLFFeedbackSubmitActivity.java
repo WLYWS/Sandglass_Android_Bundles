@@ -305,6 +305,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private String categoryText;
     private String subCategoryText;
     private String serviceTypeText;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

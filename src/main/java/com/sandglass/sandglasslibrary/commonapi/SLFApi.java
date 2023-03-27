@@ -68,8 +68,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     public void init(boolean isDebug){
         this.isDebug = isDebug;
         try {
-            SLFConstants.isOpenConsoleLog = isDebug;
-
+            SLFConstants.isUseXlog = !isDebug;
         } catch (NullPointerException var10) {
             Log.e("SLF", "BJA-115 *** AppConfig NullPointerException ***");
             Log.e("SLF", Log.getStackTraceString(var10));
@@ -133,6 +132,9 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     /**获取一个上传监听用于回调*/
     public SLFUploadAppLogCallback getAppLogCallBack(){
         return slfUploadAppLogCallback;
+    }
+    public SLFSetTokenCallback getTokenCallBack(){
+        return slfSetTokenCallback;
     }
     /**获取一个token回调*/
     public SLFSetTokenCallback getSlfSetTokenCallback(){

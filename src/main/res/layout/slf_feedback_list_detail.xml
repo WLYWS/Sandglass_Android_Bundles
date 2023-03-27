@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/slf_title_bar"
+        android:background="@color/slf_detail_header_bg_color"
         android:paddingLeft="20dp"
         android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:background="@color/slf_detail_header_bg_color">
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/slf_feedback_list_item_title_status"
@@ -50,7 +50,7 @@
     <View
         android:id="@+id/slf_feedback_list_header_line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/slf_feedback_list_detail_header_relative"
         android:background="@color/slf_detail_line_color" />
 
@@ -88,7 +88,7 @@
         <View
             android:id="@+id/slf_feedback_list_bottom_line"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_alignParentTop="true"
             android:background="@color/slf_detail_line_color" />
 
