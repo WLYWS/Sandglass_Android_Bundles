@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
+    //noinspection GradleCompatible
     compileSdk 32
 
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionName "0.1.31"
+        versionName "0.1.35"
         buildConfigField("String","versionName","\"${versionName}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -121,7 +122,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "com.sandglass.sandglasslibrary"
                 artifactId = "sandglassFeedback"
-                version = "0.1.31"
+                version = "0.1.35"
                 description "沙漏aar"
                 //aar 文件
                 def projectName = project.getName()

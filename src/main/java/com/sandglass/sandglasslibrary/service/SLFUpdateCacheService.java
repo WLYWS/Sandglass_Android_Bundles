@@ -29,7 +29,7 @@ import androidx.annotation.Nullable;
 /**用于后台请求缓存相关接口
  * Created by wangjian on 2023/3/23
  */
-public class SLFUpdateCacheService extends Service implements SLFHttpRequestCallback<SLFFeedBackCacheTimeResponseBean> {
+public class SLFUpdateCacheService extends Service implements SLFHttpRequestCallback {
 
     public static final String TAG = SLFUpdateCacheService.class.getSimpleName();
 
@@ -53,32 +53,35 @@ public class SLFUpdateCacheService extends Service implements SLFHttpRequestCall
     }
 
     @Override
-    public void onRequestNetFail (SLFFeedBackCacheTimeResponseBean bean) {
+    public void onRequestNetFail (Object bean) {
         SLFLogUtil.sdke(TAG,"获取数据更新时间没网");
     }
 
     @Override
-    public void onRequestSuccess (String result, SLFFeedBackCacheTimeResponseBean bean) {
-        if (bean.data.feedbackCategory != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,-1)){
-            //通知反馈分类更新
-            SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,bean.data.feedbackCategory);
-        }
+    public void onRequestSuccess (String result, Object type) {
+        if (type instanceof SLFFeedBackCacheTimeResponseBean) {
+            SLFFeedBackCacheTimeResponseBean bean = (SLFFeedBackCacheTimeResponseBean) type;
+            if (bean.data.feedbackCategory != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY, -1)) {
+                //通知反馈分类更新
+                SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE, bean.data.feedbackCategory);
+            }
 
-        if (bean.data.faqCategory != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQCATEGORY,-1)){
-            //通知faq分类更新
-            SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE,bean.data.faqCategory);
-            EventBus.getDefault().post(new SLFUpdateFaqCategoryEvent(bean.data.faqCategory));
-        }
+            if (bean.data.faqCategory != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQCATEGORY, -1)) {
+                //通知faq分类更新
+                SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE, bean.data.faqCategory);
+                EventBus.getDefault().post(new SLFUpdateFaqCategoryEvent(bean.data.faqCategory));
+            }
 
-        if (bean.data.faqDetail != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL,-1)){
-            //通知faq分类更新
-            SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,bean.data.faqDetail);
-            EventBus.getDefault().post(new SLFUpdateFaqDetailEvent(bean.data.faqDetail));
+            if (bean.data.faqDetail != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL, -1)) {
+                //通知faq分类更新
+                SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE, bean.data.faqDetail);
+                EventBus.getDefault().post(new SLFUpdateFaqDetailEvent(bean.data.faqDetail));
+            }
         }
     }
 
     @Override
-    public void onRequestFail (String value, String failCode, SLFFeedBackCacheTimeResponseBean bean) {
+    public void onRequestFail (String value, String failCode, Object bean) {
         //非网络错误，接口请求错误
         SLFLogUtil.sdke(TAG,"获取数据更新时间,非网络错误，接口请求错误");
     }
