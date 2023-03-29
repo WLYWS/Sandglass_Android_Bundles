@@ -29,6 +29,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpChatBotRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
@@ -56,11 +61,6 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiRespon
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUnReadCount;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
-import com.sandglass.sandglasslibrary.net.SLFHttpChatBotRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.service.SLFUpdateCacheService;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.theme.SLFSetTheme;
@@ -90,7 +90,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 /**
  * @author wangjian  yangjie
  */
-public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpRequestCallback, SLFHttpChatBotRequestCallback {
+public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpRequestCallback, PUNHttpChatBotRequestCallback {
     //记录上次进入此页面的时间
     private static final int MAX_ID = 100000000;
     private static final String LAST_ENTER_PAGE = "LAST_ENTER_PAGE";
@@ -162,8 +162,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
     }
     /**获取用户信息**/
     private void getUserInfo(){
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FIRST_PAGE_GET_USERINO, SLFUserInfoResponseBean.class, this);
+        PUNHttpUtils.getInstance().executePathGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FIRST_PAGE_GET_USERINO, SLFUserInfoResponseBean.class, this);
     }
 
     private void initData() {
@@ -213,7 +213,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
      * 获取欢迎语和热门问题
      */
     private void getWelcomeHotQuestion() {
-        SLFHttpUtils.getInstance().executePathGet(this, SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_HOT, SLFFaqWelcomeHotQResponseBean.class, this);
+        PUNHttpUtils.getInstance().executePathGet(this, PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_HOT, SLFFaqWelcomeHotQResponseBean.class, this);
     }
 
     /**
@@ -231,7 +231,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         requestMap.put("question",content);
         requestMap.put("sessionId",uuid);
         requestMap.put("hotQuestion",hotQuestion);
-        SLFHttpUtils.getInstance().executePost(this, SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_OPENAI, requestMap, SLFFaqOpenAiResponseBean.class, requesTime, this);
+        PUNHttpUtils.getInstance().executePost(this, PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_OPENAI, requestMap, SLFFaqOpenAiResponseBean.class, requesTime, this);
     }
 
     /**
@@ -244,7 +244,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
         TreeMap requestMap = new TreeMap();
         requestMap.put("id", faqid);
         requestMap.put("mark", mark);
-        SLFHttpUtils.getInstance().executePost(this, SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_MARK, requestMap, SLFFaqMarkResponseBean.class, requesTime, this);
+        PUNHttpUtils.getInstance().executePost(this, PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_MARK, requestMap, SLFFaqMarkResponseBean.class, requesTime, this);
 
     }
 
@@ -325,8 +325,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
 
     /**是否有未读消息**/
     private void requestNewFeed(){
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_UN_READ_COUNT, SLFUnReadCount.class, this);
+        PUNHttpUtils.getInstance().executePathGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_UN_READ_COUNT, SLFUnReadCount.class, this);
     }
 
     //动态设置view的宽高

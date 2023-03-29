@@ -21,6 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
@@ -41,10 +45,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMo
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFSendLeaveMsgRepsonseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCompressUtil;
@@ -69,7 +70,7 @@ import java.util.concurrent.Executors;
  * describe:反馈列表详情页
  * time:2023/1/30
  */
-public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements View.OnClickListener,SLFHttpRequestCallback<T> {
+public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements View.OnClickListener, PUNHttpRequestCallback<T> {
     /**
      * 处理状态
      */
@@ -204,8 +205,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void getFeedBackDetailList (int currentPage) {
         TreeMap map = new TreeMap();
         map.put("current", currentPage);
-        SLFHttpUtils.getInstance().executeGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}",String.valueOf(slfRecode.getId())), map, SLFFeedbackDetailItemResponseBean.class, this);
+        PUNHttpUtils.getInstance().executeGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}",String.valueOf(slfRecode.getId())), map, SLFFeedbackDetailItemResponseBean.class, this);
     }
     /**
      * 初始化view
@@ -376,7 +377,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
                                 }
                             });
 
@@ -400,8 +401,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         TreeMap map = new TreeMap();
         map.put("num", 2);
         //showLoading();
-        SLFHttpUtils.getInstance().executeGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
+        PUNHttpUtils.getInstance().executeGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
     }
 
     @Override
@@ -440,7 +441,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
             if ("0".equals(code)) {
                 SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::logfile--feedbackDetail---upload---complete");
-                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LOG_URL.replace("{id}",String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
+                PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LOG_URL.replace("{id}",String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
             }
         }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
             //showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));

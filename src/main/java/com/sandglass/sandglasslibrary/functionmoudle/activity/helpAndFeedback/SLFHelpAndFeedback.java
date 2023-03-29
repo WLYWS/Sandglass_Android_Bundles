@@ -12,6 +12,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
@@ -24,10 +28,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBea
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQFapListBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQProblemBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQResponseBean;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
+
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
@@ -47,7 +48,7 @@ import java.util.List;
  * describe:智能助手和反馈首页
  * time:2023/2/20
  */
-public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnClickListener, SLFHttpRequestCallback<T> {
+public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnClickListener, PUNHttpRequestCallback<T> {
     /**设备数据列表*/
     private List<SLFFirstPageFAQBean> deviceTypesList = new ArrayList<SLFFirstPageFAQBean>();
     /**设备数据problem数据集合**/
@@ -164,8 +165,8 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     private void getDeviceTypesList(){
         //TODO 获取所有设备类型
         showLoading();
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_CATEGORIES, SLFFirstPageFAQResponseBean.class, this);
+        PUNHttpUtils.getInstance().executePathGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_CATEGORIES, SLFFirstPageFAQResponseBean.class, this);
     }
 
     @Override

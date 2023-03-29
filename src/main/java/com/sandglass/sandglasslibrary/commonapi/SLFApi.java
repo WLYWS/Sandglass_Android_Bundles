@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
@@ -40,7 +39,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 
     private SLFUploadCompleteCallback slfUploadCompleteCallback;
 
-    private SLFSetTokenCallback slfSetTokenCallback;
+    //private SLFSetTokenCallback slfSetTokenCallback;
 
     private boolean isDebug;
 
@@ -107,10 +106,10 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 //        return SLFConstants.token;
 //    }
     /**跳转到插件反馈*/
-    public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap, String token){
+    public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap){
         //Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
         Intent in = new Intent(getSLFContext(), SLFChatBotActivity.class);
-        setToken(token);
+        //setToken(token);
 
         setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
@@ -121,21 +120,21 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
         this.slfUploadAppLogCallback = slfUploadAppLogCallback;
     }
     /**设置监听获取token的接口*/
-    public void setTokenCallBack(SLFSetTokenCallback slfSetTokenCallback){
-        this.slfSetTokenCallback = slfSetTokenCallback;
-    }
+//    public void setTokenCallBack(SLFSetTokenCallback slfSetTokenCallback){
+//        this.slfSetTokenCallback = slfSetTokenCallback;
+//    }
 
     /**获取一个上传监听用于回调*/
     public SLFUploadAppLogCallback getAppLogCallBack(){
         return slfUploadAppLogCallback;
     }
-    public SLFSetTokenCallback getTokenCallBack(){
-        return slfSetTokenCallback;
-    }
+//    public SLFSetTokenCallback getTokenCallBack(){
+//        return slfSetTokenCallback;
+//    }
     /**获取一个token回调*/
-    public SLFSetTokenCallback getSlfSetTokenCallback(){
-        return slfSetTokenCallback;
-    }
+//    public SLFSetTokenCallback getSlfSetTokenCallback(){
+//        return slfSetTokenCallback;
+//    }
     /**设置监听通知是否上传完成*/
     public void setUploadLogCompleteCallBack(SLFUploadCompleteCallback slfUploadCompleteCallback){
         this.slfUploadCompleteCallback = slfUploadCompleteCallback;

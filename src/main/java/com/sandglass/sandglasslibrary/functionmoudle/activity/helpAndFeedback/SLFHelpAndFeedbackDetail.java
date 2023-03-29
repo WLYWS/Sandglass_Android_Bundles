@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
@@ -25,10 +29,6 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqDetailEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQResponseBean;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  * describe:问题详情页
  * time:2023/2/23
  */
-public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View.OnClickListener, SLFHttpRequestCallback<T> {
+public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View.OnClickListener, PUNHttpRequestCallback<T> {
 
     private WebView mWebView;
 
@@ -197,9 +197,9 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     }
 
     private void getFaqDetaiData(){
-        SLFLogUtil.sdkd("yj","url::"+SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_FAQ_DETAIL+faq_id, SLFFaqDetailResponseBean.class, this);
+        SLFLogUtil.sdkd("yj","url::"+ PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
+        PUNHttpUtils.getInstance().executePathGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_DETAIL+faq_id, SLFFaqDetailResponseBean.class, this);
     }
 
     @Override

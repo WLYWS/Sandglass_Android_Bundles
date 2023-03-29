@@ -26,6 +26,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
@@ -55,11 +59,7 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserDeviceListResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFillagelWordResponseBean;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
@@ -97,7 +97,7 @@ import java.util.concurrent.Executors;
  *
  * @author yangjie
  */
-public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener, SLFHttpRequestCallback<T> {
+public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener, PUNHttpRequestCallback<T> {
     /**
      * scollrview控件
      */
@@ -499,8 +499,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         } else if (slfMediaDataList.get(position).getMimeType().contains("video")) {
                             contentType = "video/mp4";
                         }
-                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), this);
-                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", this);
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
                     } else {
                         //
@@ -621,7 +621,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else {
             //showLoading();
 
-            SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
+            PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
         }
     }
 
@@ -780,8 +780,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     } else if (slfMediaDataList.get(i).getMimeType().contains("video")) {
                         contentType = "video/mp4";
                     }
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
-                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", this);
+                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
+                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", this);
                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
                 }
             }
@@ -1105,8 +1105,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * 请求用户列表
      */
     private void requestUserDeviceList(){
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.USER_DEVICE_LIST, SLFUserDeviceListResponseBean.class, this);
+        PUNHttpUtils.getInstance().executePathGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL +PUNApiContant.USER_DEVICE_LIST, SLFUserDeviceListResponseBean.class, this);
         }
 
     /**
@@ -1114,8 +1114,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void requestAllData() {
         //showLoading();
-        SLFHttpUtils.getInstance().executePathGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class, this);
+        PUNHttpUtils.getInstance().executePathGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class, this);
         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request servicetype/problemtype/subtype data");
     }
 
@@ -1125,8 +1125,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
         map.put("num", 8);
-        SLFHttpUtils.getInstance().executeGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
+        PUNHttpUtils.getInstance().executeGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request upload url 8");
     }
 
@@ -1141,7 +1141,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             String content = slfEditProblem.getText().toString();
             TreeMap<String, Object> contentMap = new TreeMap<>();
             contentMap.put("content", content);
-            SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_ILLEGLA_WORD, contentMap, SLFillagelWordResponseBean.class, this);
+            PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_ILLEGLA_WORD, contentMap, SLFillagelWordResponseBean.class, this);
         }
     }
 
@@ -1371,7 +1371,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    SLFHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, SLFFeedbackSubmitActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1479,7 +1479,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::requestScucess::Integer::" + ":::type:::" + type);
             if (SLFConstants.photoCode.equals(code)) {
                 SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logfile-----upload---complete");
-                SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
+                PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
             } else {
                 resultUploadImageOrVideo(code);
             }
@@ -1736,8 +1736,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadvideo start");
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFFeedbackSubmitActivity.this);
-                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFFeedbackSubmitActivity.this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFFeedbackSubmitActivity.this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFFeedbackSubmitActivity.this);
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::request uploadvideo net");
                     }
                 }

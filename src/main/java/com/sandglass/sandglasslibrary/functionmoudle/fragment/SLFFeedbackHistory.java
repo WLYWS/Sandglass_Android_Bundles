@@ -16,6 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
@@ -32,10 +36,6 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackDetailI
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedbackItemResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHttpRequestCallback<T> {
+public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements PUNHttpRequestCallback<T> {
     public final static int IN_PROGRESS = 1;
 
     private RecyclerView slf_histroy_feedback_list;
@@ -204,8 +204,8 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements  SLFHt
         TreeMap map = new TreeMap();
         map.put("type", type);
         map.put("current", current);
-        SLFHttpUtils.getInstance().executeGet(getContext(),
-                SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_LIST_URL, map, SLFFeedbackItemResponseBean.class, this);
+        PUNHttpUtils.getInstance().executeGet(getContext(),
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LIST_URL, map, SLFFeedbackItemResponseBean.class, this);
     }
 
     private void gotoFeedbackDetail(int position){

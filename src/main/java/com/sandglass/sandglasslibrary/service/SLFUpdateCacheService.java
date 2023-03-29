@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
 
+import com.punet.punetwork.net.PUNApiContant;
+import com.punet.punetwork.net.PUNHttpRequestCallback;
+import com.punet.punetwork.net.PUNHttpRequestConstants;
+import com.punet.punetwork.net.PUNHttpUtils;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUnReadtoReadAllEvent;
@@ -14,10 +18,6 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFeedbackCategoryEven
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedBackCacheTimeData;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedBackCacheTimeResponseBean;
-import com.sandglass.sandglasslibrary.net.SLFApiContant;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
-import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
@@ -29,7 +29,7 @@ import androidx.annotation.Nullable;
 /**用于后台请求缓存相关接口
  * Created by wangjian on 2023/3/23
  */
-public class SLFUpdateCacheService extends Service implements SLFHttpRequestCallback {
+public class SLFUpdateCacheService extends Service implements PUNHttpRequestCallback {
 
     public static final String TAG = SLFUpdateCacheService.class.getSimpleName();
 
@@ -49,7 +49,7 @@ public class SLFUpdateCacheService extends Service implements SLFHttpRequestCall
      * 获取数据更新时间
      */
     private void getFeedBackCacheTime() {
-        SLFHttpUtils.getInstance().executePathGet(this, SLFHttpRequestConstants.BASE_URL + SLFApiContant.FEEDBACK_UPDATE_CACHE, SLFFeedBackCacheTimeResponseBean.class, this);
+        PUNHttpUtils.getInstance().executePathGet(this, PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_UPDATE_CACHE, SLFFeedBackCacheTimeResponseBean.class, this);
     }
 
     @Override
