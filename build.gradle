@@ -76,6 +76,7 @@ dependencies {
     implementation 'com.tencent.mars:mars-xlog:1.2.6'
     //引用网络库
     implementation project(':PUNetWork')
+    implementation project(':PUTrack')
 
     //camra
     implementation "androidx.camera:camera-core:1.1.0-alpha08"

@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class SLFFileUtils {
-    private static final String TAG = "SLFFileUtils";
+    private static final String TAG = "PUTFileUtils";
     private static long mBlockSize = 0;
     public static final int SIZETYPE_B = 1;// 获取文件大小单位为B的double值
     public static final int SIZETYPE_KB = 2;// 获取文件大小单位为KB的double值

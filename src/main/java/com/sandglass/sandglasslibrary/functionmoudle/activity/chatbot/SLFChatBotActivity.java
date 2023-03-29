@@ -34,10 +34,15 @@ import com.punet.punetwork.net.PUNHttpChatBotRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.bean.PUTConstants;
+import com.putrack.putrack.bean.PhoneInfo;
+import com.putrack.putrack.commonapi.PUTApi;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.SLFClickEditText;
 import com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout;
@@ -146,6 +151,8 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         slfdbEngine = new SLFDBEngine(this);
         initView();
         initData();
+        SLFLogUtil.sdkd("mmmmasssss","sessionid:::"+ PUTApi.getInstance(this).getSessionId()+"::time::"+ PhoneInfo.timestamp()+"::phone_os::"+PhoneInfo.phone_os()+"::phone_os_version::"
+        +PhoneInfo.phone_os_version()+":::appversion:::"+PhoneInfo.app_version()+"::phoneModel::"+PhoneInfo.phone_model()+"::经度::"+ PUTConstants.longitude+":::纬度::"+PUTConstants.latitude);
     }
 
     //绑定更新缓存服务
@@ -159,7 +166,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
     protected void onResume() {
         super.onResume();
         requestNewFeed();
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_START);
     }
+
+
     /**获取用户信息**/
     private void getUserInfo(){
         PUNHttpUtils.getInstance().executePathGet(getContext(),
@@ -994,6 +1004,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         SLFToastUtil.cancel();
         et_faq_input.clearFocus();
         hideSoftInput(SLFChatBotActivity.this, et_faq_input);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 
 

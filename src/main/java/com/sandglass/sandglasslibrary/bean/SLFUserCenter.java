@@ -104,10 +104,22 @@ public class SLFUserCenter {
     /**获取手机唯一识别码*/
     public static String getPhone_id(){
         if(TextUtils.isEmpty(phone_id)){
-            phone_id = SLFSpUtils.getString(SLFSpUtils.SLF_PHONE_ID,UUID.randomUUID().toString());
+            phone_id = SLFSpUtils.getString(SLFSpUtils.SLF_PHONE_ID,getPhoneid());
             SLFSpUtils.putCommit(SLFSpUtils.SLF_PHONE_ID,phone_id);
         }
         return phone_id;
+    }
+    private static String getPhoneid(){
+        String serial = Build.SERIAL;
+        String androidID = Settings.Secure.getString(SLFApi.getSLFContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        if(androidID==null){
+            androidID = UUID.randomUUID().toString();
+        }
+        if(serial==null){
+            serial = UUID.randomUUID().toString();
+        }
+        String id = androidID + serial;
+        return id;
     }
     /**获取手机认证型号*/
     public static String getPhoneFactoryModel(){

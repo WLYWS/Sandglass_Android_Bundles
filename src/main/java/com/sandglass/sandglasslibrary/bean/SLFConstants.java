@@ -53,8 +53,6 @@ public class SLFConstants {
 
     public static String logTime;
 
-    public static final String SLF_APP_ID = "wapk_181259b351899207";
-
     public static final String ALL_ROUND = "all_round";
 
     public static final String ROUND_FIRST = "first";
