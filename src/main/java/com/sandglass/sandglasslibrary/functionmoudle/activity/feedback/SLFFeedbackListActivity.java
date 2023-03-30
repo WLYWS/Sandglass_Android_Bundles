@@ -9,14 +9,19 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.putrack.putrack.bean.PUTConstants;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFragmentAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackAllHistory;
 import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistory;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +81,28 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
         fragments.add(new SLFFeedbackHistory<>());
         fragments.add(new SLFFeedbackAllHistory<>());
         viewPager.setOffscreenPageLimit(0);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==0){
+                    //打点选中in progress
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_ClickInProgress);
+                }else if(position==1){
+                    //打点选中all
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_ClickAll);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -89,4 +116,17 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //打点进入反馈列表页面
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackListPage,SLFPageAgentEvent.SLF_PAGE_START);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //打点退出反馈列表页面
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackListPage,SLFPageAgentEvent.SLF_PAGE_END);
+    }
 }

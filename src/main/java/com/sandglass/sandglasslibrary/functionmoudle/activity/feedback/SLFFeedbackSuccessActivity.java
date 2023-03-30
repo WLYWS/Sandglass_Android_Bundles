@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.base.SLFBaseApplication;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
@@ -63,6 +66,8 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
         slf_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //打点copy logid
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Copy);
                 ClipboardManager cm =(ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(slf_logid.getText().toString());
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_submit_success_copy));
@@ -73,6 +78,8 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
             @Override
             public void onClick(View view) {
                 //SLFBaseApplication.exitAllActivity();
+                //打点完成反馈
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Finish);
                 finish();
             }
         });
@@ -91,5 +98,19 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //打点进入反馈提交页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackCompletePage,SLFPageAgentEvent.SLF_PAGE_START);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //打点进入反馈提交页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackCompletePage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 }

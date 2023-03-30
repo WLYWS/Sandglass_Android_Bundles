@@ -40,6 +40,7 @@ import com.putrack.putrack.commonapi.PUTApi;
 import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
 import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
@@ -166,6 +167,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
     protected void onResume() {
         super.onResume();
         requestNewFeed();
+        //打点进入chatbot页面
         PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_START);
     }
 
@@ -276,7 +278,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         et_faq_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
-
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == 5) { //actionId 4 for actionDone And 6 for actionSend
@@ -314,18 +315,24 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         gotoFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //打点进入反馈页
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFeedback);
                 gotoFeedback();
             }
         });
         gotoFaq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //打点进入反馈页
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFAQ);
                 gotoFaq();
             }
         });
         imgRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //打点进入反馈列表页
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFeedbackList);
                 gotoFeedbackHistoryList();
             }
         });
@@ -773,6 +780,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         sLFChatBotRecyclerAdapter.notifyDataSetChanged();
         //刷新数据库
         slfdbEngine.update_msg(slfChatBotUpdateQuesionData);
+        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_ChangeHotQuestion);
     }
 
     /**
@@ -812,8 +820,12 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         //发送question数据
         if(fromType==SLFChatBotMsgData.SEND_FROM_INPUT) {
             hotQuestion = 0;
+            //打点自定义问题
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_SendCustomQuestion);
         }else if(fromType==SLFChatBotMsgData.SEND_FROM_CLICK_HOT){
             hotQuestion = 1;
+            //打点热门问题
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_ClickHotQuestion);
         }
 
         postSearch(question,hotQuestion,time,uuid);
@@ -1004,6 +1016,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         SLFToastUtil.cancel();
         et_faq_input.clearFocus();
         hideSoftInput(SLFChatBotActivity.this, et_faq_input);
+        //打点退出chatbot页面
         PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 

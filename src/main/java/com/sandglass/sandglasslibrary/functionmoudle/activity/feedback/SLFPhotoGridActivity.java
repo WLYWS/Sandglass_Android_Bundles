@@ -25,7 +25,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFPhotoListAdapter;
 import com.sandglass.sandglasslibrary.base.SLFPhotoBaseActivity;
@@ -498,6 +500,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             @Override
             public void onClick(View arg0) {
                 SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":click selected");
+                //打点上传资源
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_UploadResource);
                 gotoFeedback();
                 finish();
             }

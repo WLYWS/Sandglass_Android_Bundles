@@ -16,9 +16,12 @@ import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFExAdapter;
@@ -118,7 +121,15 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
+        //打点进入faq列表页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQListPage,SLFPageAgentEvent.SLF_PAGE_START);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //打点退出faq列表页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQListPage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 
     private void initTitle(){
@@ -155,6 +166,8 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         deviceRecycler.setLayoutManager(mLayoutManager);
         deviceRecycler.setAdapter(slfDeviceGridAdapter);
         slfDeviceGridAdapter.setOnItemClickListener((holder, position) -> {
+            //打点切换一级菜单
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_ChangeClassification);
             deviceTypesList.get(holder.getAdapterPosition()).setChecked(true);
             changedChecked(deviceTypesList,position);
             slfDeviceGridAdapter.notifyDataSetChanged();
@@ -306,6 +319,8 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
                 slfExAdapter.setChildSelection(groupPosition,childPostion);
                 slfExAdapter.notifyDataSetChanged();
                 gotoFAQDetail(groupPosition,childPostion);
+                //打点进入faq详情页
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_EnterDetail);
                 return true;
             }
         });

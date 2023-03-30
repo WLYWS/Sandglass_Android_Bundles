@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -30,8 +31,11 @@ import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
@@ -425,6 +429,18 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         setListenerFotEditTexts();
         slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
         slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
+        slfSendLogCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    //打点勾选sendlog
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_SelectSendLog);
+                }else{
+                    //打点取消sendlog
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_CancelSendLog);
+                }
+            }
+        });
         slfEmailEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -467,6 +483,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
+            //打点查看资源文件
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterResourceDetail);
             if (slf_common_loading_linear_submit.getVisibility() == View.GONE) {
                 if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": click add photo or video permissions");
@@ -552,7 +570,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
             // finish();
         } else if (view.getId() == R.id.slf_submit_feedback) {
-            //TODO submit feedback
+            //打点提交反馈
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_Submit);
             isSendLogsuccess = false;
             if (slfEditProblem.getText().toString().length() < 10) {
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
@@ -586,14 +605,20 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         } else if (view.getId() == R.id.spinner_service) {
             showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_service_title), getServiceTypeData(getSLFCategoriesResponseBean()), service_checkedPosition);
             changeTextAndImg(slfServiceSpinner);
+            //打点选择serviceType
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_SelectServiceType);
         } else if (view.getId() == R.id.spinner_problem) {
             //TODO selector problem
             showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_problem_title), getProblemTypeData(slfServiceType, slfServiceMap), problem_checkedPosition);
             changeTextAndImg(slfProblemSpinner);
+            //打点选择serviceType
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_SelectProblemType);
         } else if (view.getId() == R.id.spinner_problem_overview) {
             //TODO selector problem overview
             showServiceTypeDialog(SLFResourceUtils.getString(R.string.slf_feedback_selector_problem_overview_title), getSlfProblemOverviewData(slfProblemType, slfProblemMap), problem_overview_checkedPosition);
             changeTextAndImg(slfProblemOverviewSpinner);
+            //打点选择serviceType
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_SelectProblemOver);
         } else if (view.getId() == R.id.slf_submit_page_try_again) {
             checkNetWork();
         }
@@ -635,6 +660,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
             @Override
             public void onClickOk() {
+                //打点放弃反馈
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_AbandonSubmit);
                 finish();
             }
 
@@ -656,7 +683,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     @Override
     protected void onResume() {
         super.onResume();
+        //打点进入反馈提交页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackPage,SLFPageAgentEvent.SLF_PAGE_START);
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -1823,4 +1854,11 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
             return userDeviceSaved;
         }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //打点退出反馈提交页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackPage,SLFPageAgentEvent.SLF_PAGE_END);
+    }
 }

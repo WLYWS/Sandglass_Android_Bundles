@@ -24,10 +24,13 @@ import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
@@ -229,6 +232,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
+            //打点查看资源文件
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterResourceDetail);
             if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
                 SLFPermissionManager.getInstance().chekPermissions(SLFContinueLeaveMsgActivity.this, permissionStorage, permissionsStroageResult);
             } else {
@@ -413,6 +418,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         if (view.getId() == R.id.slf_iv_back) {
             finish();
         } else if (view.getId() == R.id.slf_continue_leave_send) {
+            //打点发送留言
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_SendLeave);
 //            if (slfEditProblem.getText().toString().length() < 10) {
 //                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
 //                return;
@@ -704,5 +711,19 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         }
         SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":getSendHistory:map:"+map.toString());
         return map;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //打点退出反馈详情页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_START);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //打点退出反馈详情页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 }

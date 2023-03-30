@@ -9,7 +9,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQProblemBean;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 
@@ -115,10 +117,14 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         if(isExpanded)
         {
             image.setBackgroundResource(R.drawable.slf_btn_icon_up);
+            //打点展开列表
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_ExpandSecondaryClassification);
         }
         else
         {
             image.setBackgroundResource(R.drawable.slf_btn_icon_down);
+            //打点收起列表
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_CollapseSecondaryClassification);
         }
         return view;
     }

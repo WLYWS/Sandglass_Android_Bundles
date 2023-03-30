@@ -20,7 +20,9 @@ import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFLazyLoadFragment;
@@ -209,6 +211,8 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements PUNHtt
     }
 
     private void gotoFeedbackDetail(int position){
+        //打点进入反馈详情页
+        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_EnterDetail);
         Intent in = new Intent();
         in.setClass(getContext(), SLFFeedbackListDetailActivity.class);
         if(recodeList.get(position).getRead()==0){

@@ -18,9 +18,12 @@ import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
@@ -84,6 +87,20 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         initData();
         initTitle();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //打点进入faq列表页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQDetailPage,SLFPageAgentEvent.SLF_PAGE_START);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //打点进入faq列表页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQDetailPage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 
     private void initView(){
@@ -207,6 +224,8 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         if(view.getId() == R.id.slf_iv_back){
             finish();
         }else if(view.getId() == R.id.slf_faq_to_feedback){
+            //打点进入feedback
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQDetail_EnterFeedback);
             gotoFeedback();
         }
     }

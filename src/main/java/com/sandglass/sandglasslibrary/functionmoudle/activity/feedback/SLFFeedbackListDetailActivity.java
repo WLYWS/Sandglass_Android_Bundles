@@ -25,9 +25,12 @@ import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
+import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
+import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
@@ -325,6 +328,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             finish();
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
+            //打点发送send log
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_SendLog);
             sumbitLogFiles();
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
@@ -337,6 +342,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                        "application/zip");
             }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
+            //打点进入继续留言页
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterLeave);
             gotoContinueLeaveActivity();
         }
     }
@@ -532,5 +539,19 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             map.put("logAttrList", logAttrBeans);
         SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());
         return map;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //打点进入反馈详情页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_START);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //打点退出反馈详情页
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_END);
     }
 }
