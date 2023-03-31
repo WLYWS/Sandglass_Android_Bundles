@@ -216,7 +216,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements PUN
 
     private void gotoFeedbackDetail(int position){
         //打点进入反馈详情页
-        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_EnterDetail);
+        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_EnterDetail,null);
         Intent in = new Intent();
         in.setClass(getContext(), SLFFeedbackListDetailActivity.class);
         if(recodeList.get(position).getRead()==0){

@@ -329,7 +329,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
             //打点发送send log
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_SendLog);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_SendLog,null);
             sumbitLogFiles();
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
@@ -343,7 +343,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
             //打点进入继续留言页
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterLeave);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterLeave,null);
             gotoContinueLeaveActivity();
         }
     }
@@ -545,13 +545,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     protected void onResume() {
         super.onResume();
         //打点进入反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //打点退出反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 }

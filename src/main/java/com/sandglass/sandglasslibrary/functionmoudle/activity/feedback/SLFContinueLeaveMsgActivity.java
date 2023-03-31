@@ -35,6 +35,7 @@ import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
+import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFAndPhotoLeaveAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
@@ -119,7 +120,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     /**
      * 展示缩略图的adapter
      */
-    private SLFAndPhotoAdapter slfaddAttachAdapter;
+    private SLFAndPhotoLeaveAdapter slfaddAttachAdapter;
     /**
      * 输入问题描述框记录的字符
      */
@@ -227,13 +228,13 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfMediaData.setId(SystemClock.elapsedRealtime());
         slfMediaDataList.add(this.slfMediaData);
         /**初始化显示选中图片缩略图的adapter*/
-        final SLFAndPhotoAdapter slfaddAttachAdapter = new SLFAndPhotoAdapter(getContext(), slfMediaDataList);
+        final SLFAndPhotoLeaveAdapter slfaddAttachAdapter = new SLFAndPhotoLeaveAdapter(getContext(), slfMediaDataList);
         this.slfaddAttachAdapter = slfaddAttachAdapter;
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
             //打点查看资源文件
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterResourceDetail);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterResourceDetail,null);
             if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
                 SLFPermissionManager.getInstance().chekPermissions(SLFContinueLeaveMsgActivity.this, permissionStorage, permissionsStroageResult);
             } else {
@@ -419,7 +420,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             finish();
         } else if (view.getId() == R.id.slf_continue_leave_send) {
             //打点发送留言
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_SendLeave);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_SendLeave,null);
 //            if (slfEditProblem.getText().toString().length() < 10) {
 //                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
 //                return;
@@ -559,6 +560,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             String code = (String) type;
             SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestScucess::contiuneLeave：:Integer::" + ":::type:::" + type);
             resultUploadImageOrVideo(code);
+            isUploadSuccess();
             hideLoading();
         } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
             SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":createFeedback--request--success:" + ((SLFSendLeaveMsgRepsonseBean) type).toString());
@@ -653,22 +655,29 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private synchronized void resultUploadImageOrVideo(String code) {
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
-                imageSuccessed = true;
-                resultCodeMethod(code, imageSuccessed);
+                resultCodeMethod(slfMediaDataList.get(i));
+            }
+            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")) {
+                resultCodeThumbMethod(slfMediaDataList.get(i));
             }
         }
     }
 
-    private void resultCodeMethod(String code, boolean imageSuccess) {
-        for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
-                if (slfMediaDataList.get(i).getUploadPath() != null) {
-                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                    slfaddAttachAdapter.notifyDataSetChanged();
-                    imageSuccess = false;
-                } else {
-                    imageSuccess = false;
-                }
+    private void resultCodeMethod(SLFMediaData slfMediaData) {
+        slfMediaData.setFileSuccess(true);
+    }
+
+    private void resultCodeThumbMethod(SLFMediaData slfMediaData) {
+        slfMediaData.setThumbSuccess(true);
+    }
+
+    private void isUploadSuccess(){
+        for(int i=0;i<slfMediaDataList.size()-1;i++){
+            if(slfMediaDataList.get(i).isFileSuccess()&&slfMediaDataList.get(i).isThumbSuccess()){
+                slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                slfaddAttachAdapter.notifyDataSetChanged();
+                slfMediaDataList.get(i).setFileSuccess(false);
+                slfMediaDataList.get(i).setThumbSuccess(false);
             }
         }
     }
@@ -717,13 +726,13 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     protected void onResume() {
         super.onResume();
         //打点退出反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //打点退出反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 }

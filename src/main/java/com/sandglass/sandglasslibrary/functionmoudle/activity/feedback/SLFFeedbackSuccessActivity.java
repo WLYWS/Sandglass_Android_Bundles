@@ -67,7 +67,7 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
             @Override
             public void onClick(View view) {
                 //打点copy logid
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Copy);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Copy,null);
                 ClipboardManager cm =(ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(slf_logid.getText().toString());
                 showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_submit_success_copy));
@@ -79,7 +79,7 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
             public void onClick(View view) {
                 //SLFBaseApplication.exitAllActivity();
                 //打点完成反馈
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Finish);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Finish,null);
                 finish();
             }
         });
@@ -104,13 +104,13 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
     protected void onResume() {
         super.onResume();
         //打点进入反馈提交页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackCompletePage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackCompletePage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //打点进入反馈提交页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackCompletePage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackCompletePage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 }

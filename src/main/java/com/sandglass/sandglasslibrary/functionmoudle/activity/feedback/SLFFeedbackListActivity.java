@@ -91,10 +91,10 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
             public void onPageSelected(int position) {
                 if(position==0){
                     //打点选中in progress
-                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_ClickInProgress);
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_ClickInProgress,null);
                 }else if(position==1){
                     //打点选中all
-                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_ClickAll);
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackList_ClickAll,null);
                 }
             }
 
@@ -120,13 +120,13 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
     protected void onResume() {
         super.onResume();
         //打点进入反馈列表页面
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackListPage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackListPage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //打点退出反馈列表页面
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackListPage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackListPage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 }

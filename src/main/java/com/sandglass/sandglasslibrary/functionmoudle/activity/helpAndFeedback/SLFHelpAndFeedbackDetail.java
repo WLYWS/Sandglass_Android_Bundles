@@ -93,14 +93,14 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     protected void onResume() {
         super.onResume();
         //打点进入faq列表页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQDetailPage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQDetailPage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //打点进入faq列表页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQDetailPage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQDetailPage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 
     private void initView(){
@@ -225,7 +225,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
             finish();
         }else if(view.getId() == R.id.slf_faq_to_feedback){
             //打点进入feedback
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQDetail_EnterFeedback);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQDetail_EnterFeedback,null);
             gotoFeedback();
         }
     }

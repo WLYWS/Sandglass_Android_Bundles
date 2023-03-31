@@ -122,14 +122,14 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
         //打点进入faq列表页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQListPage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQListPage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         //打点退出faq列表页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQListPage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FAQListPage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 
     private void initTitle(){
@@ -167,7 +167,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         deviceRecycler.setAdapter(slfDeviceGridAdapter);
         slfDeviceGridAdapter.setOnItemClickListener((holder, position) -> {
             //打点切换一级菜单
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_ChangeClassification);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_ChangeClassification,null);
             deviceTypesList.get(holder.getAdapterPosition()).setChecked(true);
             changedChecked(deviceTypesList,position);
             slfDeviceGridAdapter.notifyDataSetChanged();
@@ -320,7 +320,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
                 slfExAdapter.notifyDataSetChanged();
                 gotoFAQDetail(groupPosition,childPostion);
                 //打点进入faq详情页
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_EnterDetail);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_EnterDetail,null);
                 return true;
             }
         });

@@ -274,6 +274,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                             picPathLists.get(i).setUploadUrl(null);
                             picPathLists.get(i).setUploadThumurl(null);
                             picPathLists.get(i).setFileName(fileName);
+                            picPathLists.get(i).setFileSuccess(false);
+                            picPathLists.get(i).setThumbSuccess(false);
                         }
 
                     } else if (picPathLists.get(i).getMimeType().contains("png")) {
@@ -305,6 +307,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                             picPathLists.get(i).setUploadUrl(null);
                             picPathLists.get(i).setUploadThumurl(null);
                             picPathLists.get(i).setFileName(fileName);
+                            picPathLists.get(i).setFileSuccess(false);
+                            picPathLists.get(i).setThumbSuccess(false);
                         }
 
                     } else if (picPathLists.get(i).getMimeType().contains("video")) {
@@ -328,6 +332,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                             picPathLists.get(i).setUploadThumPath(null);
                             picPathLists.get(i).setUploadUrl(null);
                             picPathLists.get(i).setUploadThumurl(null);
+                            picPathLists.get(i).setFileSuccess(false);
+                            picPathLists.get(i).setThumbSuccess(false);
                             SLFMediaData slfMediaData = picPathLists.get(i);
                             compressVideo(path, newFilePath, fileName, picPathLists.get(i).getId());
                         } catch (Exception e) {
@@ -501,7 +507,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
             public void onClick(View arg0) {
                 SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":click selected");
                 //打点上传资源
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_UploadResource);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_UploadResource,null);
                 gotoFeedback();
                 finish();
             }

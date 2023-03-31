@@ -84,6 +84,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -168,7 +169,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         super.onResume();
         requestNewFeed();
         //打点进入chatbot页面
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_START);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_START,null);
     }
 
 
@@ -316,7 +317,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             @Override
             public void onClick(View view) {
                 //打点进入反馈页
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFeedback);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFeedback,null);
                 gotoFeedback();
             }
         });
@@ -324,7 +325,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             @Override
             public void onClick(View view) {
                 //打点进入反馈页
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFAQ);
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("fristone","first");
+                map.put("FAQ","faq");
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFAQ,map);
                 gotoFaq();
             }
         });
@@ -332,7 +336,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             @Override
             public void onClick(View view) {
                 //打点进入反馈列表页
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFeedbackList);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFeedbackList,null);
                 gotoFeedbackHistoryList();
             }
         });
@@ -780,7 +784,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         sLFChatBotRecyclerAdapter.notifyDataSetChanged();
         //刷新数据库
         slfdbEngine.update_msg(slfChatBotUpdateQuesionData);
-        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_ChangeHotQuestion);
+        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_ChangeHotQuestion,null);
     }
 
     /**
@@ -821,11 +825,11 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         if(fromType==SLFChatBotMsgData.SEND_FROM_INPUT) {
             hotQuestion = 0;
             //打点自定义问题
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_SendCustomQuestion);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_SendCustomQuestion,null);
         }else if(fromType==SLFChatBotMsgData.SEND_FROM_CLICK_HOT){
             hotQuestion = 1;
             //打点热门问题
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_ClickHotQuestion);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Chat_ClickHotQuestion,null);
         }
 
         postSearch(question,hotQuestion,time,uuid);
@@ -1017,7 +1021,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         et_faq_input.clearFocus();
         hideSoftInput(SLFChatBotActivity.this, et_faq_input);
         //打点退出chatbot页面
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_END);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_ChatPage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 
 

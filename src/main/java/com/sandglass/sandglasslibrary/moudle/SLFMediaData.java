@@ -1,8 +1,11 @@
 package com.sandglass.sandglasslibrary.moudle;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.File;
 /**
@@ -14,6 +17,7 @@ public class SLFMediaData implements Parcelable {
 
 
     public static final Creator<SLFMediaData> CREATOR = new Creator<SLFMediaData>() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public SLFMediaData createFromParcel(Parcel in) {
             return new SLFMediaData(in);
@@ -69,9 +73,13 @@ public class SLFMediaData implements Parcelable {
     /**文件名*/
     private String fileName;
 
+    private boolean isFileSuccess;
+    private boolean isThumbSuccess;
+
     public SLFMediaData() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     SLFMediaData(Parcel in) {
         id = in.readLong();
         title = in.readString();
@@ -96,6 +104,8 @@ public class SLFMediaData implements Parcelable {
         uploadThumurl = in.readString();
         uploadStatus = in.readString();
         fileName = in.readString();
+        isFileSuccess = in.readBoolean();
+        isThumbSuccess = in.readBoolean();
     }
 
     public String getUploadUrl() {
@@ -130,6 +140,22 @@ public class SLFMediaData implements Parcelable {
         this.uploadThumPath = uploadThumPath;
     }
 
+    public boolean isFileSuccess() {
+        return isFileSuccess;
+    }
+
+    public void setFileSuccess(boolean fileSuccess) {
+        isFileSuccess = fileSuccess;
+    }
+
+    public boolean isThumbSuccess() {
+        return isThumbSuccess;
+    }
+
+    public void setThumbSuccess(boolean thumbSuccess) {
+        isThumbSuccess = thumbSuccess;
+    }
+
     public String getUploadStatus() {
         if(uploadStatus==null){
             uploadStatus = "";
@@ -149,6 +175,7 @@ public class SLFMediaData implements Parcelable {
         this.fileName = fileName;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
@@ -174,6 +201,8 @@ public class SLFMediaData implements Parcelable {
         dest.writeString(uploadThumurl);
         dest.writeString(uploadStatus);
         dest.writeString(fileName);
+        dest.writeBoolean(isFileSuccess);
+        dest.writeBoolean(isThumbSuccess);
     }
 
     @Override
@@ -359,6 +388,8 @@ public class SLFMediaData implements Parcelable {
                 ", bucketDisplayName='" + bucketDisplayName + '\'' +
                 ", thumbnailBigPath='" + thumbnailBigPath + '\'' +
                 ", thumbnailSmallPath='" + thumbnailSmallPath + '\'' +
+                ", isFileSuccess='" + isFileSuccess + '\'' +
+                ", isThumbSuccess='" + isThumbSuccess + '\'' +
                 '}';
     }
 

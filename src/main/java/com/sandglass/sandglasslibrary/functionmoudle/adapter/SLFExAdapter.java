@@ -118,13 +118,13 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         {
             image.setBackgroundResource(R.drawable.slf_btn_icon_up);
             //打点展开列表
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_ExpandSecondaryClassification);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_ExpandSecondaryClassification,null);
         }
         else
         {
             image.setBackgroundResource(R.drawable.slf_btn_icon_down);
             //打点收起列表
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_CollapseSecondaryClassification);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FAQ_CollapseSecondaryClassification,null);
         }
         return view;
     }
