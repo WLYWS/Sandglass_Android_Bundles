@@ -75,10 +75,10 @@ dependencies {
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.tencent.mars:mars-xlog:1.2.6'
     //引用网络库
-//    implementation project(':PUNetWork')
-//    implementation project(':PUTrack')
-    implementation 'com.punet.punetwork:punetwork:0.0.1b'
-    implementation 'com.putrack.putrack:putrack:0.0.1c'
+    implementation project(':PUNetWork')
+    implementation project(':PUTrack')
+//    implementation 'com.punet.punetwork:punetwork:0.0.1b'
+//    implementation 'com.putrack.putrack:putrack:0.0.1c'
 
     //camra
     implementation "androidx.camera:camera-core:1.1.0-alpha08"

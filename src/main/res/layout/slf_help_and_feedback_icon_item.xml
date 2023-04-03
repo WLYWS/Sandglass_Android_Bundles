@@ -5,8 +5,8 @@
     android:layout_marginRight="12dp"
     >
     <RelativeLayout
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:id="@+id/slf_first_page_icon_relate"
         android:layout_centerHorizontal="true">
 
@@ -19,11 +19,12 @@
         android:clickable="false"/>
 
     <ImageView
-        android:layout_width="28dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/slf_device_item_icon_img"
         android:layout_centerInParent="true"
-        android:background="@color/transparent"/>
+        android:background="@color/transparent"
+        android:padding="3dp"/>
 </RelativeLayout>
 
     <TextView
@@ -33,11 +34,10 @@
         android:layout_below="@+id/slf_first_page_icon_relate"
         android:layout_marginTop="4dp"
         android:layout_centerHorizontal="true"
-        android:ellipsize="end"
         android:gravity="center"               
-        android:maxWidth="54dp"
-        android:singleLine="true"
+        android:maxWidth="64dp"
         android:text="RVI"
+        android:lineSpacingExtra="8dp"
         android:textColor="@color/white"
         android:textSize="12sp" />
 </RelativeLayout>
