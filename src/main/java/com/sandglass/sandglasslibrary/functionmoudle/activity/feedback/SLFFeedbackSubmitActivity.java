@@ -249,6 +249,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * try agaiin按钮
      */
     private Button slf_submit_page_try_again;
+
+    private TextView slf_checkbox_text;
     private int service_checkedPosition = -1;
     private int problem_checkedPosition = -1;
     private int problem_overview_checkedPosition = -1;
@@ -375,6 +377,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfSumbmit = findViewById(R.id.slf_submit_feedback);
         slfEmailEdit = findViewById(R.id.slf_email_eidt);
         slfEmailError = findViewById(R.id.slf_email_error);
+        slf_checkbox_text = findViewById(R.id.slf_checkbox_text);
         //无网页控件
         slf_submit_page_no_network_linear = findViewById(R.id.slf_submit_page_no_network_linear);
         slf_submit_page_no_network_title = findViewById(R.id.slf_submit_page_no_network_title);
@@ -418,6 +421,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFFontSet.setSLF_RegularFont(getContext(), slfEmailEdit);
         SLFFontSet.setSLF_RegularFont(getContext(), slfSendLogCheck);
         SLFFontSet.setSLF_MediumFontt(getContext(), slfSumbmit);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_checkbox_text);
         setSubmitBtnCanClick(canSubmit());
         changeTextAndImg(slfServiceSpinner);
         changeTextAndImg(slfProblemSpinner);
@@ -425,6 +429,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         setListenerFotEditTexts();
         slfEmailHeight = SLFViewUtil.getHeight(slfEmailEdit);
         slfEmailErrorHeight = SLFViewUtil.getHeight(slfEmailError);
+//        Drawable drawable = SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_log_checkbox_layout);
+//        drawable.setBounds(0,0,SLFResourceUtils.dp2px(this,40),SLFResourceUtils.dp2px(this,40));
+//        slfSendLogCheck.setCompoundDrawables(drawable,null,null,null);
         slfEmailEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
