@@ -178,7 +178,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0L);
             SLFLogUtil.sdkd("yj","lastSendTime:::"+lastSendTime);
             if(lastSendTime==0L){
-                SLFLogUtil.sdkd("yj","难道是这里");
                 isFristIn = true;
                 uuid = getUUid();
                 SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
@@ -187,17 +186,14 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
             }else{
                 isFristIn = false;
                 if (((fromHelpTime - lastSendTime) / 1000 / 60) > 5) {
-                    SLFLogUtil.sdkd("yj","还是这里");
                     uuid = getUUid();
                     SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                     slfdbEngine.quary_ten_msg(msg_id);
                     getWelcomeHotQuestion();
                 }else {
-                    SLFLogUtil.sdkd("yj","或者是这里");
                     uuid = SLFSpUtils.getString(SLFConstants.UUID, "");
                     SLFLogUtil.sdkd("yj","uuid:::"+uuid);
                     if (TextUtils.isEmpty(uuid)) {
-                        SLFLogUtil.sdkd("yj","uuid:::新会话");
                         uuid = getUUid();
                         SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                     }
@@ -924,7 +920,6 @@ public class SLFChatBotActivity extends SLFBaseActivity implements SLFHttpReques
                     getWelcomeHotQuestion();
                 }
             } else {
-                SLFLogUtil.sdkd("yj","两个我");
                 faqMsgList.addAll(tenMsgDataList);
                 Collections.sort(faqMsgList);
                 setRcycleApdater();
