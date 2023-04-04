@@ -24,7 +24,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="slf.sdk.action.SLFHelpAndFeedback" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -37,6 +36,8 @@
         <activity
             android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity"
             android:exported="false"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFPhotoGridActivity"

@@ -105,5 +105,7 @@ public class SLFConstants {
     public static final String LASTSENDTIME = "LASTSENDTIME";
     public static final String UUID = "UUID";
     public static final String photoCode = "6";
+    //from faq
+    public static final String FROM_FAQ = "from_faq";
 
 }

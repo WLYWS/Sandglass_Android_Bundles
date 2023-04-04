@@ -27,6 +27,7 @@ import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
+import com.sandglass.sandglasslibrary.moudle.event.SLFFinishActivity;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqCategoryEvent;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqDetailEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailBean;
@@ -232,6 +233,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     private void gotoFeedback(){
         Intent in = new Intent(getContext(), SLFFeedbackSubmitActivity.class);
+        in.putExtra(SLFConstants.FROM_FAQ,"faqfrom");
         startActivity(in);
     }
 
@@ -304,6 +306,17 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFUpdateFaqDetailEvent event) {
         SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,event.updateTime);
-        getFaqDetaiData();;
+        getFaqDetaiData();
+    }
+
+    /**
+     * 关闭页面
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFFinishActivity event) {
+       if(event.finish){
+           finish();
+       }
     }
 }

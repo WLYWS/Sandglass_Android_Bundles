@@ -2,7 +2,9 @@ package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +14,16 @@ import android.widget.TextView;
 import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
-import com.sandglass.sandglasslibrary.base.SLFBaseApplication;
 import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
+import com.sandglass.sandglasslibrary.moudle.event.SLFFinishActivity;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Greated by yangjie
@@ -38,31 +42,34 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
 
     private int logId;
 
+    private String from;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_success);
-        logId = getIntent().getIntExtra(SLFConstants.LOGID,-1);
+        from = getIntent().getStringExtra(SLFConstants.FROM_FAQ);
+        logId = getIntent().getIntExtra(SLFConstants.LOGID, -1);
         initTitle();
         initView();
     }
 
 
-    private void initTitle(){
+    private void initTitle() {
         ImageView iv_Back = findViewById(R.id.slf_iv_back);
         iv_Back.setVisibility(View.GONE);
         TextView iv_title = findViewById(R.id.slf_tv_title_name);
         iv_title.setText(SLFResourceUtils.getString(R.string.slf_feedback_title_content));
-        SLFFontSet.setSLF_RegularFont(getContext(),iv_title);
+        SLFFontSet.setSLF_RegularFont(getContext(), iv_title);
     }
 
-    private void initView(){
+    private void initView() {
         slf_logid = findViewById(R.id.slf_feed_back_sucess_logid);
         slf_copy = findViewById(R.id.slf_feed_back_success_copy);
         slf_finish_Btn = findViewById(R.id.slf_success_finish);
         slf_feed_back_succeeded = findViewById(R.id.slf_feed_back_succeeded);
-        slf_logid.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_success_center_logid,logId));
+        slf_logid.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_success_center_logid, logId));
         slf_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,15 +85,25 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
             @Override
             public void onClick(View view) {
                 //SLFBaseApplication.exitAllActivity();
-                //打点完成反馈
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Finish,null);
-                finish();
+
+                if (null != from && !TextUtils.isEmpty(from)) {
+                    if (from.equals("faqfrom")) {
+                        //打点完成反馈
+                        PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Finish,null);
+                        EventBus.getDefault().post(new SLFFinishActivity(true));
+                        finish();
+                    }
+                } else {
+                    //打点完成反馈
+                    PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackComplete_Finish,null);
+                    finish();
+                }
             }
         });
-        SLFFontSet.setSLF_MediumFontt(getContext(),slf_feed_back_succeeded);
-        SLFFontSet.setSLF_RegularFont(getContext(),slf_logid);
-        SLFFontSet.setSLF_RegularFont(getContext(),slf_copy);
-        SLFFontSet.setSLF_MediumFontt(getContext(),slf_finish_Btn);
+        SLFFontSet.setSLF_MediumFontt(getContext(), slf_feed_back_succeeded);
+        SLFFontSet.setSLF_RegularFont(getContext(), slf_logid);
+        SLFFontSet.setSLF_RegularFont(getContext(), slf_copy);
+        SLFFontSet.setSLF_MediumFontt(getContext(), slf_finish_Btn);
     }
 
     @Override
@@ -94,9 +111,17 @@ public class SLFFeedbackSuccessActivity extends SLFBaseActivity {
 
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 //            SLFBaseApplication.exitAllActivity();
-            finish();
+            if (null != from && !TextUtils.isEmpty(from)) {
+                if (from.equals("faqfrom")) {
+                    EventBus.getDefault().post(new SLFFinishActivity(true));
+                    finish();
+                }
+            } else {
+                finish();
+            }
             return false;
         }
+
         return super.onKeyDown(keyCode, event);
     }
 

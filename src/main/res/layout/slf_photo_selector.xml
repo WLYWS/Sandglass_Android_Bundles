@@ -279,18 +279,28 @@
 
             <CheckBox
                 android:id="@+id/slf_upload_log"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/slf_email_error"
+                android:button="@null"
+                android:background="@drawable/slf_feed_back_log_checkbox_layout"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="20dp"
+                android:checked="true"
+                android:paddingLeft="8dp" />
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/slf_checkbox_text"
                 android:layout_below="@+id/slf_email_error"
-                android:layout_marginLeft="36dp"
-                android:button="@drawable/slf_feed_back_log_checkbox_layout"
-                android:checked="true"
-                android:paddingLeft="8dp"
-                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/slf_upload_log"
                 android:text="@string/slf_feedback_send_log"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:paddingTop="3dp"
+                android:layout_marginLeft="6dp"
                 android:textColor="@color/slf_feedback_page_child_text"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp"/>
         </RelativeLayout>
     </com.sandglass.sandglasslibrary.commonui.SLFScrollView>
 

@@ -1,10 +1,10 @@
 <resources>
     <!-- faq-->
-    <string name="slf_faq_input_hint">Please describe your problem briefly</string>
+    <string name="slf_faq_input_hint">Please briefly describe your problem</string>
     <string name="slf_faq_title">Chat Bot</string>
     <string name="slf_top_question">Top questions</string>
     <string name="slf_related_question">Related questions:</string>
-    <string name="slf_input_500_toast_text">500 characters limit.</string>
+    <string name="slf_input_500_toast_text">500 characters limit</string>
 
     <item name="slf_adatper_utils" type="id"></item>
     <!--titlebar-->
@@ -27,23 +27,23 @@
     <string name="slf_feedback_font_count">%1$d/1000</string>
     <string name="slf_feedback_photo_count">%1$d/3</string>
     <string name="slf_feedback_email_title">Email:</string>
-    <string name="slf_feedback_email_hint">Please enter email address</string>
+    <string name="slf_feedback_email_hint">Please enter your email address</string>
     <string name="slf_feedback_email_error">Please enter a valid email address</string>
     <string name="slf_feedback_send_log">Send Log</string>
-    <string name="slf_feedback_submit_feedback">Submit Feedback</string>
+    <string name="slf_feedback_submit_feedback">Submit feedback</string>
     <string name="slf_feedback_title_content">Feedback</string>
     <string name="slf_feedback_problem_font_least">Feedback description should be at least 10 characters.</string>
     <string name="slf_feedback_problem_font_least_all_space">Feedback description should be at least 10 characters.</string>
     <string name="slf_feedback_dilaog_per_title">Request Phone Access</string>
-    <string name="slf_feedback_dilaog_per_go_to_set">Go to Set</string>
+    <string name="slf_feedback_dilaog_per_go_to_set">Go to Settings</string>
     <string name="slf_feedback_dilaog_per_content">To enable this feature,the RVI app requests permission to access your phone\'s ablum.</string>
-    <string name="slf_feedback_dilaog_resure_title">Discard feedback</string>
+    <string name="slf_feedback_dilaog_resure_title">Discard Feedback</string>
     <string name="slf_feedback_dilaog_resure_content">You have filled out this feedback content, click OK to discard this feedback.</string>
     <string name="slf_feedback_dilaog_resure_ok">OK</string>
     <string name="slf_feedback_grid_bottom_left">Preview</string>
     <string name="slf_feedback_grid_bottom_right">Done\(%1$d\)</string>
     <string name="slf_feedback_grid_bottom_right_no_selected">Done</string>
-    <string name="slf_feedback_success_center_title">Feedback succeeded</string>
+    <string name="slf_feedback_success_center_title">Submission successful</string>
     <string name="slf_feedback_success_center_logid">Log ID:%1$d</string>
     <string name="slf_feedback_success_center_copy">Copy</string>
     <string name="slf_feedback_success_bottom_finish">Finish</string>
@@ -59,9 +59,9 @@
     <string name="slf_feedback_list_item_title_in_progress">In progress</string>
     <string name="slf_feedback_list_item_title_to_be_processed">To be processed</string>
     <string name="slf_feedback_list_item_title_finished">Finished</string>
-    <string name="slf_feedback_list_item_no_item">No feedback</string>
+    <string name="slf_feedback_list_item_no_item">No feedback found</string>
     <string name="slf_feedback_list_item_id">Feedback ID: %1$d</string>
-    <string name="slf_feedback_list_leave_message_bottom_text">Continue to leave a message</string>
+    <string name="slf_feedback_list_leave_message_bottom_text">Continue to Leave a Message</string>
     <string name="slf_feedback_list_leave_message_title_text">Details</string>
     <string name="slf_feedback_list_continue_leave_message_bottom_text">Send</string>
     <string name="slf_feedback_list_send_log">Sent successfully.</string>
@@ -71,7 +71,7 @@
     <string name="slf_first_page_no_network_sub">Please check your network connection and try again.</string>
     <string name="slf_first_page_request_fail">Request Failed</string>
     <string name="slf_first_page_request_fail_sub">The network is weak or the server is down, request for data failed</string>
-    <string name="slf_first_page_no_network_try_again">Try Again</string>
+    <string name="slf_first_page_no_network_try_again">Try again</string>
     <string name="slf_faq_detail_btton_text">Unsolved? Submit feedback ~</string>
     <string name="slf_feedback_detail_send_log_success">Log has been sent</string>
     <!--help and feedback-->

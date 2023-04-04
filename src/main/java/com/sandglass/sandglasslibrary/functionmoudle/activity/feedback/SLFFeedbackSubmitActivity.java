@@ -1,12 +1,15 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.feedback;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -253,6 +257,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * try agaiin按钮
      */
     private Button slf_submit_page_try_again;
+
+    private TextView slf_checkbox_text;
     private int service_checkedPosition = -1;
     private int problem_checkedPosition = -1;
     private int problem_overview_checkedPosition = -1;
@@ -314,6 +320,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private boolean isResolveDevicelist;
     private boolean isResolveAllData;
 
+    private String from = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -321,6 +329,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         setContentView(R.layout.slf_photo_selector);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
         cacheManager = new SLFCacheToFileManager(SLFCategoriesResponseBean.class);
+        from = getIntent().getStringExtra(SLFConstants.FROM_FAQ);
         initTitle();
         initView();
         checkNetWork();
@@ -379,6 +388,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfSumbmit = findViewById(R.id.slf_submit_feedback);
         slfEmailEdit = findViewById(R.id.slf_email_eidt);
         slfEmailError = findViewById(R.id.slf_email_error);
+        slf_checkbox_text = findViewById(R.id.slf_checkbox_text);
         //无网页控件
         slf_submit_page_no_network_linear = findViewById(R.id.slf_submit_page_no_network_linear);
         slf_submit_page_no_network_title = findViewById(R.id.slf_submit_page_no_network_title);
@@ -422,6 +432,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFFontSet.setSLF_RegularFont(getContext(), slfEmailEdit);
         SLFFontSet.setSLF_RegularFont(getContext(), slfSendLogCheck);
         SLFFontSet.setSLF_MediumFontt(getContext(), slfSumbmit);
+        SLFFontSet.setSLF_RegularFont(getContext(),slf_checkbox_text);
         setSubmitBtnCanClick(canSubmit());
         changeTextAndImg(slfServiceSpinner);
         changeTextAndImg(slfProblemSpinner);
@@ -1002,10 +1013,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
                     @Override
                     public void keyBoardShow(int height) {
-                        slfSumbmit.setVisibility(View.INVISIBLE);
-                        if (slfEmailEdit.hasFocus()) {
-                            slfScrollView.smoothScrollTo(0, slfKeyBoardHeight + slfEmailErrorHeight + slfEmailHeight + SLFResourceUtils.dp2px(getContext(), 3));
-                        }
+                        slfSumbmit.setVisibility(View.GONE);
+//                        if (slfEmailEdit.hasFocus()) {
+//                            slfScrollView.smoothScrollTo(0, slfKeyBoardHeight + slfEmailErrorHeight + slfEmailHeight + SLFResourceUtils.dp2px(getContext(), 40));
+//                        }
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord show");
                     }
 
@@ -1426,6 +1437,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void gotoFeedbackSuccess(int logId) {
         Intent in = new Intent(getContext(), SLFFeedbackSuccessActivity.class);
         in.putExtra(SLFConstants.LOGID, logId);
+        in.putExtra(SLFConstants.FROM_FAQ,from);
         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::go to feedback success page ::logid::" + logId);
         startActivity(in);
         finish();
@@ -1662,6 +1674,47 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     }
 
+    /**
+     * 点击空白区域隐藏键盘.
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent me) {
+        if (me.getAction() == MotionEvent.ACTION_DOWN) {  //把操作放在用户点击的时候
+            View v = getCurrentFocus();      //得到当前页面的焦点,ps:有输入框的页面焦点一般会被输入框占据
+            if (isShouldHideKeyboard(v, me)) { //判断用户点击的是否是输入框以外的区域
+                hideKeyboard(v.getWindowToken());   //收起键盘
+            }
+        }
+        return super.dispatchTouchEvent(me);
+    }
+
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+     *
+     * @param v
+     * @param event
+     * @return
+     */
+    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {  //判断得到的焦点控件是否包含EditText
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0],    //得到输入框在屏幕中上下左右的位置
+                    top = l[1],
+                    bottom = top + v.getHeight(),
+                    right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击位置如果是EditText的区域，忽略它，不收起键盘。
+                return false;
+            } else {
+                return true;
+            }
+        }
+        // 如果焦点不是EditText则忽略
+        return false;
+    }
+
     private TreeMap<String, Object> getCreateFeedBackTreemap() {
         ArrayList<SLFLogAttrBean> logAttrBeans = new ArrayList<>();
         ArrayList<SLFLeaveMsgBean> attrList = new ArrayList<>();
@@ -1789,6 +1842,17 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slfaddAttachAdapter.notifyDataSetChanged();
         } else {
 
+        }
+    }
+
+    /**
+     * 获取InputMethodManager，隐藏软键盘
+     * @param token
+     */
+    private void hideKeyboard(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 

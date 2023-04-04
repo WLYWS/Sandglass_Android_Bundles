@@ -26,6 +26,7 @@ import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFDeviceGridAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFExAdapter;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
+import com.sandglass.sandglasslibrary.moudle.event.SLFFinishActivity;
 import com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqCategoryEvent;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQFapListBean;
@@ -352,5 +353,16 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     public void onEvent(SLFUpdateFaqCategoryEvent event) {
         SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE,event.updateTime);
         getDeviceTypesList();
+    }
+
+    /**
+     * 关闭页面
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SLFFinishActivity event) {
+        if(event.finish){
+            finish();
+        }
     }
 }
