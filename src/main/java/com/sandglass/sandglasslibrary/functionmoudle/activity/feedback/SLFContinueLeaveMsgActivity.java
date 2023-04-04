@@ -28,6 +28,7 @@ import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
+import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFAndPhotoLeaveAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.enums.SLFMediaType;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
@@ -116,7 +117,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     /**
      * 展示缩略图的adapter
      */
-    private SLFAndPhotoAdapter slfaddAttachAdapter;
+    private SLFAndPhotoLeaveAdapter slfaddAttachAdapter;
     /**
      * 输入问题描述框记录的字符
      */
@@ -224,7 +225,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfMediaData.setId(SystemClock.elapsedRealtime());
         slfMediaDataList.add(this.slfMediaData);
         /**初始化显示选中图片缩略图的adapter*/
-        final SLFAndPhotoAdapter slfaddAttachAdapter = new SLFAndPhotoAdapter(getContext(), slfMediaDataList);
+        final SLFAndPhotoLeaveAdapter slfaddAttachAdapter = new SLFAndPhotoLeaveAdapter(getContext(), slfMediaDataList);
         this.slfaddAttachAdapter = slfaddAttachAdapter;
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
@@ -443,8 +444,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             if (!hasUploadingFile) {
                 if(slfRecord!=null&&!TextUtils.isEmpty(slfRecord.getContent())) {
                     //------if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
-                        showLoading();
-                        SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
+                    showLoading();
+                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
                     //-}
                 }else{
                     showCenterToast("data is error");
@@ -552,6 +553,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             String code = (String) type;
             SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestScucess::contiuneLeave：:Integer::" + ":::type:::" + type);
             resultUploadImageOrVideo(code);
+            isUploadSuccess();
             hideLoading();
         } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
             SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":createFeedback--request--success:" + ((SLFSendLeaveMsgRepsonseBean) type).toString());
@@ -646,27 +648,35 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private synchronized void resultUploadImageOrVideo(String code) {
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
-                imageSuccessed = true;
-                resultCodeMethod(code, imageSuccessed);
+                resultCodeMethod(slfMediaDataList.get(i));
             }
+            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()) + "thumb")) {
+                resultCodeThumbMethod(slfMediaDataList.get(i));
+            }
+
         }
     }
+        private void resultCodeMethod(SLFMediaData slfMediaData) {
+            slfMediaData.setFileSuccess(true);
+        }
 
-    private void resultCodeMethod(String code, boolean imageSuccess) {
-        for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
-            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
-                if (slfMediaDataList.get(i).getUploadPath() != null) {
+        private void resultCodeThumbMethod(SLFMediaData slfMediaData) {
+            slfMediaData.setThumbSuccess(true);
+        }
+
+        private void isUploadSuccess(){
+            for(int i=0;i<slfMediaDataList.size()-1;i++){
+                if(slfMediaDataList.get(i).isFileSuccess()&&slfMediaDataList.get(i).isThumbSuccess()){
                     slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
                     slfaddAttachAdapter.notifyDataSetChanged();
-                    imageSuccess = false;
-                } else {
-                    imageSuccess = false;
+                    slfMediaDataList.get(i).setFileSuccess(false);
+                    slfMediaDataList.get(i).setThumbSuccess(false);
                 }
             }
         }
-    }
 
-    /**创建send对象*/
+
+        /**创建send对象*/
     private TreeMap<String, Object> getSendHistory() {
         List<SLFLeaveMsgBean> attrList = new ArrayList<>();
         attrlistResponselist.clear();

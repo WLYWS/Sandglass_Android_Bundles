@@ -11,6 +11,7 @@ import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecycle
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFirstPageFAQBean;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
+import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 
@@ -45,7 +46,13 @@ public class SLFDeviceGridAdapter extends SLFRecyclerAdatper<SLFFirstPageFAQBean
         ImageView slf_device_item_icon_img = holder.getView(R.id.slf_device_item_icon_img);
         TextView slf_device_item_name = holder.getView(R.id.slf_device_item_name);
         if(object.getIconUrl()!=null) {
-            SLFImageUtil.loadImage(mContext, object.getIconUrl(), slf_device_item_icon_img, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon);
+            if (object.getIconUrl().equals(slf_device_item_icon_img.getTag(R.id.slf_iv_photo))) {
+
+            } else {
+                SLFImageUtil.loadImage(getContext(), object.getIconUrl(), slf_device_item_icon_img, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                        , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
+                slf_device_item_icon_img.setTag(R.id.slf_iv_photo, object.getIconUrl());
+            }
         }else{
             SLFImageUtil.loadImage(mContext,"", slf_device_item_icon_img, R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon);
         }
