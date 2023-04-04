@@ -17,7 +17,6 @@ public class SLFMediaData implements Parcelable {
 
 
     public static final Creator<SLFMediaData> CREATOR = new Creator<SLFMediaData>() {
-        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public SLFMediaData createFromParcel(Parcel in) {
             return new SLFMediaData(in);
@@ -75,6 +74,7 @@ public class SLFMediaData implements Parcelable {
 
     private boolean isFileSuccess;
     private boolean isThumbSuccess;
+
 
     public SLFMediaData() {
     }
@@ -140,22 +140,6 @@ public class SLFMediaData implements Parcelable {
         this.uploadThumPath = uploadThumPath;
     }
 
-    public boolean isFileSuccess() {
-        return isFileSuccess;
-    }
-
-    public void setFileSuccess(boolean fileSuccess) {
-        isFileSuccess = fileSuccess;
-    }
-
-    public boolean isThumbSuccess() {
-        return isThumbSuccess;
-    }
-
-    public void setThumbSuccess(boolean thumbSuccess) {
-        isThumbSuccess = thumbSuccess;
-    }
-
     public String getUploadStatus() {
         if(uploadStatus==null){
             uploadStatus = "";
@@ -173,6 +157,22 @@ public class SLFMediaData implements Parcelable {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public boolean isFileSuccess() {
+        return isFileSuccess;
+    }
+
+    public void setFileSuccess(boolean fileSuccess) {
+        isFileSuccess = fileSuccess;
+    }
+
+    public boolean isThumbSuccess() {
+        return isThumbSuccess;
+    }
+
+    public void setThumbSuccess(boolean thumbSuccess) {
+        isThumbSuccess = thumbSuccess;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -273,6 +273,8 @@ public class SLFMediaData implements Parcelable {
     public void setBucketDisplayName(String bucketDisplayName) {
         this.bucketDisplayName = bucketDisplayName;
     }
+
+
 
     public String getThumbnailBigPath() {
         if(!TextUtils.isEmpty(thumbnailBigPath)){

@@ -80,13 +80,13 @@ public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
             helper.setVisible(R.id.slf_center_addimg,true);
             helper.setVisible(R.id.slf_photo_count,true);
             helper.setVisible(R.id.slf_iv_photo_fail,false);
-                if (object.getThumbnailSmallPath() != null) {
+            if (object.getThumbnailSmallPath() != null) {
 //                SLFImageUtil.loadImage(getContext(),object.getOriginalPath()
 //                        ,(ImageView) helper.getView(R.id.slf_iv_photo),R.drawable.slf_photo_adapter_defult_icon,R.drawable.slf_photo_adapter_defult_icon
-                    if (object.getThumbnailSmallPath().equals(helper.getView(R.id.slf_iv_photo).getTag(R.id.slf_iv_photo))) {
+                if (object.getThumbnailSmallPath().equals(helper.getView(R.id.slf_iv_photo).getTag(R.id.slf_iv_photo))) {
 
-                    } else {
-                        //四周都是圆角的圆角矩形图片。
+                } else {
+                    //四周都是圆角的圆角矩形图片。
 //                    Glide.with(mContext).load(object.getThumbnailSmallPath()).apply(
 //                                    RequestOptions.bitmapTransform(new RoundedCorners(10))).
 //                            error(SLFResourceUtils.getDrawable(R.drawable.slf_photo_adapter_defult_icon))
@@ -95,18 +95,18 @@ public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
 //                            //取消Glide自带的动画
 //                            .dontAnimate()
 //                            .into((ImageView) helper.getView(R.id.slf_iv_photo));
-                        ViewGroup.LayoutParams lp = helper.getView(R.id.slf_iv_photo).getLayoutParams();
-                        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                        lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                        helper.getView(R.id.slf_iv_photo).setLayoutParams(lp);
-                        SLFImageUtil.loadImage(getContext(), object.getThumbnailSmallPath(), (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
-                                , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
-                        helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
-                    }
-                } else {
-                    SLFImageUtil.loadImage(getContext(), "", (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                    ViewGroup.LayoutParams lp = helper.getView(R.id.slf_iv_photo).getLayoutParams();
+                    lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                    helper.getView(R.id.slf_iv_photo).setLayoutParams(lp);
+                    SLFImageUtil.loadImage(getContext(), object.getThumbnailSmallPath(), (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
                             , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
+                    helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
                 }
+            } else {
+                SLFImageUtil.loadImage(getContext(), "", (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
+                        , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
+            }
         }
 
         helper.setOnClickListener(R.id.slf_iv_delete, v -> {

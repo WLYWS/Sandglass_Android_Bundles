@@ -25,6 +25,7 @@
         android:layout_centerInParent="true"
         android:background="@color/transparent"
         android:padding="3dp"/>
+
 </RelativeLayout>
 
     <TextView
@@ -36,8 +37,8 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"               
         android:maxWidth="64dp"
-        android:text="RVI"
         android:lineSpacingExtra="8dp"
+        android:text="RVI"
         android:textColor="@color/white"
         android:textSize="12sp" />
 </RelativeLayout>

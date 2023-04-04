@@ -20,17 +20,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.punet.punetwork.net.PUNApiContant;
-import com.punet.punetwork.net.PUNHttpRequestCallback;
-import com.punet.punetwork.net.PUNHttpRequestConstants;
-import com.punet.punetwork.net.PUNHttpUtils;
-import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
-import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
-import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
@@ -46,6 +39,10 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeveMsgRecordMo
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFSendLeaveMsgRepsonseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUploadFileReponseBean;
+import com.sandglass.sandglasslibrary.net.SLFApiContant;
+import com.sandglass.sandglasslibrary.net.SLFHttpRequestCallback;
+import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
+import com.sandglass.sandglasslibrary.net.SLFHttpUtils;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
@@ -73,7 +70,7 @@ import java.util.concurrent.Executors;
  * descripe:继续留言
  * time:2023/2/7
  */
-public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, PUNHttpRequestCallback<T> {
+public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFHttpRequestCallback<T> {
     /**
      * scollrview控件
      */
@@ -179,8 +176,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
         map.put("num", 6);
-        PUNHttpUtils.getInstance().executeGet(getContext(),
-                PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
+        SLFHttpUtils.getInstance().executeGet(getContext(),
+                SLFHttpRequestConstants.BASE_URL + SLFApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
     }
 
     /**
@@ -233,8 +230,6 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
-            //打点查看资源文件
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterResourceDetail,null);
             if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
                 SLFPermissionManager.getInstance().chekPermissions(SLFContinueLeaveMsgActivity.this, permissionStorage, permissionsStroageResult);
             } else {
@@ -310,8 +305,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                     } else if (slfMediaDataList.get(i).getMimeType().contains("video")) {
                         contentType = "video/mp4";
                     }
-                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
-                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", this);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
+                    SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", this);
                 }
             } else {
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
@@ -419,8 +414,6 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         if (view.getId() == R.id.slf_iv_back) {
             finish();
         } else if (view.getId() == R.id.slf_continue_leave_send) {
-            //打点发送留言
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Leave_SendLeave,null);
 //            if (slfEditProblem.getText().toString().length() < 10) {
 //                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
 //                return;
@@ -451,8 +444,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             if (!hasUploadingFile) {
                 if(slfRecord!=null&&!TextUtils.isEmpty(slfRecord.getContent())) {
                     //------if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
-                        showLoading();
-                        PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
+                    showLoading();
+                    SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
                     //-}
                 }else{
                     showCenterToast("data is error");
@@ -610,8 +603,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                     if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFContinueLeaveMsgActivity.this);
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFContinueLeaveMsgActivity.this);
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFContinueLeaveMsgActivity.this);
+                        SLFHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFContinueLeaveMsgActivity.this);
                         SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:compelete");
                     }
                 } else {
@@ -657,32 +650,33 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
                 resultCodeMethod(slfMediaDataList.get(i));
             }
-            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId())+"thumb")) {
+            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()) + "thumb")) {
                 resultCodeThumbMethod(slfMediaDataList.get(i));
             }
+
         }
     }
+        private void resultCodeMethod(SLFMediaData slfMediaData) {
+            slfMediaData.setFileSuccess(true);
+        }
 
-    private void resultCodeMethod(SLFMediaData slfMediaData) {
-        slfMediaData.setFileSuccess(true);
-    }
+        private void resultCodeThumbMethod(SLFMediaData slfMediaData) {
+            slfMediaData.setThumbSuccess(true);
+        }
 
-    private void resultCodeThumbMethod(SLFMediaData slfMediaData) {
-        slfMediaData.setThumbSuccess(true);
-    }
-
-    private void isUploadSuccess(){
-        for(int i=0;i<slfMediaDataList.size()-1;i++){
-            if(slfMediaDataList.get(i).isFileSuccess()&&slfMediaDataList.get(i).isThumbSuccess()){
-                slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
-                slfaddAttachAdapter.notifyDataSetChanged();
-                slfMediaDataList.get(i).setFileSuccess(false);
-                slfMediaDataList.get(i).setThumbSuccess(false);
+        private void isUploadSuccess(){
+            for(int i=0;i<slfMediaDataList.size()-1;i++){
+                if(slfMediaDataList.get(i).isFileSuccess()&&slfMediaDataList.get(i).isThumbSuccess()){
+                    slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                    slfaddAttachAdapter.notifyDataSetChanged();
+                    slfMediaDataList.get(i).setFileSuccess(false);
+                    slfMediaDataList.get(i).setThumbSuccess(false);
+                }
             }
         }
-    }
 
-    /**创建send对象*/
+
+        /**创建send对象*/
     private TreeMap<String, Object> getSendHistory() {
         List<SLFLeaveMsgBean> attrList = new ArrayList<>();
         attrlistResponselist.clear();
@@ -720,19 +714,5 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         }
         SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":getSendHistory:map:"+map.toString());
         return map;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //打点退出反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_START,null);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //打点退出反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackLeavePage,SLFPageAgentEvent.SLF_PAGE_END,null);
     }
 }
