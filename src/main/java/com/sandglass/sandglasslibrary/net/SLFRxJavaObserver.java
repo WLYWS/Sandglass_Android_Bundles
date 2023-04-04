@@ -3,9 +3,11 @@ package com.sandglass.sandglasslibrary.net;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.interf.SLFSetNewTokentoFeed;
+import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import org.json.JSONException;
@@ -31,6 +33,8 @@ public class SLFRxJavaObserver<T> implements Observer<String>, SLFSetNewTokentoF
     private final static String CODE = "code";
     private final static String MSG = "message";
     private final static String SUCCESS = "SUCCESS";
+
+    private long failCodeTime;
 
     SLFRxJavaObserver(Context context, T type, SLFHttpRequestCallback callBack,String secret) {
         this.mCallBack = callBack;
@@ -68,10 +72,15 @@ public class SLFRxJavaObserver<T> implements Observer<String>, SLFSetNewTokentoF
                                 String code = jsonObjectData.getString(CODE);
                                 SLFLogUtil.sdkd("yj","CODE::::"+code);
                                 if(code.equals(SLFHttpStatusCode.TOKEN_FAILED)){
-                                    SLFLogUtil.sdkd("yj","CODE::xxx::401");
-                                    //TODO 临时放在这里，之后放在失败那里
-                                    if(SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback()!=null){
-                                        SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback().setToken();
+                                    failCodeTime = SLFSpUtils.getLong(SLFConstants.FAIL_CODE_CALLBACK,0L);
+                                    if((System.currentTimeMillis() - failCodeTime)/1000/60 >= 5) {
+                                        //TODO 临时放在这里，之后放在失败那里
+                                        SLFLogUtil.sdkd("yj", "CODE::xxx::401");
+                                        if (SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback() != null) {
+                                            SLFApi.getInstance(SLFApi.getSLFContext()).getSlfSetTokenCallback().setToken();
+                                        }
+                                        failCodeTime  = System.currentTimeMillis();
+                                        SLFSpUtils.put(SLFConstants.FAIL_CODE_CALLBACK,failCodeTime);
                                     }
                                 }else {
                                     mCallBack.onRequestFail(errMsg, code, mType);

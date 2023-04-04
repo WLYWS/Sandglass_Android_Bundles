@@ -110,4 +110,6 @@ public class SLFConstants {
     //from faq
     public static final String FROM_FAQ = "from_faq";
 
+    public static final String FAIL_CODE_CALLBACK = "fail_code_callback";
+
 }
