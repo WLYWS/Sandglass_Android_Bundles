@@ -21,4 +21,6 @@ public class SLFSPContant {
     public static final String UPDATE_TIME_FAQDETAIL = "UPDATE_TIME_FAQDETAIL";
     //缓存faq详情更新的时间
     public static final String UPDATE_TIME_FAQDETAIL_CACHE = "UPDATE_TIME_FAQDETAIL_CACHE";
+
+
 }

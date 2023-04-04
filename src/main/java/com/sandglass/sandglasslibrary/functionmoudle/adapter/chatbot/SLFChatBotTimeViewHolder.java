@@ -58,32 +58,32 @@ public class SLFChatBotTimeViewHolder extends SLFChatBotBaseViewHodler{
         int type = getDateType(date);
         switch (type){
             case TODAY_DATE:
-                if (is12Hour()){
+//                if (is12Hour()){
                     tv_chat_bot_date.setText(replaceAMPM(formatDate(Long.valueOf(date),HM_12)));
-                }else {
-                    tv_chat_bot_date.setText(formatDate(Long.valueOf(date),HM_24));
-                }
+//                }else {
+//                    tv_chat_bot_date.setText(formatDate(Long.valueOf(date),HM_24));
+//                }
                 break;
             case YESTERDAY_DATE:
-                if (is12Hour()){
+ //               if (is12Hour()){
                     tv_chat_bot_date.setText(YESTERDAY+" "+replaceAMPM(formatDate(Long.valueOf(date),HM_12)));
-                }else {
-                    tv_chat_bot_date.setText(YESTERDAY+" "+formatDate(Long.valueOf(date),HM_24));
-                }
+//                }else {
+//                    tv_chat_bot_date.setText(YESTERDAY+" "+formatDate(Long.valueOf(date),HM_24));
+//                }
                 break;
             case CURRENT_YEAR_DATE:
-                if (is12Hour()){
+//                if (is12Hour()){
                     tv_chat_bot_date.setText(replaceAMPM(formatDate(Long.valueOf(date),MMDD_12)));
-                }else {
-                    tv_chat_bot_date.setText(formatDate(Long.valueOf(date),MMDD_24));
-                }
+//                }else {
+//                    tv_chat_bot_date.setText(formatDate(Long.valueOf(date),MMDD_24));
+//                }
                 break;
             case NO_CURRENT_YEAR_DATE:
-                if (is12Hour()){
+//                if (is12Hour()){
                     tv_chat_bot_date.setText(replaceAMPM(formatDate(Long.valueOf(date),YHD_12)));
-                }else {
-                    tv_chat_bot_date.setText(formatDate(Long.valueOf(date),YHD_24));
-                }
+//                }else {
+//                    tv_chat_bot_date.setText(formatDate(Long.valueOf(date),YHD_24));
+//                }
                 break;
         }
     }
