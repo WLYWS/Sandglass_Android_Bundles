@@ -318,6 +318,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     private String from = "";
 
+    private String emailStr = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -397,7 +399,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         SLFFontSet.setSLF_RegularFont(getContext(), slf_common_loading_text_submit);
 
         if (SLFUserCenter.userInfoBean!=null&&SLFUserCenter.userInfoBean.getData()!=null&&SLFUserCenter.userInfoBean.getData().getEmail() != null) {
-            slfEmailEdit.setText(SLFUserCenter.userInfoBean.getData().getEmail());
+            emailStr = SLFUserCenter.userInfoBean.getData().getEmail();
+            slfEmailEdit.setText(emailStr);
+        }else{
+            slfEmailEdit.setText(emailStr);
         }
 
         slfServiceSpinner.setOnClickListener(this);
@@ -559,7 +564,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             return;
         }
         if (view.getId() == R.id.slf_iv_back) {
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size() - 1 > 0)) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || !slfEmailEdit.getText().toString().equals(emailStr) || (slfMediaDataList.size() - 1 > 0)) {
                 showReSureDialog();
             } else {
                 finish();
@@ -674,16 +679,15 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-
-            if (serviceType || problemType || problemOverviewType || problemEdit || emailEdit || (slfMediaDataList.size() - 1 > 0)) {
+            if (serviceType || problemType || problemOverviewType || problemEdit || !slfEmailEdit.getText().toString().equals(emailStr) || (slfMediaDataList.size() - 1 > 0)) {
                 showReSureDialog();
             } else {
                 finish();
             }
 
-            return false;
+
+                return false;
 
         }
         return super.onKeyDown(keyCode, event);
