@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionName "0.1.37"
+        versionName "0.1.39"
         buildConfigField("String","versionName","\"${versionName}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -74,11 +74,9 @@ dependencies {
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.tencent.mars:mars-xlog:1.2.6'
-    //引用网络库
-    implementation project(':PUNetWork')
-    implementation project(':PUTrack')
-//    implementation 'com.punet.punetwork:punetwork:0.0.1b'
-//    implementation 'com.putrack.putrack:putrack:0.0.1c'
+
+
+
 
     //camra
     implementation "androidx.camera:camera-core:1.1.0-alpha08"
@@ -93,6 +91,24 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
+    // okHttp网络请求框架
+    // define a BOM and its version
+    api(platform("com.squareup.okhttp3:okhttp-bom:4.9.1"))
+
+    // define any required OkHttp artifacts without version
+    api("com.squareup.okhttp3:okhttp")
+    api("com.squareup.okhttp3:logging-interceptor")
+
+    //retrofit网络请求框架
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    //retrofit添加Json解析返回数据
+    api 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //retrofit添加RxJava支持
+    api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    api "io.reactivex.rxjava3:rxjava:3.0.13"
+    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
     //数据库
     implementation 'androidx.room:room-common:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
@@ -106,7 +122,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "com.sandglass.sandglasslibrary"
                 artifactId = "sandglassFeedback"
-                version = "0.1.37"
+                version = "0.1.39"
                 description "沙漏aar"
                 //aar 文件
                 def projectName = project.getName()

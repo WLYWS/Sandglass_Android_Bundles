@@ -37,7 +37,6 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"               
         android:maxWidth="64dp"
-        android:lineSpacingExtra="8dp"
         android:text="RVI"
         android:textColor="@color/white"
         android:textSize="12sp" />
