@@ -67,7 +67,8 @@ public class SLFPreviewPagerAdapter extends PagerAdapter {
             }else{
                 videoThub.setImageBitmap(null);
             }
-            durningText.setText(SLFDateFormatUtils.timeStampToDate(mContext, mediaData.getDuration()));
+            durningText.setVisibility(View.GONE);
+            //durningText.setText(SLFDateFormatUtils.timeStampToDate(mContext, mediaData.getDuration()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

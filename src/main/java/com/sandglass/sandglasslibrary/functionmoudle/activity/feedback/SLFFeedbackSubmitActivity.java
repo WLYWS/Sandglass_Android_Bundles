@@ -1450,7 +1450,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 //            isHideLoading("isResolveAllData");
 //        }
         else{
-            SLFToastUtil.showCenterSubmitFailText();
+            showCenterToast(SLFResourceUtils.getString(R.string.slf_common_network_error));
         }
     }
 
