@@ -1,7 +1,6 @@
 package com.sandglass.sandglasslibrary.utils;
 
 import com.sandglass.sandglasslibrary.enums.ServiceType;
-import com.sandglass.sandglasslibrary.net.SLFHttpRequestConstants;
 
 public class SLFCheckService {
 
