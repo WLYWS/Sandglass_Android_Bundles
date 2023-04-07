@@ -185,6 +185,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
                 if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL,-1)){
                     getFaqDetaiData();
                 }else {
+                    mFeedbackBtn.setVisibility(View.VISIBLE);
                     showContent(sLFFaqDetailResponseBean);
                 }
             }else {
