@@ -62,15 +62,15 @@ public class SLFExAdapter extends BaseExpandableListAdapter
         }
         TextView textView = (TextView)view.findViewById(R.id.slf_problem_sub_title);
         ImageView imgView = (ImageView) view.findViewById(R.id.slf_problem_sub);
-        View devider =view.findViewById(R.id.slf_child_devider);
+        //View devider =view.findViewById(R.id.slf_child_devider);
         textView.setText(arrayList_memberData.get(groupPosition).getFaqList().get(childPosition).getTitle());
         SLFFontSet.setSLF_RegularFont(context, textView);
         imgView.setImageResource(R.drawable.slf_btn_icon_right);
-        if(isLastChild){
-            devider.setVisibility(View.GONE);
-        }else{
-            devider.setVisibility(View.GONE);
-        }
+//        if(isLastChild){
+//            devider.setVisibility(View.GONE);
+//        }else{
+//            devider.setVisibility(View.GONE);
+//        }
 
         return view;
     }
