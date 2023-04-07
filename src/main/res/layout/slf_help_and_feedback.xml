@@ -32,6 +32,7 @@
             android:layout_below="@+id/slf_all_devices_recycler"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:childDivider="@color/transparent"
             android:overScrollMode="never"
             android:scrollbars="none" />
 
