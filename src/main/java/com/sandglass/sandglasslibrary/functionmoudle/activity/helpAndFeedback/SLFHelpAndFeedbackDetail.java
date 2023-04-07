@@ -233,7 +233,9 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     @Override
     public void onRequestSuccess(String result, T type) {
         if(type instanceof SLFFaqDetailResponseBean){
-            cacheManager.delete(CACHE_FILE_PATH);
+            if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL,-1)) {
+                cacheManager.delete(CACHE_FILE_PATH);
+            }
             SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0));
             cacheManager.saveObj(CACHE_FILE_PATH+"slf_faq_detail_"+faq_id,(SLFFaqDetailResponseBean)type);
             //showContent((SLFFaqDetailResponseBean) type);
