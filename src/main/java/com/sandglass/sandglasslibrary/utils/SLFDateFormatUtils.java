@@ -21,7 +21,7 @@ public class SLFDateFormatUtils {
     public static final String YYYYMMDD = "yyyyMMdd";
     public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
     public static final String MDYT = "MM/dd/yyyy HH:mm";
-    public static final String MDYT12 = "MM/dd/yyyy HH:mm aa";
+    public static final String MDYT12 = "MM/dd/yyyy hh:mm aa";
     public static final SimpleDateFormat yymmdd = new SimpleDateFormat(YYYYMMDD);
     public static final SimpleDateFormat ymdhmsSDF = new SimpleDateFormat(YMDHMS);
     public static final SimpleDateFormat ymdhm_cnSDF = new SimpleDateFormat(YMDHM_CN);
@@ -85,14 +85,14 @@ public class SLFDateFormatUtils {
         String typeTime = getSystemTimeFormat(context);
         SimpleDateFormat format;
         String time;
-            if (typeTime.equals("12")) {
+ //           if (typeTime.equals("12")) {
                 format = new SimpleDateFormat(MDYT12, Locale.getDefault());
                 time = replaceAMPM(format.format(date));
                 return time;
-            }else {
-                format = new SimpleDateFormat(MDYT, Locale.getDefault());
-                return format.format(date);
-            }
+//            }else {
+//                format = new SimpleDateFormat(MDYT, Locale.getDefault());
+//                return format.format(date);
+//            }
 
     }
 
