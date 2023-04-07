@@ -1,10 +1,14 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +23,7 @@ import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
 import com.putrack.putrack.commonapi.PUTClickAgent;
+import androidx.annotation.NonNull;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
@@ -113,33 +118,33 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
         slf_faq_detail_no_network = findViewById(R.id.slf_faq_detail_no_network);
         slf_faq_detail_try_again = findViewById(R.id.slf_faq_detail_try_again);
         mFeedbackBtn.setOnClickListener(this);
+        mFeedbackBtn.setVisibility(View.GONE);
         SLFFontSet.setSLF_MediumFontt(getContext(),mFeedbackBtn);
         WebSettings settings = mWebView.getSettings();
         // 設置WebView支持JavaScript
         settings.setJavaScriptEnabled(true);
         //支持自動適配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptThirdPartyCookies(mWebView, true);
+            mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        mWebView.setDrawingCacheEnabled(false);
         settings.setLoadWithOverviewMode(true);
-        settings.setSupportZoom(false);  //支持放大縮小
-        settings.setBuiltInZoomControls(true); //顯示縮放按鈕
-        settings.setBlockNetworkImage(true);// 把圖片加載放在最後來加載渲染
-        settings.setAllowFileAccess(true); // 容許訪問文件
-        settings.setSaveFormData(true);
-        settings.setGeolocationEnabled(true);
-        settings.setDomStorageEnabled(true);
+//        settings.setBlockNetworkImage(true);// 把圖片加載放在最後來加載渲染
+//        settings.setAllowFileAccess(true); // 容許訪問文件
+//        settings.setSaveFormData(true);
+//        settings.setGeolocationEnabled(true);
+//        settings.setDomStorageEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);/// 支持經過JS打開新窗口
 //        Typeface typeFace =Typeface.createFromAsset(getContext().getAssets(),"fonts/Rany.otf");
 //        settings.setfont(getAssets()+"/fonts/Rany.otf");
-        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
+//        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE,null);//开启硬件加速
         //設置不讓其跳轉瀏覽器
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
-        });
+
 
         // 添加客戶端支持
-        mWebView.setWebChromeClient(new WebChromeClient());
+//        mWebView.setWebChromeClient(new WebChromeClient());
         // mWebView.loadUrl(TEXTURL);
 
         //不加這個圖片顯示不出來
@@ -215,6 +220,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     }
 
     private void getFaqDetaiData(){
+        showLoading();
         SLFLogUtil.sdkd("yj","url::"+ PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_DETAIL+faq_id);
         PUNHttpUtils.getInstance().executePathGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_DETAIL+faq_id, SLFFaqDetailResponseBean.class, this);
@@ -248,19 +254,67 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
             cacheManager.delete(CACHE_FILE_PATH);
             SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQDETAIL,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0));
             cacheManager.saveObj(CACHE_FILE_PATH+"slf_faq_detail_"+faq_id,(SLFFaqDetailResponseBean)type);
-            showContent((SLFFaqDetailResponseBean) type);
+            //showContent((SLFFaqDetailResponseBean) type);
+            Message msg = handler.obtainMessage();
+            msg.what = 10032;
+            msg.obj = (SLFFaqDetailResponseBean)type;
+            handler.sendMessageDelayed(msg,300);
         }
     }
+
+    Handler handler =new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 10032:
+                    showContent((SLFFaqDetailResponseBean)msg.obj);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mFeedbackBtn.setVisibility(View.VISIBLE);
+                        }
+                    },300);
+                    break;
+            }
+            return false;
+        }
+    });
 
 
     private void showContent (SLFFaqDetailResponseBean type) {
         String replaceAll;
         slfFaqDetailBean = ((SLFFaqDetailResponseBean) type).data;
         content = slfFaqDetailBean.getContent();
-        replaceAll = content.replaceAll("<img ","<img style=\"max-width:100%;height:auto\" ");
 
+        replaceAll = content.replaceAll("<img ","<img style=\"max-width:100%;height:auto\" ");
+        hideLoading();
         mWebView.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
+
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                super.onReceivedSslError(view, handler, error);
+                handler.proceed();
+            }
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                mWebView.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
+                return true;
+            }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+        });
+
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+            }
+        });
         chageView();
+
     }
 
     public List<String> getImgSrc(String htmlStr) {
@@ -315,8 +369,8 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SLFFinishActivity event) {
-       if(event.finish){
-           finish();
-       }
+        if(event.finish){
+            finish();
+        }
     }
 }

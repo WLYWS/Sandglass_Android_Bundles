@@ -2,8 +2,8 @@
 # compiler_version: 3.2.74
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.0"}
-# pg_map_id: 0c16e3b
-# pg_map_hash: SHA-256 0c16e3b0e1885cac9a7a8a1cb5bde100a8aca075462feb5526024eb673aa869e
+# pg_map_id: 0fdd627
+# pg_map_hash: SHA-256 0fdd627cb1de3320dd473eb899d49fe3916471d84caa658324192fdedf162af8
 a.SLFBaseActivity$$ExternalSyntheticOutline0 -> a.a:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
@@ -625,6 +625,11 @@ com.sandglass.sandglasslibrary.commonui.SLFToastUtil$3 -> com.sandglass.sandglas
 com.sandglass.sandglasslibrary.commonui.SLFToastUtil$4 -> com.sandglass.sandglasslibrary.commonui.k:
     1:1:void <init>(long,long):407:407 -> <init>
     1:1:void onFinish():425:425 -> onFinish
+com.sandglass.sandglasslibrary.commonui.SLFWebView -> com.sandglass.sandglasslibrary.commonui.SLFWebView:
+    1:1:void <init>(android.content.Context):8:8 -> <init>
+    2:2:void <init>(android.content.Context,android.util.AttributeSet):12:12 -> <init>
+    3:3:void <init>(android.content.Context,android.util.AttributeSet,int):16:16 -> <init>
+    1:2:void onMeasure(int,int):19:20 -> onMeasure
 com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotDateView -> com.sandglass.sandglasslibrary.commonui.chatbot.SLFChatBotDateView:
     1:3:void <init>(android.content.Context,android.view.ViewGroup):42:44 -> <init>
     4:4:void <init>(android.content.Context):48:48 -> <init>
@@ -3960,51 +3965,63 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAn
     com.sandglass.sandglasslibrary.commonui.SLFScrollView slf_feed_back_scroll_view -> r
     java.lang.String titleName -> h
     com.sandglass.sandglasslibrary.utils.manager.SLFCacheToFileManager cacheManager -> l
+    android.os.Handler handler -> s
     android.widget.Button slf_faq_detail_try_again -> p
     java.lang.String content -> q
-    java.lang.String CACHE_FILE_PATH -> s
+    java.lang.String CACHE_FILE_PATH -> t
     android.widget.Button mFeedbackBtn -> g
     android.widget.LinearLayout slf_faq_detail_no_item_linear -> m
     android.webkit.WebView mWebView -> f
     android.widget.ImageView slfBack -> k
     android.widget.TextView slfTitle -> j
-    1:1:void <clinit>():70:70 -> <clinit>
-    1:1:void <init>():54:54 -> <init>
-    1:1:void onRequestNetFail(java.lang.Object):223:223 -> a
-    2:7:void showContent(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailResponseBean):239:244 -> a
-    8:9:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):279:280 -> a
-    1:5:void onRequestSuccess(java.lang.String,java.lang.Object):228:232 -> b
-    1:19:void chageView():147:165 -> e
-    1:1:void getFaqDetaiData():0:0 -> f
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":407,"2":408,"3":409}}
-    407:407:void getFaqDetaiData():201:201 -> f
-    408:408:void getFaqDetaiData():201:201 -> f
-    409:409:void getFaqDetaiData():201:201 -> f
-    202:203:void getFaqDetaiData():201:202 -> f
-    204:204:void getFaqDetaiData():0:0 -> f
-      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":410,"2":411,"3":412}}
-    410:410:void getFaqDetaiData():202:202 -> f
-    411:411:void getFaqDetaiData():202:202 -> f
-    412:412:void getFaqDetaiData():202:202 -> f
-    406:406:void getFaqDetaiData():202:202 -> f
-    1:19:void initData():170:188 -> g
-    1:3:void onClick(android.view.View):208:210 -> onClick
-    4:6:void gotoFeedback():216:218 -> onClick
-    4:6:void onClick(android.view.View):211 -> onClick
-    1:3:void onCreate(android.os.Bundle):81:83 -> onCreate
-    4:51:void initView():91:138 -> onCreate
-    4:51:void onCreate(android.os.Bundle):84 -> onCreate
-    52:52:void onCreate(android.os.Bundle):85:85 -> onCreate
-    53:57:void initTitle():193:197 -> onCreate
-    53:57:void onCreate(android.os.Bundle):86 -> onCreate
-    1:2:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqDetailEvent):289:290 -> onEvent
-    3:4:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFFinishActivity):299:300 -> onEvent
+    1:1:void <clinit>():76:76 -> <clinit>
+    1:188:void <init>():60:247 -> <init>
+    1:1:void onRequestNetFail(java.lang.Object):230:230 -> a
+    2:32:void showContent(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqDetailResponseBean):268:298 -> a
+    33:34:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):334:335 -> a
+    1:9:void onRequestSuccess(java.lang.String,java.lang.Object):235:243 -> b
+    1:19:void chageView():153:171 -> e
+    1:3:void getFaqDetaiData():207:209 -> f
+    4:4:void getFaqDetaiData():0:0 -> f
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":214,"2":215,"3":216}}
+    214:214:void getFaqDetaiData():209:209 -> f
+    215:215:void getFaqDetaiData():209:209 -> f
+    216:216:void getFaqDetaiData():209:209 -> f
+    213:213:void getFaqDetaiData():209:209 -> f
+    1:19:void initData():176:194 -> g
+    1:3:void onClick(android.view.View):215:217 -> onClick
+    4:6:void gotoFeedback():223:225 -> onClick
+    4:6:void onClick(android.view.View):218 -> onClick
+    1:3:void onCreate(android.os.Bundle):87:89 -> onCreate
+    4:51:void initView():97:144 -> onCreate
+    4:51:void onCreate(android.os.Bundle):90 -> onCreate
+    52:52:void onCreate(android.os.Bundle):91:91 -> onCreate
+    53:57:void initTitle():199:203 -> onCreate
+    53:57:void onCreate(android.os.Bundle):92 -> onCreate
+    1:2:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFUpdateFaqDetailEvent):344:345 -> onEvent
+    3:4:void onEvent(com.sandglass.sandglasslibrary.moudle.event.SLFFinishActivity):354:355 -> onEvent
 com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$1 -> f.a:
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail):117:117 -> <init>
-com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$2 -> f.b:
     com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail this$0 -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail):138:138 -> <init>
-    1:1:void onClick(android.view.View):141:141 -> onClick
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail):144:144 -> <init>
+    1:1:void onClick(android.view.View):147:147 -> onClick
+com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$2 -> com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$a:
+    com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail this$0 -> a
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail):247:247 -> <init>
+    1:4:boolean handleMessage(android.os.Message):250:253 -> handleMessage
+com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$2$1 -> com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$a$a:
+    com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$2 this$1 -> a
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$2):253:253 -> <init>
+    1:1:void run():256:256 -> run
+com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$3 -> com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$b:
+    com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail this$0 -> b
+    java.lang.String val$replaceAll -> a
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail,java.lang.String):275:275 -> <init>
+    1:1:void onPageFinished(android.webkit.WebView,java.lang.String):288:288 -> onPageFinished
+    1:2:void onReceivedSslError(android.webkit.WebView,android.webkit.SslErrorHandler,android.net.http.SslError):278:279 -> onReceivedSslError
+    1:1:boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String):283:283 -> shouldOverrideUrlLoading
+com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$4 -> com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail$c:
+    1:1:void <init>(com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedbackDetail):292:292 -> <init>
+    1:1:void onProgressChanged(android.webkit.WebView,int):295:295 -> onProgressChanged
 com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter -> g.a:
     android.content.Context mContext -> c
     1:2:void <init>(android.content.Context,java.util.List):32:33 -> <init>
@@ -4192,7 +4209,7 @@ com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFExAdapter -> g.b:
     java.util.List arrayList_memberData -> b
     1:4:void <init>(android.content.Context,java.util.List):25:28 -> <init>
     1:1:java.lang.Object getChild(int,int):40:40 -> getChild
-    1:14:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup):57:70 -> getChildView
+    1:10:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup):57:66 -> getChildView
     1:1:int getChildrenCount(int):79:79 -> getChildrenCount
     1:1:java.lang.Object getGroup(int):85:85 -> getGroup
     1:1:int getGroupCount():91:91 -> getGroupCount
@@ -6670,12 +6687,11 @@ com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils -> n.j:
     java.text.SimpleDateFormat ymdhm_cnSDF -> a
     1:4:void <clinit>():25:28 -> <clinit>
     1:1:java.lang.String getDateToMyString(android.content.Context,long):84:84 -> a
-    2:9:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.getSystemTimeFormat(android.content.Context):52:59 -> a
-    2:9:java.lang.String getDateToMyString(android.content.Context,long):85 -> a
-    10:12:java.lang.String getDateToMyString(android.content.Context,long):88:90 -> a
-    13:17:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.replaceAMPM(java.lang.String):100:104 -> a
-    13:17:java.lang.String getDateToMyString(android.content.Context,long):90 -> a
-    18:19:java.lang.String getDateToMyString(android.content.Context,long):93:94 -> a
+    2:7:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.getSystemTimeFormat(android.content.Context):53:58 -> a
+    2:7:java.lang.String getDateToMyString(android.content.Context,long):85 -> a
+    8:9:java.lang.String getDateToMyString(android.content.Context,long):89:90 -> a
+    10:14:java.lang.String com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils.replaceAMPM(java.lang.String):100:104 -> a
+    10:14:java.lang.String getDateToMyString(android.content.Context,long):90 -> a
 com.sandglass.sandglasslibrary.utils.SLFFastClickUtils -> n.k:
     long lastUpTime -> a
     1:2:boolean isFastDoubleClick(int):13:14 -> a
