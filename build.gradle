@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionName "0.1.51"
+        versionName "0.1.52"
         buildConfigField("String","versionName","\"${versionName}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -124,7 +124,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "com.sandglass.sandglasslibrary"
                 artifactId = "sandglassFeedback"
-                version = "0.1.51"
+                version = "0.1.52"
                 description "沙漏aar"
                 //aar 文件
                 def projectName = project.getName()

@@ -13,6 +13,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.sandglass.sandglasslibrary.R;
+import com.sandglass.sandglasslibrary.commonui.SLFCancelOrOkDialog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,9 @@ import java.util.List;
  */
 
 public class SLFPermissionManager {
-    /**权限请求码*/
+    /**
+     * 权限请求码
+     */
     private final int mRequestCode = 100;
     public static boolean showSystemSetting = true;
     List<String> mPermissionList;
@@ -72,10 +77,11 @@ public class SLFPermissionManager {
 
     }
 
-    /**请求权限后回调的方法
-      *参数： requestCode  是我们自己定义的权限请求码
-      *参数： permissions  是我们请求的权限名称数组
-      *参数： grantResults 是我们在弹出页面后是否允许权限的标识数组，数组的长度对应的是权限名称数组的长度，数组的数据0表示允许权限，-1表示我们点击了禁止权限
+    /**
+     * 请求权限后回调的方法
+     * 参数： requestCode  是我们自己定义的权限请求码
+     * 参数： permissions  是我们请求的权限名称数组
+     * 参数： grantResults 是我们在弹出页面后是否允许权限的标识数组，数组的长度对应的是权限名称数组的长度，数组的数据0表示允许权限，-1表示我们点击了禁止权限
      */
 
     public void onRequestPermissionsResult(Activity context, int requestCode, @NonNull String[] permissions,
@@ -115,36 +121,100 @@ public class SLFPermissionManager {
     AlertDialog mPermissionDialog;
 
     private void showSystemPermissionsSettingDialog(final Activity context) {
+//        final String mPackName = context.getPackageName();
+//        if (mPermissionDialog == null) {
+//            mPermissionDialog = new AlertDialog.Builder(context)
+//                    .setMessage(SLFResourceUtils.getString(R.string.slf_permission_text))
+//                    .setPositiveButton(SLFResourceUtils.getString(R.string.slf_permission_text_setting), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            cancelPermissionDialog();
+//
+//                            Uri packageURI = Uri.parse("package:" + mPackName);
+//                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+//                            context.startActivity(intent);
+//                            context.finish();
+//                        }
+//                    })
+//                    .setNegativeButton(SLFResourceUtils.getString(R.string.slf_title_cancel), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            /**关闭页面或者做其他操作*/
+//                            cancelPermissionDialog();
+//                            /**mContext.finish();*/
+//                            mPermissionsResult.forbitPermissons();
+//                        }
+//                    })
+//                    .create();
+//        }
+//        mPermissionDialog.show();
         final String mPackName = context.getPackageName();
-        if (mPermissionDialog == null) {
-            mPermissionDialog = new AlertDialog.Builder(context)
-                    .setMessage("已禁用权限，请手动授予")
-                    .setPositiveButton("设置", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            cancelPermissionDialog();
+        SLFCancelOrOkDialog slfHintDialog = new SLFCancelOrOkDialog(context, SLFCancelOrOkDialog.STYLE_CANCEL_OK);
+        slfHintDialog.setTitle(SLFResourceUtils.getString(R.string.slf_permission_text_title));
+        slfHintDialog.setContentText(SLFResourceUtils.getString(R.string.slf_permission_text_content));
+        slfHintDialog.setLeftBtnText(SLFResourceUtils.getString(R.string.slf_title_cancel));
+        slfHintDialog.setRightBtnText(SLFResourceUtils.getString(R.string.slf_permission_text_go_to_set));
+        slfHintDialog.setOnListener(new SLFCancelOrOkDialog.OnHintDialogListener() {
 
-                            Uri packageURI = Uri.parse("package:" + mPackName);
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
-                            context.startActivity(intent);
-                            context.finish();
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            /**关闭页面或者做其他操作*/
-                            cancelPermissionDialog();
-                            /**mContext.finish();*/
-                            mPermissionsResult.forbitPermissons();
-                        }
-                    })
-                    .create();
-        }
-        mPermissionDialog.show();
+            @Override
+            public void onClickOk() {
+                cancelPermissionDialog();
+
+                Uri packageURI = Uri.parse("package:" + mPackName);
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                context.startActivity(intent);
+                context.finish();
+            }
+
+            @Override
+            public void onClickCancel() {
+                /**关闭页面或者做其他操作*/
+                cancelPermissionDialog();
+                /**mContext.finish();*/
+                mPermissionsResult.forbitPermissons();
+            }
+
+            @Override
+            public void onClickOther() {
+
+            }
+        });
+
+        slfHintDialog.show();
     }
+//    private void showSystemPermissionsSettingDialog(final Activity context) {
+//        final String mPackName = context.getPackageName();
+//        if (mPermissionDialog == null) {
+//            mPermissionDialog = new AlertDialog.Builder(context)
+//                    .setMessage(SLFResourceUtils.getString(R.string.slf_permission_text))
+//                    .setPositiveButton(SLFResourceUtils.getString(R.string.slf_permission_text_setting), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            cancelPermissionDialog();
+//
+//                            Uri packageURI = Uri.parse("package:" + mPackName);
+//                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+//                            context.startActivity(intent);
+//                            context.finish();
+//                        }
+//                    })
+//                    .setNegativeButton(SLFResourceUtils.getString(R.string.slf_title_cancel), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            /**关闭页面或者做其他操作*/
+//                            cancelPermissionDialog();
+//                            /**mContext.finish();*/
+//                            mPermissionsResult.forbitPermissons();
+//                        }
+//                    })
+//                    .create();
+//        }
+//        mPermissionDialog.show();
+//    }
 
-    /**关闭对话框*/
+    /**
+     * 关闭对话框
+     */
     private void cancelPermissionDialog() {
         if (mPermissionDialog != null) {
             mPermissionDialog.cancel();
@@ -153,9 +223,10 @@ public class SLFPermissionManager {
 
     }
 
-    public interface IPermissionsResult {
-        void passPermissons();
-        void forbitPermissons();
-    }
+public interface IPermissionsResult {
+    void passPermissons();
+
+    void forbitPermissons();
+}
 
 }
