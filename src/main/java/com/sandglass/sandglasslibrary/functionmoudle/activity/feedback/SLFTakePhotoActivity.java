@@ -103,9 +103,17 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
     /**
      * 定义permissions
      */
-    private String[] permissionStorage = android.os.Build.VERSION.SDK_INT > 29 ? new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} : new String[]{
+    private String[] permissionStorageMax32 = android.os.Build.VERSION.SDK_INT > 29 ? new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} : new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    /**
+     * android13 权限增加
+     */
+    private String[] permissionStorage = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU?new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES,
+//            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.READ_MEDIA_VIDEO
+    }:permissionStorageMax32;
     private String[] permissionCamrea = new String[]{Manifest.permission.CAMERA};
     private String[] permissionMic = new String[]{Manifest.permission.RECORD_AUDIO};
     private String[] modeList = new String[]{SLFResourceUtils.getString(R.string.slf_camera_mode_photo),SLFResourceUtils.getString(R.string.slf_camera_mode_video)};

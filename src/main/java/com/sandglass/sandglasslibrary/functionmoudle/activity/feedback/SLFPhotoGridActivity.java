@@ -106,9 +106,20 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
      * 定义permissions
      */
     private String[] permissionCamrea = new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
-    private String[] permissionStorage = android.os.Build.VERSION.SDK_INT > 29 ? new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} : new String[]{
+    /**
+     * 定义permissions
+     */
+    private String[] permissionStorageMax32 = android.os.Build.VERSION.SDK_INT > 29 ? new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} : new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    /**
+     * android13 权限增加
+     */
+    private String[] permissionStorage = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU?new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES,
+//            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.READ_MEDIA_VIDEO
+    }:permissionStorageMax32;
 
     private boolean isCreate;
 
