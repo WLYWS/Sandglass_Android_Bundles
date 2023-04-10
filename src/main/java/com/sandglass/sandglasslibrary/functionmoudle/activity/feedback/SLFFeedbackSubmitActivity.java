@@ -1510,6 +1510,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 SLFHttpUtils.getInstance().executePost(getContext(), SLFHttpRequestConstants.BASE_URL + SLFApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
             } else {
                 resultUploadImageOrVideo(code);
+                isUploadSuccess();
             }
             hideLoading();
         } else if (type instanceof SLFCreateFeedbackRepsonseBean) {
@@ -1522,6 +1523,25 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             SLFUserCenter.userDeviceListBean = (SLFUserDeviceListResponseBean) type;
             //isHideLoading("isResolveDevicelist");
             SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.getData().size());
+        }
+    }
+
+    private void resultCodeMethod(SLFMediaData slfMediaData) {
+        slfMediaData.setFileSuccess(true);
+    }
+
+    private void resultCodeThumbMethod(SLFMediaData slfMediaData) {
+        slfMediaData.setThumbSuccess(true);
+    }
+
+    private void isUploadSuccess(){
+        for(int i=0;i<slfMediaDataList.size()-1;i++){
+            if(slfMediaDataList.get(i).isFileSuccess()&&slfMediaDataList.get(i).isThumbSuccess()){
+                slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
+                slfaddAttachAdapter.notifyDataSetChanged();
+                slfMediaDataList.get(i).setFileSuccess(false);
+                slfMediaDataList.get(i).setThumbSuccess(false);
+            }
         }
     }
         private void isHideLoading(String isTrueString){
@@ -1603,8 +1623,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private synchronized void resultUploadImageOrVideo(String code) {
         for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
             if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()))) {
-                imageSuccessed = true;
-                resultCodeMethod(code, imageSuccessed);
+                resultCodeMethod(slfMediaDataList.get(i));
+            }
+            if (code.equals(String.valueOf(slfMediaDataList.get(i).getId()) + "thumb")) {
+                resultCodeThumbMethod(slfMediaDataList.get(i));
             }
         }
     }

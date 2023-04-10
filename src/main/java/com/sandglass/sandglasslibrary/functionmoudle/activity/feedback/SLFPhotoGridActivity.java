@@ -85,6 +85,7 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     private SLFPhotoListAdapter mPhotoListAdapter;
     private SLFFileListAdapter mFileListAdapter;
 
+
     private List<SLFPhotoFolderInfo> mAllPhotoFolderList = new ArrayList<SLFPhotoFolderInfo>();
     private List<SLFMediaData> mCurPhotoList = new ArrayList<>();
 
