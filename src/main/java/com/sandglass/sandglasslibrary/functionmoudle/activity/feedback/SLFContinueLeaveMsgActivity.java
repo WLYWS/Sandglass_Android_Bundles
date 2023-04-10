@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -111,9 +112,17 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     /**
      * 定义permissions
      */
-    private String[] permissionStorage = android.os.Build.VERSION.SDK_INT > 29 ? new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} : new String[]{
+    private String[] permissionStorageMax32 = android.os.Build.VERSION.SDK_INT > 29 ? new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} : new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    /**
+     * android13 权限增加
+     */
+    private String[] permissionStorage = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU?new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES,
+//            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.READ_MEDIA_VIDEO
+    }:permissionStorageMax32;
     /**
      * 展示缩略图的adapter
      */

@@ -73,13 +73,7 @@ public class SLFPhotoListAdapter extends BaseAdapter {
         convertView = helper.getConvertView();
         if(mDatas!=null && !mDatas.isEmpty()){
             SLFMediaData mSLFMediaData = mDatas.get(position);
-            if(mSLFMediaData!=null){
-                if(position!=mDatas.size()-1) {
-                    SLFImageUtil.loadImage(context, mSLFMediaData.getOriginalPath(), helper.getView(R.id.slf_iv_photo));
-                }else{
-                    helper.setImageResource(R.id.slf_iv_photo,R.drawable.slf_camra_icon);
-                    notifyDataSetChanged();
-                }
+
                 SLFLogUtil.sdkd("yj","selectedNum::"+selectedNum);
                 if(picPathLists.size()>=selectedNum){
                     if(picPathLists.contains(mDatas.get(position))||position==mDatas.size()-1){
@@ -104,6 +98,14 @@ public class SLFPhotoListAdapter extends BaseAdapter {
                     helper.setVisibility(R.id.slf_tv_media_type,false);
                     helper.setVisibility(R.id.slf_iv_video,false);
                     helper.setVisibility(R.id.slf_tv_video_duration,false);
+                }
+            if(mSLFMediaData!=null){
+                if(position!=mDatas.size()-1) {
+                    SLFImageUtil.loadImage(context, mSLFMediaData.getOriginalPath(), helper.getView(R.id.slf_iv_photo));
+                }else{
+                    helper.setVisibility(R.id.slf_iv_video,false);
+                    helper.setImageResource(R.id.slf_iv_photo,R.drawable.slf_camra_icon);
+                    notifyDataSetChanged();
                 }
             }
 
