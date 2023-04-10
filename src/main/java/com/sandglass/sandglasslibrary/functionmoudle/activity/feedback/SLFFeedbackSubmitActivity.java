@@ -1035,7 +1035,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
                     @Override
                     public void keyBoardHide(int height) {
-                        slfSumbmit.setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                slfSumbmit.setVisibility(View.VISIBLE);
+                            }
+                        },100);
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord hide");
                     }
                 });
