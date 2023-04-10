@@ -322,14 +322,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             @Override
             public void onClick(View view) {
                 //打点进入反馈页
-                PUTParams putParams = new PUTParams("userid","12345678");
-                PUTParams putParams2 = new PUTParams("font","35sp");
-                PUTParams putParams3 = new PUTParams("color","green");
-                List<PUTParams> paramsList = new ArrayList<>();
-                paramsList.add(putParams);
-                paramsList.add(putParams2);
-                paramsList.add(putParams3);
-                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFAQ,paramsList);
+                PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Help_EnterFAQ,null);
                 gotoFaq();
             }
         });
