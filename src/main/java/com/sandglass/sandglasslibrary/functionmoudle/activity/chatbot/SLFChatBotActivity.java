@@ -35,7 +35,6 @@ import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
 import com.punet.punetwork.net.PUNHttpUtils;
 import com.putrack.putrack.bean.PUTConstants;
-import com.putrack.putrack.bean.PUTParams;
 import com.putrack.putrack.bean.PhoneInfo;
 import com.putrack.putrack.commonapi.PUTApi;
 import com.putrack.putrack.commonapi.PUTClickAgent;

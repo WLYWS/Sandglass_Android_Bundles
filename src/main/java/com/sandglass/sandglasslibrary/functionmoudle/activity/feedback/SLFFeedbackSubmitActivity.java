@@ -1041,6 +1041,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 slfSumbmit.setVisibility(View.VISIBLE);
                             }
                         },100);
+
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":keybord hide");
                     }
                 });

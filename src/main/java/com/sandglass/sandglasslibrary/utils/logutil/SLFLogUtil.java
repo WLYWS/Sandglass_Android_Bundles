@@ -78,67 +78,69 @@ public class SLFLogUtil {
                         if (fileName == null) {
                             fileName = "";
                         }
-                        long handlerThreadId = logHandlerThread.getId();
-                        long looperId = logHandlerThread.getLooper().getThread().getId();
-                        switch (msg.what) {
-                            case 1: {
-                                Log.getImpl().logV(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                            }
-                            break;
-                            case 2: {
-                                Log.getImpl().logD(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                            }
-                            break;
-                            case 3: {
-                                Log.getImpl().logE(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                            }
-                            break;
-                            case 4: {
-                                Log.getImpl().logW(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                            }
-                            break;
-                            case 5: {
-                                if (sdkXlog != null&&SLFConstants.isUseXlog) {
-                                    sdkXlog.logI(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                                } else {
-                                    android.util.Log.i(tag, content);
+                        if(logHandlerThread!=null) {
+                            long handlerThreadId = logHandlerThread.getId();
+                            long looperId = logHandlerThread.getLooper().getThread().getId();
+                            switch (msg.what) {
+                                case 1: {
+                                    Log.getImpl().logV(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 }
-                            }
-                            break;
-                            case 6: {
-                                if (sdkXlog != null&&SLFConstants.isUseXlog) {
-                                    sdkXlog.logV(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                                } else {
-                                    android.util.Log.v(tag, content);
+                                break;
+                                case 2: {
+                                    Log.getImpl().logD(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 }
-                            }
-                            break;
-                            case 7: {
-                                if (sdkXlog != null&&SLFConstants.isUseXlog) {
-                                    sdkXlog.logD(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                                } else {
-                                    android.util.Log.i(tag, content);
+                                break;
+                                case 3: {
+                                    Log.getImpl().logE(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 }
-                            }
-                            break;
-                            case 8: {
-                                if (sdkXlog != null&&SLFConstants.isUseXlog) {
-                                    sdkXlog.logE(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                                } else {
-                                    android.util.Log.e(tag, content);
+                                break;
+                                case 4: {
+                                    Log.getImpl().logW(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
                                 }
-                            }
-                            break;
-                            case 9: {
-                                if (sdkXlog != null&&SLFConstants.isUseXlog) {
-                                    sdkXlog.logW(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
-                                } else {
-                                    android.util.Log.w(tag, content);
+                                break;
+                                case 5: {
+                                    if (sdkXlog != null && SLFConstants.isUseXlog) {
+                                        sdkXlog.logI(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                    } else {
+                                        android.util.Log.i(tag, content);
+                                    }
                                 }
-                            }
-                            break;
-                            default: {
-                                Log.getImpl().logI(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                break;
+                                case 6: {
+                                    if (sdkXlog != null && SLFConstants.isUseXlog) {
+                                        sdkXlog.logV(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                    } else {
+                                        android.util.Log.v(tag, content);
+                                    }
+                                }
+                                break;
+                                case 7: {
+                                    if (sdkXlog != null && SLFConstants.isUseXlog) {
+                                        sdkXlog.logD(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                    } else {
+                                        android.util.Log.i(tag, content);
+                                    }
+                                }
+                                break;
+                                case 8: {
+                                    if (sdkXlog != null && SLFConstants.isUseXlog) {
+                                        sdkXlog.logE(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                    } else {
+                                        android.util.Log.e(tag, content);
+                                    }
+                                }
+                                break;
+                                case 9: {
+                                    if (sdkXlog != null && SLFConstants.isUseXlog) {
+                                        sdkXlog.logW(sdkXloginstance, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                    } else {
+                                        android.util.Log.w(tag, content);
+                                    }
+                                }
+                                break;
+                                default: {
+                                    Log.getImpl().logI(0, tag, fileName, methodName, lineNumber, Process.myPid(), handlerThreadId, looperId, content);
+                                }
                             }
                         }
                     } else {
