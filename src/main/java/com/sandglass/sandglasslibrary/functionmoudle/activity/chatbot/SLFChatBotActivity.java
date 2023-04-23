@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -28,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpChatBotRequestCallback;
@@ -272,25 +275,26 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         slf_bottom_btn_linear = findViewById(R.id.slf_bottom_btn_linear);
         et_faq_input.setHorizontallyScrolling(false);
         et_faq_input.setMaxLines(4);
-        et_faq_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                if (actionId == 5) { //actionId 4 for actionDone And 6 for actionSend
-
-//perform action what you want
-
-                    return true;
-
-                } else {
-
-                    return false;
-                }
-
-            }
-
-        });
+        et_faq_input.setFilters(new InputFilter[]{new MaxTextLengthFilter(500)});
+//        et_faq_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//
+//                if (actionId == 5) { //actionId 4 for actionDone And 6 for actionSend
+//
+////perform action what you want
+//
+//                    return true;
+//
+//                } else {
+//
+//                    return false;
+//                }
+//
+//            }
+//
+//        });
         imgRight.setVisibility(View.VISIBLE);
         imgRight.setImageResource(R.drawable.slf_help_feedback_format);
         setWH(imgRight,SLFResourceUtils.dp2px(getContext(),17),SLFResourceUtils.dp2px(getContext(),17));
@@ -410,23 +414,23 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
 //            }
 //        });
 
-        et_faq_input.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    //获取焦点
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run ( ) {
-//                            rv_faq_chat_bot.smoothScrollToPosition(faqMsgList.size() - 1);
-//                        }
-//                    }, 250);
-                } else {
-                    //失去焦点
-                    //处理我们的实际计算需求
-                }
-            }
-        });
+//        et_faq_input.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    //获取焦点
+////                    handler.postDelayed(new Runnable() {
+////                        @Override
+////                        public void run ( ) {
+////                            rv_faq_chat_bot.smoothScrollToPosition(faqMsgList.size() - 1);
+////                        }
+////                    }, 250);
+//                } else {
+//                    //失去焦点
+//                    //处理我们的实际计算需求
+//                }
+//            }
+//        });
         /**
          * 设置recycleview的item间距
          */
@@ -483,6 +487,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 slfInputNum = s;
                 SLFLogUtil.sdkd("yj","slfInputNum.length:::"+slfInputNum.length());
+//                if(slfInputNum.length()==500){
+//                    //SLFLogUtil.sdkd("yj","slfInputNum.length::>>>:"+slfInputNum.length());
+//                    SLFToastUtil.showToastWithMarginBottom(getResources().getString(R.string.slf_input_500_toast_text), SLFCommonUtils.getScreenHeight() / 2);
+//                }
             }
 
             @Override
@@ -498,11 +506,35 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
 //                if (et_faq_input.getText().length() == 500) {
 //                    SLFToastUtil.showToastWithMarginBottom(getResources().getString(R.string.slf_input_500_toast_text), SLFCommonUtils.getScreenHeight() / 2);
 //                }
-                if(slfInputNum.length()>=500){
-                    SLFToastUtil.showToastWithMarginBottom(getResources().getString(R.string.slf_input_500_toast_text), SLFCommonUtils.getScreenHeight() / 2);
-                }
+//                if(et_faq_input.getText().toString().length()>=500){
+//                    SLFToastUtil.showToastWithMarginBottom(getResources().getString(R.string.slf_input_500_toast_text), SLFCommonUtils.getScreenHeight() / 2);
+//                }
             }
         });
+    }
+
+    class MaxTextLengthFilter implements InputFilter {
+
+        private int mMaxLength;
+
+        public MaxTextLengthFilter(int max){
+            mMaxLength = max;
+        }
+
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart , int dend){
+            int keep = mMaxLength - (dest.length() - (dend - dstart));
+            if(keep < (end - start)){
+                showCenterToast(getResources().getString(R.string.slf_input_500_toast_text));
+            }
+            if(keep <= 0){
+                return "";
+            }else if(keep >= end - start){
+                return null;
+            }else{
+                return source.subSequence(start,start + keep);
+            }
+        }
     }
 
     /**
