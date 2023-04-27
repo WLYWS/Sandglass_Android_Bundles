@@ -28,14 +28,17 @@ import androidx.annotation.RequiresApi;
 import com.putrack.putrack.commonapi.PUTClickAgent;
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFAgentEvent;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFFileListAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFPhotoListAdapter;
 import com.sandglass.sandglasslibrary.base.SLFPhotoBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.enums.SLFMediaType;
+import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.SLFPhotoFolderInfo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
+import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideoProgress;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventUpdatePhotolist;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
@@ -137,7 +140,6 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
     //private SLFCamraContentObserver slfCamraContentObserver;
     private Handler handler = new Handler();
     private SLFMediaData getMediaData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -452,15 +454,21 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
 
                 @Override
                 public void onProgress(float percent) {
-                    //SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":compress progress:::" + String.valueOf(percent) + "%");
+                    //Log.e("yjjjjjjjjj","压缩视频进度：："+String.valueOf(Math.round((percent*3)/10))+"%");
+                    //Log.e("yjjjjjjjjj","压缩视频进度：："+Math.round((percent*3)/10));
+                    long percentLong = Math.round((percent*3)/10);
+                    if(SLFApi.getInstance(getContext()).getSlfCompressProgress()!=null){
+                        SLFApi.getInstance(getContext()).getSlfCompressProgress().getCompressProgress(id,percentLong);
+                    }
                 }
             });
-
 
         } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
         }
     }
+
+
 
     @Override
     protected void onPause() {

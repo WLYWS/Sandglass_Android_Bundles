@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.punet.punetwork.interf.UploadProgressListener;
 import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
@@ -314,8 +315,23 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                     } else if (slfMediaDataList.get(i).getMimeType().contains("video")) {
                         contentType = "video/mp4";
                     }
-                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
-                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", this);
+                    if(contentType.contains("video/mp4")){
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+
+                            }
+                        }, this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+
+                            }
+                        }, this);
+                    }else {
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()),null, this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", null,this);
+                    }
                 }
             } else {
                 slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
@@ -612,8 +628,18 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                     if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFContinueLeaveMsgActivity.this);
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFContinueLeaveMsgActivity.this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+                                //TODO Progress 文件
+                            }
+                        },SLFContinueLeaveMsgActivity.this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+                                //TODO Progress 缩略图
+                            }
+                        },SLFContinueLeaveMsgActivity.this);
                         SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":continueleave:compelete");
                     }
                 } else {

@@ -110,4 +110,9 @@
     <color name="slf_first_page_btn_stroke">#404040</color> //按钮边框色
     <color name="slf_first_page_btn_text">#FFFFFF</color>//按钮字体色
     <color name="slf_first_page_bottom_bg">#131313</color>//首页底部区域背景色
+
+    <!--进度条-->
+    <color name="slf_progress_stroke_bg">#676767</color> //进度条背景颜色
+    <color name="slf_progress_inprogress">#C9FF43</color> //进度条进度颜色
+    <color name="slf_progress_bg">#414141</color> //背景颜色
 </resources>

@@ -384,7 +384,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
-                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", SLFFeedbackListDetailActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", null,SLFFeedbackListDetailActivity.this);
                                 }
                             });
 

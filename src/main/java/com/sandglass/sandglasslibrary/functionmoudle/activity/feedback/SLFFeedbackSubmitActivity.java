@@ -15,6 +15,7 @@ import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.punet.punetwork.interf.UploadProgressListener;
 import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
 import com.punet.punetwork.net.PUNHttpRequestConstants;
@@ -44,7 +46,9 @@ import com.sandglass.sandglasslibrary.bean.SLFPageAgentEvent;
 import com.sandglass.sandglasslibrary.bean.SLFSPContant;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
+import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved;
+import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideoProgress;
 import com.sandglass.sandglasslibrary.moudle.net.requestbean.SLFLeaveMsgBean;
 import com.sandglass.sandglasslibrary.moudle.net.requestbean.SLFLogAttrBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFCategoriesResponseBean;
@@ -106,7 +110,7 @@ import java.util.concurrent.Executors;
  *
  * @author yangjie
  */
-public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener, PUNHttpRequestCallback<T> {
+public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, SLFBottomDialog.OnSeletedTypeListener, PUNHttpRequestCallback<T>, SLFCompressProgress {
     /**
      * scollrview控件
      */
@@ -299,6 +303,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private ExecutorService singleThreadExecutor;
     private ExecutorService singleUploadVideoExecutor;
 
+    private ExecutorService singleUploadProgress;
+
     private boolean isSubmit = false;
 
     private SLFCategoriesResponseBean slfCategoriesResponseBean;
@@ -333,6 +339,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     private String emailStr = "";
 
+    private Map<Long,Long> progressMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -345,6 +353,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         initView();
         checkNetWork();
         initPhontoSelector();
+        SLFApi.getInstance(this).setCompressProgress(this);
     }
 
     private void checkNetWork() {
@@ -508,6 +517,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
+            Log.d("yj","position:::click    :"+position+"::::id===::"+id);
             //打点查看资源文件
             PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterResourceDetail,null);
             if (slf_common_loading_linear_submit.getVisibility() == View.GONE) {
@@ -542,8 +552,31 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         } else if (slfMediaDataList.get(position).getMimeType().contains("video")) {
                             contentType = "video/mp4";
                         }
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), this);
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", this);
+                        long percent = progressMap.get(slfMediaDataList.get(position).getId());
+                        if(contentType.contains("video/mp4")) {
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), new UploadProgressListener() {
+                                @Override
+                                public void onProgress(long currentlength, long total) {
+                                    double progress = (double) (currentlength*1.0/total);
+                                    long progressFile = (long) (progress*(100-percent));
+                                    long progressZone = percent + progressFile;
+                                    if(progressZone<=100){
+                                        slfMediaDataList.get(position).setProgress(progressZone);
+                                        //slfaddAttachAdapter.notifyDataSetChanged();
+                                        runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                                    }
+                                }
+                            }, this);
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", new UploadProgressListener() {
+                                @Override
+                                public void onProgress(long currentlength, long total) {
+                                    Log.e("yjjjjjjjjj", "缩略图：：：：currentlength::" + currentlength + ":::total:::" + total);
+                                }
+                            }, this);
+                        }else{
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()),null,this);
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb",null, this);
+                        }
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
                     } else {
                         //
@@ -835,8 +868,25 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                     } else if (slfMediaDataList.get(i).getMimeType().contains("video")) {
                         contentType = "video/mp4";
                     }
-                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), this);
-                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", this);
+                    if(contentType.contains("video/mp4")){
+                        Log.e("yj","视频类型");
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+                                Log.e("yjjjjjjjjj","文件：：：：currentlength::000："+currentlength+":::total:::"+total);
+                            }
+                        }, this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+
+                            }
+                        }, this);
+                    }else {
+                        Log.e("yj","图片类型");
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(i).getId()), null, this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", null, this);
+                    }
                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
                 }
             }
@@ -1432,7 +1482,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
                                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logFile.size------::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, SLFFeedbackSubmitActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, null,SLFFeedbackSubmitActivity.this);
 
                                 }
                             });
@@ -1852,17 +1902,37 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if (id == slfMediaDataList.get(i).getId()) {
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
+                long percent = progressMap.get(id);
+                Log.d("yjjjjjjjjj","percent::::"+percent);
                 if (slfMediaDataList.get(i).getUploadPath() == null) {
                     SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadvideo url is null");
                     slfMediaDataList.get(i).setUploadStatus(SLFConstants.UPLOADED);
                 } else {
                     //slfaddAttachAdapter.notifyDataSetChanged();
-                    if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                    SLFMediaData slfData = slfMediaDataList.get(i);
+                    if (slfData.getUploadStatus().equals(SLFConstants.UPLOADING)) {
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadvideo start");
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), SLFFeedbackSubmitActivity.this);
-                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", SLFFeedbackSubmitActivity.this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+                                double progress = (double) (currentlength*1.0/total);
+                                long progressFile = (long) (progress*(100-percent));
+                                long progressZone = percent + progressFile;
+                                if(progressZone<=100){
+                                    slfData.setProgress(progressZone);
+                                    //slfaddAttachAdapter.notifyDataSetChanged();
+                                    runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                                }
+                            }
+                        },SLFFeedbackSubmitActivity.this);
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", new UploadProgressListener() {
+                            @Override
+                            public void onProgress(long currentlength, long total) {
+
+                            }
+                        },SLFFeedbackSubmitActivity.this);
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::request uploadvideo net");
                     }
                 }
@@ -1965,5 +2035,24 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         super.onPause();
         //打点退出反馈提交页
         PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackPage,SLFPageAgentEvent.SLF_PAGE_END,null);
+    }
+
+    @Override
+    public void getCompressProgress(long id, long percent) {
+        progressMap.clear();
+        progressMap.put(id,percent);
+        singleUploadProgress = Executors.newSingleThreadExecutor();
+        singleUploadProgress.execute(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<slfMediaDataList.size()-1;i++){
+                    if(slfMediaDataList.get(i).getId()==id){
+                        slfMediaDataList.get(i).setProgress(percent);
+                        runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                    }
+                }
+            }
+        });
+
     }
 }

@@ -75,6 +75,8 @@ public class SLFMediaData implements Parcelable {
     private boolean isFileSuccess;
     private boolean isThumbSuccess;
 
+    private long progress;
+
 
     public SLFMediaData() {
     }
@@ -106,6 +108,7 @@ public class SLFMediaData implements Parcelable {
         fileName = in.readString();
         isFileSuccess = in.readBoolean();
         isThumbSuccess = in.readBoolean();
+        progress = in.readLong();
     }
 
     public String getUploadUrl() {
@@ -203,6 +206,7 @@ public class SLFMediaData implements Parcelable {
         dest.writeString(fileName);
         dest.writeBoolean(isFileSuccess);
         dest.writeBoolean(isThumbSuccess);
+        dest.writeLong(progress);
     }
 
     @Override
@@ -275,6 +279,13 @@ public class SLFMediaData implements Parcelable {
     }
 
 
+    public long getProgress() {
+        return progress;
+    }
+
+    public void setProgress(long progress) {
+        this.progress = progress;
+    }
 
     public String getThumbnailBigPath() {
         if(!TextUtils.isEmpty(thumbnailBigPath)){

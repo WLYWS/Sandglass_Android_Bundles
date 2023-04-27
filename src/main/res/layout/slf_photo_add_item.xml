@@ -43,14 +43,28 @@
         android:layout_height="60dp"
         android:background="@drawable/slf_feedback_add_photo_bg"
         android:layout_margin="5dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
         <ProgressBar
             android:id="@+id/slf_progressbar"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             style="@style/slf_ProgressBar"
+            android:visibility="gone"
             />
+        <com.sandglass.sandglasslibrary.commonui.SLFProgressView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:id="@+id/slf_progress_view"
+            android:visibility="gone"/>
+<!--        <com.sandglass.sandglasslibrary.commonui.SLFProgressBarView-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:id="@+id/slf_progress_view"-->
+<!--            android:visibility="gone"/>-->
     </FrameLayout>
 
     <ImageView

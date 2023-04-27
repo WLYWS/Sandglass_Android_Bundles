@@ -8,6 +8,7 @@ import android.os.StrictMode;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
+import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
@@ -38,6 +39,8 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     private SLFUploadAppLogCallback slfUploadAppLogCallback;
 
     private SLFUploadCompleteCallback slfUploadCompleteCallback;
+
+    private SLFCompressProgress slfCompressProgress;
 
     //private SLFSetTokenCallback slfSetTokenCallback;
 
@@ -142,6 +145,14 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     /**获取一个回传成功的监听*/
     public SLFUploadCompleteCallback getUploadLogCompleteCallBack(){
         return slfUploadCompleteCallback;
+    }
+
+    public void setCompressProgress(SLFCompressProgress compressProgress){
+        this.slfCompressProgress = compressProgress;
+    }
+
+    public SLFCompressProgress getSlfCompressProgress(){
+        return slfCompressProgress;
     }
 
     private void initReceiver() {
