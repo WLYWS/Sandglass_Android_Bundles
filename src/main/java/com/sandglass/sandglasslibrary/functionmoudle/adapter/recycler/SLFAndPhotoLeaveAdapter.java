@@ -1,14 +1,21 @@
 package com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
+import com.sandglass.sandglasslibrary.commonui.SLFProgressView;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFQuickAdapter;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
@@ -28,6 +35,10 @@ import java.util.List;
 public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
 
     private Context mContext;
+
+    private SLFProgressView progressView;
+
+    private static final int DELETEPHOTOCHANGE = 20230428;
 
     public SLFAndPhotoLeaveAdapter(Context context, List<SLFMediaData> list) {
         super(context, list);
@@ -62,11 +73,27 @@ public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
         }
 
         if (object.getUploadStatus().equals(SLFConstants.UPLOADING)) {
-            helper.setVisible(R.id.slf_progress, true);
-            helper.setVisible(R.id.slf_iv_delete, true);
-            helper.setVisible(R.id.slf_center_addimg,true);
-            helper.setVisible(R.id.slf_photo_count,true);
-            helper.setImageResource(R.id.slf_iv_photo, R.drawable.slf_photo_adapter_defult_icon);
+
+            if (object.getMimeType().contains("video") || object.getMimeType().contains("mp4")) {
+                helper.setVisible(R.id.slf_progress_view,true);
+                progressView = ((SLFProgressView) helper.getView(R.id.slf_progress_view));
+                progressView.setProgress(object.getProgress()/100f);
+                helper.setVisible(R.id.slf_progress, true);
+                helper.setVisible(R.id.slf_progressbar,false);
+                helper.setVisible(R.id.slf_iv_delete, true);
+                helper.getView(R.id.slf_iv_delete).setTag(position);
+                helper.setVisible(R.id.slf_center_addimg, true);
+                helper.setVisible(R.id.slf_photo_count, true);
+                helper.setImageResource(R.id.slf_iv_photo, R.drawable.slf_photo_adapter_defult_icon);
+            } else {
+                helper.setVisible(R.id.slf_progress_view,false);
+                helper.setVisible(R.id.slf_progress, true);
+                helper.setVisible(R.id.slf_progressbar,true);
+                helper.setVisible(R.id.slf_iv_delete, true);
+                helper.setVisible(R.id.slf_center_addimg, true);
+                helper.setVisible(R.id.slf_photo_count, true);
+                helper.setImageResource(R.id.slf_iv_photo, R.drawable.slf_photo_adapter_defult_icon);
+            }
         } else if(object.getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
             helper.getView(R.id.slf_progress).clearAnimation();
             helper.setVisible(R.id.slf_progress, false);
@@ -109,21 +136,68 @@ public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
             }
         }
 
-        helper.setOnClickListener(R.id.slf_iv_delete, v -> {
+//        helper.setOnClickListener(R.id.slf_iv_delete, v -> {
+//
+//            if (SLFCommonUpload.getListInstance().size() == 6) {
+//                for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
+//                    if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
+//                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+//                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i + 1)).isIdle = true;
+//                    }
+//                }
+//            }
+//            SLFLogUtil.sdkd("yj","delete-----object---:"+object.getUploadStatus());
+//            getList().remove(object);
+//            notifyDataSetChanged();
+//        });
 
-            if (SLFCommonUpload.getListInstance().size() == 6) {
-                for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
-                    if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i + 1)).isIdle = true;
-                    }
+        helper.getView(R.id.slf_iv_delete).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    Log.d("yj","delete----object---touch--ssss");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Log.d("yj","delete----object---ssss");
+//                            if(object!=null) {
+//                                if (object.getMimeType().contains("video") || object.getMimeType().contains("mp4")) {
+//                                    SLFVideoSlimmer.stopConvertVideo();
+//                                }
+//                            }
+                            if (SLFCommonUpload.getListInstance().size() == 8) {
+                                for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
+                                    if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
+                                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i + 1)).isIdle = true;
+                                    }
+                                }
+                            }
+
+                            getList().remove(object);
+                            Message msg = handler.obtainMessage();
+                            msg.what = DELETEPHOTOCHANGE;
+                            handler.sendMessage(msg);
+                        }
+                    }).start();
+                    return true;
                 }
+                return false;
             }
-            SLFLogUtil.sdkd("yj","delete-----object---:"+object.getUploadStatus());
-            getList().remove(object);
-            notifyDataSetChanged();
         });
     }
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch(msg.what){
+                case DELETEPHOTOCHANGE:
+                    notifyDataSetChanged();
+                    break;
+            }
+            return true;
+        }
+    });
 
 
     @Override

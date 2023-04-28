@@ -1,16 +1,20 @@
 package com.sandglass.sandglasslibrary.functionmoudle.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
-import com.sandglass.sandglasslibrary.commonui.SLFProgressBarView;
 import com.sandglass.sandglasslibrary.commonui.SLFProgressView;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
@@ -33,6 +37,10 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
     private Context mContext;
 
     private long progress;
+
+    private SLFProgressView progressView;
+
+    private static final int DELETECHANGE = 20230427;
 
     public SLFAndPhotoAdapter(Context context, List<SLFMediaData> list) {
         super(context, list);
@@ -69,10 +77,8 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
         if (object.getUploadStatus().equals(SLFConstants.UPLOADING)) {
             if (object.getMimeType().contains("video") || object.getMimeType().contains("mp4")) {
                 helper.setVisible(R.id.slf_progress_view,true);
-                ((SLFProgressView) helper.getView(R.id.slf_progress_view)).clearFocus();
-                ((SLFProgressView) helper.getView(R.id.slf_progress_view)).setProgress(object.getProgress()/100f);
-
-
+                progressView = ((SLFProgressView) helper.getView(R.id.slf_progress_view));
+                progressView.setProgress(object.getProgress()/100f);
                 helper.setVisible(R.id.slf_progress, true);
                 helper.setVisible(R.id.slf_progressbar,false);
                 helper.setVisible(R.id.slf_iv_delete, true);
@@ -128,32 +134,75 @@ public class SLFAndPhotoAdapter extends SLFQuickAdapter<SLFMediaData> {
                     SLFImageUtil.loadImage(getContext(), object.getThumbnailSmallPath(), (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
                             , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
                     helper.getView(R.id.slf_iv_photo).setTag(R.id.slf_iv_photo, object.getThumbnailSmallPath());
+
                 }
+
             } else {
                 SLFImageUtil.loadImage(getContext(), "", (ImageView) helper.getView(R.id.slf_iv_photo), R.drawable.slf_photo_adapter_defult_icon, R.drawable.slf_photo_adapter_defult_icon
                         , SLFImageShapes.SQUARE, SLFImageShapes.ROUND);
             }
         }
 
+        helper.getView(R.id.slf_iv_delete).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    Log.d("yj","delete----object---touch--ssss");
+                    SLFConstants.isCloseClick = true;
+                    Log.d("yj","delete----object---touch--ssss::"+ SLFConstants.isCloseClick );
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Log.d("yj","delete----object---ssss");
+//                            if(object!=null) {
+//                                if (object.getMimeType().contains("video") || object.getMimeType().contains("mp4")) {
+//                                    SLFVideoSlimmer.stopConvertVideo();
+//                                }
+//                            }
+                            if (SLFCommonUpload.getListInstance().size() == 8) {
+                                for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
+                                    if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
+                                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
+                                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i + 1)).isIdle = true;
+                                    }
+                                }
+                            }
 
-        helper.getView(R.id.slf_iv_delete).setOnClickListener( v -> {
-            Log.d("yj","delete----object---ssss");
-            if (SLFCommonUpload.getListInstance().size() == 8) {
-                for (int i = 0; i < SLFCommonUpload.getListInstance().size(); i++) {
-                    if (SLFCommonUpload.getListInstance().get(i).equals(object.getUploadPath())) {
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
-                        SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i + 1)).isIdle = true;
-                    }
+                            getList().remove(object);
+                            Message msg = handler.obtainMessage();
+                            msg.what = DELETECHANGE;
+                            handler.sendMessage(msg);
+                        }
+                    }).start();
+                    return true;
                 }
+                return false;
             }
-
-            if(object.getMimeType().contains("video")||object.getMimeType().contains("mp4")) {
-                SLFVideoSlimmer.stopConvertVideo();
-            }
-            getList().remove(object);
-            notifyDataSetChanged();
         });
+
+//        helper.getView(R.id.slf_iv_delete).setOnClickListener( v -> {
+//
+//
+//        });
     }
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch(msg.what){
+                case DELETECHANGE:
+                    notifyDataSetChanged();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SLFConstants.isCloseClick = false;
+                        }
+                    },500);
+                    break;
+            }
+            return true;
+        }
+    });
 
     @Override
     public int getContentView() {

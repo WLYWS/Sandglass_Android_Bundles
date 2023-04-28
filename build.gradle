@@ -91,10 +91,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-//    implementation project(":PUNetWork")
-//    implementation project(":PUTrack")
-    api 'com.punet.punetwork:punetwork:0.0.3'
-    api 'com.putrack.putrack:putrack:0.0.4'
+    implementation project(":PUNetWork")
+    implementation project(":PUTrack")
+//    api 'com.punet.punetwork:punetwork:0.0.3'
+//    api 'com.putrack.putrack:putrack:0.0.4'
 
     // okHttp网络请求框架
     // define a BOM and its version

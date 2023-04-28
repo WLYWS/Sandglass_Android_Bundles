@@ -110,4 +110,6 @@ public class SLFConstants {
 
     public static final String FAIL_CODE_CALLBACK = "fail_code_callback";
 
+    public static boolean isCloseClick = false;
+
 }

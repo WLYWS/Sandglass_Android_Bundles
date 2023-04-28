@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
@@ -90,6 +91,13 @@ public class SLFProgressView extends View {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.i("yj", "[EventDemoActivity-->dispatchTouchEvent]ev=" + event.getAction());
+        return false;
+    }
+
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         // 如果触摸事件在进度圆弧内，不处理事件并将事件传递给下一层视图
         switch(event.getAction()){
@@ -101,9 +109,5 @@ public class SLFProgressView extends View {
         return false;
     }
 
-    @Override
-    public void setOnFocusChangeListener(OnFocusChangeListener l) {
-        super.setOnFocusChangeListener(l);
-    }
 
 }

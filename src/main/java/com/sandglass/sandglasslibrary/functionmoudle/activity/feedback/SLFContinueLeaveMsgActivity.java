@@ -11,6 +11,7 @@ import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -30,12 +31,14 @@ import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.base.SLFBaseActivity;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFHttpStatusCode;
+import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.commonapi.SLFCommonUpload;
 import com.sandglass.sandglasslibrary.commonui.SLFScrollView;
 import com.sandglass.sandglasslibrary.commonui.SLFToastUtil;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.SLFAndPhotoAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFAndPhotoLeaveAdapter;
 import com.sandglass.sandglasslibrary.functionmoudle.enums.SLFMediaType;
+import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventCompressVideo;
 import com.sandglass.sandglasslibrary.moudle.event.SLFEventNoCompressVideo;
@@ -62,7 +65,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,7 +77,7 @@ import java.util.concurrent.Executors;
  * descripe:继续留言
  * time:2023/2/7
  */
-public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, PUNHttpRequestCallback<T> {
+public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements View.OnClickListener, TextWatcher, PUNHttpRequestCallback<T> ,SLFCompressProgress {
     /**
      * scollrview控件
      */
@@ -164,6 +169,10 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     /**多媒体附件*/
     private List<SLFLeveMsgRecordMoudle> attrlistResponselist = new ArrayList<>();
 
+    private Map<Long,Long> progressMap = new HashMap<>();
+
+    private ExecutorService singleUploadProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +187,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             showNetworkError();
         }
         initPhontoSelector();
+        SLFApi.getInstance(this).setCompressProgress(this);
     }
 
     /**
@@ -254,7 +264,62 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                     in.putParcelableArrayListExtra("photoPath", picPathLists);
                     startActivity(in);
                 } else {
-                    // showCenterToast("正在上传……");
+                    SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": click goto preview");
+                    picPathLists.clear();
+                    picPathLists.addAll(slfMediaDataList);
+                    picPathLists.remove(slfMediaData);
+                    if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADED)) {
+                        Intent in = new Intent();
+                        in.putExtra("from", "feedback");
+                        in.setClass(SLFContinueLeaveMsgActivity.this, SLFFeedbackPicPreviewActivity.class);
+                        in.putExtra("position", position);
+                        in.putParcelableArrayListExtra("photoPath", picPathLists);
+                        startActivity(in);
+                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": goto preview complete" + ":picPathLists size:" + picPathLists.size());
+                    } else if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
+                        slfMediaDataList.get(position).setUploadStatus(SLFConstants.UPLOADING);
+                        slfaddAttachAdapter.notifyDataSetChanged();
+                        File file = new File(slfMediaDataList.get(position).getOriginalPath());
+                        File thumbFile = new File(slfMediaDataList.get(position).getThumbnailSmallPath());
+                        String contentType = "";
+                        if (slfMediaDataList.get(position).getMimeType().contains("png")) {
+                            contentType = "image/png";
+                        } else if (slfMediaDataList.get(position).getMimeType().contains("jpg")) {
+                            contentType = "image/jpg";
+                        } else if (slfMediaDataList.get(position).getMimeType().contains("jpeg")) {
+                            contentType = "image/jpeg";
+                        } else if (slfMediaDataList.get(position).getMimeType().contains("video")) {
+                            contentType = "video/mp4";
+                        }
+                        long percent = 0;
+                        if (contentType.contains("video/mp4")) {
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), new UploadProgressListener() {
+                                @Override
+                                public void onProgress(long currentlength, long total) {
+                                    double progress = (double) (currentlength * 1.0 / total);
+                                    long progressFile = (long) (progress * (100 - percent));
+                                    long progressZone = percent + progressFile;
+                                    if (progressZone <= 100) {
+                                        slfMediaDataList.get(position).setProgress(progressZone);
+                                        //slfaddAttachAdapter.notifyDataSetChanged();
+                                        runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                                    }
+                                }
+                            }, this);
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", new UploadProgressListener() {
+                                @Override
+                                public void onProgress(long currentlength, long total) {
+                                    Log.e("yjjjjjjjjj", "缩略图：：：：currentlength::" + currentlength + ":::total:::" + total);
+                                }
+                            }, this);
+                        } else {
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), null, this);
+                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", null, this);
+                        }
+                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
+                    } else {
+                        //
+                    }
                 }
             }
         });
@@ -624,14 +689,24 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
             if (id == slfMediaDataList.get(i).getId()) {
                 slfMediaDataList.get(i).setOriginalPath(path);
                 slfMediaDataList.get(i).setFileName(filename);
+
+                SLFMediaData slfData = slfMediaDataList.get(i);
                 if (slfMediaDataList.get(i).getUploadPath() != null&&SLFCommonUtils.isNetworkAvailable(this)) {
                     if (slfMediaDataList.get(i).getUploadStatus().equals(SLFConstants.UPLOADING)) {
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
+                        long percent = progressMap.get(id);
                         PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), new UploadProgressListener() {
                             @Override
                             public void onProgress(long currentlength, long total) {
-                                //TODO Progress 文件
+                                double progress = (double) (currentlength*1.0/total);
+                                long progressFile = (long) (progress*(100-percent));
+                                long progressZone = percent + progressFile;
+                                if(progressZone<=100){
+                                    slfData.setProgress(progressZone);
+                                    //slfaddAttachAdapter.notifyDataSetChanged();
+                                    runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                                }
                             }
                         },SLFContinueLeaveMsgActivity.this);
                         PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadThumurl(), thumbFile, "image/jpg", String.valueOf(slfMediaDataList.get(i).getId()) + "thumb", new UploadProgressListener() {
@@ -749,5 +824,24 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         }
         SLFLogUtil.sdkd(TAG, "ActivityName:"+this.getClass().getSimpleName()+":getSendHistory:map:"+map.toString());
         return map;
+    }
+
+    @Override
+    public void getCompressProgress(long id, long percent) {
+        progressMap.clear();
+        progressMap.put(id, percent);
+        singleUploadProgress = Executors.newSingleThreadExecutor();
+        singleUploadProgress.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < slfMediaDataList.size() - 1; i++) {
+                    if (slfMediaDataList.get(i).getId() == id) {
+                        slfMediaDataList.get(i).setProgress(percent);
+                        runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                    }
+                }
+
+            }
+        });
     }
 }

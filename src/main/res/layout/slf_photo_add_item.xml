@@ -3,7 +3,7 @@
     android:layout_width="60dp"
     android:layout_height="60dp"
     android:background="@color/transparent"
-    android:descendantFocusability="blocksDescendants">
+    >
 
     <include layout="@layout/slf_add_img_layout"
         />
@@ -69,11 +69,12 @@
 
     <ImageView
         android:id="@+id/slf_iv_delete"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_margin="-6dp"
         android:src="@drawable/slf_list_img_delete"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+       />
 
 
 
