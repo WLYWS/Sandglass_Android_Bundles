@@ -250,78 +250,87 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
-            if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
-                SLFPermissionManager.getInstance().chekPermissions(SLFContinueLeaveMsgActivity.this, permissionStorage, permissionsStroageResult);
-            } else {
-                picPathLists.clear();
-                picPathLists.addAll(slfMediaDataList);
-                picPathLists.remove(slfMediaData);
-                if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING)) {
-                    Intent in = new Intent();
-                    in.putExtra("from", "feedback");
-                    in.setClass(SLFContinueLeaveMsgActivity.this, SLFFeedbackPicPreviewActivity.class);
-                    in.putExtra("position", position);
-                    in.putParcelableArrayListExtra("photoPath", picPathLists);
-                    startActivity(in);
-                } else {
-                    SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": click goto preview");
-                    picPathLists.clear();
-                    picPathLists.addAll(slfMediaDataList);
-                    picPathLists.remove(slfMediaData);
-                    if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADED)) {
-                        Intent in = new Intent();
-                        in.putExtra("from", "feedback");
-                        in.setClass(SLFContinueLeaveMsgActivity.this, SLFFeedbackPicPreviewActivity.class);
-                        in.putExtra("position", position);
-                        in.putParcelableArrayListExtra("photoPath", picPathLists);
-                        startActivity(in);
-                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": goto preview complete" + ":picPathLists size:" + picPathLists.size());
-                    } else if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
-                        slfMediaDataList.get(position).setUploadStatus(SLFConstants.UPLOADING);
-                        slfaddAttachAdapter.notifyDataSetChanged();
-                        File file = new File(slfMediaDataList.get(position).getOriginalPath());
-                        File thumbFile = new File(slfMediaDataList.get(position).getThumbnailSmallPath());
-                        String contentType = "";
-                        if (slfMediaDataList.get(position).getMimeType().contains("png")) {
-                            contentType = "image/png";
-                        } else if (slfMediaDataList.get(position).getMimeType().contains("jpg")) {
-                            contentType = "image/jpg";
-                        } else if (slfMediaDataList.get(position).getMimeType().contains("jpeg")) {
-                            contentType = "image/jpeg";
-                        } else if (slfMediaDataList.get(position).getMimeType().contains("video")) {
-                            contentType = "video/mp4";
-                        }
-                        long percent = 0;
-                        if (contentType.contains("video/mp4")) {
-                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), new UploadProgressListener() {
-                                @Override
-                                public void onProgress(long currentlength, long total) {
-                                    double progress = (double) (currentlength * 1.0 / total);
-                                    long progressFile = (long) (progress * (100 - percent));
-                                    long progressZone = percent + progressFile;
-                                    if (progressZone <= 100) {
-                                        slfMediaDataList.get(position).setProgress(progressZone);
-                                        //slfaddAttachAdapter.notifyDataSetChanged();
-                                        runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
-                                    }
-                                }
-                            }, this);
-                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", new UploadProgressListener() {
-                                @Override
-                                public void onProgress(long currentlength, long total) {
-                                    Log.e("yjjjjjjjjj", "缩略图：：：：currentlength::" + currentlength + ":::total:::" + total);
-                                }
-                            }, this);
-                        } else {
-                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), null, this);
-                            PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", null, this);
-                        }
-                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(SLFConstants.isCloseClick){
+                        return;
+                    }
+                    if (position == slfMediaDataList.size() - 1 && TextUtils.isEmpty(slfMediaDataList.get(position).getOriginalPath())) {
+                        SLFPermissionManager.getInstance().chekPermissions(SLFContinueLeaveMsgActivity.this, permissionStorage, permissionsStroageResult);
                     } else {
-                        //
+                        picPathLists.clear();
+                        picPathLists.addAll(slfMediaDataList);
+                        picPathLists.remove(slfMediaData);
+                        if (!slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADING)) {
+                            Intent in = new Intent();
+                            in.putExtra("from", "feedback");
+                            in.setClass(SLFContinueLeaveMsgActivity.this, SLFFeedbackPicPreviewActivity.class);
+                            in.putExtra("position", position);
+                            in.putParcelableArrayListExtra("photoPath", picPathLists);
+                            startActivity(in);
+                        } else {
+                            SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": click goto preview");
+                            picPathLists.clear();
+                            picPathLists.addAll(slfMediaDataList);
+                            picPathLists.remove(slfMediaData);
+                            if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADED)) {
+                                Intent in = new Intent();
+                                in.putExtra("from", "feedback");
+                                in.setClass(SLFContinueLeaveMsgActivity.this, SLFFeedbackPicPreviewActivity.class);
+                                in.putExtra("position", position);
+                                in.putParcelableArrayListExtra("photoPath", picPathLists);
+                                startActivity(in);
+                                SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ": goto preview complete" + ":picPathLists size:" + picPathLists.size());
+                            } else if (slfMediaDataList.get(position).getUploadStatus().equals(SLFConstants.UPLOADFAIL)) {
+                                slfMediaDataList.get(position).setUploadStatus(SLFConstants.UPLOADING);
+                                slfaddAttachAdapter.notifyDataSetChanged();
+                                File file = new File(slfMediaDataList.get(position).getOriginalPath());
+                                File thumbFile = new File(slfMediaDataList.get(position).getThumbnailSmallPath());
+                                String contentType = "";
+                                if (slfMediaDataList.get(position).getMimeType().contains("png")) {
+                                    contentType = "image/png";
+                                } else if (slfMediaDataList.get(position).getMimeType().contains("jpg")) {
+                                    contentType = "image/jpg";
+                                } else if (slfMediaDataList.get(position).getMimeType().contains("jpeg")) {
+                                    contentType = "image/jpeg";
+                                } else if (slfMediaDataList.get(position).getMimeType().contains("video")) {
+                                    contentType = "video/mp4";
+                                }
+                                long percent = 0;
+                                if (contentType.contains("video/mp4")) {
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), new UploadProgressListener() {
+                                        @Override
+                                        public void onProgress(long currentlength, long total) {
+                                            double progress = (double) (currentlength * 1.0 / total);
+                                            long progressFile = (long) (progress * (100 - percent));
+                                            long progressZone = percent + progressFile;
+                                            if (progressZone <= 100) {
+                                                slfMediaDataList.get(position).setProgress(progressZone);
+                                                //slfaddAttachAdapter.notifyDataSetChanged();
+                                                runOnUiThread(() -> slfaddAttachAdapter.notifyDataSetChanged());
+                                            }
+                                        }
+                                    }, SLFContinueLeaveMsgActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", new UploadProgressListener() {
+                                        @Override
+                                        public void onProgress(long currentlength, long total) {
+                                            Log.e("yjjjjjjjjj", "缩略图：：：：currentlength::" + currentlength + ":::total:::" + total);
+                                        }
+                                    }, SLFContinueLeaveMsgActivity.this);
+                                } else {
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadUrl(), file, contentType, String.valueOf(slfMediaDataList.get(position).getId()), null, SLFContinueLeaveMsgActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(position).getUploadThumurl(), thumbFile, contentType, String.valueOf(slfMediaDataList.get(position).getId()) + "thumb", null, SLFContinueLeaveMsgActivity.this);
+                                }
+                                SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":uploadFiles requested completed");
+                            } else {
+                                //
+                            }
+                        }
                     }
                 }
-            }
+            },100);
+
         });
     }
 

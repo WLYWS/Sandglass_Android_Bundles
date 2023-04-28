@@ -156,6 +156,7 @@ public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
                     Log.d("yj","delete----object---touch--ssss");
+                    SLFConstants.isCloseClick = true;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -193,6 +194,12 @@ public class SLFAndPhotoLeaveAdapter extends SLFQuickAdapter<SLFMediaData> {
             switch(msg.what){
                 case DELETEPHOTOCHANGE:
                     notifyDataSetChanged();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SLFConstants.isCloseClick = false;
+                        }
+                    },500);
                     break;
             }
             return true;
