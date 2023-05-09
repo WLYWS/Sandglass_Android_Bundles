@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionName "0.1.54tt"
+        versionName "0.1.54ui"
         buildConfigField("String","versionName","\"${versionName}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -91,10 +91,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    implementation project(":PUNetWork")
-    implementation project(":PUTrack")
-//    api 'com.punet.punetwork:punetwork:0.0.3'
-//    api 'com.putrack.putrack:putrack:0.0.4'
+//    implementation project(":PUNetWork")
+//    implementation project(":PUTrack")
+    api 'com.punet.punetwork:punetwork:0.0.4'
+    api 'com.putrack.putrack:putrack:0.0.5'
 
     // okHttp网络请求框架
     // define a BOM and its version
@@ -127,7 +127,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "com.sandglass.sandglasslibrary"
                 artifactId = "sandglassFeedback"
-                version = "0.1.54tt"
+                version = "0.1.54ui"
                 description "沙漏aar"
                 //aar 文件
                 def projectName = project.getName()
