@@ -1308,12 +1308,14 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                                 SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel(), serviceTypeTitle.sub.get(j).id,
                                                 SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion());
                                         SLFUserCenter.getInstance().put(categoryBean.id, userDeviceSaved);
+
+                                        listCategory.add(categoryBean);
+                                        slfServiceMap.put(categoryBean.id, categoryBean.sub);
+                                        slfServiceTypes.add(categoryBean);
                                     }
 
                                 }
-                                listCategory.add(categoryBean);
-                                slfServiceMap.put(categoryBean.id, categoryBean.sub);
-                                slfServiceTypes.add(categoryBean);
+
 
                                 if(slfServiceTypes.size()<=1){
                                     slfServiceTypes.clear();
