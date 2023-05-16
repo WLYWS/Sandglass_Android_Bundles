@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.StrictMode;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
 import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
@@ -116,6 +119,20 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 
         setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
+        context.startActivity(in);
+    }
+
+    /**跳转到留言详情页*/
+    public void gotoLeaveMessagePage(Context context, HashMap<String,Object> paramsMap){
+        //Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
+        Intent in = new Intent(getSLFContext(), SLFFeedbackListDetailActivity.class);
+        //setToken(token);
+
+        setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
+        SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SLFConstants.PARAMSMAP, (Parcelable) paramsMap);
+        in.putExtras(bundle);
         context.startActivity(in);
     }
     /**设置监听获取上传applog的路径和固件log的地址*/

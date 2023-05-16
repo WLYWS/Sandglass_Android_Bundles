@@ -19,6 +19,8 @@ public class SLFConstants {
     public static boolean isGreyed = false;
     public static String token;
     public static String USER_ID = "userId";
+
+    public static String LEAVE_MESSAGE_DATA = "leave_message_data";
     public static String userId = "1";
 
     public static final boolean isShowLog = true;
