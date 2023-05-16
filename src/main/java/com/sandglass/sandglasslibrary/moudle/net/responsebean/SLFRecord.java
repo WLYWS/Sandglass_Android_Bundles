@@ -32,6 +32,8 @@ public class SLFRecord implements Serializable {
     /**是否查看了新消息 0=未读，1=读了*/
     private int read;
 
+    public SLFRecord(){}
+
     public SLFRecord(long id, String deviceId, String deviceModel, String serviceTypeText, String categoryText, String subCategoryText, String content, long lastReplyTs, int status, int sendLog, int read){
         this.id = id;
         this.deviceId = deviceId;

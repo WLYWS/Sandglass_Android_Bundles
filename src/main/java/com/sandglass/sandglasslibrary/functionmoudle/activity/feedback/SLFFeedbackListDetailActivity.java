@@ -152,27 +152,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private boolean isCreate;
     private boolean isInit;
 
-    private HashMap<String,Object> paramMap;
-
-    private String fromNotification;
-
-    private String jsonNotifiy;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_list_detail);
         isCreate = true;
-        fromNotification = getIntent().getStringExtra(SLFConstants.FROM_NOTIFICATION);
-        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")){
-            paramMap = SLFSpUtils.getHashMapData(SLFConstants.PARAMSMAP);
-            if(paramMap!=null&&paramMap.size()>0){
-                initNotificationData();
-            }
-        }else{
-            initFromData();
-        }
+        initFromData();
         initTitleBar();
         initView();
         initRecyclerView();
@@ -181,7 +167,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             public void onActivityResult(ActivityResult result) {
                 //此处是跳转的result回调方法
                 if (result.getData() != null && result.getResultCode() == Activity.RESULT_OK) {
-                    SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":onActivityReuslt:");
+                    SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":onActivityReuslt:");
                     SLFLeaveMsgRecord slfLeaveMsgRecord = (SLFLeaveMsgRecord) result.getData().getSerializableExtra(SLFConstants.LEAVE_MSG_DATA);
                     slfLeaveMsgRecordList.add(slfLeaveMsgRecord);
                     adapter.notifyDataSetChanged();
@@ -196,18 +182,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     /**
      * 初始化必须数据
-     *
      */
-    private void initFromData(){
-        position = getIntent().getIntExtra(SLFConstants.RECORD_DATA_POSITION,-1);
+    private void initFromData() {
+        position = getIntent().getIntExtra(SLFConstants.RECORD_DATA_POSITION, -1);
         slfRecode = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
         slfLeaveMsgRecordList = new ArrayList<>();
     }
 
-    private void initNotificationData(){
-        jsonNotifiy = (String) paramMap.get(SLFConstants.LEAVE_MESSAGE_DATA);
-
-    }
     /**
      * 刷新数据
      */
@@ -216,31 +197,25 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         currentPage = 1;
         isInit = true;
         isRefresh = false;
-        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
+        getFeedBackDetailList(currentPage);
 
-        }else{
-            getFeedBackDetailList(currentPage);
-        }
     }
 
     private void refresh() {
         isInit = false;
         isRefresh = true;
-        SLFLogUtil.sdkd("yj","currentPage--fresh--:"+currentPage);
-        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
-
-        }else{
-            getFeedBackDetailList(currentPage);
-        }
+        SLFLogUtil.sdkd("yj", "currentPage--fresh--:" + currentPage);
+        getFeedBackDetailList(currentPage);
     }
 
 
-    private void getFeedBackDetailList (int currentPage) {
+    private void getFeedBackDetailList(int currentPage) {
         TreeMap map = new TreeMap();
         map.put("current", currentPage);
         PUNHttpUtils.getInstance().executeGet(getContext(),
-                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}",String.valueOf(slfRecode.getId())), map, SLFFeedbackDetailItemResponseBean.class, this);
+                PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}", String.valueOf(slfRecode.getId())), map, SLFFeedbackDetailItemResponseBean.class, this);
     }
+
     /**
      * 初始化view
      */
@@ -252,50 +227,46 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slf_feedback_bottom_relative = findViewById(R.id.slf_feedback_list_bottom_relative);
         slf_feedback_list_leave_message_bottom_text = findViewById(R.id.slf_feedback_list_leave_message_bottom_text);
         slf_feedback_list_detail_refreshLayout = findViewById(R.id.slf_feedback_list_detail_refreshLayout);
-        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
-
-        }else{
-            if (slfRecode != null) {
-                if (slfRecode.getStatus() == 0) {
-                    slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_to_be_processed));
-                    slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_warning_color));
-                    slf_feedback_bottom_relative.setVisibility(View.VISIBLE);
-                } else if (slfRecode.getStatus() == 1 || slfRecode.getStatus() == 2) {
-                    slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_in_progress));
-                    slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
-                    slf_feedback_bottom_relative.setVisibility(View.VISIBLE);
-                } else if (slfRecode.getStatus() == 4) {
-                    slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_finished));
-                    slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_add_photos_text_color));
-                    slf_feedback_bottom_relative.setVisibility(View.GONE);
-                }
-                if (slfRecode.getSendLog() == 0) {
-                    requestUploadUrls();
-                    slfRightTitle.setVisibility(View.VISIBLE);
-                    slfRightTitle.setText(SLFResourceUtils.getString(R.string.slf_feedback_send_log));
-                    slfRightTitle.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
-                    slfRightTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                } else {
-                    slfRightTitle.setVisibility(View.GONE);
-                }
-                slf_feedback_id.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_list_item_id, slfRecode.getId()));
-                if (TextUtils.isEmpty(slfRecode.getServiceTypeText()) && TextUtils.isEmpty(slfRecode.getCategoryText()) && TextUtils.isEmpty(slfRecode.getSubCategoryText())) {
-                    slf_feedback_question_type.setText("");
-                } else if (!TextUtils.isEmpty(slfRecode.getServiceTypeText()) && !TextUtils.isEmpty(slfRecode.getCategoryText()) && TextUtils.isEmpty(slfRecode.getSubCategoryText())) {
-                    slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText());
-                } else if (!TextUtils.isEmpty(slfRecode.getServiceTypeText()) && TextUtils.isEmpty(slfRecode.getCategoryText()) && TextUtils.isEmpty(slfRecode.getSubCategoryText())) {
-                    slf_feedback_question_type.setText(slfRecode.getServiceTypeText());
-                } else {
-                    slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText() + "/" + slfRecode.getSubCategoryText());
-                }
-            } else {
-                SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":slfRecode is null:");
+        if (slfRecode != null) {
+            if (slfRecode.getStatus() == 0) {
+                slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_to_be_processed));
+                slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_warning_color));
+                slf_feedback_bottom_relative.setVisibility(View.VISIBLE);
+            } else if (slfRecode.getStatus() == 1 || slfRecode.getStatus() == 2) {
+                slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_in_progress));
+                slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
+                slf_feedback_bottom_relative.setVisibility(View.VISIBLE);
+            } else if (slfRecode.getStatus() == 4) {
+                slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_finished));
+                slf_title_status.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_add_photos_text_color));
+                slf_feedback_bottom_relative.setVisibility(View.GONE);
             }
+            if (slfRecode.getSendLog() == 0) {
+                requestUploadUrls();
+                slfRightTitle.setVisibility(View.VISIBLE);
+                slfRightTitle.setText(SLFResourceUtils.getString(R.string.slf_feedback_send_log));
+                slfRightTitle.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
+                slfRightTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            } else {
+                slfRightTitle.setVisibility(View.GONE);
+            }
+            slf_feedback_id.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_list_item_id, slfRecode.getId()));
+            if (TextUtils.isEmpty(slfRecode.getServiceTypeText()) && TextUtils.isEmpty(slfRecode.getCategoryText()) && TextUtils.isEmpty(slfRecode.getSubCategoryText())) {
+                slf_feedback_question_type.setText("");
+            } else if (!TextUtils.isEmpty(slfRecode.getServiceTypeText()) && !TextUtils.isEmpty(slfRecode.getCategoryText()) && TextUtils.isEmpty(slfRecode.getSubCategoryText())) {
+                slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText());
+            } else if (!TextUtils.isEmpty(slfRecode.getServiceTypeText()) && TextUtils.isEmpty(slfRecode.getCategoryText()) && TextUtils.isEmpty(slfRecode.getSubCategoryText())) {
+                slf_feedback_question_type.setText(slfRecode.getServiceTypeText());
+            } else {
+                slf_feedback_question_type.setText(slfRecode.getServiceTypeText() + "/" + slfRecode.getCategoryText() + "/" + slfRecode.getSubCategoryText());
+            }
+        } else {
+            SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":slfRecode is null:");
         }
-        SLFFontSet.setSLF_RegularFont(getContext(),slf_title_status);
-        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_id);
-        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_question_type);
-        SLFFontSet.setSLF_RegularFont(getContext(),slf_feedback_list_leave_message_bottom_text);
+        SLFFontSet.setSLF_RegularFont(getContext(), slf_title_status);
+        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_id);
+        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_question_type);
+        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_list_leave_message_bottom_text);
         slf_feedback_bottom_relative.setOnClickListener(this);
 
     }
@@ -305,11 +276,11 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
      */
     @SuppressLint("ResourceAsColor")
     private void initRecyclerView() {
-        adapter = new SLFFeedbackDetailAdapter(getContext(),slfLeaveMsgRecordList);
+        adapter = new SLFFeedbackDetailAdapter(getContext(), slfLeaveMsgRecordList);
 //        adapter.setHasStableIds(true);
 
 //关闭动画效果
-        SimpleItemAnimator sa=(SimpleItemAnimator )slf_feedback_leave_list.getItemAnimator();
+        SimpleItemAnimator sa = (SimpleItemAnimator) slf_feedback_leave_list.getItemAnimator();
         sa.setSupportsChangeAnimations(false);
 //设置动画为空
         slf_feedback_leave_list.setItemAnimator(null);
@@ -352,8 +323,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slfTitle.setText(getResources().getText(R.string.slf_feedback_list_leave_message_title_text));
         slfBack.setOnClickListener(this);
         slfRightTitle.setOnClickListener(this);
-        SLFFontSet.setSLF_RegularFont(getContext(),slfTitle);
-        SLFFontSet.setSLF_MediumFontt(getContext(),slfRightTitle);
+        SLFFontSet.setSLF_RegularFont(getContext(), slfTitle);
+        SLFFontSet.setSLF_MediumFontt(getContext(), slfRightTitle);
     }
 
     @Override
@@ -363,21 +334,21 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         } else if (view.getId() == R.id.slf_tv_title_right) {
             showLoading();
             //打点发送send log
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_SendLog,null);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_SendLog, null);
             sumbitLogFiles();
             SLFApi.getInstance(getContext()).setUploadLogCompleteCallBack(new SLFUploadCompleteCallback() {
                 @Override
                 public void isUploadAppLogComplete(boolean isComplete) {
-                    SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackList Detail upload app log complete callback:");
+                    SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":feedbackList Detail upload app log complete callback:");
                 }
             });
             if (SLFApi.getInstance(getContext()).getAppLogCallBack() != null) {
                 SLFApi.getInstance(SLFApi.getSLFContext()).getAppLogCallBack().getUploadAppLogUrl(SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(1)).uploadUrl,
-                       "application/zip");
+                        "application/zip");
             }
         } else if (view.getId() == R.id.slf_feedback_list_bottom_relative) {
             //打点进入继续留言页
-            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterLeave,null);
+            PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_FeedbackDetail_EnterLeave, null);
             gotoContinueLeaveActivity();
         }
     }
@@ -385,7 +356,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void gotoContinueLeaveActivity() {
 
         Intent intent = new Intent(SLFFeedbackListDetailActivity.this, SLFContinueLeaveMsgActivity.class);
-        intent.putExtra(SLFConstants.RECORD_DATA,slfRecode);
+        intent.putExtra(SLFConstants.RECORD_DATA, slfRecode);
         intentActivityResultLauncher.launch(intent);
     }
 
@@ -416,9 +387,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                                 @Override
                                 public void run() {
                                     File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
-                                    SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::logFile.size::" + logFile.length());
+                                    SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logFile.size::" + logFile.length());
                                     String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(0)).uploadUrl;
-                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", null,SLFFeedbackListDetailActivity.this);
+                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", "0", null, SLFFeedbackListDetailActivity.this);
                                 }
                             });
 
@@ -428,7 +399,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
                     @Override
                     public void onFailure() {
                         isSubmit = false;
-                        SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::application log compress  error::");
+                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::application log compress  error::");
                     }
                 });
             }
@@ -448,15 +419,15 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     @Override
     public void onRequestNetFail(T type) {
-        SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":FeedbackList Detail onRequestNetFail::");
+        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":FeedbackList Detail onRequestNetFail::");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
             if ("0".equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             }
-        }else if(type instanceof SLFFeedbackDetailItemResponseBean){
-            if(isRefresh){
+        } else if (type instanceof SLFFeedbackDetailItemResponseBean) {
+            if (isRefresh) {
                 slf_feedback_list_detail_refreshLayout.finishRefresh();
                 isRefresh = false;
             }
@@ -468,76 +439,73 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     public void onRequestSuccess(String result, T type) {
         hideLoading();
         if (type instanceof SLFUploadFileReponseBean) {
-            SLFLogUtil.sdkd(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail::SLFUploadFileReponseBean" + ":type:" + type.toString());
-            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,3);
-            if(SLFCommonUpload.getInstance()!=null&&SLFCommonUpload.getInstance().size()>0&&SLFCommonUpload.getListInstance()!=null&&SLFCommonUpload.getListInstance().size()>0) {
+            SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::feedbackDetail::SLFUploadFileReponseBean" + ":type:" + type.toString());
+            SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type, 3);
+            if (SLFCommonUpload.getInstance() != null && SLFCommonUpload.getInstance().size() > 0 && SLFCommonUpload.getListInstance() != null && SLFCommonUpload.getListInstance().size() > 0) {
                 /**分配3个链接给log上传*/
                 for (int i = 0; i < 3; i++) {
                     SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(i)).isIdle = true;
                     SLFLogUtil.sdkd(TAG, "uploadPath--all--feedbackDetail--:::" + SLFCommonUpload.getListInstance().get(i));
                 }
             }
-        }else if(type instanceof String){
+        } else if (type instanceof String) {
             String code = (String) type;
-            SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
+            SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
             if ("0".equals(code)) {
-                SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::logfile--feedbackDetail---upload---complete");
-                if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
+                SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::logfile--feedbackDetail---upload---complete");
+                PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LOG_URL.replace("{id}", String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
 
-                }else{
-                    PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LOG_URL.replace("{id}", String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
-                }
             }
-        }else if(type instanceof SLFSendLeaveMsgRepsonseBean){
+        } else if (type instanceof SLFSendLeaveMsgRepsonseBean) {
             //showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_list_send_log));
             showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_detail_send_log_success));
             slfRightTitle.setVisibility(View.GONE);
 //            EventBus.getDefault().post(new SLFSendLogSuceessEvent(true,position));
-            SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFSendLeaveMsgRepsonseBean");
-        }else if (type instanceof SLFFeedbackDetailItemResponseBean){
+            SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::SLFSendLeaveMsgRepsonseBean");
+        } else if (type instanceof SLFFeedbackDetailItemResponseBean) {
             pages = ((SLFFeedbackDetailItemResponseBean) type).data.getPages();
-            showFeedBackAdapter((SLFFeedbackDetailItemResponseBean)type);
-            SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::SLFFeedbackDetailItemResponseBean");
+            showFeedBackAdapter((SLFFeedbackDetailItemResponseBean) type);
+            SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::SLFFeedbackDetailItemResponseBean");
         }
 
     }
 
-    private void showFeedBackAdapter (SLFFeedbackDetailItemResponseBean bean) {
+    private void showFeedBackAdapter(SLFFeedbackDetailItemResponseBean bean) {
         newDatas = bean.data.getRecods();
-            if (newDatas != null && newDatas.size() > 0) {
-                if(isRefresh||isInit){
-                    adapter.updateList(newDatas,false,true);
-                    slf_feedback_list_detail_refreshLayout.finishRefresh();
-                    currentPage++;
-                }
+        if (newDatas != null && newDatas.size() > 0) {
+            if (isRefresh || isInit) {
+                adapter.updateList(newDatas, false, true);
+                slf_feedback_list_detail_refreshLayout.finishRefresh();
+                currentPage++;
+            }
 //                else if(isLoadMore){
 //                    adapter.updateList(newDatas, true,false);
 //                    slf_feedback_list_detail_refreshLayout.finishLoadMore();
 //                    currentPage++;
 //                }
-            } else {
-                adapter.updateList(null, false,false);
-                slf_feedback_list_detail_refreshLayout.finishRefresh();
-            }
-            adapter.notifyDataSetChanged();
-            if(isInit){
-                slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
-            }
-            isRefresh = false;
-            isInit = false;
+        } else {
+            adapter.updateList(null, false, false);
+            slf_feedback_list_detail_refreshLayout.finishRefresh();
+        }
+        adapter.notifyDataSetChanged();
+        if (isInit) {
+            slf_feedback_leave_list.scrollToPosition(slfLeaveMsgRecordList.size() - 1);
+        }
+        isRefresh = false;
+        isInit = false;
     }
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
-        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":feedbackDetail requestOptionFail");
+        SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":feedbackDetail requestOptionFail");
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;
             if ("0".equals(code)) {
                 SLFToastUtil.showCenterSubmitFailText();
             }
-        }else if(type instanceof SLFFeedbackDetailItemResponseBean){
-            if(isRefresh){
+        } else if (type instanceof SLFFeedbackDetailItemResponseBean) {
+            if (isRefresh) {
                 slf_feedback_list_detail_refreshLayout.finishRefresh();
                 isRefresh = false;
             }
@@ -550,16 +518,16 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     }
 
     private TreeMap<String, Object> getSendLog() {
-            ArrayList<SLFLogAttrBean> logAttrBeans = new ArrayList<>();
-            TreeMap<String, Object> map = new TreeMap<>();
-            SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();
-            /**appLogBean*/
-            logAttrAppBean.setPath(SLFCommonUpload.getListInstance().get(1));
-            if (!TextUtils.isEmpty(appLogFileName)) {
-                logAttrAppBean.setFileName(appLogFileName);
-            }
-            logAttrAppBean.setContentType("application/zip");
-            /**firmwareLogBean*/
+        ArrayList<SLFLogAttrBean> logAttrBeans = new ArrayList<>();
+        TreeMap<String, Object> map = new TreeMap<>();
+        SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();
+        /**appLogBean*/
+        logAttrAppBean.setPath(SLFCommonUpload.getListInstance().get(1));
+        if (!TextUtils.isEmpty(appLogFileName)) {
+            logAttrAppBean.setFileName(appLogFileName);
+        }
+        logAttrAppBean.setContentType("application/zip");
+        /**firmwareLogBean*/
 //            SLFLogAttrBean logAttrFirmwareBean = new SLFLogAttrBean();
 //
 //            logAttrFirmwareBean.setPath(SLFCommonUpload.getListInstance().get(2));
@@ -567,15 +535,15 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 //                logAttrAppBean.setFileName(firmwareLogFileName);
 //            }
 //            logAttrFirmwareBean.setContentType("application/zip");
-            /*sdkLogBean*/
-            SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
-            logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(0));
-            logAttrPluginBean.setFileName("sdkLog.zip");
-            logAttrPluginBean.setContentType("application/zip");
-            logAttrBeans.add(logAttrAppBean);
-            logAttrBeans.add(logAttrPluginBean);
-            map.put("logAttrList", logAttrBeans);
-        SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":getSendlog MAP :" + map.toString());
+        /*sdkLogBean*/
+        SLFLogAttrBean logAttrPluginBean = new SLFLogAttrBean();
+        logAttrPluginBean.setPath(SLFCommonUpload.getListInstance().get(0));
+        logAttrPluginBean.setFileName("sdkLog.zip");
+        logAttrPluginBean.setContentType("application/zip");
+        logAttrBeans.add(logAttrAppBean);
+        logAttrBeans.add(logAttrPluginBean);
+        map.put("logAttrList", logAttrBeans);
+        SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":getSendlog MAP :" + map.toString());
         return map;
     }
 
@@ -583,13 +551,13 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     protected void onResume() {
         super.onResume();
         //打点进入反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_START,null);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage, SLFPageAgentEvent.SLF_PAGE_START, null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //打点退出反馈详情页
-        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage,SLFPageAgentEvent.SLF_PAGE_END,null);
+        PUTClickAgent.pageTypeAgent(SLFPageAgentEvent.SLF_FeedbackDetailPage, SLFPageAgentEvent.SLF_PAGE_END, null);
     }
 }

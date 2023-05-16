@@ -7,7 +7,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
+import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
@@ -15,6 +17,7 @@ import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
 import com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
@@ -22,6 +25,9 @@ import com.sandglass.sandglasslibrary.utils.logutil.SLFCrashHandler;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFDebugConfig;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
@@ -124,14 +130,37 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 
     /**跳转到留言详情页*/
     public void gotoLeaveMessagePage(Context context, HashMap<String,Object> paramsMap){
-        //Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
         Intent in = new Intent(getSLFContext(), SLFFeedbackListDetailActivity.class);
-        //setToken(token);
 
         setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
-        in.putExtra(SLFConstants.FROM_NOTIFICATION,"notification");
-        context.startActivity(in);
+        //HashMap<String,Object> map = SLFSpUtils.getHashMapData(SLFConstants.PARAMSMAP);
+        if(paramsMap!=null&&paramsMap.size()>0){
+            String jsonNotify = (String) paramsMap.get(SLFConstants.LEAVE_MESSAGE_DATA);
+            try {
+                JSONObject json = new JSONObject(jsonNotify);
+                String serviceType = json.optString("serviceTypeText")==null?"":json.optString("serviceTypeText");
+                String categoryText = json.optString("categoryText")==null?"":json.optString("categoryText");
+                String subCategoryText = json.optString("subCategoryText")==null?"":json.optString("subCategoryText");
+                long feek_id = json.optLong("id");
+                int sendLog = json.optInt("sendLog");
+                int status = json.optInt("status");
+                SLFRecord slfRecord = new SLFRecord();
+                slfRecord.setServiceTypeText(serviceType);
+                slfRecord.setCategoryText(categoryText);
+                slfRecord.setSubCategoryText(subCategoryText);
+                slfRecord.setId(feek_id);
+                slfRecord.setSendLog(sendLog);
+                slfRecord.setStatus(status);
+                in.putExtra(SLFConstants.RECORD_DATA,slfRecord);
+                context.startActivity(in);
+            } catch (JSONException e) {
+                Log.e("yj","Exception:"+e.toString());
+            }
+        }else{
+            Log.d("yj","slfRecord:::else：");
+        }
+
     }
     /**设置监听获取上传applog的路径和固件log的地址*/
     public void setAppLogCallBack(SLFUploadAppLogCallback slfUploadAppLogCallback){
