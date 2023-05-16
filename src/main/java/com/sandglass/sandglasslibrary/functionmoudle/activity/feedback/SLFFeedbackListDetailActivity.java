@@ -54,6 +54,7 @@ import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCompressUtil;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
+import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -153,6 +154,8 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     private HashMap<String,Object> paramMap;
 
+    private String fromNotification;
+
     private String jsonNotifiy;
 
     @Override
@@ -161,16 +164,14 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         SLFStatusBarColorChange.transparencyBar(this);
         setContentView(R.layout.slf_feedback_list_detail);
         isCreate = true;
-        Bundle bundle = getIntent().getExtras();
-        if(bundle==null) {
-            initFromData();
-        }else{
-            paramMap = bundle.getParcelable(SLFConstants.PARAMSMAP);
+        fromNotification = getIntent().getStringExtra(SLFConstants.FROM_NOTIFICATION);
+        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")){
+            paramMap = SLFSpUtils.getHashMapData(SLFConstants.PARAMSMAP);
             if(paramMap!=null&&paramMap.size()>0){
                 initNotificationData();
-            }else{
-                initFromData();
             }
+        }else{
+            initFromData();
         }
         initTitleBar();
         initView();
@@ -205,7 +206,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
 
     private void initNotificationData(){
         jsonNotifiy = (String) paramMap.get(SLFConstants.LEAVE_MESSAGE_DATA);
-        Log.d("yj","jsonNotify:::"+jsonNotifiy);
+
     }
     /**
      * 刷新数据
@@ -215,7 +216,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         currentPage = 1;
         isInit = true;
         isRefresh = false;
-        if(paramMap==null) {
+        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
+
+        }else{
             getFeedBackDetailList(currentPage);
         }
     }
@@ -224,7 +227,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         isInit = false;
         isRefresh = true;
         SLFLogUtil.sdkd("yj","currentPage--fresh--:"+currentPage);
-        if(paramMap==null) {
+        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
+
+        }else{
             getFeedBackDetailList(currentPage);
         }
     }
@@ -247,7 +252,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         slf_feedback_bottom_relative = findViewById(R.id.slf_feedback_list_bottom_relative);
         slf_feedback_list_leave_message_bottom_text = findViewById(R.id.slf_feedback_list_leave_message_bottom_text);
         slf_feedback_list_detail_refreshLayout = findViewById(R.id.slf_feedback_list_detail_refreshLayout);
-        if(paramMap==null) {
+        if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
+
+        }else{
             if (slfRecode != null) {
                 if (slfRecode.getStatus() == 0) {
                     slf_title_status.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_to_be_processed));
@@ -475,7 +482,9 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
             if ("0".equals(code)) {
                 SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+":requestScucess::logfile--feedbackDetail---upload---complete");
-                if(paramMap==null) {
+                if(null!=fromNotification&&!TextUtils.isEmpty(fromNotification)&&fromNotification.equals("notification")) {
+
+                }else{
                     PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LOG_URL.replace("{id}", String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
                 }
             }

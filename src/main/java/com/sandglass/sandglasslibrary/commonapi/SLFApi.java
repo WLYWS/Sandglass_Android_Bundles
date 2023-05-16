@@ -130,9 +130,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 
         setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(SLFConstants.PARAMSMAP, (Parcelable) paramsMap);
-        in.putExtras(bundle);
+        in.putExtra(SLFConstants.FROM_NOTIFICATION,"notification");
         context.startActivity(in);
     }
     /**设置监听获取上传applog的路径和固件log的地址*/

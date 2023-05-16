@@ -20,6 +20,8 @@ public class SLFConstants {
     public static String token;
     public static String USER_ID = "userId";
 
+    public static String FROM_NOTIFICATION = "from_notification";
+
     public static String LEAVE_MESSAGE_DATA = "leave_message_data";
     public static String userId = "1";
 
