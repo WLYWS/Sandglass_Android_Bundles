@@ -541,7 +541,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 }
             }
             if (!hasUploadingFile) {
-                if(slfRecord!=null&&!TextUtils.isEmpty(slfRecord.getContent())) {
+                if(slfRecord!=null) {
                     //------if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
                     showLoading();
                     PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
