@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionName "0.1.55sptest11"
+        versionName "0.1.57"
         buildConfigField("String","versionName","\"${versionName}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -126,7 +126,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = "com.sandglass.sandglasslibrary"
                 artifactId = "sandglassFeedback"
-                version = "0.1.55sptest11"
+                version = "0.1.57"
                 description "沙漏aar"
                 //aar 文件
                 def projectName = project.getName()
@@ -153,7 +153,7 @@ afterEvaluate {
                 // test, upload local maven repository
                 //url = "file:" + new File(project.rootProject.rootDir, "local_test_repo").path
                 //url = "file:///Users/kingmac/Downloads/maven_android"
-                url = "file:///Users/yangjie/Downloads/maven_android"
+                url = "file:///Users/liutao/Documents/Git/Sandglass_Android_Bundles"
             }
         }
     }
