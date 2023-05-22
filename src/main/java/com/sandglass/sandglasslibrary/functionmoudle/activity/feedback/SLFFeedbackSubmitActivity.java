@@ -1299,10 +1299,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 categoryBean.name = SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceName();
                                 categoryBean.deviceModel = SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel();
                                 categoryBean.sub = new ArrayList<>();
+                                //判断是否需要添加新对象
+                                if (slfServiceTypes.size() <= k)
+                                {
+                                    slfServiceTypes.add(categoryBean);
+                                }
                                 if(!TextUtils.isEmpty(serviceTypeTitle.sub.get(j).deviceModel)) {
-                                    if (SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel)
-                                            || SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel.toLowerCase())
-                                            || SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().contains(serviceTypeTitle.sub.get(j).deviceModel.toUpperCase())) {
+                                    if (SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().equals(serviceTypeTitle.sub.get(j).deviceModel)) {
                                         categoryBean.sub.addAll(serviceTypeTitle.sub.get(j).sub);
                                         SLFUserDeviceSaved userDeviceSaved = new SLFUserDeviceSaved(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId(),
                                                 SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel(), serviceTypeTitle.sub.get(j).id,
@@ -1311,15 +1314,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
                                         listCategory.add(categoryBean);
                                         slfServiceMap.put(categoryBean.id, categoryBean.sub);
-                                        slfServiceTypes.add(categoryBean);
+//                                        slfServiceTypes.add(categoryBean);
+                                        //替换对应索引的值
+                                        slfServiceTypes.set(k, categoryBean);
                                     }
 
                                 }
 
-
-                                if(slfServiceTypes.size()<=1){
-                                    slfServiceTypes.clear();
-                                }
                             }
                             slfServiceTitleMap.put(serviceTypeTitle.sub.get(j).id + 100, listCategory);
                         }
@@ -1329,6 +1330,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
                     }
                 }
+            }
+            if(slfServiceTypes.size()<=1){
+                slfServiceTypes.clear();
             }
         }
 
