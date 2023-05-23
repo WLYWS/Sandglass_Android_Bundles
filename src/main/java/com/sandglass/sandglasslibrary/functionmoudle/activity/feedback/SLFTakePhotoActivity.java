@@ -297,6 +297,10 @@ public class SLFTakePhotoActivity extends SLFBaseActivity {
 
     @SuppressLint("RestrictedApi")
     private void bindPreview(@NonNull ProcessCameraProvider cameraProvider,boolean isVideo) {
+        if (cameraProvider == null)
+        {
+            return;
+        }
         Preview.Builder previewBuilder = new Preview.Builder();
         ImageCapture.Builder captureBuilder = new ImageCapture.Builder();
         captureBuilder.setTargetResolution(targetSize);
