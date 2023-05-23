@@ -48,7 +48,7 @@ public class SLFImageTransformation {
                 break;
             case MASK:
                 if(resId==0){
-                    resId = R.drawable.ic_launcher_background;
+                    resId = R.drawable.slf_launcher_background;
                 }
                 mTransformation = new SLFMaskTransformation(resId);
                 break;

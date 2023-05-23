@@ -23,8 +23,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.sandglass.sandglasslibrary.R;
@@ -47,7 +45,7 @@ public class SLFImageUtil {
 
     public static int getPlaceholderRes(){
         if(placeholderImgResId==0){
-            return R.drawable.ic_launcher_background;
+            return R.drawable.slf_launcher_background;
         }
         return placeholderImgResId;
     }
@@ -58,7 +56,7 @@ public class SLFImageUtil {
 
     public static int getErrorImgRes(){
         if(errorImgResId==0){
-            return R.drawable.ic_launcher_background;
+            return R.drawable.slf_launcher_background;
         }
         return errorImgResId;
     }
