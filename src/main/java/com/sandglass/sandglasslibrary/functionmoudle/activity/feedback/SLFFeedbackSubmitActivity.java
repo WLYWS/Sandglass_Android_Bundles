@@ -1300,7 +1300,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 categoryBean.deviceModel = SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel();
                                 categoryBean.sub = new ArrayList<>();
                                 //判断是否需要添加新对象
-                                if (slfServiceTypes.size() <= k)
+                                if (slfServiceTypes.size() <= k+1)
                                 {
                                     slfServiceTypes.add(categoryBean);
                                 }
@@ -1316,7 +1316,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                         slfServiceMap.put(categoryBean.id, categoryBean.sub);
 //                                        slfServiceTypes.add(categoryBean);
                                         //替换对应索引的值
-                                        slfServiceTypes.set(k, categoryBean);
+                                        slfServiceTypes.set(k+1, categoryBean);
                                     }
 
                                 }
