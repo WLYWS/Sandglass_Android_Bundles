@@ -47,6 +47,10 @@ public class SLFPermissionManager {
     }
 
     public void chekPermissions(Activity context, String[] permissions, @NonNull IPermissionsResult permissionsResult) {
+        //间隔500毫秒再响应下一个点击事件
+        if (SLFFastClickUtils.isFastDoubleClick(500)) {
+            return;
+        }
         mPermissionsResult = permissionsResult;
         /**6.0才用动态权限*/
         if (Build.VERSION.SDK_INT < 23) {
