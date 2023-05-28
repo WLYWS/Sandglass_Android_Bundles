@@ -250,6 +250,10 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         slfPhotoSelector.setAdapter(slfaddAttachAdapter);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
+            //间隔500毫秒再响应下一个点击事件
+            if (SLFFastClickUtils.isFastDoubleClick(500)) {
+                return;
+            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

@@ -521,6 +521,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfPhotoSelector.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
         slfPhotoSelector.setOnItemClickListener((parent, view, position, id) -> {
+            //限制按钮点击响应500毫秒一次
+            if (SLFFastClickUtils.isFastDoubleClick(500)) {
+                return;
+            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
