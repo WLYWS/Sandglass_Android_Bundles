@@ -95,9 +95,9 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
                 SLFFileUtils.delete((File)logList.get(i));
             }
         }
-        SLFCrashHandler.getInstance().init(mContext);
+//        SLFCrashHandler.getInstance().init(mContext);
         SLFDebugConfig.setOpenLogEnable(true);
-        SLFCrashHandler.getInstance().addCrashListener((ex, appId) -> SLFLogUtil.sdke("slf_crash", appId));
+//        SLFCrashHandler.getInstance().addCrashListener((ex, appId) -> SLFLogUtil.sdke("slf_crash", appId));
         // android 7.0系统解决拍照的问题
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
