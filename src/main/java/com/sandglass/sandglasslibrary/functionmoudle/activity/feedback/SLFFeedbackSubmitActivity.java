@@ -703,7 +703,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      * 处理sendlog选中和未选中接口提交
      */
     private void checkedSendLog() {
-        if (slfSendLogCheck.isChecked()) {
+        if (slfSendLogCheck.isChecked() && SLFCommonUpload.getListInstance().size() >= 1) {
             //showLoading();
             //sumbitLogFiles();
             sumbitLogFiles();
@@ -1853,7 +1853,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         }
         map.put("content", slfEditProblem.getText().toString());
         map.put("email", slfEmailEdit.getText().toString().trim());
-        if (slfSendLogCheck.isChecked()) {
+        if (slfSendLogCheck.isChecked() && SLFCommonUpload.getListInstance().size() >= 1) {
             map.put("sendLog", 1);
             SLFLogAttrBean logAttrAppBean = new SLFLogAttrBean();
             /**appLogBean*/
@@ -1935,7 +1935,12 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::uploadvideo start");
                         File file = new File(slfMediaDataList.get(i).getOriginalPath());
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
-                        long percent = progressMap.get(id);
+                        //压缩过程占总进度的30%
+                        long percent = 30;
+                        if (progressMap.size() > 0) {
+                            percent = progressMap.get(id);
+                        }
+                        final long finalPercent = percent;
                         PUNHttpUtils.getInstance().executePutFile(getContext(), slfMediaDataList.get(i).getUploadUrl(), file, "video/mp4", String.valueOf(slfMediaDataList.get(i).getId()), new UploadProgressListener() {
                             @Override
                             public void onProgress(long currentlength, long total) {
@@ -1945,8 +1950,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 //                                    throw new RuntimeException(e);
 //                                }
                                 double progress = (double) (currentlength*1.0/total);
-                                long progressFile = (long) (progress*(100-percent));
-                                long progressZone = percent + progressFile;
+                                long progressFile = (long) (progress*(100-finalPercent));
+                                long progressZone = finalPercent + progressFile;
                                 if(progressZone<=100){
                                     slfData.setProgress(progressZone);
                                     //slfaddAttachAdapter.notifyDataSetChanged();
