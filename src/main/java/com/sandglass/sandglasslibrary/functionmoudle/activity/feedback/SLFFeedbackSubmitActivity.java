@@ -1937,7 +1937,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                         File thumbFile = new File(slfMediaDataList.get(i).getThumbnailSmallPath());
                         //压缩过程占总进度的30%
                         long percent = 30;
-                        if (progressMap.size() > 0) {
+                        if (progressMap.containsKey(id)){
                             percent = progressMap.get(id);
                         }
                         final long finalPercent = percent;
