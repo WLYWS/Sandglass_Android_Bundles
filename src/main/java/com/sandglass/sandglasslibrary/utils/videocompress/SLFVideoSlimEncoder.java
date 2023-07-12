@@ -2,6 +2,7 @@ package com.sandglass.sandglasslibrary.utils.videocompress;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
@@ -11,6 +12,7 @@ import android.util.Log;
 
 import com.sandglass.sandglasslibrary.utils.videocompress.listner.SLFSlimProgressListener;
 import com.sandglass.sandglasslibrary.utils.videocompress.muxer.SLFCodecInputSurface;
+import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -124,7 +126,12 @@ public class SLFVideoSlimEncoder {
                 mAudioExtractor.selectTrack(audioIndex);
                 mAudioExtractor.seekTo(0, MediaExtractor.SEEK_TO_PREVIOUS_SYNC);
                 MediaFormat trackFormat = mAudioExtractor.getTrackFormat(audioIndex);
-                muxerAudioTrackIndex = mMuxer.addTrack(trackFormat);
+                //为兼容opus等其他类型音频格式，需先保证存在必要字段
+                if(trackFormat.containsKey(MediaFormat.KEY_SAMPLE_RATE)
+                        && trackFormat.containsKey(MediaFormat.KEY_CHANNEL_COUNT)
+                        && trackFormat.containsKey(MediaFormat.KEY_BIT_RATE)) {
+                    muxerAudioTrackIndex = mMuxer.addTrack(trackFormat);
+                }
 
                // extractor.unselectTrack(muxerAudioTrackIndex);
             }
@@ -349,6 +356,7 @@ public class SLFVideoSlimEncoder {
 
             } else {
                 Log.e(TAG,"startvideorecord");
+                mBufferInfo = new MediaCodec.BufferInfo();
                 long videoTime = simpleReadAndWriteTrack(extractor, mMuxer, mBufferInfo, startTime, endTime, cacheFile, false);
                 if (videoTime != -1) {
                     videoStartTime = videoTime;
@@ -569,6 +577,18 @@ public class SLFVideoSlimEncoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //获取当前解码器的信息对象
+        MediaCodecInfo codecInfo = mEncoder.getCodecInfo();
+        //获取当前解码器的限制最大宽高
+        int maxWidth = codecInfo.getCapabilitiesForType(MIME_TYPE).getVideoCapabilities().getSupportedWidths().getUpper();
+        int maxHeight = codecInfo.getCapabilitiesForType(MIME_TYPE).getVideoCapabilities().getSupportedWidths().getUpper();
+        //当前视频宽高与当前解码器最大宽高取最小值，不然超限会config报错
+        int finalWidth = Math.min(maxWidth, (int)mWidth);
+        int finalHeight = Math.min(maxHeight, (int)mHeight);
+        //设置宽高
+        format.setInteger(MediaFormat.KEY_WIDTH, finalWidth);
+        format.setInteger(MediaFormat.KEY_HEIGHT, finalHeight);
+
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         mInputSurface = new SLFCodecInputSurface(mEncoder.createInputSurface());
         mInputSurface.makeCurrent();

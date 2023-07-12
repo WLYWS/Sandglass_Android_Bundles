@@ -1307,6 +1307,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 if (slfServiceTypes.size() <= k+1)
                                 {
                                     slfServiceTypes.add(categoryBean);
+                                    listCategory.add(categoryBean);
                                 }
                                 if(!TextUtils.isEmpty(serviceTypeTitle.sub.get(j).deviceModel)) {
                                     if (SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceModel().equals(serviceTypeTitle.sub.get(j).deviceModel)) {
@@ -1316,7 +1317,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                                 SLFUserCenter.userDeviceListBean.getData().get(k).getFirmwareVersion());
                                         SLFUserCenter.getInstance().put(categoryBean.id, userDeviceSaved);
 
-                                        listCategory.add(categoryBean);
+//                                        listCategory.add(categoryBean);
+                                        listCategory.set(k, categoryBean);
                                         slfServiceMap.put(categoryBean.id, categoryBean.sub);
 //                                        slfServiceTypes.add(categoryBean);
                                         //替换对应索引的值
@@ -1326,8 +1328,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                                 }
 
                             }
-                            slfServiceTitleMap.put(serviceTypeTitle.sub.get(j).id + 100, listCategory);
+
                         }
+                        slfServiceTitleMap.put(serviceTypeTitle.sub.get(0).id + 100, listCategory);
                         if (slfServiceTitleMap != null && slfServiceTitleMap.size() > 0) {
                             setServiceTitleMapConner(slfServiceTitleMap);
                         }
