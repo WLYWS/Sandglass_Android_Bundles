@@ -348,8 +348,8 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                             picPathLists.get(i).setUploadThumurl(null);
                             picPathLists.get(i).setFileSuccess(false);
                             picPathLists.get(i).setThumbSuccess(false);
-                            SLFMediaData slfMediaData = picPathLists.get(i);
-                            compressVideo(path, newFilePath, fileName, picPathLists.get(i).getId());
+//                            SLFMediaData slfMediaData = picPathLists.get(i);
+//                            compressVideo(path, newFilePath, fileName, picPathLists.get(i).getId());
                         } catch (Exception e) {
                             Log.e(TAG, Log.getStackTraceString(e));
                             SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":video picPathList compressvideo error::" + e.toString());
@@ -359,6 +359,15 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
                 }
 
                 if (!picPathLists.isEmpty()) {
+                    //所有选择的资源处理完成后再对视频进行压缩，防止没生成slfMediaDataList就上传，导致不上传的问题
+                    for (int i = 0; i < picPathLists.size(); i++) {
+                        if (picPathLists.get(i).getMimeType().contains("video")) {
+                            final String path = picPathLists.get(i).getOriginalPath();
+                            String fileName = SLFUtils.getCharacterAndNumber() + ".mp4";
+                            String newFilePath = SLFConstants.CROP_IMAGE_PATH + fileName;
+                            compressVideo(path, newFilePath, fileName, picPathLists.get(i).getId());
+                        }
+                    }
                     if (SLFPhotoSelectorUtils.mListenter != null) {
                         setResult(RESULT_OK);
                         runOnUiThread(() -> SLFPhotoSelectorUtils.mListenter.onSelect(picPathLists));
