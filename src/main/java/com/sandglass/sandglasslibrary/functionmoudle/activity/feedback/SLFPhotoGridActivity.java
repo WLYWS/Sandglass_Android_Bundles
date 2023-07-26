@@ -486,7 +486,10 @@ public class SLFPhotoGridActivity extends SLFPhotoBaseActivity{
         oldCurrentList.clear();
         oldPickPositions.clear();
         oldCurrentList.addAll(mCurPhotoList);
-        oldPickPositions.addAll(mPhotoListAdapter.getPickPositions());
+        //当页面初始化完成前，切后台，mPhotoListAdapter为null，会崩。为处理该情况，添加是否为null判断
+        if (mPhotoListAdapter != null) {
+            oldPickPositions.addAll(mPhotoListAdapter.getPickPositions());
+        }
     }
 
     @Override
