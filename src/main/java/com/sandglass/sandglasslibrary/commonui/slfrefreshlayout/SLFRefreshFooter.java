@@ -101,7 +101,7 @@ public class SLFRefreshFooter extends RelativeLayout implements RefreshFooter {
     @SuppressLint("RestrictedApi")
     @Override
     public void setPrimaryColors(int... colors) {
-        setBackgroundColor(getResources().getColor(R.color.transparent));
+        setBackgroundColor(getResources().getColor(R.color.slf_bg_color));
     }
 
     @Override

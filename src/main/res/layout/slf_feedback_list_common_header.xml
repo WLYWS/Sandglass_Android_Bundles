@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/slf_feedback_list_common_header"
-    android:background="@color/transparent">
+    android:background="@color/slf_bg_color">
 
     <ProgressBar
         android:id="@+id/slf_header"

@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_et_input"
         android:layout_below="@+id/slf_title_bar"
-        android:background="@color/black"
+        android:background="@color/slf_bg_color"
         android:fadingEdge="none"
         android:overScrollMode="never"
         app:srlAccentColor="@color/transparent"
