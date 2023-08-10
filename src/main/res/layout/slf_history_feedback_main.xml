@@ -8,43 +8,43 @@
     android:orientation="vertical"
     tools:context="com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListActivity"
     tools:ignore="MergeRootFrame">
+
     <FrameLayout
+        android:id="@+id/slf_frame_history_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/slf_frame_history_layout"
-        android:background="@color/black"
-        >
+        android:background="@color/slf_bg_color">
+
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/slf_tabs"
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_marginTop="44dp"
             android:layout_height="44dp"
             android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="44dp"
             app:tl_indicator_color="@color/transparent"
+            app:tl_tab_padding="16dp"
             app:tl_textSelectColor="@color/slf_feedback_page_submit_btn_bg"
             app:tl_textUnselectColor="@color/slf_feedback_question_type_title"
-            app:tl_textsize="16sp"
-            app:tl_tab_padding="16dp"
-            />
+            app:tl_textsize="16sp" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/slf_vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="104dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="104dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp" />
+
         <ImageView
             android:id="@+id/slf_iv_back"
-            android:layout_marginTop="60dp"
             android:layout_width="20dp"
             android:layout_height="15dp"
             android:layout_gravity="left"
             android:layout_marginStart="20dp"
-            android:src="@drawable/slf_title_icon_white_back"
-            />
+            android:layout_marginTop="60dp"
+            android:src="@drawable/slf_title_icon_white_back" />
     </FrameLayout>
 
 

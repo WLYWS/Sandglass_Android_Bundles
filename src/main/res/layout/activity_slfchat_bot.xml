@@ -23,128 +23,129 @@
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="0dp"-->
 <!--            android:layout_weight="1">-->
-        <com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout
-            android:id="@+id/sw_faq_recycle"
+    <com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout
+        android:id="@+id/sw_faq_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_et_input"
+        android:layout_below="@+id/slf_title_bar"
+        android:background="@color/black"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        app:srlAccentColor="@color/transparent"
+        app:srlPrimaryColor="@color/transparent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_faq_chat_bot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black"
-            android:layout_below="@+id/slf_title_bar"
-            android:layout_above="@+id/ll_et_input"
-            android:fadingEdge="none"
-            android:overScrollMode="never"
-            app:srlAccentColor="@color/transparent"
-            app:srlPrimaryColor="@color/transparent">
+            android:background="@color/slf_bg_color" />
+    </com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_faq_chat_bot"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout>
+    <LinearLayout
+        android:id="@+id/ll_et_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/slf_bg_color"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ll_et_input"
-            android:layout_width="match_parent"
+            android:id="@+id/slf_bottom_btn_linear"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/slf_first_page_bottom_bg"
-            android:orientation="vertical">
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/slf_bottom_btn_linear"
+                android:id="@+id/slf_feedback_linear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/slf_first_page_btn_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="8dp">
+
+                <ImageView
+                    android:id="@+id/slf_img_feedback"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/slf_first_page_feedback_left_icon" />
+
+                <TextView
+                    android:id="@+id/slf_text_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="@string/slf_help_and_feedback_feed_back"
+                    android:textColor="@color/slf_first_page_btn_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/slf_faq_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
+                android:background="@drawable/slf_first_page_btn_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="8dp">
 
-                <LinearLayout
-                    android:id="@+id/slf_feedback_linear"
+                <ImageView
+                    android:id="@+id/slf_img_faq"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/slf_first_page_faq_left_icon" />
+
+                <TextView
+                    android:id="@+id/slf_text_faq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/slf_first_page_btn_bg"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingRight="12dp"
-                    android:paddingBottom="8dp">
-
-                    <ImageView
-                        android:id="@+id/slf_img_feedback"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/slf_first_page_feedback_left_icon" />
-
-                    <TextView
-                        android:id="@+id/slf_text_feedback"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:text="@string/slf_help_and_feedback_feed_back"
-                        android:textColor="@color/slf_first_page_btn_text"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/slf_faq_linear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/slf_first_page_btn_bg"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingRight="12dp"
-                    android:paddingBottom="8dp"
-                    android:layout_marginLeft="12dp">
-
-                    <ImageView
-                        android:id="@+id/slf_img_faq"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/slf_first_page_faq_left_icon" />
-
-                    <TextView
-                        android:id="@+id/slf_text_faq"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:text="@string/slf_help_and_feedback_faq_list"
-                        android:textColor="@color/slf_first_page_btn_text"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="@string/slf_help_and_feedback_faq_list"
+                    android:textColor="@color/slf_first_page_btn_text"
+                    android:textSize="12sp" />
             </LinearLayout>
-
-            <com.sandglass.sandglasslibrary.commonui.SLFClickEditText
-                android:id="@+id/et_faq_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/slf_chat_bot_bg"
-                android:hint="@string/slf_faq_input_hint"
-                android:imeOptions="actionSend"
-                android:maxHeight="90dp"
-                android:maxLength="500"
-                android:inputType="text"
-                android:paddingLeft="16dp"
-                android:paddingTop="12dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="12dp"
-                android:scrollbarSize="2dp"
-                android:scrollbarThumbVertical="@color/slf_complete_text_color"
-                android:scrollbars="vertical"
-                android:singleLine="false"
-                android:textColor="@color/white"
-                android:textColorHint="@color/slf_chat_input_ph_color"
-                android:textSize="16sp" />
         </LinearLayout>
+
+        <com.sandglass.sandglasslibrary.commonui.SLFClickEditText
+            android:id="@+id/et_faq_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/slf_chat_bot_bg"
+            android:hint="@string/slf_faq_input_hint"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:maxHeight="90dp"
+            android:maxLength="500"
+            android:paddingLeft="16dp"
+            android:paddingTop="12dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="12dp"
+            android:scrollbarSize="2dp"
+            android:scrollbarThumbVertical="@color/slf_complete_text_color"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:textColor="@color/white"
+            android:textColorHint="@color/slf_chat_input_ph_color"
+            android:textSize="16sp" />
+    </LinearLayout>
 <!--    </LinearLayout>-->
 
 </com.sandglass.sandglasslibrary.commonui.SLFFITRelativeLayout>

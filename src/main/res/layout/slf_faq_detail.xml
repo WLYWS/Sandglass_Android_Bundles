@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slf_faq_detail_bg"
+    android:background="@color/slf_bg_color"
     android:elevation="0dp">
 
     <include layout="@layout/slf_all_common_title" />
@@ -13,26 +13,26 @@
         android:layout_height="match_parent"
         android:layout_below="@id/slf_title_bar"
         android:layout_marginBottom="20dp"
+        android:background="@color/slf_bg_color"
+        android:layerType="software"
         android:overScrollMode="never"
-        android:scrollbars="none"
-        android:layerType="software">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layerType="software">
+            android:layerType="software"
+            android:orientation="vertical">
 
             <com.sandglass.sandglasslibrary.commonui.SLFWebView
                 android:id="@+id/slf_faq_detail_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="20dp"
                 android:background="@color/transparent"
-                android:layerType="software"
-                />
+                android:layerType="software" />
 
             <Button
                 android:id="@+id/slf_faq_to_feedback"
@@ -46,8 +46,8 @@
                 android:gravity="center"
                 android:paddingLeft="21dp"
                 android:paddingRight="21dp"
-                android:textAllCaps="false"
                 android:text="@string/slf_faq_detail_btton_text"
+                android:textAllCaps="false"
                 android:textColor="@color/slf_faq_detail_btn_text_color"
                 android:textSize="16sp" />
 
@@ -58,8 +58,8 @@
         android:id="@+id/slf_faq_detail_no_item_linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_centerInParent="true"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <ImageView
@@ -70,43 +70,42 @@
             android:src="@drawable/slf_feedback_list_no_item" />
 
         <TextView
+            android:id="@+id/slf_faq_detail_no_feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/slf_faq_detail_no_feedback"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:layout_gravity="center_horizontal"
             android:text="@string/slf_feedback_list_item_no_item"
             android:textColor="@color/slf_sub_title_color"
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/slf_faq_detail_no_network"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/slf_faq_detail_no_network"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:alpha="0.5"
+            android:gravity="center"
             android:text="@string/slf_first_page_no_network_sub"
             android:textColor="@color/slf_first_page_no_network_warning"
-            android:alpha="0.5"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <Button
+            android:id="@+id/slf_faq_detail_try_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/slf_faq_detail_try_again"
-            android:background="@drawable/slf_first_page_no_network_btn_bg"
             android:layout_marginLeft="36dp"
+            android:layout_marginTop="120dp"
             android:layout_marginRight="36dp"
-            android:textSize="20sp"
-            android:textColor="@color/slf_first_page_try_again_text"
-            android:text="@string/slf_first_page_no_network_try_again"
-            android:textAllCaps="false"
+            android:background="@drawable/slf_first_page_no_network_btn_bg"
             android:gravity="center"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:layout_marginTop="120dp"/>
+            android:text="@string/slf_first_page_no_network_try_again"
+            android:textAllCaps="false"
+            android:textColor="@color/slf_first_page_try_again_text"
+            android:textSize="20sp" />
     </LinearLayout>
 </RelativeLayout>

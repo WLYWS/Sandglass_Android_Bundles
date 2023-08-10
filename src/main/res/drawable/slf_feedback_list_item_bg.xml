@@ -6,5 +6,5 @@
         android:bottomRightRadius="12dp"
         android:topLeftRadius="12dp"
         android:topRightRadius="12dp" />
-    <solid android:color="@color/slf_list_card_bg_color" />
+    <solid android:color="@color/slf_component_bg_color" />
 </shape>

@@ -5,114 +5,114 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#FF1D252C</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="slf_grey">#FFaeaeae</color>
     <color name="slf_grey_bottom_dialog">#F0F4F7</color>
-    <color name="slf_photo_item_mask_bg">#CCCFCFCF</color>
-    <color name="slf_feedback_question_type_title">#808080</color>
-    <color name="slf_feedback_page_child_bg">#272727</color>
-    <color name="slf_feedback_page_child_text">#A7A7A7</color>
-    <color name="slf_feedback_page_edit_line">#414141</color>
-    <color name="slf_feedback_page_email_error">#FF2C38</color>
-    <color name="slf_feedback_page_submit_btn_bg">#C9FF43</color>
-    <color name="slf_feedback_bottom_dialog_item_bg">#3F3F3F</color>
-    <color name="slf_feedback_bottom_dialog_item_line">#5A5A5A</color>
-    <color name="slf_common_dialog_bg">#262626</color>
-    <color name="slf_common_dialog_bg_left_btn">#A5A5A5</color>
-    <color name="slf_photo_selector_grid_bottom_bg">#222222</color>
-    <color name="slf_feed_back_success_bg">#383838</color>
-    <color name="slf_help_feedback_bottom_bg">#131313</color>
+    <color name="slf_photo_item_mask_bg">#CC8E9396</color>
+    <color name="slf_feedback_question_type_title">#6C7176</color>
+    <color name="slf_feedback_page_child_bg">#343B41</color>
+    <color name="slf_feedback_page_child_text">#8E9396</color>
+    <color name="slf_feedback_page_edit_line">#4A5156</color>
+    <color name="slf_feedback_page_email_error">#E58E8E</color>
+    <color name="slf_feedback_page_submit_btn_bg">#A7D9DC</color>
+    <color name="slf_feedback_bottom_dialog_item_bg">#343B41</color>
+    <color name="slf_feedback_bottom_dialog_item_line">#4A5156</color>
+    <color name="slf_common_dialog_bg">#1D252C</color>
+    <color name="slf_common_dialog_bg_left_btn">#8E9396</color>
+    <color name="slf_photo_selector_grid_bottom_bg">#1D252C</color>
+    <color name="slf_feed_back_success_bg">#4A5156</color>
+    <color name="slf_help_feedback_bottom_bg">#1D252C</color>
     <color name="slf_submit_fail_text_color">#E6FFFFFF</color>
 
     <!--公共自定义样式-->
-    <color name="slf_theme_color">#C9FF43</color>//默认主题色
-    <color name="slf_bg_color">#000000</color>//背景颜色
-    <color name="slf_component_bg_color">#272727</color>//组件背景色
-    <color name="slf_sub_title_color">#808080</color>//子标题颜色
-    <color name="slf_warning_color">#FF2C38</color>//警告色
+    <color name="slf_theme_color">#A7D9DC</color>//默认主题色
+    <color name="slf_bg_color">#1D252C</color>//背景颜色
+    <color name="slf_component_bg_color">#343B41</color>//组件背景色
+    <color name="slf_sub_title_color">#6C7176</color>//子标题颜色
+    <color name="slf_warning_color">#E58E8E</color>//警告色
     <!--导航栏自定义样式-->
     <color name="slf_title_color">#FFFFFF</color>//导航栏标题颜色
     <!--Alert自定义样式-->
-    <color name="slf_alert_bg_color">#3F3F3F</color>//alert背景颜色
+    <color name="slf_alert_bg_color">#343B41</color>//alert背景颜色
     <color name="slf_alert_title_color">#FFFFFF</color>//alert标题颜色
     <color name="slf_alert_detail_color">#FFFFFF</color>//alert detail颜色
-    <color name="slf_alert_item_normal_color">#A5A5A5</color>//alert item normal颜色
-    <color name="slf_alert_item_highlight_color">#C9FF43</color>//alert /item highlight颜色
+    <color name="slf_alert_item_normal_color">#8E9396</color>//alert item normal颜色
+    <color name="slf_alert_item_highlight_color">#A7D9DC</color>//alert /item highlight颜色
     <!--Toast自定义样式-->
-    <color name="slf_toast_bg_color">#5A5A5A</color>//toast背景颜色
+    <color name="slf_toast_bg_color">#4A5156</color>//toast背景颜色
     <color name="slf_toast_title_color">#FFFFFF</color>//toast title颜色
     <color name="slf_toast_loading_color">#FFFFFF</color>//toast loading线条颜色
     <!--相册自定义样式-->
-    <color name="slf_photo_cannot_select_layer_color">#CFCFCF</color>//相片不能选择时的蒙版颜色
+    <color name="slf_photo_cannot_select_layer_color">#8E9396</color>//相片不能选择时的蒙版颜色
     <!--提交反馈模块页面自定义样式-->
-    <color name="slf_feedback_default_text_color">#A7A7A7</color>//默认文案颜色
+    <color name="slf_feedback_default_text_color">#8E9396</color>//默认文案颜色
     <color name="slf_feedback_input_text_color">#FFFFFF</color>//输入文案颜色
-    <color name="slf_feedback_underline_color">#5A5A5A</color>//下划线颜色
-    <color name="slf_feedback_add_photos_bg_color">#414141</color>//添加图片背景颜色
-    <color name="slf_feedback_add_photos_text_color">#A7A7A7</color>//添加图片文字颜色
-    <color name="slf_feedback_send_log_text_color">#A7A7A7</color>//sendlog文案颜色
-    <color name="slf_feedback_submit_button_usable_text_color">#000000</color>//submit按钮可用文案颜色
+    <color name="slf_feedback_underline_color">#4A5156</color>//下划线颜色
+    <color name="slf_feedback_add_photos_bg_color">#4A5156</color>//添加图片背景颜色
+    <color name="slf_feedback_add_photos_text_color">#8E9396</color>//添加图片文字颜色
+    <color name="slf_feedback_send_log_text_color">#8E9396</color>//sendlog文案颜色
+    <color name="slf_feedback_submit_button_usable_text_color">#1D252C</color>//submit按钮可用文案颜色
 
     <!--提交反馈底部弹框自定义样式-->
-    <color name="slf_popup_item_bg_color">#383838</color>//选项背景色
+    <color name="slf_popup_item_bg_color">#4A5156</color>//选项背景色
     <color name="slf_popup_title_color">#FFFFFF</color>//弹框标题文案颜色
-    <color name="slf_popup_tab_bg_color">#3F3F3F</color>//弹框选项卡背景颜色
+    <color name="slf_popup_tab_bg_color">#343B41</color>//弹框选项卡背景颜色
     <color name="slf_popup_default_text_color">#FFFFFF</color>//弹框默认文案颜色
 
     <!--提交反馈完成页-->
     <color name="slf_complete_title_color">#FFFFFF</color>//完成页标题颜色
-    <color name="slf_complete_text_color">#A5A5A5</color>//完成页文案颜色
+    <color name="slf_complete_text_color">#8E9396</color>//完成页文案颜色
 
     <!--反馈列表-->
-    <color name="slf_list_card_bg_color">#262626</color>//卡片背景颜色
-    <color name="slf_list_time_text_color">#5A5A5A</color>//时间颜色
+    <color name="slf_list_card_bg_color">#1D252C</color>//卡片背景颜色
+    <color name="slf_list_time_text_color">#4A5156</color>//时间颜色
     <color name="slf_list_problem_text_color">#FFFFFF</color>//问题颜色
 
     <!--反馈详情-->
-    <color name="slf_detail_header_bg_color">#131313</color>//顶部背景颜色
-    <color name="slf_detail_bottom_bg_color">#131313</color>//底部（全部）背景颜色
-    <color name="slf_detail_line_color">#404040</color>//顶部背景分割线
-    <color name="slf_detail_id_color">#A7A7A7</color>//反馈id颜色
+    <color name="slf_detail_header_bg_color">#1D252C</color>//顶部背景颜色
+    <color name="slf_detail_bottom_bg_color">#1D252C</color>//底部（全部）背景颜色
+    <color name="slf_detail_line_color">#4A5156</color>//顶部背景分割线
+    <color name="slf_detail_id_color">#8E9396</color>//反馈id颜色
     <color name="slf_detail_type_text_color">#FFFFFF</color>//问题类型颜色
-    <color name="slf_detail_card_bg_color">#272727</color>//留言卡片背景颜色
+    <color name="slf_detail_card_bg_color">#343B41</color>//留言卡片背景颜色
     <color name="slf_detail_card_content_color">#FFFFFF</color>//卡片文字颜色
-    <color name="slf_detail_card_time_color">#A7A7A7</color>//卡片时间颜色
-    <color name="slf_detail_leave_message_list_color">#000000</color>//留言列表背景颜色
+    <color name="slf_detail_card_time_color">#8E9396</color>//卡片时间颜色
+    <color name="slf_detail_leave_message_list_color">#1D252C</color>//留言列表背景颜色
 
     <!--智能助手-->
-    <color name="slf_chat_bar_bg_color">#131313</color>//底部bar背景颜色
-    <color name="slf_chat_input_bg_color">#272727</color>//输入框背景颜色
+    <color name="slf_chat_bar_bg_color">#1D252C</color>//底部bar背景颜色
+    <color name="slf_chat_input_bg_color">#343B41</color>//输入框背景颜色
     <color name="slf_chat_input_color">#FFFFFF</color>//输入文字颜色
-    <color name="slf_chat_input_ph_color">#808080</color>//输入框placeHolder文字颜色
-    <color name="slf_chat_cell_time_color">#A7A7A7</color>//单个时间颜色
+    <color name="slf_chat_input_ph_color">#6C7176</color>//输入框placeHolder文字颜色
+    <color name="slf_chat_cell_time_color">#8E9396</color>//单个时间颜色
     <color name="slf_chat_content_color">#FFFFFF</color>//聊天文字颜色
-    <color name="slf_chat_line_color">#404040</color>//回答问题线的颜色
+    <color name="slf_chat_line_color">#4A5156</color>//回答问题线的颜色
 
     <!--首页-->
 
-    <color name="slf_first_page_bottom_button_bg">#272727</color>//首页底部反馈按钮背景色
-    <color name="slf_first_page_bg">#000000</color>//首页背景色
+    <color name="slf_first_page_bottom_button_bg">#343B41</color>//首页底部反馈按钮背景色
+    <color name="slf_first_page_bg">#1D252C</color>//首页背景色
     <color name="slf_first_page_top_text_selected">#FFFFFF</color>//一级菜单选中字体颜色
     <color name="slf_first_page_no_network_warning">#FFFFFF</color>//无网络提示字体颜色
-    <color name="slf_first_page_top_text_normal">#808080</color>//一级菜单未选中字体颜色
+    <color name="slf_first_page_top_text_normal">#6C7176</color>//一级菜单未选中字体颜色
     <color name="slf_first_page_category_item_text">#FFFFFF</color>//二级菜单字体颜色
-    <color name="slf_first_page_sub_item_text">#808080</color>//三级菜单字体颜色
-    <color name="slf_first_page_try_again">#C9FF43</color>//try again按钮背景色
-    <color name="slf_first_page_try_again_text">#000000</color>//try again按钮字体颜色
-    <color name="slf_faq_detail_btn_color">#1B1B1B</color>//faq详情页按钮背景色
-    <color name="slf_faq_detail_btn_text_color">#A7A7A7</color>//faq详情页按钮字体颜色
-    <color name="slf_faq_detail_bg">#000000</color>//详情页背景色
+    <color name="slf_first_page_sub_item_text">#6C7176</color>//三级菜单字体颜色
+    <color name="slf_first_page_try_again">#A7D9DC</color>//try again按钮背景色
+    <color name="slf_first_page_try_again_text">#1D252C</color>//try again按钮字体颜色
+    <color name="slf_faq_detail_btn_color">#343B41</color>//faq详情页按钮背景色
+    <color name="slf_faq_detail_btn_text_color">#8E9396</color>//faq详情页按钮字体颜色
+    <color name="slf_faq_detail_bg">#1D252C</color>//详情页背景色
 
     <!--改版首页-->
     <color name="slf_first_page_btn_bg">#00000000</color> //按钮背景色
-    <color name="slf_first_page_btn_stroke">#404040</color> //按钮边框色
+    <color name="slf_first_page_btn_stroke">#4A5156</color> //按钮边框色
     <color name="slf_first_page_btn_text">#FFFFFF</color>//按钮字体色
-    <color name="slf_first_page_bottom_bg">#131313</color>//首页底部区域背景色
+    <color name="slf_first_page_bottom_bg">#1D252C</color>//首页底部区域背景色
 
     <!--进度条-->
-    <color name="slf_progress_stroke_bg">#676767</color> //进度条背景颜色
-    <color name="slf_progress_inprogress">#C9FF43</color> //进度条进度颜色
-    <color name="slf_progress_bg">#414141</color> //背景颜色
+    <color name="slf_progress_stroke_bg">#4A5156</color> //进度条背景颜色
+    <color name="slf_progress_inprogress">#A7D9DC</color> //进度条进度颜色
+    <color name="slf_progress_bg">#4A5156</color> //背景颜色
 </resources>

@@ -22,8 +22,9 @@
             android:id="@+id/slf_histroy_feedback_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:fadingEdge="none"/>
+            android:background="@color/slf_bg_color"
+            android:fadingEdge="none"
+            android:overScrollMode="never" />
     </com.sandglass.sandglasslibrary.commonui.slfrefreshlayout.SLFSmartRefreshLayout>
 
     <LinearLayout
