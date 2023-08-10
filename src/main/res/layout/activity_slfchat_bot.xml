@@ -144,7 +144,8 @@
             android:singleLine="false"
             android:textColor="@color/white"
             android:textColorHint="@color/slf_chat_input_ph_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textCursorDrawable="@drawable/slf_edit_cursor"/>
     </LinearLayout>
 <!--    </LinearLayout>-->
 

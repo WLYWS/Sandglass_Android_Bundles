@@ -53,7 +53,7 @@
             android:id="@+id/view_line_top"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/slf_feedback_bottom_dialog_item_bg" />
+            android:background="@color/slf_feedback_bottom_dialog_item_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:id="@+id/view_stand"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/slf_feedback_bottom_dialog_item_bg" />
+                android:background="@color/slf_feedback_bottom_dialog_item_line" />
 
             <TextView
                 android:id="@+id/tb_right"
