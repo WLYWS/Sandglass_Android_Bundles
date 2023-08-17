@@ -191,7 +191,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             SLFLogUtil.sdkd("yj","超过7天");
         } else {
             //请求数据库查找记录
-            lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0L);
+            lastSendTime = SLFSpUtils.getLong(SLFConstants.userId+"_"+SLFConstants.LASTSENDTIME,0L);
             SLFLogUtil.sdkd("yj","lastSendTime:::"+lastSendTime);
             if(lastSendTime==0L){
                 isFristIn = true;
@@ -565,7 +565,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
      * @return
      */
     private boolean exceedFiveMi() {
-        lastSendTime = SLFSpUtils.getLong(SLFConstants.LASTSENDTIME,0);
+        lastSendTime = SLFSpUtils.getLong(SLFConstants.userId+"_"+SLFConstants.LASTSENDTIME,0);
         return ((System.currentTimeMillis() - lastSendTime) /1000 /60) > 5;
     }
 
@@ -598,7 +598,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         if (type instanceof SLFFaqWelcomeHotQResponseBean) {
             SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestSuccess:chatbot");
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
-            SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
+            SLFSpUtils.putCommit(SLFConstants.userId+"_"+SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
         }else if(type instanceof SLFUnReadCount){
             SLFLogUtil.sdkd("yj","data===weidu===="+((SLFUnReadCount)type).data);
@@ -1091,7 +1091,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         if (type instanceof SLFFaqOpenAiResponseBean) {
             SLFLogUtil.sdkd("yj","result：：：chat_bot::"+result);
             SLFFaqOpenAiResponseBean slfFaqOpenAiResponseBean = (SLFFaqOpenAiResponseBean) type;
-            SLFSpUtils.putCommit(SLFConstants.LASTSENDTIME, System.currentTimeMillis());
+            SLFSpUtils.putCommit(SLFConstants.userId+"_"+SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showSearchReslutData(slfFaqOpenAiResponseBean, requestTime);
 
         }
