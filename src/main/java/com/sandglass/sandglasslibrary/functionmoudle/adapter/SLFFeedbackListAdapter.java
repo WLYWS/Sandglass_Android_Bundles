@@ -63,7 +63,7 @@ public class SLFFeedbackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }else if(datas.get(position).getStatus()==1||datas.get(position).getStatus()==2){
                 ((NormalHolder) holder).slf_feedback_list_item_title.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_in_progress));
                 ((NormalHolder) holder).slf_feedback_list_item_title.setTextColor(SLFResourceUtils.getColor(R.color.slf_theme_color));
-            }else if(datas.get(position).getStatus()==4){
+            }else if(datas.get(position).getStatus()==4||datas.get(position).getStatus()==5){
                 ((NormalHolder) holder).slf_feedback_list_item_title.setText(SLFResourceUtils.getString(R.string.slf_feedback_list_item_title_finished));
                 ((NormalHolder) holder).slf_feedback_list_item_title.setTextColor(SLFResourceUtils.getColor(R.color.slf_feedback_add_photos_text_color));
             }
