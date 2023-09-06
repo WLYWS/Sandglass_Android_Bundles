@@ -1473,7 +1473,7 @@ public class SLFCommonUtils {
      *
      * @param context     一般应是activity
      * @param deviceModel 设备的产品类型
-     * @param ivIcon      设置图片的imageview"WYZEC1-JZ"
+     * @param ivIcon      设置图片的imageview
      */
     @SuppressWarnings("java:S1172")
     public static void setRotateIcon(@NonNull Context context, @Nullable String deviceModel, @NonNull ImageView ivIcon) {

@@ -478,7 +478,7 @@ public class SLFFileUtils {
         values.put(MediaStore.Video.Media.DISPLAY_NAME,file.getName());
         values.put(MediaStore.Video.Media.MIME_TYPE,"video/mp4");
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q){
-            values.put(MediaStore.Video.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/wyze/"+relativePath);
+            values.put(MediaStore.Video.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/Psync/"+relativePath);
         }else{
             values.put(MediaStore.Images.Media.DATA,SLFConstants.externalGallery+relativePath+"/"+file.getName());
         }
@@ -508,7 +508,7 @@ public class SLFFileUtils {
         values.put(MediaStore.Images.Media.DISPLAY_NAME,file.getName());
         values.put(MediaStore.Images.Media.MIME_TYPE,"image/jpeg");
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q){
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/wyze/"+relativePath);
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/Psync/"+relativePath);
         }else{
             values.put(MediaStore.Images.Media.DATA, SLFConstants.externalGallery+relativePath+"/"+file.getName());
         }

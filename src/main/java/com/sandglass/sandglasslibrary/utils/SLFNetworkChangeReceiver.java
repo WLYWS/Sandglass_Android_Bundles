@@ -16,12 +16,6 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFEventNetWorkChange;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * created by lmj
- * describe:网络切换监听
- * time: 2019/4/25
- * Copyright© 2019 WYZE.
- */
 public class SLFNetworkChangeReceiver extends BroadcastReceiver {
     @SuppressWarnings("unused")
     private static final String TAG = "SLFNetworkChangeReceiver";

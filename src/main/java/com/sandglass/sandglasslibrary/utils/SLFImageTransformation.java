@@ -10,7 +10,6 @@ import com.sandglass.sandglasslibrary.R;
  * created by yangjie
  * describe:根据枚举类型生成不同的形状
  * time: 2022/12/7
- * Copyright© 2019 WYZE.
  */
 public class SLFImageTransformation {
 
