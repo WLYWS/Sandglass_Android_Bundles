@@ -2,8 +2,8 @@
 # compiler_version: 4.0.52
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.1"}
-# pg_map_id: ab7fe2a
-# pg_map_hash: SHA-256 ab7fe2af6d812d259a02d7106444afc8d3cd46a7f917360c819c2c05c0fbbfeb
+# pg_map_id: c498136
+# pg_map_hash: SHA-256 c498136f220bc34b2931a46242776151c143dede46cb4fe8dd91caccc0306657
 com.sandglass.sandglasslibrary.base.SLFBaseActivity -> com.sandglass.sandglasslibrary.base.SLFBaseActivity:
     java.lang.String TAG -> a
     int loadingCount -> e
@@ -1027,11 +1027,17 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivit
     11:11:void onRequestChatBotFail(java.lang.String,java.lang.String,java.lang.Object,long):1123:1123 -> onRequestChatBotFail
     1:2:void onRequestChatBotNetFail(java.lang.Object,long):1069:1070 -> onRequestChatBotNetFail
     1:4:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1091:1094 -> onRequestChatBotSuccess
-    5:28:void showSearchReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiResponseBean,long):635:658 -> onRequestChatBotSuccess
-    5:28:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1095 -> onRequestChatBotSuccess
-    29:30:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1098:1099 -> onRequestChatBotSuccess
-    31:39:void showMarkReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean):788:796 -> onRequestChatBotSuccess
-    31:39:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1100 -> onRequestChatBotSuccess
+    5:5:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):0:0 -> onRequestChatBotSuccess
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":1135,"2":1136,"3":1137},"outline":"Lb/a;a(Ljava/lang/StringBuilder;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"}
+    1135:1135:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1094:1094 -> onRequestChatBotSuccess
+    1136:1136:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1094:1094 -> onRequestChatBotSuccess
+    1137:1137:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1094:1094 -> onRequestChatBotSuccess
+    1099:1099:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1094:1094 -> onRequestChatBotSuccess
+    1100:1123:void showSearchReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqOpenAiResponseBean,long):635:658 -> onRequestChatBotSuccess
+    1100:1123:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1095 -> onRequestChatBotSuccess
+    1124:1125:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1098:1099 -> onRequestChatBotSuccess
+    1126:1134:void showMarkReslutData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqMarkResponseBean):788:796 -> onRequestChatBotSuccess
+    1126:1134:void onRequestChatBotSuccess(java.lang.String,java.lang.Object,long):1100 -> onRequestChatBotSuccess
     1:6:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):618:623 -> onRequestFail
     7:8:void com.sandglass.sandglasslibrary.base.SLFBaseActivity.showCenterToast(java.lang.String):285:286 -> onRequestFail
     7:8:void onRequestFail(java.lang.String,java.lang.String,java.lang.Object):623 -> onRequestFail
@@ -1041,12 +1047,18 @@ com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivit
     2:3:void onRequestNetFail(java.lang.Object):591 -> onRequestNetFail
     4:5:void onRequestNetFail(java.lang.Object):592:593 -> onRequestNetFail
     1:4:void onRequestSuccess(java.lang.String,java.lang.Object):598:601 -> onRequestSuccess
-    5:11:void addTimeItem():730:736 -> onRequestSuccess
-    5:11:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):692 -> onRequestSuccess
-    5:11:void onRequestSuccess(java.lang.String,java.lang.Object):602 -> onRequestSuccess
-    12:43:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):694:725 -> onRequestSuccess
-    12:43:void onRequestSuccess(java.lang.String,java.lang.Object):602 -> onRequestSuccess
-    44:53:void onRequestSuccess(java.lang.String,java.lang.Object):603:612 -> onRequestSuccess
+    5:5:void onRequestSuccess(java.lang.String,java.lang.Object):0:0 -> onRequestSuccess
+      # {"id":"com.android.tools.r8.outlineCallsite","positions":{"1":656,"2":657,"3":658},"outline":"Lb/a;a(Ljava/lang/StringBuilder;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"}
+    656:656:void onRequestSuccess(java.lang.String,java.lang.Object):601:601 -> onRequestSuccess
+    657:657:void onRequestSuccess(java.lang.String,java.lang.Object):601:601 -> onRequestSuccess
+    658:658:void onRequestSuccess(java.lang.String,java.lang.Object):601:601 -> onRequestSuccess
+    606:606:void onRequestSuccess(java.lang.String,java.lang.Object):601:601 -> onRequestSuccess
+    607:613:void addTimeItem():730:736 -> onRequestSuccess
+    607:613:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):692 -> onRequestSuccess
+    607:613:void onRequestSuccess(java.lang.String,java.lang.Object):602 -> onRequestSuccess
+    614:645:void showWelcomeData(com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQResponseBean):694:725 -> onRequestSuccess
+    614:645:void onRequestSuccess(java.lang.String,java.lang.Object):602 -> onRequestSuccess
+    646:655:void onRequestSuccess(java.lang.String,java.lang.Object):603:612 -> onRequestSuccess
     1:1:void onResume():172:172 -> onResume
     2:2:void requestNewFeed():346:346 -> onResume
     2:2:void onResume():173 -> onResume
