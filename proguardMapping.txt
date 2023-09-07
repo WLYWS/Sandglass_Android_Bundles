@@ -2,8 +2,8 @@
 # compiler_version: 4.0.52
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.1"}
-# pg_map_id: c498136
-# pg_map_hash: SHA-256 c498136f220bc34b2931a46242776151c143dede46cb4fe8dd91caccc0306657
+# pg_map_id: a3d0831
+# pg_map_hash: SHA-256 a3d083192b64f71d38dc75e01c8890cd62eab85e8d25a820b23af99509f3b16a
 com.sandglass.sandglasslibrary.base.SLFBaseActivity -> com.sandglass.sandglasslibrary.base.SLFBaseActivity:
     java.lang.String TAG -> a
     int loadingCount -> e
@@ -5850,29 +5850,29 @@ com.sandglass.sandglasslibrary.utils.SLFImageShapes -> com.sandglass.sandglassli
 com.sandglass.sandglasslibrary.utils.SLFImageTransformation -> com.sandglass.sandglasslibrary.utils.a:
     com.bumptech.glide.load.Transformation mTransformation -> b
     int resId -> a
-    1:1:void <init>(com.sandglass.sandglasslibrary.utils.SLFImageShapes):21:21 -> <init>
-    2:5:void <init>(com.sandglass.sandglasslibrary.utils.SLFImageShapes):19:22 -> <init>
-    1:27:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):30:56 -> a
-    28:31:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):50:53 -> a
-    32:32:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):47:47 -> a
-    33:33:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):44:44 -> a
+    1:1:void <init>(com.sandglass.sandglasslibrary.utils.SLFImageShapes):20:20 -> <init>
+    2:5:void <init>(com.sandglass.sandglasslibrary.utils.SLFImageShapes):18:21 -> <init>
+    1:27:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):29:55 -> a
+    28:31:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):49:52 -> a
+    32:32:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):46:46 -> a
+    33:33:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):43:43 -> a
     34:34:void com.sandglass.sandglasslibrary.utils.SLFBlurTransformation.<init>(int):31:31 -> a
-    34:34:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):44 -> a
-    35:35:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):44:44 -> a
-    36:36:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):41:41 -> a
-    37:37:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):38:38 -> a
-    38:38:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):35:35 -> a
-    39:39:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):32:32 -> a
+    34:34:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):43 -> a
+    35:35:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):43:43 -> a
+    36:36:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):40:40 -> a
+    37:37:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes) -> a
+    38:38:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):34:34 -> a
+    39:39:void initShape(com.sandglass.sandglasslibrary.utils.SLFImageShapes):31:31 -> a
 com.sandglass.sandglasslibrary.utils.SLFImageTransformation$1 -> com.sandglass.sandglasslibrary.utils.a$a:
     int[] $SwitchMap$com$sandglass$sandglasslibrary$utils$SLFImageShapes -> a
-    1:1:void <clinit>():30:30 -> <clinit>
+    1:1:void <clinit>():29:29 -> <clinit>
 com.sandglass.sandglasslibrary.utils.SLFImageUtil -> l.o:
     1:3:void loadImage(android.content.Context,java.lang.Object,android.widget.ImageView,int,int,com.sandglass.sandglasslibrary.utils.SLFImageShapes[]):248:250 -> a
-    4:4:com.bumptech.glide.load.Transformation com.sandglass.sandglasslibrary.utils.SLFImageTransformation.getTransformation():65:65 -> a
+    4:4:com.bumptech.glide.load.Transformation com.sandglass.sandglasslibrary.utils.SLFImageTransformation.getTransformation():64:64 -> a
     4:4:void loadImage(android.content.Context,java.lang.Object,android.widget.ImageView,int,int,com.sandglass.sandglasslibrary.utils.SLFImageShapes[]):250 -> a
     5:19:void loadImage(android.content.Context,java.lang.Object,android.widget.ImageView,int,int,com.sandglass.sandglasslibrary.utils.SLFImageShapes[]):250:264 -> a
     20:22:void loadImageShow(android.content.Context,java.lang.Object,android.widget.ImageView,android.view.View,int,int,com.sandglass.sandglasslibrary.utils.SLFImageShapes[]):272:274 -> a
-    23:23:com.bumptech.glide.load.Transformation com.sandglass.sandglasslibrary.utils.SLFImageTransformation.getTransformation():65:65 -> a
+    23:23:com.bumptech.glide.load.Transformation com.sandglass.sandglasslibrary.utils.SLFImageTransformation.getTransformation():64:64 -> a
     23:23:void loadImageShow(android.content.Context,java.lang.Object,android.widget.ImageView,android.view.View,int,int,com.sandglass.sandglasslibrary.utils.SLFImageShapes[]):274 -> a
     24:51:void loadImageShow(android.content.Context,java.lang.Object,android.widget.ImageView,android.view.View,int,int,com.sandglass.sandglasslibrary.utils.SLFImageShapes[]):274:301 -> a
 com.sandglass.sandglasslibrary.utils.SLFImageUtil$1 -> l.n:
@@ -5916,13 +5916,13 @@ com.sandglass.sandglasslibrary.utils.SLFMediaUtil -> l.r:
     82:88:java.util.List getMediaWithVideoList(android.content.Context):83 -> b
 com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver -> com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver:
     android.os.Handler handler -> a
-    1:5:void <init>():25:29 -> <init>
-    1:25:void onReceive(android.content.Context,android.content.Intent):53:77 -> onReceive
+    1:5:void <init>():19:23 -> <init>
+    1:25:void onReceive(android.content.Context,android.content.Intent):47:71 -> onReceive
 com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver$1 -> com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver$a:
-    1:1:void <init>(com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver):30:30 -> <init>
-    1:10:void handleMessage(android.os.Message):33:42 -> handleMessage
-    11:11:void handleMessage(android.os.Message):39:39 -> handleMessage
-    12:12:void handleMessage(android.os.Message):36:36 -> handleMessage
+    1:1:void <init>(com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver):24:24 -> <init>
+    1:10:void handleMessage(android.os.Message):27:36 -> handleMessage
+    11:11:void handleMessage(android.os.Message):33:33 -> handleMessage
+    12:12:void handleMessage(android.os.Message):30:30 -> handleMessage
 com.sandglass.sandglasslibrary.utils.SLFPermissionManager -> l.t:
     com.sandglass.sandglasslibrary.utils.SLFPermissionManager$IPermissionsResult mPermissionsResult -> a
     com.sandglass.sandglasslibrary.utils.SLFPermissionManager slfPermissionManger -> b
