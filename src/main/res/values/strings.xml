@@ -87,7 +87,7 @@
 <!--    <string name="slf_permission_text">Permission disabled, please grant manually</string>-->
 <!--    <string name="slf_permission_text_setting">Setting</string>-->
     <string name="slf_permission_text_title">Request Phone Access</string>
-    <string name="slf_permission_text_content">To enable this feature, the Psyncup app requests permission to access your phone\'s album.</string>
+    <string name="slf_permission_text_content">To enable this feature, the Psync app requests permission to access your phone\'s album.</string>
     <string name="slf_permission_text_go_to_set">Go to Settings</string>
 
     <string name="loading1">loading   </string>
