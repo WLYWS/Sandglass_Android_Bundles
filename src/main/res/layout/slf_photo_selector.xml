@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/problem_overview_seletor_linear"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="36dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/slf_feedback_problem_description_title"

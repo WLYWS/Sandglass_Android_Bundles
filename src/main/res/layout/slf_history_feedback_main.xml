@@ -44,7 +44,7 @@
             android:layout_gravity="left"
             android:layout_marginStart="20dp"
             android:layout_marginTop="60dp"
-            android:src="@drawable/slf_title_icon_white_back" />
+            android:src="@drawable/slf_btn_common_back_white" />
     </FrameLayout>
 
 

@@ -14,7 +14,7 @@
         android:layout_height="15dp"
         android:layout_gravity="center|left"
         android:layout_marginStart="20dp"
-        android:src="@drawable/slf_title_icon_white_back"
+        android:src="@drawable/slf_btn_common_back_white"
         android:visibility="visible" />
 
     <TextView

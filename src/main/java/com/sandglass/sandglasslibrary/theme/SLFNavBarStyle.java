@@ -11,7 +11,7 @@ import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
  */
 public class SLFNavBarStyle {
     //导航栏返回键icon
-    public static Drawable backIcon = SLFResourceUtils.getDrawable(R.drawable.slf_title_icon_white_back);
+    public static Drawable backIcon = SLFResourceUtils.getDrawable(R.drawable.slf_btn_common_back_white);
     //导航栏标题颜色
     public static int titleColor = SLFResourceUtils.getColor(R.color.slf_title_color);
 }
