@@ -367,7 +367,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             requestUserDeviceList();
             SLFCategoriesResponseBean sLFCategoriesResponseBean = cacheManager.readObj(CACHE_FILE_PATH);
             showLoading();
-            if (sLFCategoriesResponseBean!=null){
+            if (sLFCategoriesResponseBean!=null && sLFCategoriesResponseBean.data.size() > 0 && sLFCategoriesResponseBean.data.get(0).sub.size() > 0){
                 if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY,-1)){
                     requestAllData();
                     isAllDataCache = false;
@@ -1290,7 +1290,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             slfServiceMap.clear();
             slfServiceTitleMap.clear();
             slfServiceTypes.add(SLFResourceUtils.getResources().getString(R.string.slf_user_device_service_type));
-            if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0) {
+            if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0 && slfCategoriesResponseBean.data.get(0).sub.size() > 0) {
                 for (int i = 0; i < slfCategoriesResponseBean.data.size(); i++) {
                     SLFProlemDataBean serviceTypeTitle = slfCategoriesResponseBean.data.get(i);
                     List<SLFCategoryBean> listCategory = new ArrayList<>();
@@ -1330,7 +1330,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                             }
 
                         }
-                        slfServiceTitleMap.put(serviceTypeTitle.sub.get(0).id + 100, listCategory);
+                        if (serviceTypeTitle.sub.size() > 0){
+                            slfServiceTitleMap.put(serviceTypeTitle.sub.get(0).id + 100, listCategory);
+                        }
                         if (slfServiceTitleMap != null && slfServiceTitleMap.size() > 0) {
                             setServiceTitleMapConner(slfServiceTitleMap);
                         }
@@ -1352,7 +1354,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private List<Object> getServiceTypeData(SLFCategoriesResponseBean slfCategoriesResponseBean) {
         slfServiceTypes.clear();
         slfServiceTypes = getUserTypeData(slfCategoriesResponseBean);
-        if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0) {
+        if (slfCategoriesResponseBean != null && slfCategoriesResponseBean.data != null && slfCategoriesResponseBean.data.size() > 0 && slfCategoriesResponseBean.data.get(0).sub.size() > 0) {
             for (int i = 0; i < slfCategoriesResponseBean.data.size(); i++) {
                 SLFProlemDataBean serviceTypeTitle = slfCategoriesResponseBean.data.get(i);
                 if (serviceTypeTitle.sub != null && serviceTypeTitle.sub.size() > 0) {

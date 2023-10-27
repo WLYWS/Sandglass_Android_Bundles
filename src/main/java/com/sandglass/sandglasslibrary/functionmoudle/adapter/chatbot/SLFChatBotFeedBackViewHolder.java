@@ -1,6 +1,7 @@
 package com.sandglass.sandglasslibrary.functionmoudle.adapter.chatbot;
 
 import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -102,7 +103,7 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
 //    }
 
     public void setContent (String content) {
-        tv_faq_feedback_answer.setText(content);
+        tv_faq_feedback_answer.setText(Html.fromHtml(content, 0));
     }
 
 //    public void setQustionList (String question,int position) {
