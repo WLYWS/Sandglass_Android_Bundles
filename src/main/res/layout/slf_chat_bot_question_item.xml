@@ -9,8 +9,7 @@
     <TextView
         android:id="@+id/tv_question_item"
         android:textSize="14sp"
-        android:ellipsize="end"
-        android:lines="1"
+        android:ellipsize="none"
         android:background="@drawable/slf_chat_bot_bg"
         android:textColor="@color/slf_theme_color"
         android:layout_width="match_parent"
