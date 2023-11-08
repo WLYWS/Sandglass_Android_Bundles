@@ -212,6 +212,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void getFeedBackDetailList(int currentPage) {
         TreeMap map = new TreeMap();
         map.put("current", currentPage);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}", String.valueOf(slfRecode.getId())) + ":body:" + map);
         PUNHttpUtils.getInstance().executeGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_HISTORY_LIST_URL.replace("{id}", String.valueOf(slfRecode.getId())), map, SLFFeedbackDetailItemResponseBean.class, this);
     }
@@ -412,6 +413,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
         map.put("num", 2);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL + ":body:" + map);
         //showLoading();
         PUNHttpUtils.getInstance().executeGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
@@ -438,6 +440,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     @Override
     public void onRequestSuccess(String result, T type) {
         hideLoading();
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::feedbackDetail::SLFUploadFileReponseBean" + ":type:" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type, 3);
@@ -453,6 +456,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
             SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::feedbackDetail：:Integer::" + ":type:" + type);
             if ("0".equals(code)) {
                 SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":requestScucess::logfile--feedbackDetail---upload---complete");
+                SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Post）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LOG_URL.replace("{id}", String.valueOf(slfRecode.getId())));
                 PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LOG_URL.replace("{id}", String.valueOf(slfRecode.getId())), getSendLog(), SLFSendLeaveMsgRepsonseBean.class, this);
 
             }
@@ -498,6 +502,7 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
     @Override
     public void onRequestFail(String value, String failCode, T type) {
         SLFLogUtil.sdke(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":feedbackDetail requestOptionFail");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestFail:failCode:"+failCode+"*value:"+value);
         hideLoading();
         if (type instanceof String) {
             String code = (String) type;

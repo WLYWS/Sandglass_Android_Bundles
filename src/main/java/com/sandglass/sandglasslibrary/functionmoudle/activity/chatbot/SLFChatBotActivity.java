@@ -178,6 +178,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
 
     /**获取用户信息**/
     private void getUserInfo(){
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FIRST_PAGE_GET_USERINO);
         PUNHttpUtils.getInstance().executePathGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FIRST_PAGE_GET_USERINO, SLFUserInfoResponseBean.class, this);
     }
@@ -225,6 +226,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
      * 获取欢迎语和热门问题
      */
     private void getWelcomeHotQuestion() {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_HOT);
         PUNHttpUtils.getInstance().executePathGet(this, PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_HOT, SLFFaqWelcomeHotQResponseBean.class, this);
     }
 
@@ -343,6 +345,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
 
     /**是否有未读消息**/
     private void requestNewFeed(){
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_UN_READ_COUNT);
         PUNHttpUtils.getInstance().executePathGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_UN_READ_COUNT, SLFUnReadCount.class, this);
     }
@@ -595,6 +598,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
 
     @Override
     public void onRequestSuccess(String result, Object type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if (type instanceof SLFFaqWelcomeHotQResponseBean) {
             SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":requestSuccess:chatbot");
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
@@ -616,6 +620,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
     @Override
     public void onRequestFail(String value, String failCode, Object type) {
         hideLoading();
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestFail:failCode:"+failCode+"*value:"+value);
         if(failCode.equals(SLFHttpStatusCode.TOKEN_FAILED)){
             //TODO 重新请求token
             return;
@@ -1111,6 +1116,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
      */
     @Override
     public void onRequestChatBotFail(String value, String failCode, Object type, long requestTime) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestChatBotFail:failCode:"+failCode+"*value:"+value);
         if(failCode.equals(SLFHttpStatusCode.TOKEN_FAILED)){
             //TODO 重新获取token
             return;

@@ -251,6 +251,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
 
     @Override
     public void onRequestSuccess(String result, T type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if(type instanceof SLFFaqDetailResponseBean){
             if (SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL_CACHE,0)!=SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQDETAIL,-1)) {
                 cacheManager.delete(CACHE_FILE_PATH);
@@ -354,6 +355,7 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
     public void onRequestFail(String value, String failCode, T type) {
         chageView();
         SLFLogUtil.sdke("yj","error____");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestFail:failCode:"+failCode+"*value:"+value);
     }
 
     /**

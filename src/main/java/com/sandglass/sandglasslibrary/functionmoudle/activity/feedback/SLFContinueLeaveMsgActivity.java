@@ -196,6 +196,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
     private void requestUploadUrls() {
         TreeMap map = new TreeMap();
         map.put("num", 6);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL + ":body:" + map);
         PUNHttpUtils.getInstance().executeGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
     }
@@ -548,6 +549,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
                 if(slfRecord!=null) {
                     //------if(SLFCommonUtils.isNetworkAvailable(getActivity())) {
                     showLoading();
+                    SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Post）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())));
                     PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.POST_FEEDBACK_URL.replace("{id}", String.valueOf(slfRecord.getId())), getSendHistory(), SLFSendLeaveMsgRepsonseBean.class, this);
                     //-}
                 }else{
@@ -641,6 +643,7 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
 
     @Override
     public void onRequestSuccess(String result, T type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if (type instanceof SLFUploadFileReponseBean) {
             SLFLogUtil.sdke(TAG,"ActivityName:"+this.getClass().getSimpleName()+"::requestScucess:::contiuneLeave::SLFUploadFileReponseBean::" + ":type:" + type.toString());
             SLFCommonUpload.setSLFcommonUpload((SLFUploadFileReponseBean) type,6);

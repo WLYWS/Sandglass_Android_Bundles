@@ -720,8 +720,8 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }
         } else {
             //showLoading();
-
             PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
+            SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Post）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.CREATE_FEEDBACK_URL + ":body:" + getCreateFeedBackTreemap());
         }
     }
 
@@ -1235,6 +1235,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
     private void requestUserDeviceList(){
         PUNHttpUtils.getInstance().executePathGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL +PUNApiContant.USER_DEVICE_LIST, SLFUserDeviceListResponseBean.class, this);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.USER_DEVICE_LIST);
         }
 
     /**
@@ -1245,6 +1246,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         PUNHttpUtils.getInstance().executePathGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.CATEGORY_URL, SLFCategoriesResponseBean.class, this);
         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request servicetype/problemtype/subtype data");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.CATEGORY_URL);
     }
 
     /**
@@ -1256,6 +1258,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         PUNHttpUtils.getInstance().executeGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL, map, SLFUploadFileReponseBean.class, this);
         SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":request upload url 8");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.UPLOAD_FILE_URL + ":body:" + map);
     }
 
     /**
@@ -1269,6 +1272,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             String content = slfEditProblem.getText().toString();
             TreeMap<String, Object> contentMap = new TreeMap<>();
             contentMap.put("content", content);
+            SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Post）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_ILLEGLA_WORD + ":body:" + contentMap);
             PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_ILLEGLA_WORD, contentMap, SLFillagelWordResponseBean.class, this);
         }
     }
@@ -1577,7 +1581,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
     @Override
     public void onRequestSuccess(String result, Object type) {
-
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if (type instanceof SLFCategoriesResponseBean) {
             //isHideLoading("isResolveAllData");
             hideLoading();
@@ -1620,6 +1624,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             if (SLFConstants.photoCode.equals(code)) {
                 SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logfile-----upload---complete");
                 PUNHttpUtils.getInstance().executePost(getContext(), PUNHttpRequestConstants.BASE_URL + PUNApiContant.CREATE_FEEDBACK_URL, getCreateFeedBackTreemap(), SLFCreateFeedbackRepsonseBean.class, this);
+                SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Post）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.CREATE_FEEDBACK_URL + ":body:" + getCreateFeedBackTreemap());
             } else {
                 resultUploadImageOrVideo(code);
                 isUploadSuccess();

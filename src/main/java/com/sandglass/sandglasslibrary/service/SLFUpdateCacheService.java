@@ -49,6 +49,7 @@ public class SLFUpdateCacheService extends Service implements PUNHttpRequestCall
      * 获取数据更新时间
      */
     private void getFeedBackCacheTime() {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_UPDATE_CACHE);
         PUNHttpUtils.getInstance().executePathGet(this, PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_UPDATE_CACHE, SLFFeedBackCacheTimeResponseBean.class, this);
     }
 
@@ -59,6 +60,7 @@ public class SLFUpdateCacheService extends Service implements PUNHttpRequestCall
 
     @Override
     public void onRequestSuccess (String result, Object type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if (type instanceof SLFFeedBackCacheTimeResponseBean) {
             SLFFeedBackCacheTimeResponseBean bean = (SLFFeedBackCacheTimeResponseBean) type;
             if (bean.data.feedbackCategory != SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FEEDBACKCATEGORY, -1)) {
@@ -84,6 +86,7 @@ public class SLFUpdateCacheService extends Service implements PUNHttpRequestCall
     public void onRequestFail (String value, String failCode, Object bean) {
         //非网络错误，接口请求错误
         SLFLogUtil.sdke(TAG,"获取数据更新时间,非网络错误，接口请求错误");
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestFail:failCode:"+failCode+"*value:"+value);
     }
 
 }

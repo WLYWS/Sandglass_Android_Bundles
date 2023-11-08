@@ -206,6 +206,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements PUNHtt
         TreeMap map = new TreeMap();
         map.put("type", type);
         map.put("current", current);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LIST_URL + "\nbody:" + map);
         PUNHttpUtils.getInstance().executeGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LIST_URL, map, SLFFeedbackItemResponseBean.class, this);
     }
@@ -243,7 +244,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements PUNHtt
 
     @Override
     public void onRequestSuccess(String result, T type) {
-        SLFLogUtil.sdkd("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type + "\n**result:"+result);
         if (type instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) type).data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
@@ -270,6 +271,7 @@ public class SLFFeedbackHistory<T> extends SLFLazyLoadFragment implements PUNHtt
 
     @Override
     public void onRequestFail(String value, String failCode, T type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestFail:failCode:"+failCode+"*value:"+value);
         chageView();
         SLFToastUtil.hideLoading();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));

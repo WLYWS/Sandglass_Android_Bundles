@@ -181,6 +181,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
         showLoading();
         PUNHttpUtils.getInstance().executePathGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_CATEGORIES, SLFFirstPageFAQResponseBean.class, this);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_FAQ_CATEGORIES);
     }
 
     @Override
@@ -241,6 +242,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
 
     @Override
     public void onRequestSuccess(String result, T type) {
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestSuccess:type:("+type.getClass()+")\nresult:"+result);
         if(type instanceof SLFFirstPageFAQResponseBean){
             cacheManager.delete(CACHE_FILE_PATH);
             SLFSpUtils.put(SLFSPContant.UPDATE_TIME_FAQCATEGORY,SLFSpUtils.getLong(SLFSPContant.UPDATE_TIME_FAQCATEGORY_CACHE,0));
@@ -268,6 +270,7 @@ public class SLFHelpAndFeedback<T> extends SLFBaseActivity implements View.OnCli
     @Override
     public void onRequestFail(String value, String failCode, T type) {
         hideLoading();
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestFail:failCode:"+failCode+"*value:"+value);
         if(type == SLFFirstPageFAQResponseBean.class){
             noDataPage(false);
         }

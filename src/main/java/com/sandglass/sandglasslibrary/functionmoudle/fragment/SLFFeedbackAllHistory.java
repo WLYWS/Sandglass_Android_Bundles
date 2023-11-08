@@ -210,6 +210,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements PUN
         TreeMap map = new TreeMap();
         map.put("type", type);
         map.put("current", current);
+        SLFLogUtil.sdke(TAG, "ActivityName:"+this.getClass().getSimpleName()+":onRequestUrl（Get）:"+PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LIST_URL + "\nbody:" + map);
         PUNHttpUtils.getInstance().executeGet(getContext(),
                 PUNHttpRequestConstants.BASE_URL + PUNApiContant.FEEDBACK_LIST_URL, map, SLFFeedbackItemResponseBean.class, this);
     }
@@ -247,7 +248,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements PUN
 
     @Override
     public void onRequestSuccess(String result, T type) {
-        SLFLogUtil.sdkd("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackinpressHistoryFragment", "FragmentName:" + this.getClass().getSimpleName() + ":onRequestSuccess type:" + type + "\n**result:"+result);
         if (type instanceof SLFFeedbackItemResponseBean) {
             List<SLFRecord> newDatas = ((SLFFeedbackItemResponseBean) type).data.getRecods();
             if (newDatas != null && newDatas.size() > 0) {
@@ -277,7 +278,7 @@ public class SLFFeedbackAllHistory<T> extends SLFLazyLoadFragment implements PUN
         chageView();
         SLFToastUtil.hideLoading();
         SLFToastUtil.showCenterText(SLFResourceUtils.getString(R.string.slf_common_request_error));
-        SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestFail type:" + type);
+        SLFLogUtil.sdkd("SLFFeedbackAllHistoryFragment","FragmentName:"+this.getClass().getSimpleName()+":onRequestFail type:" + type + ":failCode:"+failCode+"*value:"+value);
     }
 
 
