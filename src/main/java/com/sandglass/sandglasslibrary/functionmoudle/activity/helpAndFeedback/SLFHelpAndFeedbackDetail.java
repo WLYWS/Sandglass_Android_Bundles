@@ -1,6 +1,7 @@
 package com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -302,12 +303,19 @@ public class SLFHelpAndFeedbackDetail<T> extends SLFBaseActivity implements View
             }
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                mWebView.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
+//                view.loadDataWithBaseURL(null,replaceAll,"text/html","utf-8",null);
+                //跳转到系统浏览器打开链接
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
                 return true;
             }
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                // 设置超链接的文字颜色
+                String style = "javascript:" +
+                        "var style = document.createElement('style');style.innerHTML = 'a { color: A7D9DC; text-decoration: underline; }';document.getElementsByTagName('head')[0].appendChild(style);";
+                mWebView.loadUrl(style);
             }
         });
 
