@@ -648,10 +648,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             //打点提交反馈
             PUTClickAgent.clickTypeAgent(SLFAgentEvent.SLF_Feedback_Submit,null);
             isSendLogsuccess = false;
-            if (slfEditProblem.getText().toString().length() < 10) {
-                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
-                return;
-            }
+//            if (slfEditProblem.getText().toString().length() < 10) {
+//                showCenterToast(SLFResourceUtils.getString(R.string.slf_feedback_problem_font_least));
+//                return;
+//            }
 
             if (!SLFRegular.isEmail(slfEmailEdit.getText().toString().trim())) {
                 slfEmailError.setVisibility(View.VISIBLE);
@@ -1052,7 +1052,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             emailEdit = false;
         }
         SLFUserDeviceSaved userInfo = getUserInfo();
-        if (type && problemEdit && emailEdit && userInfo!=null) {
+        if (type && emailEdit && userInfo!=null) {
             return true;
         } else {
             return false;
@@ -1266,8 +1266,9 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
      */
     private void requestIllegalWorld() {
         if (TextUtils.isEmpty(slfEditProblem.getText().toString().trim())) {
-            showToast("Content is empty!");
-            return;
+//            showToast("Content is empty!");
+//            return;
+            checkedSendLog();
         } else {
             String content = slfEditProblem.getText().toString();
             TreeMap<String, Object> contentMap = new TreeMap<>();
