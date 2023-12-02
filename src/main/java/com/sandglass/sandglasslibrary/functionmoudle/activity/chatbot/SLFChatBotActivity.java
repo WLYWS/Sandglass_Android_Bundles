@@ -142,10 +142,18 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
 
     private boolean isFristIn;
 
+    private String autoMessage = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 获取传递过来的Intent对象
+        Intent intent = getIntent();
+        // 获取要发送的消息
+        autoMessage = intent.getStringExtra("EXTRA_KEY_MESSAGE");
+
         SLFStatusBarColorChange.transparencyBar(this);
         bindSlfUpdateService();
         setContentView(R.layout.activity_slfchat_bot);
@@ -199,6 +207,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
                 uuid = getUUid();
                 SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                 slfdbEngine.quary_ten_msg(msg_id);
+                //如果收到消息，则自动发送
+                if (!autoMessage.equals("")){
+                    sendMsg(autoMessage, 0);
+                }
 
             }else{
                 isFristIn = false;
@@ -215,6 +227,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
                         SLFSpUtils.putCommit(SLFConstants.UUID, uuid);
                     }
                     slfdbEngine.quary_ten_msg(msg_id);
+                    //如果收到消息，则自动发送
+                    if (!autoMessage.equals("")){
+                        sendMsg(autoMessage, 0);
+                    }
                 }
             }
         }
@@ -604,6 +620,10 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             SLFFaqWelcomeHotQResponseBean sLFFaqWelcomeHotQResponseBean = (SLFFaqWelcomeHotQResponseBean) type;
             SLFSpUtils.putCommit(SLFConstants.userId+"_"+SLFConstants.LASTSENDTIME, System.currentTimeMillis());
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
+            //如果收到消息，则自动发送
+            if (!autoMessage.equals("")){
+                sendMsg(autoMessage, 0);
+            }
         }else if(type instanceof SLFUnReadCount){
             SLFLogUtil.sdkd("yj","data===weidu===="+((SLFUnReadCount)type).data);
             if(((SLFUnReadCount)type).data >0){

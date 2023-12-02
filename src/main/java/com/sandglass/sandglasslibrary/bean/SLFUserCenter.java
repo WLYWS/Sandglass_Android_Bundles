@@ -14,6 +14,7 @@ import com.sandglass.sandglasslibrary.commonapi.SLFApi;
 import com.sandglass.sandglasslibrary.moudle.SLFUserDeviceSaved;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserDeviceListResponseBean;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserinfoDeviceMoudle;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSystemUtil;
 
@@ -62,6 +63,8 @@ public class SLFUserCenter {
     public static SLFUserInfoResponseBean userInfoBean;
 
     public static SLFUserDeviceListResponseBean userDeviceListBean;
+
+    public static SLFUserinfoDeviceMoudle defaultDevice;
 
     private static HashMap<Long, SLFUserDeviceSaved> mInstance;
     /**保存用户信息的单例*/

@@ -11,13 +11,19 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
+import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackListDetailActivity;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.feedback.SLFFeedbackSubmitActivity;
+import com.sandglass.sandglasslibrary.functionmoudle.activity.helpAndFeedback.SLFHelpAndFeedback;
 import com.sandglass.sandglasslibrary.interf.SLFCompressProgress;
 import com.sandglass.sandglasslibrary.interf.SLFSetTokenCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadAppLogCallback;
 import com.sandglass.sandglasslibrary.interf.SLFUploadCompleteCallback;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFRecord;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoMoudle;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserInfoResponseBean;
+import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserinfoDeviceMoudle;
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
 import com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
@@ -113,19 +119,38 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     public void setUserId(String userId){
         SLFConstants.userId = userId;
     }
-//
-//    public String getToken(){
-//        return SLFConstants.token;
-//    }
+
+    /**跳转到插件反馈*/
+    public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap, HashMap<String,String> deviceInfo){
+
+        gotoHelpAndFeedback(context, paramsMap);
+        SLFUserCenter.defaultDevice = new SLFUserinfoDeviceMoudle(deviceInfo.get("deviceId"), deviceInfo.get("deviceName"), deviceInfo.get("deviceModel"), deviceInfo.get("firmwareVersion"));
+    }
     /**跳转到插件反馈*/
     public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap){
-        //Intent in = new Intent("slf.sdk.action.SLFHelpAndFeedback");
-        Intent in = new Intent(getSLFContext(), SLFChatBotActivity.class);
-        //setToken(token);
 
+        SLFUserCenter.defaultDevice = null;
         setUserId(paramsMap.get(SLFConstants.USER_ID).toString());
+        Object enterPage = paramsMap.get("enterPage");
+        if (enterPage == "FAQ"){
+            Intent in = new Intent(getSLFContext(), SLFHelpAndFeedback.class);
+            context.startActivity(in);
+        } else if (enterPage == "Feedback") {
+            if (paramsMap.get("email") != null && paramsMap.get("email").toString() != null){
+                SLFUserInfoMoudle userInfo = new SLFUserInfoMoudle(paramsMap.get("email").toString(),"");
+                SLFUserCenter.userInfoBean = new SLFUserInfoResponseBean("", userInfo);
+            }
+            Intent in = new Intent(getSLFContext(), SLFFeedbackSubmitActivity.class);
+            context.startActivity(in);
+        }else {
+            Intent in = new Intent(getSLFContext(), SLFChatBotActivity.class);
+            if (paramsMap.get("chatbotMessage") != null && paramsMap.get("chatbotMessage").toString() != null){
+                // 附加额外的数据到Intent对象
+                in.putExtra("EXTRA_KEY_MESSAGE", paramsMap.get("chatbotMessage").toString());
+            }
+            context.startActivity(in);
+        }
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
-        context.startActivity(in);
     }
 
     /**跳转到留言详情页*/
