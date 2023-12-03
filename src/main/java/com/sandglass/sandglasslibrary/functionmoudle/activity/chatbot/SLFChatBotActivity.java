@@ -152,7 +152,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
         // 获取传递过来的Intent对象
         Intent intent = getIntent();
         // 获取要发送的消息
-        autoMessage = intent.getStringExtra("EXTRA_KEY_MESSAGE");
+        autoMessage = intent.getStringExtra("EXTRA_KEY_MESSAGE") != null ? intent.getStringExtra("EXTRA_KEY_MESSAGE"):"";
 
         SLFStatusBarColorChange.transparencyBar(this);
         bindSlfUpdateService();
