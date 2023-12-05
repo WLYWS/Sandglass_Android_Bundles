@@ -209,7 +209,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
                 slfdbEngine.quary_ten_msg(msg_id);
                 //如果收到消息，则自动发送
                 if (!autoMessage.equals("")){
-                    sendMsg(autoMessage, 0);
+                    sendMsg(autoMessage, SLFChatBotMsgData.SEND_FROM_INPUT);
                 }
 
             }else{
@@ -229,7 +229,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
                     slfdbEngine.quary_ten_msg(msg_id);
                     //如果收到消息，则自动发送
                     if (!autoMessage.equals("")){
-                        sendMsg(autoMessage, 0);
+                        sendMsg(autoMessage, SLFChatBotMsgData.SEND_FROM_INPUT);
                     }
                 }
             }
@@ -622,7 +622,7 @@ public class SLFChatBotActivity extends SLFBaseActivity implements PUNHttpReques
             showWelcomeData(sLFFaqWelcomeHotQResponseBean);
             //如果收到消息，则自动发送
             if (!autoMessage.equals("")){
-                sendMsg(autoMessage, 0);
+                sendMsg(autoMessage, SLFChatBotMsgData.SEND_FROM_INPUT);
             }
         }else if(type instanceof SLFUnReadCount){
             SLFLogUtil.sdkd("yj","data===weidu===="+((SLFUnReadCount)type).data);
