@@ -1654,13 +1654,26 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
                 }else{
                     //传入设备信息则显示默认设备
                     if (SLFUserCenter.defaultDevice != null) {
-                        for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
-                            if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
-                                service_checkedPosition = k+1;
+                        if (SLFUserCenter.defaultDevice.getDeviceId() != null && !SLFUserCenter.defaultDevice.getDeviceId().equals("")){
+                            for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
+                                if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
+                                    service_checkedPosition = k+1;
 
-                                slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
-                                setDefaultServiceType(slfServiceType);
-                                break;
+                                    slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
+                                    setDefaultServiceType(slfServiceType);
+                                    break;
+                                }
+                            }
+                        }else {
+                            int devicesCount = SLFUserCenter.userDeviceListBean.getData().size();
+                            for (int k = devicesCount+2; k < slfServiceTypes.size(); k++) {
+                                slfServiceType = (SLFCategoryBean)slfServiceTypes.get(k);
+
+                                if (slfServiceType.deviceModel!=null && slfServiceType.deviceModel.equals(SLFUserCenter.defaultDevice.getDeviceModel())){
+                                    service_checkedPosition = k;
+
+                                    setDefaultServiceType(slfServiceType);
+                                }
                             }
                         }
                     }
@@ -1749,6 +1762,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         hasGetCategories = true;
         if(hasGetUserDeviceInfo){
             slfServiceTypes = getServiceTypeData(getSLFCategoriesResponseBean());
+            //如果只有一个设备类型且无设备，默认选中该类型
             if (slfServiceTypes.size() == 2){
                 service_checkedPosition = 1;
 
@@ -1757,13 +1771,26 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             }else{
                 //传入设备信息则显示默认设备
                 if (SLFUserCenter.defaultDevice != null) {
-                    for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
-                        if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
-                            service_checkedPosition = k+1;
+                    if (SLFUserCenter.defaultDevice.getDeviceId() != null && !SLFUserCenter.defaultDevice.getDeviceId().equals("")){
+                        for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
+                            if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
+                                service_checkedPosition = k+1;
 
-                            slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
-                            setDefaultServiceType(slfServiceType);
-                            break;
+                                slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
+                                setDefaultServiceType(slfServiceType);
+                                break;
+                            }
+                        }
+                    }else {
+                        int devicesCount = SLFUserCenter.userDeviceListBean.getData().size();
+                        for (int k = devicesCount+2; k < slfServiceTypes.size(); k++) {
+                            slfServiceType = (SLFCategoryBean)slfServiceTypes.get(k);
+
+                            if (slfServiceType.deviceModel!=null && slfServiceType.deviceModel.equals(SLFUserCenter.defaultDevice.getDeviceModel())){
+                                service_checkedPosition = k;
+
+                                setDefaultServiceType(slfServiceType);
+                            }
                         }
                     }
                 }
