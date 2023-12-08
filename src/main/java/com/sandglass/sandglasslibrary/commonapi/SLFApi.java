@@ -125,6 +125,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
 
         gotoHelpAndFeedback(context, paramsMap);
         SLFUserCenter.defaultDevice = new SLFUserinfoDeviceMoudle(deviceInfo.get("deviceId"), deviceInfo.get("deviceName"), deviceInfo.get("deviceModel"), deviceInfo.get("firmwareVersion"));
+        SLFLogUtil.sdkd("EnterSDK", "deviceInfo:" + deviceInfo);
     }
     /**跳转到插件反馈*/
     public void gotoHelpAndFeedback(Context context, HashMap<String,Object> paramsMap){
@@ -151,6 +152,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
             context.startActivity(in);
         }
         SLFSpUtils.putHashMapData(SLFConstants.PARAMSMAP,paramsMap);
+        SLFLogUtil.sdkd("EnterSDK", "paramsMap:" + paramsMap);
     }
 
     /**跳转到留言详情页*/

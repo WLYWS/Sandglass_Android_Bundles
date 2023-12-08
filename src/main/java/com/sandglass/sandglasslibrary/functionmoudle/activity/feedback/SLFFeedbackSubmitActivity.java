@@ -439,6 +439,10 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         slfEditProblem.addTextChangedListener(this);
         initDrawableRight(slfEmailEdit);
         setDrawableRightVisble(false, slfEmailEdit);
+        Drawable rightImage = getResources().getDrawable(R.drawable.slf_feed_back_email_close_all);
+        rightImage.setBounds(0,0,48,48);
+        //设置邮箱输入框右侧图片大小
+        slfEmailEdit.setCompoundDrawables(null,null,rightImage,null);
         slfEmailEdit.addTextChangedListener(editWatcher);
         //slfEmailEdit.setOnKeyListener(emailKeyLister);
         slfEmailEdit.setOnTouchListener(emailTouchListener);
@@ -1644,43 +1648,49 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
 
             hasGetUserDeviceInfo = true;
             if(hasGetCategories){
-                slfServiceTypes = getServiceTypeData(getSLFCategoriesResponseBean());
-                //如果只有一个设备类型且无设备，默认选中该类型
-                if (slfServiceTypes.size() == 2){
-                    service_checkedPosition = 1;
+                setDefaultServiceType();
+            }
+            //isHideLoading("isResolveDevicelist");
+            SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.getData().size());
+        }
+    }
+    //设置默认的servicetype信息
+    private void setDefaultServiceType(){
 
-                    slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
-                    setDefaultServiceType(slfServiceType);
-                }else{
-                    //传入设备信息则显示默认设备
-                    if (SLFUserCenter.defaultDevice != null) {
-                        if (SLFUserCenter.defaultDevice.getDeviceId() != null && !SLFUserCenter.defaultDevice.getDeviceId().equals("")){
-                            for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
-                                if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
-                                    service_checkedPosition = k+1;
+        slfServiceTypes = getServiceTypeData(getSLFCategoriesResponseBean());
+        //如果只有一个设备类型且无设备，默认选中该类型
+        if (slfServiceTypes.size() == 2){
+            service_checkedPosition = 1;
 
-                                    slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
-                                    setDefaultServiceType(slfServiceType);
-                                    break;
-                                }
-                            }
-                        }else {
-                            int devicesCount = SLFUserCenter.userDeviceListBean.getData().size();
-                            for (int k = devicesCount+2; k < slfServiceTypes.size(); k++) {
-                                slfServiceType = (SLFCategoryBean)slfServiceTypes.get(k);
+            slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
+            setDefaultServiceType(slfServiceType);
+        }else{
+            //传入设备信息则显示默认设备
+            if (SLFUserCenter.defaultDevice != null) {
+                //如果收到deviceid有值，显示对应设备
+                if (SLFUserCenter.defaultDevice.getDeviceId() != null && !SLFUserCenter.defaultDevice.getDeviceId().equals("")){
+                    for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
+                        if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
+                            service_checkedPosition = k+1;
 
-                                if (slfServiceType.deviceModel!=null && slfServiceType.deviceModel.equals(SLFUserCenter.defaultDevice.getDeviceModel())){
-                                    service_checkedPosition = k;
+                            slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
+                            setDefaultServiceType(slfServiceType);
+                            break;
+                        }
+                    }
+                }else {//如果没有deviceid，显示对应deviceidModel
+                    int devicesCount = SLFUserCenter.userDeviceListBean.getData().size();
+                    for (int k = devicesCount+2; k < slfServiceTypes.size(); k++) {
+                        slfServiceType = (SLFCategoryBean)slfServiceTypes.get(k);
 
-                                    setDefaultServiceType(slfServiceType);
-                                }
-                            }
+                        if (slfServiceType.deviceModel!=null && slfServiceType.deviceModel.equals(SLFUserCenter.defaultDevice.getDeviceModel())){
+                            service_checkedPosition = k;
+
+                            setDefaultServiceType(slfServiceType);
                         }
                     }
                 }
             }
-            //isHideLoading("isResolveDevicelist");
-            SLFLogUtil.sdkd("yj","SLFUserCenter.userDeviceListBean::::::"+SLFUserCenter.userDeviceListBean.getData().size());
         }
     }
     //设置默认设备的servicetype
@@ -1761,40 +1771,7 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
         this.slfCategoriesResponseBean = (SLFCategoriesResponseBean) type;
         hasGetCategories = true;
         if(hasGetUserDeviceInfo){
-            slfServiceTypes = getServiceTypeData(getSLFCategoriesResponseBean());
-            //如果只有一个设备类型且无设备，默认选中该类型
-            if (slfServiceTypes.size() == 2){
-                service_checkedPosition = 1;
-
-                slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
-                setDefaultServiceType(slfServiceType);
-            }else{
-                //传入设备信息则显示默认设备
-                if (SLFUserCenter.defaultDevice != null) {
-                    if (SLFUserCenter.defaultDevice.getDeviceId() != null && !SLFUserCenter.defaultDevice.getDeviceId().equals("")){
-                        for (int k = 0; k < SLFUserCenter.userDeviceListBean.getData().size(); k++) {
-                            if (SLFUserCenter.defaultDevice.getDeviceId().equals(SLFUserCenter.userDeviceListBean.getData().get(k).getDeviceId())){
-                                service_checkedPosition = k+1;
-
-                                slfServiceType = (SLFCategoryBean)slfServiceTypes.get(service_checkedPosition);
-                                setDefaultServiceType(slfServiceType);
-                                break;
-                            }
-                        }
-                    }else {
-                        int devicesCount = SLFUserCenter.userDeviceListBean.getData().size();
-                        for (int k = devicesCount+2; k < slfServiceTypes.size(); k++) {
-                            slfServiceType = (SLFCategoryBean)slfServiceTypes.get(k);
-
-                            if (slfServiceType.deviceModel!=null && slfServiceType.deviceModel.equals(SLFUserCenter.defaultDevice.getDeviceModel())){
-                                service_checkedPosition = k;
-
-                                setDefaultServiceType(slfServiceType);
-                            }
-                        }
-                    }
-                }
-            }
+            setDefaultServiceType();
         }
         //isHideLoading("isResolveAllData");
         hideLoading();
