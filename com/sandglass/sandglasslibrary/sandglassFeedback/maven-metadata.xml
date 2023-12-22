@@ -3,8 +3,8 @@
   <groupId>com.sandglass.sandglasslibrary</groupId>
   <artifactId>sandglassFeedback</artifactId>
   <versioning>
-    <latest>0.1.93</latest>
-    <release>0.1.93</release>
+    <latest>0.1.94</latest>
+    <release>0.1.94</release>
     <versions>
       <version>0.1.56</version>
       <version>0.1.55sptest9</version>
@@ -47,7 +47,8 @@
       <version>0.1.91</version>
       <version>0.1.92</version>
       <version>0.1.93</version>
+      <version>0.1.94</version>
     </versions>
-    <lastUpdated>20231220072633</lastUpdated>
+    <lastUpdated>20231222023302</lastUpdated>
   </versioning>
 </metadata>
