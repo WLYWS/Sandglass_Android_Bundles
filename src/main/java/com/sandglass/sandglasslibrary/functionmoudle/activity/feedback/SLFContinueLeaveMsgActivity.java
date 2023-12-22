@@ -230,8 +230,8 @@ public class SLFContinueLeaveMsgActivity<T> extends SLFBaseActivity implements V
         setSendBtnCanClick(false);
         slfFontCount.setText(SLFStringFormatUtil.getFormatString(R.string.slf_feedback_font_count, slfProblemWordNum.length()));
         slfRecord = (SLFRecord) getIntent().getSerializableExtra(SLFConstants.RECORD_DATA);
-        SLFFontSet.setSLF_RegularFont(getContext(),slfEditProblem);
-        SLFFontSet.setSLF_RegularFont(getContext(),slfFontCount);
+//        SLFFontSet.setSLF_RegularFont(getContext(),slfEditProblem);
+//        SLFFontSet.setSLF_RegularFont(getContext(),slfFontCount);
         SLFFontSet.setSLF_MediumFontt(getContext(),slf_send_btn);
         SLFFontSet.setSLF_MediumFontt(getContext(),slf_continue_leave_descripe_title);
     }

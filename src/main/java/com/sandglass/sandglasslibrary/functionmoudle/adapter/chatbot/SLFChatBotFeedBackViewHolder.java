@@ -68,7 +68,7 @@ public class SLFChatBotFeedBackViewHolder extends SLFChatBotBaseViewHodler imple
 //        lv_faq_feedback_list = itemView.findViewById(R.id.lv_faq_feedback_list);
 //        SLFFontSet.setSLF_RegularFont(context,tv_faq_feedback_title);
 //        SLFFontSet.setSLF_RegularFont(context,tv_relate_question);
-        SLFFontSet.setSLF_RegularFont(context,tv_faq_feedback_answer);
+//        SLFFontSet.setSLF_RegularFont(context,tv_faq_feedback_answer);
 
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ll_faq_answer.getLayoutParams());
         layoutParams.width = SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116);

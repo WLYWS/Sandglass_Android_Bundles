@@ -46,7 +46,7 @@ public class SLFChatBotTimeViewHolder extends SLFChatBotBaseViewHodler{
         super(itemView);
         this.context = context;
         tv_chat_bot_date = itemView.findViewById(R.id.tv_chat_bot_date);
-        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_date);
+//        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_date);
     }
 
     @Override

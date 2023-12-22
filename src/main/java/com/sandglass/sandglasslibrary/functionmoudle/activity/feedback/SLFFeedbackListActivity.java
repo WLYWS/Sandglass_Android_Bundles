@@ -71,8 +71,8 @@ public class SLFFeedbackListActivity extends SLFBaseActivity{
 
 
         tabLayout.setViewPager(viewPager, nameList);
-        SLFFontSet.setSLF_RegularFont(getContext(),tabLayout.getTitleView(0));
-        SLFFontSet.setSLF_RegularFont(getContext(),tabLayout.getTitleView(1));
+//        SLFFontSet.setSLF_RegularFont(getContext(),tabLayout.getTitleView(0));
+//        SLFFontSet.setSLF_RegularFont(getContext(),tabLayout.getTitleView(1));
     }
 
 

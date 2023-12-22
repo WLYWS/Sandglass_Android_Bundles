@@ -200,8 +200,8 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
 
             ((UserNormalHolder) holder).slf_feedback_detail_question_content.setText(datas.get(position).getContent());
             ((UserNormalHolder) holder).slf_feedback_detail_user_time.setText(SLFDateFormatUtils.getDateToMyString(context, datas.get(position).getReplyTs()));
-            SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_question_content);
-            SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_user_time);
+//            SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_question_content);
+//            SLFFontSet.setSLF_RegularFont(context, ((UserNormalHolder) holder).slf_feedback_detail_user_time);
             //通过为条目设置点击事件触发回调
 //            if (mOnItemClickLitener != null) {
 //                ((NormalHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -214,8 +214,8 @@ public class SLFFeedbackDetailAdapter extends RecyclerView.Adapter<RecyclerView.
         } else if (holder instanceof WorkerNormalHolder) {
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content.setText(datas.get(position).getContent());
             ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time.setText(SLFDateFormatUtils.getDateToMyString(context, datas.get(position).getReplyTs()));
-            SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content);
-            SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time);
+//            SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_question_content);
+//            SLFFontSet.setSLF_RegularFont(context, ((WorkerNormalHolder) holder).slf_feedback_detail_worker_time);
         }
     }
 

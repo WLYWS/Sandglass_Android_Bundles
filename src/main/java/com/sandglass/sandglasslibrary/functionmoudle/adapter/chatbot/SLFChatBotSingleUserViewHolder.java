@@ -46,7 +46,7 @@ public class SLFChatBotSingleUserViewHolder extends SLFChatBotBaseViewHodler {
         tv_chat_bot_user_text = itemView.findViewById(R.id.tv_chat_bot_user_text);
         iv_chat_bot_user_warn = itemView.findViewById(R.id.iv_chat_bot_user_warn);
         tv_chat_bot_user_text.setMaxWidth(SLFCommonUtils.getScreenWidth()-SLFCommonUtils.dip2px(context,116));
-        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_user_text);
+//        SLFFontSet.setSLF_RegularFont(context,tv_chat_bot_user_text);
         if(SLFUserCenter.userInfoBean!=null&&SLFUserCenter.userInfoBean.getData()!=null&&SLFUserCenter.userInfoBean.getData().getIconUrl()!=null){
             SLFImageUtil.loadImage(context, SLFUserCenter.userInfoBean.getData().getIconUrl(),iv_chat_bot_user_icon , R.mipmap.slf_chat_bot_user_icon, R.mipmap.slf_chat_bot_user_icon
                     , SLFImageShapes.CIRCLE, SLFImageShapes.ROUND);

@@ -264,10 +264,10 @@ public class SLFFeedbackListDetailActivity<T> extends SLFBaseActivity implements
         } else {
             SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + ":slfRecode is null:");
         }
-        SLFFontSet.setSLF_RegularFont(getContext(), slf_title_status);
-        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_id);
-        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_question_type);
-        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_list_leave_message_bottom_text);
+//        SLFFontSet.setSLF_RegularFont(getContext(), slf_title_status);
+//        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_id);
+//        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_question_type);
+//        SLFFontSet.setSLF_RegularFont(getContext(), slf_feedback_list_leave_message_bottom_text);
         slf_feedback_bottom_relative.setOnClickListener(this);
 
     }

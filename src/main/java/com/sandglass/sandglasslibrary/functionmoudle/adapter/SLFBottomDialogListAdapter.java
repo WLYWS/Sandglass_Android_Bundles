@@ -122,7 +122,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
                     serviceTypeTitle.setText(((SLFCategoryCommonBean) object).name);
                     checkBox.setChecked(((SLFCategoryCommonBean) object).isChecked());
                 }
-                SLFFontSet.setSLF_RegularFont(mContext,serviceTypeTitle);
+//                SLFFontSet.setSLF_RegularFont(mContext,serviceTypeTitle);
 
                 if(checkBox.isChecked()){
                     checkBox.setBackground(SLFResourceUtils.getDrawable(R.drawable.slf_feed_back_bottom_dialog_selected));
@@ -135,7 +135,7 @@ public class SLFBottomDialogListAdapter<T> extends SLFRecyclerAdatper<Object> {
 
         } else {
             TextView serviceType_title = recyclerHolder.getView(R.id.slf_tv_content);
-            SLFFontSet.setSLF_RegularFont(mContext,serviceType_title);
+//            SLFFontSet.setSLF_RegularFont(mContext,serviceType_title);
             serviceType_title.setText((String) object);
         }
 
