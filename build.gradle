@@ -90,8 +90,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    implementation project(":PUNetWork")
-    implementation project(":PUTrack")
+    implementation project(":PUNetWork_android")
+    implementation project(":PUTrack_android")
+    implementation project(":PSYToolsSet_Android")
 //    api 'com.punet.punetwork:punetwork:0.0.1'
 //    api 'com.putrack.putrack:putrack:0.0.1'
 

@@ -10,6 +10,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.logutil.logutil.SLFLogAPI;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.bean.SLFUserCenter;
 import com.sandglass.sandglasslibrary.functionmoudle.activity.chatbot.SLFChatBotActivity;
@@ -27,10 +28,10 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFUserinfoDeviceM
 import com.sandglass.sandglasslibrary.utils.SLFFileUtils;
 import com.sandglass.sandglasslibrary.utils.SLFNetworkChangeReceiver;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFCrashHandler;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFDebugConfig;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogAPI;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFCrashHandler;
+import com.logutil.logutil.SLFDebugConfig;
+import com.logutil.logutil.SLFLogAPI;
+import com.logutil.logutil.SLFLogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,12 +86,12 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
     public void init(boolean isDebug){
         this.isDebug = isDebug;
         SLFConstants.isOpenConsoleLog = isDebug;
-        SLFConstants.isUseXlog = !isDebug;
+        SLFLogAPI.isUseXlog = !isDebug;
         long startTime = System.currentTimeMillis();
 
         long endTime = System.currentTimeMillis();
         SLFSpUtils.getInstance(mContext, mContext.getPackageName() + "_slf_sp");
-        SLFLogAPI.init();
+        SLFLogAPI.init(mContext);
         //SLFLogUtil.syncPermissonCreate();
         //SLFLogUtil.sdkinitXLog(SLFConstants.xlogCachePath,SLFConstants.apiLogPath,XLOG_PUBKEY);
         SLFLogUtil.sdke("ArouterInitTime:", endTime - startTime + "");
@@ -102,7 +103,7 @@ public class SLFApi{  //implements SLFSetNewTokentoFeed {
             }
         }
 //        SLFCrashHandler.getInstance().init(mContext);
-        SLFDebugConfig.setOpenLogEnable(true);
+        SLFDebugConfig.setOpenLogEnable(mContext,true);
 //        SLFCrashHandler.getInstance().addCrashListener((ex, appId) -> SLFLogUtil.sdke("slf_crash", appId));
         // android 7.0系统解决拍照的问题
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();

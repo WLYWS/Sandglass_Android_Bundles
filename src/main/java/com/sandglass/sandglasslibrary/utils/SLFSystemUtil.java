@@ -22,7 +22,7 @@ import android.provider.Settings;
 import android.view.WindowManager;
 
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.lang.reflect.Method;

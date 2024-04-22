@@ -78,7 +78,7 @@ import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 

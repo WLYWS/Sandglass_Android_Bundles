@@ -44,7 +44,7 @@ import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 import com.sandglass.sandglasslibrary.utils.manager.SLFCacheToFileManager;
 
 import org.greenrobot.eventbus.Subscribe;

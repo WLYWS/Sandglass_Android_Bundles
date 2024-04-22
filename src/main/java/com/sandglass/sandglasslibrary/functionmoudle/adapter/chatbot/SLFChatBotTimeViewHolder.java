@@ -11,7 +11,7 @@ import com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

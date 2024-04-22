@@ -14,7 +14,7 @@ import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecycle
 import com.sandglass.sandglasslibrary.functionmoudle.adapter.recycler.SLFRecyclerHolder;
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.util.List;
 

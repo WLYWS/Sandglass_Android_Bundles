@@ -18,7 +18,7 @@ import androidx.annotation.RequiresApi;
 
 import com.sandglass.sandglasslibrary.R;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

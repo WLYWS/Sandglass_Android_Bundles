@@ -21,7 +21,7 @@ import com.sandglass.sandglasslibrary.functionmoudle.fragment.SLFFeedbackHistory
 import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

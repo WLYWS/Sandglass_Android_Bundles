@@ -19,7 +19,7 @@ import com.sandglass.sandglasslibrary.moudle.event.SLFEventCommon;
 import com.sandglass.sandglasslibrary.uiutils.SLFTitleBarUtil;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

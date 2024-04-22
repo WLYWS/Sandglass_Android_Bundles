@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.logutil.logutil.SLFLogAPI;
 import com.punet.punetwork.interf.UploadProgressListener;
 import com.punet.punetwork.net.PUNApiContant;
 import com.punet.punetwork.net.PUNHttpRequestCallback;
@@ -79,7 +80,7 @@ import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.uiutils.SLFEditTextScrollListener;
 import com.sandglass.sandglasslibrary.uiutils.SLFStatusBarColorChange;
 import com.sandglass.sandglasslibrary.utils.SLFCommonUtils;
-import com.sandglass.sandglasslibrary.utils.SLFCompressUtil;
+import com.logutil.logutil.SLFCompressUtil;
 import com.sandglass.sandglasslibrary.utils.SLFFastClickUtils;
 import com.sandglass.sandglasslibrary.utils.SLFPermissionManager;
 import com.sandglass.sandglasslibrary.utils.SLFPhotoSelectorUtils;
@@ -89,7 +90,7 @@ import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
 import com.sandglass.sandglasslibrary.utils.keyboard.SLFSoftKeyBoardListener;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 import com.sandglass.sandglasslibrary.utils.manager.SLFCacheToFileManager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -1510,29 +1511,13 @@ public class SLFFeedbackSubmitActivity<T> extends SLFBaseActivity implements Vie
             public void run() {
                 SLFLogUtil.sdkAppenderFlush(true);
                 /**压缩成zip*/
-                SLFCompressUtil.zipFile(SLFConstants.apiLogPath, "*", SLFConstants.feedbacklogPath + "sdkLog.zip", new SLFCompressUtil.OnCompressSuccessListener() {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccess() {
-                        isSubmit = true;
-                        if (isSubmit) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    File logFile = new File(SLFConstants.feedbacklogPath + "sdkLog.zip");
-                                    SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logFile.size------::" + logFile.length());
-                                    String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
-                                    PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, null,SLFFeedbackSubmitActivity.this);
-
-                                }
-                            });
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        isSubmit = false;
-                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::compress  logFils error");
+                    public void run() {
+                        File logFile = SLFCompressUtil.getZipFile();
+                        SLFLogUtil.sdkd(TAG, "ActivityName:" + this.getClass().getSimpleName() + "::logFile.size------::" + logFile.length());
+                        String uploadUrl = SLFCommonUpload.getInstance().get(SLFCommonUpload.getListInstance().get(6)).uploadUrl;
+                        PUNHttpUtils.getInstance().executePutFile(getContext(), uploadUrl, logFile, "application/zip", SLFConstants.photoCode, null,SLFFeedbackSubmitActivity.this);
                     }
                 });
             }

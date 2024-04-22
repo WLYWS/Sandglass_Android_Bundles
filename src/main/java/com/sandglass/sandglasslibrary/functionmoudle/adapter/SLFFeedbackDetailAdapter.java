@@ -27,7 +27,7 @@ import com.sandglass.sandglasslibrary.theme.SLFFontSet;
 import com.sandglass.sandglasslibrary.utils.SLFDateFormatUtils;
 import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

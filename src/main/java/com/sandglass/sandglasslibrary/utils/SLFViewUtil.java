@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.commonapi.SLFApi;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;

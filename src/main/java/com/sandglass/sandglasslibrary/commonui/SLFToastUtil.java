@@ -27,7 +27,7 @@ import com.sandglass.sandglasslibrary.utils.SLFConvertUtil;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFSystemUtil;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 /**
  * created by yangjie

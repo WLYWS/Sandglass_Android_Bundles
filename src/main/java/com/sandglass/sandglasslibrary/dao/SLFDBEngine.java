@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.moudle.SLFChatBotMsgData;
 import com.sandglass.sandglasslibrary.moudle.event.SLFTenMsgData;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

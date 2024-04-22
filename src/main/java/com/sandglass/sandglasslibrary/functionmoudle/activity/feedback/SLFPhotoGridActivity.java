@@ -52,7 +52,7 @@ import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
 import com.sandglass.sandglasslibrary.utils.SLFUtils;
 import com.sandglass.sandglasslibrary.utils.SLFViewUtil;
 //import com.sandglass.sandglasslibrary.utils.camralistener.SLFCamraContentObserver;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 import com.sandglass.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
 //import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 

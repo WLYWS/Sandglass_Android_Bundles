@@ -44,7 +44,7 @@ import com.sandglass.sandglasslibrary.utils.SLFPermissionManager;
 import com.sandglass.sandglasslibrary.utils.SLFPhotoSelectorUtils;
 import com.sandglass.sandglasslibrary.utils.SLFResourceUtils;
 import com.sandglass.sandglasslibrary.utils.SLFUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import com.sandglass.sandglasslibrary.base.SLFFileData;
 import com.sandglass.sandglasslibrary.bean.SLFConstants;
 import com.sandglass.sandglasslibrary.moudle.SLFMediaData;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFLeaveMsgRecord;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.util.ArrayList;

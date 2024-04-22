@@ -19,7 +19,7 @@ import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFaqWelcomeHotQR
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedBackCacheTimeData;
 import com.sandglass.sandglasslibrary.moudle.net.responsebean.SLFFeedBackCacheTimeResponseBean;
 import com.sandglass.sandglasslibrary.utils.SLFSpUtils;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
+import com.logutil.logutil.SLFLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
