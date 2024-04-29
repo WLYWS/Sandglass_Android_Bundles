@@ -22,7 +22,6 @@ import com.sandglass.sandglasslibrary.utils.SLFAdapterUtils;
 import com.sandglass.sandglasslibrary.utils.SLFImageShapes;
 import com.sandglass.sandglasslibrary.utils.SLFImageUtil;
 import com.sandglass.sandglasslibrary.utils.SLFStringFormatUtil;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 import com.sandglass.sandglasslibrary.utils.videocompress.SLFVideoSlimmer;
 
 import java.util.List;

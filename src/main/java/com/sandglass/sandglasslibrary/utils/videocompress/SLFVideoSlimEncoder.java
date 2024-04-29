@@ -12,7 +12,6 @@ import android.util.Log;
 
 import com.sandglass.sandglasslibrary.utils.videocompress.listner.SLFSlimProgressListener;
 import com.sandglass.sandglasslibrary.utils.videocompress.muxer.SLFCodecInputSurface;
-import com.sandglass.sandglasslibrary.utils.logutil.SLFLogUtil;
 
 import java.io.File;
 import java.io.IOException;
