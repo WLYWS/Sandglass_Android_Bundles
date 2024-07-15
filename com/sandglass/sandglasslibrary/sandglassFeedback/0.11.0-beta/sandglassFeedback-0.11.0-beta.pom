@@ -7,14 +7,19 @@
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
+      <groupId>com.hl.gpt</groupId>
+      <artifactId>res_atom_sandglass</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+    <dependency>
       <groupId>androidx.appcompat</groupId>
       <artifactId>appcompat</artifactId>
-      <version>1.4.1</version>
+      <version>1.6.1</version>
     </dependency>
     <dependency>
       <groupId>com.google.android.material</groupId>
       <artifactId>material</artifactId>
-      <version>1.5.0</version>
+      <version>1.9.0</version>
     </dependency>
     <dependency>
       <groupId>androidx.recyclerview</groupId>
@@ -24,7 +29,7 @@
     <dependency>
       <groupId>androidx.constraintlayout</groupId>
       <artifactId>constraintlayout</artifactId>
-      <version>2.1.0</version>
+      <version>2.1.4</version>
     </dependency>
     <dependency>
       <groupId>com.github.bumptech.glide</groupId>
@@ -92,19 +97,14 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <groupId>androidx.room</groupId>
-      <artifactId>room-runtime</artifactId>
-      <version>2.3.0</version>
-    </dependency>
-    <dependency>
       <groupId>androidx.swiperefreshlayout</groupId>
       <artifactId>swiperefreshlayout</artifactId>
       <version>1.1.0</version>
     </dependency>
     <dependency>
-      <groupId>com.hl.gpt</groupId>
-      <artifactId>res_atom_sandglass</artifactId>
-      <version>0.0.1-beta</version>
+      <groupId>androidx.room</groupId>
+      <artifactId>room-runtime</artifactId>
+      <version>2.3.0</version>
     </dependency>
     <dependency>
       <groupId>androidx.room</groupId>
