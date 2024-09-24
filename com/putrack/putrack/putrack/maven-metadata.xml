@@ -3,8 +3,8 @@
   <groupId>com.putrack.putrack</groupId>
   <artifactId>putrack</artifactId>
   <versioning>
-    <latest>0.1.0</latest>
-    <release>0.1.0</release>
+    <latest>0.1.1</latest>
+    <release>0.1.1</release>
     <versions>
       <version>0.0.6</version>
       <version>0.0.7</version>
@@ -26,7 +26,8 @@
       <version>0.1.0-beta-5</version>
       <version>0.1.0-beta-6</version>
       <version>0.1.0</version>
+      <version>0.1.1</version>
     </versions>
-    <lastUpdated>20240923095846</lastUpdated>
+    <lastUpdated>20240924122842</lastUpdated>
   </versioning>
 </metadata>
