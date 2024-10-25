@@ -3,8 +3,8 @@
   <groupId>com.punet.punetwork</groupId>
   <artifactId>punetwork</artifactId>
   <versioning>
-    <latest>0.1.1</latest>
-    <release>0.1.1</release>
+    <latest>0.0.17-beta</latest>
+    <release>0.0.17-beta</release>
     <versions>
       <version>0.0.4</version>
       <version>0.0.5</version>
@@ -33,7 +33,8 @@
       <version>0.1.0-beta-6</version>
       <version>0.1.0</version>
       <version>0.1.1</version>
+      <version>0.0.17-beta</version>
     </versions>
-    <lastUpdated>20240924122835</lastUpdated>
+    <lastUpdated>20241025002248</lastUpdated>
   </versioning>
 </metadata>
