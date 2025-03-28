@@ -3,8 +3,8 @@
   <groupId>com.psync.aiagents</groupId>
   <artifactId>psyaiagents</artifactId>
   <versioning>
-    <latest>0.10.7</latest>
-    <release>0.10.7</release>
+    <latest>0.10.8</latest>
+    <release>0.10.8</release>
     <versions>
       <version>0.0.1</version>
       <version>0.0.2</version>
@@ -59,7 +59,8 @@
       <version>0.10.7-beta-3</version>
       <version>0.10.7-beta-4</version>
       <version>0.10.7</version>
+      <version>0.10.8</version>
     </versions>
-    <lastUpdated>20241231081934</lastUpdated>
+    <lastUpdated>20250328032600</lastUpdated>
   </versioning>
 </metadata>
